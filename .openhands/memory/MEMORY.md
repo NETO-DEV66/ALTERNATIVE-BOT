@@ -29,13 +29,22 @@ rebranded to **Alternative Bot**, mobile-only, Android package
 
 ## Current state (2026-10-31)
 
-- `main` HEAD `42aa60f fix: finish Alternative Bot rebrand and remove billing leftovers`,
-  pushed to `origin/main`.
+- `origin/main` is at `42aa60f fix: finish Alternative Bot rebrand and remove billing leftovers`.
+  A newer local commit `8893438` (conversation archive + final billing-leftover cleanup)
+  is **committed but not pushed** — the push 403s on the read-only token; needs the
+  user's fresh PAT.
 - Rebrand + billing removal are **verified complete**: no `rakazo`/`Rakazo` or
   `elie222` references remain outside `.git`/the original source zip; all
   billing/payment code, Prisma models, migrations and Stripe compose env are gone.
 - **T5 (APK build + GitHub release) is still open** — no release exists, no APK built.
 - 4 test files fail on clean `HEAD` for environmental reasons (no `::1` loopback,
   npm-in-pnpm, process-reaping timing, real model HTTP) — not regressions.
+
+### Secret hygiene rule (learned the hard way)
+- The repo is **public**. Before committing a fetched conversation/trajectory (or any
+  third-party dump), grep it for secrets — the user pasted a live `ghp_…` PAT into a
+  chat and it landed in the archive. Redact to `<REDACTED-SECRET>` in both the text
+  files **and** any nested `.zip`, then `git reflog expire --expire=now --all &&
+  git gc --prune=now` to drop the dangling blobs before pushing.
 
 See `2026-10-31.md` for details.
