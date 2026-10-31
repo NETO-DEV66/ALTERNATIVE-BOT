@@ -70,7 +70,7 @@ export const GROK_SOURCES = [
 ] as const;
 
 export const INSTALL_COMMAND = `mkdir -p alternativebot && cd alternativebot &&
-curl -fsSLO https://raw.githubusercontent.com/elie222/alternativebot/main/infra/compose/install-images.sh &&
+curl -fsSLO https://raw.githubusercontent.com/NETO-DEV66/alternativebot/main/infra/compose/install-images.sh &&
 bash install-images.sh`;
 
 export const SELF_HOST_LEAD =

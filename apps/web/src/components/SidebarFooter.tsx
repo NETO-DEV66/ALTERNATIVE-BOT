@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { NavLink } from "@alternativebot/contracts";
-import { ANDROID_APK_URL, IOS_APP_STORE_URL } from "@alternativebot/contracts";
+import { ANDROID_APK_URL } from "@alternativebot/contracts";
 import {
   AppMarkStack,
   Button,
@@ -211,7 +211,7 @@ export function SidebarFooter({
             <div className="my-1 border-t border-border" />
             <a
               className={`${buttonVariants({ variant: "ghost" })} h-9 w-full justify-start gap-2.5 font-normal`}
-              href={/Android/i.test(navigator.userAgent) ? ANDROID_APK_URL : IOS_APP_STORE_URL}
+              href={ANDROID_APK_URL}
               target="_blank"
               rel="noreferrer"
             >
@@ -230,7 +230,7 @@ export function SidebarFooter({
             ) : null}
             <a
               className={`${buttonVariants({ variant: "ghost" })} h-9 w-full justify-start gap-2.5 font-normal`}
-              href="https://github.com/elie222/alternativebot/blob/main/docs/self-host.md"
+              href="https://github.com/NETO-DEV66/alternativebot/blob/main/docs/self-host.md"
               target="_blank"
               rel="noreferrer"
             >

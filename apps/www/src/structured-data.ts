@@ -1,6 +1,6 @@
 import { GITHUB_URL, SITE_NAME, SITE_URL } from "./site";
 
-const LEGAL_NAME = "Inbox Zero Inc.";
+const LEGAL_NAME = "Alternative Bot";
 
 export type HomeFaqItem = {
   question: string;
@@ -37,15 +37,7 @@ export function homeStructuredData(input: HomeStructuredDataInput) {
           url: `${SITE_URL}/support/`,
           availableLanguage: input.availableLanguages,
         },
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: "131 Continental Dr, Suite 305",
-          addressLocality: "Newark",
-          addressRegion: "DE",
-          postalCode: "19713",
-          addressCountry: "US",
-        },
-        sameAs: [GITHUB_URL, "https://www.getinboxzero.com/"],
+        sameAs: [GITHUB_URL],
       },
       {
         "@type": "WebSite",

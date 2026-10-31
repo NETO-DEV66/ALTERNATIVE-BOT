@@ -33,7 +33,7 @@ const DISPLAY_START = 20;
 const DEFAULT_NAMESPACE = "alternativebot-sandboxes";
 // Same default as the Compose stack. Pin a digest with KUBERNETES_SANDBOX_COMPUTER_IMAGE in
 // production so every pod runs the image the API was tested against.
-const DEFAULT_COMPUTER_IMAGE = "ghcr.io/elie222/alternativebot/computer:edge";
+const DEFAULT_COMPUTER_IMAGE = "ghcr.io/NETO-DEV66/alternativebot/computer:edge";
 const DEFAULT_READY_TIMEOUT_MS = 120_000;
 const WORKSPACE = "/home/alternativebot";
 const CONTAINER_NAME = "computer";

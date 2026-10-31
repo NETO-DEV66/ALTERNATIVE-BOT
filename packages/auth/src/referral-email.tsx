@@ -25,7 +25,7 @@ export function referralEmail(
       <Text>Have any questions? Just reply to this email.</Text>
       <Text>
         If you're enjoying Alternative Bot,{" "}
-        <Link href="https://github.com/elie222/alternativebot" style={linkStyle}>
+        <Link href="https://github.com/NETO-DEV66/alternativebot" style={linkStyle}>
           give us a star on GitHub
         </Link>
         .

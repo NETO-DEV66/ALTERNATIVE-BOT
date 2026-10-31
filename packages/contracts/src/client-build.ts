@@ -16,9 +16,8 @@ export const CLIENT_KINDS = ["web", "mobile"] as const;
 export type ClientKind = (typeof CLIENT_KINDS)[number];
 export type MinimumClientBuilds = Partial<Record<ClientKind, string>>;
 
-export const IOS_APP_STORE_URL = "https://apps.apple.com/app/alternativebot/id6801531099";
 export const ANDROID_APK_URL =
-  "https://github.com/elie222/alternativebot/releases/download/android/alternativebot.apk";
+  "https://github.com/NETO-DEV66/alternativebot/releases/download/android/alternativebot.apk";
 
 const BUILD_ID = /^\d{14}$/;
 

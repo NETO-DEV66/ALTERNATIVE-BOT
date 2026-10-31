@@ -16,14 +16,14 @@ export const OPENCLAW_SANDBOX_URL = "https://docs.openclaw.ai/gateway/sandboxing
 export const OPENCLAW_GITHUB_URL = "https://github.com/openclaw/openclaw";
 
 export const PUBLISHED_IMAGES_INSTALL = `mkdir -p alternativebot && cd alternativebot &&
-curl -fsSLO https://raw.githubusercontent.com/elie222/alternativebot/main/infra/compose/install-images.sh &&
+curl -fsSLO https://raw.githubusercontent.com/NETO-DEV66/alternativebot/main/infra/compose/install-images.sh &&
 bash install-images.sh`;
 
 export const PUBLISHED_IMAGES_SERVER = `bash install-images.sh --prepare-only
 # Edit .env, then:
 bash install-images.sh`;
 
-export const SOURCE_CHECKOUT = `git clone https://github.com/elie222/alternativebot.git
+export const SOURCE_CHECKOUT = `git clone https://github.com/NETO-DEV66/alternativebot.git
 cd alternativebot
 cp .env.example .env`;
 
@@ -175,7 +175,7 @@ export const COMPARISON_ROWS: readonly ComparisonRow[] = [
   },
   {
     aspect: "License",
-    alternativebot: "Apache-2.0. Maintained in the open by Inbox Zero Inc.",
+    alternativebot: "Apache-2.0. Maintained in the open by the Alternative Bot project.",
     openclaw: "MIT. Stewarded by the OpenClaw Foundation, an independent 501(c)(3).",
   },
   {
@@ -412,7 +412,7 @@ Alternative Bot runs bot work on a computer. Local Docker is the default. OpenCl
 
 Both let you bring a model provider, including a server you run. Neither charges a seat fee for the software. OpenClaw's docs say it has no paid tier and no hosted service. Alternative Bot is free to self-host. Hosted Alternative Bot Cloud is in beta.
 
-Alternative Bot is Apache-2.0, maintained by Inbox Zero Inc. OpenClaw is MIT, stewarded by the OpenClaw Foundation.
+Alternative Bot is Apache-2.0, maintained by the Alternative Bot project. OpenClaw is MIT, stewarded by the OpenClaw Foundation.
 
 ## Which shape fits
 

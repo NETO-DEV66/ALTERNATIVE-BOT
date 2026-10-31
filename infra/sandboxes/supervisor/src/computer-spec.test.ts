@@ -77,15 +77,15 @@ describe("graphical computer spec", () => {
     // Explicit "" stands for unset, so exported ALTERNATIVEBOT_COMPUTER_IMAGE* values cannot leak in.
     expect(resolveComputerImage("", "")).toBe("alternativebot/computer:local");
     expect(resolveComputerImage("", "edge")).toBe("alternativebot/computer:local");
-    expect(resolveComputerImage("ghcr.io/elie222/alternativebot/computer", "edge")).toBe(
-      "ghcr.io/elie222/alternativebot/computer:edge",
+    expect(resolveComputerImage("ghcr.io/NETO-DEV66/alternativebot/computer", "edge")).toBe(
+      "ghcr.io/NETO-DEV66/alternativebot/computer:edge",
     );
-    expect(resolveComputerImage("ghcr.io/elie222/alternativebot/computer", "")).toBe(
-      "ghcr.io/elie222/alternativebot/computer",
+    expect(resolveComputerImage("ghcr.io/NETO-DEV66/alternativebot/computer", "")).toBe(
+      "ghcr.io/NETO-DEV66/alternativebot/computer",
     );
     // Compose already appends the tag, so a tagged or pinned image is never tagged twice.
-    expect(resolveComputerImage("ghcr.io/elie222/alternativebot/computer:edge", "edge")).toBe(
-      "ghcr.io/elie222/alternativebot/computer:edge",
+    expect(resolveComputerImage("ghcr.io/NETO-DEV66/alternativebot/computer:edge", "edge")).toBe(
+      "ghcr.io/NETO-DEV66/alternativebot/computer:edge",
     );
     expect(resolveComputerImage("registry.example.com:5000/alternativebot/computer", "v1.2.3")).toBe(
       "registry.example.com:5000/alternativebot/computer:v1.2.3",
@@ -451,7 +451,7 @@ describe("graphical computer spec", () => {
   });
 
   it("pulls a missing computer image only from a registry the name spells out", () => {
-    expect(isRegistryQualifiedImage("ghcr.io/elie222/alternativebot/computer:edge")).toBe(true);
+    expect(isRegistryQualifiedImage("ghcr.io/NETO-DEV66/alternativebot/computer:edge")).toBe(true);
     expect(isRegistryQualifiedImage("registry.test/alternativebot/computer@sha256:0123")).toBe(true);
     expect(isRegistryQualifiedImage("localhost:5000/alternativebot/computer")).toBe(true);
     expect(isRegistryQualifiedImage("localhost/alternativebot/computer:local")).toBe(true);

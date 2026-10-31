@@ -69,7 +69,7 @@ project's managed keystore, and replaces the rolling `android` GitHub release,
 so the download link stays the same:
 
 ```text
-https://github.com/elie222/alternativebot/releases/download/android/alternativebot.apk
+https://github.com/NETO-DEV66/alternativebot/releases/download/android/alternativebot.apk
 ```
 
 The APK uses the production update channel, so JavaScript changes reach it

@@ -18,7 +18,7 @@ import {
 describe("normalizeRepoUrl", () => {
   it("accepts the official repository and https forks", () => {
     expect(normalizeRepoUrl(OFFICIAL_REPO_URL)).toEqual({
-      url: "https://github.com/elie222/alternativebot",
+      url: "https://github.com/NETO-DEV66/alternativebot",
     });
     expect(normalizeRepoUrl("  https://github.com/me/alternativebot.git/  ")).toEqual({
       url: "https://github.com/me/alternativebot.git",
@@ -69,18 +69,18 @@ describe("normalizeRepoUrl", () => {
 
 describe("repoIdentity", () => {
   it("treats every spelling of the same remote as one repository", () => {
-    const identity = "github.com/elie222/alternativebot";
-    expect(repoIdentity("https://github.com/elie222/alternativebot")).toBe(identity);
-    expect(repoIdentity("https://github.com/elie222/alternativebot.git")).toBe(identity);
-    expect(repoIdentity("git@github.com:elie222/alternativebot.git")).toBe(identity);
+    const identity = "github.com/NETO-DEV66/alternativebot";
+    expect(repoIdentity("https://github.com/NETO-DEV66/alternativebot")).toBe(identity);
+    expect(repoIdentity("https://github.com/NETO-DEV66/alternativebot.git")).toBe(identity);
+    expect(repoIdentity("git@github.com:NETO-DEV66/alternativebot.git")).toBe(identity);
     expect(repoIdentity("ssh://git@github.com/Elie222/AlternativeBot")).toBe(identity);
     expect(repoIdentity("not a url")).toBeNull();
   });
 
   it("only calls the real upstream official", () => {
-    expect(isOfficialRepoUrl("git@github.com:elie222/alternativebot.git")).toBe(true);
+    expect(isOfficialRepoUrl("git@github.com:NETO-DEV66/alternativebot.git")).toBe(true);
     expect(isOfficialRepoUrl("https://github.com/attacker/alternativebot")).toBe(false);
-    expect(isOfficialRepoUrl("https://githubb.com/elie222/alternativebot")).toBe(false);
+    expect(isOfficialRepoUrl("https://githubb.com/NETO-DEV66/alternativebot")).toBe(false);
   });
 });
 

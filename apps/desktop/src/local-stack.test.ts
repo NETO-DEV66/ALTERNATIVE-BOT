@@ -80,7 +80,7 @@ describe("renderStackEnv", () => {
     expect(lines.some((line) => line.startsWith("ALTERNATIVEBOT_IMAGE_TAG="))).toBe(false);
     expect(lines.some((line) => line.startsWith("ALTERNATIVEBOT_COMPUTER_IMAGE_TAG="))).toBe(false);
     // Everything else, including the image names and empty optional keys, stays verbatim.
-    expect(lines).toContain("ALTERNATIVEBOT_IMAGE=ghcr.io/elie222/alternativebot/app");
+    expect(lines).toContain("ALTERNATIVEBOT_IMAGE=ghcr.io/NETO-DEV66/alternativebot/app");
     expect(lines).toContain("SANDBOX_PROVIDER=docker");
     expect(lines).toContain("OPENROUTER_API_KEY=");
     expect(rendered.endsWith("\n")).toBe(template.endsWith("\n"));

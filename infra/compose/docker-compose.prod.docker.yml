@@ -39,7 +39,7 @@ services:
   # container with the project, which is how it finds the `web` screen proxy to
   # join each bot network.
   supervisor:
-    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/elie222/alternativebot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-local}
+    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/NETO-DEV66/alternativebot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-local}
     build:
       context: ../..
       dockerfile: infra/compose/Dockerfile

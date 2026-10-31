@@ -309,7 +309,7 @@ ALTERNATIVEBOT_IPTABLES="$bin/missing-iptables" ALTERNATIVEBOT_IP6TABLES="$bin/m
 docs="$root/../../docs/self-host-docker-computers.md"
 grep -q 'restrict-computer-egress.sh' "$docs" || fail "self-host-docker-computers.md does not mention the script"
 grep -q 'SANDBOX_COMPUTER_EGRESS' "$docs" || fail "self-host-docker-computers.md does not document the flag"
-grep -q 'https://raw.githubusercontent.com/elie222/alternativebot/main/infra/compose/restrict-computer-egress.sh' "$docs" ||
+grep -q 'https://raw.githubusercontent.com/NETO-DEV66/alternativebot/main/infra/compose/restrict-computer-egress.sh' "$docs" ||
   fail "self-host-docker-computers.md does not point VM hosts at the egress script"
 grep -q 'name: alternativebot-computer-egress' "$docs" ||
   fail "self-host-docker-computers.md does not keep the VM egress helper in its own Compose project"

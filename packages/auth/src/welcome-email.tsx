@@ -1,12 +1,11 @@
 /** @jsxRuntime automatic */
 import type { TransactionalEmail } from "@alternativebot/adapter-kit";
-import { ANDROID_APK_URL, IOS_APP_STORE_URL } from "@alternativebot/contracts";
+import { ANDROID_APK_URL } from "@alternativebot/contracts";
 import { displayName } from "@alternativebot/core";
 import { Link, Text } from "react-email";
 import { linkStyle, message } from "./email.js";
 
 const APPS = [
-  ["iPhone", IOS_APP_STORE_URL],
   ["Android", ANDROID_APK_URL],
   ["Mac", "https://alternativebot.com/api/download?platform=mac"],
   ["Windows", "https://alternativebot.com/api/download?platform=windows"],
@@ -36,15 +35,8 @@ export function welcomeEmail(
         ))}
       </Text>
       <Text>
-        Questions or ideas?{" "}
-        <Link href="https://discord.gg/RWwKa2Sn7h" style={linkStyle}>
-          Join us on Discord
-        </Link>
-        .
-      </Text>
-      <Text>
         Alternative Bot is open source. If you like it,{" "}
-        <Link href="https://github.com/elie222/alternativebot" style={linkStyle}>
+        <Link href="https://github.com/NETO-DEV66/alternativebot" style={linkStyle}>
           a star on GitHub
         </Link>{" "}
         helps others find it.
@@ -52,7 +44,7 @@ export function welcomeEmail(
       <Text>
         Want to run it on your own servers?{" "}
         <Link
-          href="https://github.com/elie222/alternativebot/blob/main/docs/self-host.md"
+          href="https://github.com/NETO-DEV66/alternativebot/blob/main/docs/self-host.md"
           style={linkStyle}
         >
           Self-host Alternative Bot
@@ -60,7 +52,6 @@ export function welcomeEmail(
         .
       </Text>
       <Text>Have any questions? Reply to this email.</Text>
-      <Text>Elie</Text>
     </>,
     unsubscribeUrl,
   );

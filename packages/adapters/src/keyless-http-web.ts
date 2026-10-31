@@ -65,7 +65,7 @@ export class KeylessHttpWebProvider implements WebProvider {
     this.fetchTimeoutMs = options.fetchTimeoutMs ?? 15_000;
     this.maxBufferBytes = options.maxBufferBytes ?? 5 * 1024 * 1024;
     this.userAgent =
-      options.userAgent ?? "AlternativeBot/0.1 (+https://github.com/elie222/alternativebot; web tools)";
+      options.userAgent ?? "AlternativeBot/0.1 (+https://github.com/NETO-DEV66/alternativebot; web tools)";
   }
 
   describe() {

@@ -3,11 +3,10 @@ import {
   buildIdAt,
   CLIENT_BUILD_HEADER,
   formatClientBuild,
-  IOS_APP_STORE_URL,
 } from "@alternativebot/contracts";
 import * as Updates from "expo-updates";
 import type { AppStateStatus } from "react-native";
-import { Alert, AppState, Linking, Platform } from "react-native";
+import { Alert, AppState, Linking } from "react-native";
 import { configureClientBuild } from "./api";
 import { t } from "./i18n";
 
@@ -42,7 +41,7 @@ async function downloadUpdate(): Promise<boolean> {
   return true;
 }
 
-/** Apply an over-the-air update now if one exists; otherwise send the user to the store. */
+/** Apply an over-the-air update now if one exists; otherwise send the user to the download page. */
 export async function applyRequiredUpdate(): Promise<void> {
   try {
     if (await downloadUpdate()) {
@@ -52,9 +51,7 @@ export async function applyRequiredUpdate(): Promise<void> {
   } catch {
     // An unreachable update server falls through to the store.
   }
-  await Linking.openURL(Platform.OS === "ios" ? IOS_APP_STORE_URL : ANDROID_APK_URL).catch(
-    () => undefined,
-  );
+  await Linking.openURL(ANDROID_APK_URL).catch(() => undefined);
 }
 
 let prompting = false;
