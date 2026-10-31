@@ -217,7 +217,7 @@ describe("team chat engagement judge", () => {
     { provider: "amazon-bedrock", key: undefined, personal: true },
     { provider: "amazon-bedrock", key: undefined, personal: false },
   ])(
-    "meters $provider host credentials with personal=$personal",
+    "runs $provider host credentials with personal=$personal",
     async ({ provider, key, personal }) => {
       vi.stubEnv("PI_DEFAULT_PROVIDER", provider);
       vi.stubEnv("PI_DEFAULT_MODEL", "fixture-model");
@@ -230,7 +230,7 @@ describe("team chat engagement judge", () => {
         });
         const judge = new ModelTeamChatEngagementJudge({
           prisma: {
-            deploymentSettings: { findUnique: async () => ({ modelCreditsEnabled: true }) },
+            deploymentSettings: { findUnique: async () => null },
             userModelPreference: {
               findFirst: async () =>
                 personal
@@ -240,13 +240,8 @@ describe("team chat engagement judge", () => {
                     }
                   : null,
             },
-            space: {
-              findFirst: async () => ({ organization: { modelCredits: { mode: "credits" } } }),
-              findUnique: async () => ({ organizationId: "org" }),
-            },
+            space: { findUnique: async () => ({ organizationId: "org" }) },
             member: { findUnique: async () => ({ role: "owner" }) },
-            billingAccount: { findUnique: async () => null },
-            modelCreditAccount: { upsert: async () => ({ mode: "credits" }) },
           } as never,
           runtime: { run } as never,
           secrets: { load } as never,
@@ -268,54 +263,14 @@ describe("team chat engagement judge", () => {
           messages: [],
         });
         expect(run).toHaveBeenCalledOnce();
-        expect(run.mock.calls[0]?.[0]).toMatchObject({
-          model: { callObserver: expect.any(Object) },
-        });
         if (key) expect(run.mock.calls[0]?.[0]).toHaveProperty("model.apiKey", key);
         else expect(run.mock.calls[0]?.[0]).not.toHaveProperty("model.apiKey");
-        expect(load).not.toHaveBeenCalled();
       } finally {
         vi.unstubAllEnvs();
       }
     },
   );
 
-  it("blocks a hosted judge without credit access before running the model", async () => {
-    const run = vi.fn(async function* () {
-      yield { type: "done", text: '{"act":true}' };
-    });
-    const judge = new ModelTeamChatEngagementJudge({
-      prisma: {
-        deploymentSettings: { findUnique: async () => ({ modelCreditsEnabled: true }) },
-        userModelPreference: { findFirst: async () => null },
-        space: { findUnique: async () => ({ organizationId: "org" }) },
-        member: { findUnique: async () => ({ role: "owner" }) },
-        billingAccount: { findUnique: async () => null },
-        modelCreditAccount: { upsert: async () => ({ mode: "byok" }) },
-      } as never,
-      runtime: { run } as never,
-      secrets: {} as never,
-      deploymentProvider: "openrouter",
-      deploymentModel: "fixture",
-      deploymentModelKey: "fixture",
-    });
-    await expect(
-      judge.decide({
-        bot: {
-          id: "bot",
-          spaceId: "space",
-          userId: "user",
-          name: "Fixture",
-          modelProvider: null,
-          modelId: null,
-        },
-        channelId: "channel",
-        rules: "",
-        messages: [],
-      }),
-    ).resolves.toEqual({ act: false });
-    expect(run).not.toHaveBeenCalled();
-  });
   it.each(["saved", "lookup failure"])(
     "judges with optional owner timezone (%s)",
     async (state) => {

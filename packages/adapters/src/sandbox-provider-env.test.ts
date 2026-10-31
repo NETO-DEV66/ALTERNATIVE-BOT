@@ -144,7 +144,7 @@ describe("sandboxProviderOptionsFromEnv", () => {
       sandboxProviderOptionsFromEnv({
         KUBERNETES_SANDBOX_NAMESPACE: " alternativebot-computers ",
         KUBERNETES_SANDBOX_RUNTIME_CLASS_NAME: "kata",
-        KUBERNETES_SANDBOX_COMPUTER_IMAGE: "ghcr.io/NETO-DEV66/alternativebot/computer@sha256:abc",
+        KUBERNETES_SANDBOX_COMPUTER_IMAGE: "ghcr.io/neto-dev66/alternative-bot/computer@sha256:abc",
         KUBERNETES_SANDBOX_CPU_LIMIT: "2",
         KUBERNETES_SANDBOX_MEMORY_LIMIT: "4Gi",
         KUBERNETES_SANDBOX_POD_LABELS: '{"team":"bots"}',
@@ -154,7 +154,7 @@ describe("sandboxProviderOptionsFromEnv", () => {
     ).toMatchObject({
       kubernetesNamespace: "alternativebot-computers",
       kubernetesRuntimeClassName: "kata",
-      kubernetesComputerImage: "ghcr.io/NETO-DEV66/alternativebot/computer@sha256:abc",
+      kubernetesComputerImage: "ghcr.io/neto-dev66/alternative-bot/computer@sha256:abc",
       kubernetesCpuLimit: "2",
       kubernetesMemoryLimit: "4Gi",
       kubernetesPodLabels: { team: "bots" },

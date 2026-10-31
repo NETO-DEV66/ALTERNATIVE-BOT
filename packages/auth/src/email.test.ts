@@ -12,7 +12,6 @@ import {
   pluginSubmissionReceivedEmail,
   pluginSubmissionReviewedEmail,
 } from "./plugin-submission-email.js";
-import { referralEmail } from "./referral-email.js";
 import { welcomeEmail } from "./welcome-email.js";
 
 describe("account email templates", () => {
@@ -54,7 +53,6 @@ it("shares the layout across account, product and marketplace emails", async () 
     accountDeletionEmail(user.email, "123456"),
     identityCodeEmail(user.email, "123456"),
     welcomeEmail(user, url),
-    referralEmail(user, url, url),
     pluginSubmissionReceivedEmail(user.email),
     pluginSubmissionAdminEmail(
       user.email,

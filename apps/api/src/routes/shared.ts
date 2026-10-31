@@ -1,6 +1,5 @@
 import {
   deploymentModelRole,
-  hasHostedModelCredits,
   hostCredentialSource,
   mcpStdioAvailable,
   resolveMemberMainModel,
@@ -66,12 +65,7 @@ export async function meDto(deps: RouterDeps, actor: Actor): Promise<Me> {
       }),
     avatarStyle: "organic",
     timezone: user.timezone ?? null,
-    billingEnabled: Boolean(deps.billing),
-    // Only billing deployments ask; self-hosted installs never see the survey.
-    needsSignupSurvey: Boolean(deps.billing) && !user.signupSurvey,
-    paymentWalletProvider: deps.paymentWallet
-      ? { id: deps.paymentWallet.describe().id, name: deps.paymentWallet.displayName }
-      : null,
+    needsSignupSurvey: !user.signupSurvey,
   };
 }
 
@@ -91,17 +85,8 @@ export async function modelSetup(deps: RouterDeps, actor: Actor) {
     resolveMemberMainModel({ prisma: deps.prisma, secretStore: deps.secrets }, actor),
     deps.prisma.deploymentSettings.findUnique({ where: { id: "default" } }),
   ]);
-  const main =
-    member &&
-    (member.credential ||
-      (deps.billing?.modelCreditsEnabled &&
-        (await hasHostedModelCredits(deps.prisma, actor, member.provider))))
-      ? member
-      : null;
-  const funding = deps.billing ? await deps.billing.status(actor) : null;
-  const hasDeployment =
-    Boolean(deps.env.deploymentModelConfigured) &&
-    (!funding?.creditPurchasesEnabled || funding.funding === "credits");
+  const main = member && member.credential ? member : null;
+  const hasDeployment = Boolean(deps.env.deploymentModelConfigured);
   return {
     main,
     model:
@@ -111,7 +96,6 @@ export async function modelSetup(deps: RouterDeps, actor: Actor) {
         deployment: { provider: deps.env.defaultProvider, model: deps.env.defaultModel },
       }).primary,
     settings,
-    funding,
     hasDeployment,
     needsModel: deps.env.agentRuntime !== "scripted" && !main && !hasDeployment,
   };

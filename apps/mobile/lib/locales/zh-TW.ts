@@ -862,7 +862,7 @@ export const ZH_TW_MESSAGES: Record<string, string> = {
   "AI models": "AI 模型",
   Memory: "記憶",
   "Privacy policies": "隱私權政策",
-  AlternativeBot: "Alternative Bot",
+  "Alternative Bot": "Alternative Bot",
   "Withdraw all permissions": "撤回所有權限",
   "Withdraw all permissions?": "要撤回所有權限嗎？",
   "New mobile actions won't send data to these services. Runs already in progress and routines keep going until you stop them.":

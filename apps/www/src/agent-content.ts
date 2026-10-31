@@ -65,11 +65,11 @@ ${getHomeCopy("en")
 
 ${home.cta.copy}
 
-- [Agent setup prompt](https://github.com/NETO-DEV66/alternativebot/blob/main/SETUP_PROMPT.md)
+- [Agent setup prompt](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/blob/main/SETUP_PROMPT.md)
 - [Self-hosting guide](https://alternativebot.com/self-hosted-ai-agent/)
-- [Full self-hosting reference](https://github.com/NETO-DEV66/alternativebot/blob/main/docs/self-host.md)
+- [Full self-hosting reference](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/blob/main/docs/self-host.md)
 - [OpenClaw comparison](https://alternativebot.com/openclaw-alternative/)
-- [Source code](https://github.com/NETO-DEV66/alternativebot)
+- [Source code](https://github.com/NETO-DEV66/ALTERNATIVE-BOT)
 
 ## Site index
 
@@ -96,9 +96,9 @@ The project started from a simple premise: useful agents should be understandabl
 
 Alternative Bot targets the web, macOS, Windows, Linux, iOS, and Android. The source is available under the Apache-2.0 license and accepts public issues and contributions on GitHub. The Alternative Bot project maintains the project and offers support at hello@alternativebot.com.
 
-- [Source code](https://github.com/NETO-DEV66/alternativebot)
+- [Source code](https://github.com/NETO-DEV66/ALTERNATIVE-BOT)
 - [Self-hosting guide](https://alternativebot.com/self-hosted-ai-agent/)
-- [Full self-hosting reference](https://github.com/NETO-DEV66/alternativebot/blob/main/docs/self-host.md)
+- [Full self-hosting reference](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/blob/main/docs/self-host.md)
 - [Support](https://alternativebot.com/support/)
 `;
 
@@ -106,7 +106,7 @@ export const SUPPORT_MARKDOWN = `# Alternative Bot support
 
 For help with the Alternative Bot mobile app or a hosted Alternative Bot account, email [hello@alternativebot.com](mailto:hello@alternativebot.com). Include the email address on the account, what you expected to happen, and any error message you saw. Never send passwords, API keys, access tokens, or other secrets.
 
-For self-hosted Alternative Bot, start with the [self-hosting guide](https://alternativebot.com/self-hosted-ai-agent/). The [full reference](https://github.com/NETO-DEV66/alternativebot/blob/main/docs/self-host.md) is on GitHub. Open reproducible bugs and feature requests in the [public GitHub repository](https://github.com/NETO-DEV66/alternativebot/issues). Report vulnerabilities only to [security@alternativebot.com](mailto:security@alternativebot.com).
+For self-hosted Alternative Bot, start with the [self-hosting guide](https://alternativebot.com/self-hosted-ai-agent/). The [full reference](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/blob/main/docs/self-host.md) is on GitHub. Open reproducible bugs and feature requests in the [public GitHub repository](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/issues). Report vulnerabilities only to [security@alternativebot.com](mailto:security@alternativebot.com).
 
 Hosted users can permanently delete their account and associated personal Space data from the Account screen in the Alternative Bot app, or on the web at [app.alternativebot.com](https://app.alternativebot.com) under Settings → Account. Without access to the app, email [hello@alternativebot.com](mailto:hello@alternativebot.com) from the account's email address to ask us to delete it. Sign-in security records are kept for up to 90 days.
 `;
@@ -159,10 +159,10 @@ Alternative Bot Cloud at https://app.alternativebot.com is in beta. Self-hosting
 
 ## How an agent should use Alternative Bot
 
-1. Read the [setup prompt](https://github.com/NETO-DEV66/alternativebot/blob/main/SETUP_PROMPT.md) before changing the user's machine.
-2. Use the [self-hosting guide](https://alternativebot.com/self-hosted-ai-agent/) for setup. The [GitHub guide](https://github.com/NETO-DEV66/alternativebot/blob/main/docs/self-host.md) is the full reference for backups, upgrades, and production layout.
+1. Read the [setup prompt](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/blob/main/SETUP_PROMPT.md) before changing the user's machine.
+2. Use the [self-hosting guide](https://alternativebot.com/self-hosted-ai-agent/) for setup. The [GitHub guide](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/blob/main/docs/self-host.md) is the full reference for backups, upgrades, and production layout.
 3. Confirm deployment choices and any host-level commands with the user, and keep secrets in local environment configuration rather than tracked files.
-4. Use the [public issue tracker](https://github.com/NETO-DEV66/alternativebot/issues) for reproducible bugs. Send vulnerabilities only to [security@alternativebot.com](mailto:security@alternativebot.com).
+4. Use the [public issue tracker](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/issues) for reproducible bugs. Send vulnerabilities only to [security@alternativebot.com](mailto:security@alternativebot.com).
 
 ## Canonical resources
 
@@ -172,16 +172,16 @@ Alternative Bot Cloud at https://app.alternativebot.com is in beta. Self-hosting
 - [Alternatives](https://alternativebot.com/alternatives/)
 - [Open source Grok Bot alternative](https://alternativebot.com/grok-bot-alternative/)
 - [About](https://alternativebot.com/about/)
-- [Source](https://github.com/NETO-DEV66/alternativebot)
+- [Source](https://github.com/NETO-DEV66/ALTERNATIVE-BOT)
 - [Self-hosting guide](https://alternativebot.com/self-hosted-ai-agent/): requirements, Docker install, source setup, and desktop and mobile connections.
 - [Self-hosting Markdown](https://alternativebot.com/self-hosted-ai-agent.md): the setup guide with language-tagged code examples.
-- [Full self-hosting reference](https://github.com/NETO-DEV66/alternativebot/blob/main/docs/self-host.md)
+- [Full self-hosting reference](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/blob/main/docs/self-host.md)
 - [OpenClaw comparison](https://alternativebot.com/openclaw-alternative/)
 - [Docs](https://alternativebot.com/docs/): getting started, using Alternative Bot, and self-hosting. Each page has a Markdown version.
 - [Integrations](https://alternativebot.com/integrations/): every app a bot can connect to. [Markdown list](https://alternativebot.com/integrations.md); each app page has a Markdown version with its actions.
 - [Submit a plugin](https://alternativebot.com/plugins/submit/): list a plugin in the Alternative Bot marketplace. [Markdown with the API](https://alternativebot.com/plugins/submit.md).
 - [Blog](https://alternativebot.com/blog/)
-- [Releases](https://github.com/NETO-DEV66/alternativebot/releases)
+- [Releases](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/releases)
 - [Support](https://alternativebot.com/support/)
 - [Privacy](https://alternativebot.com/privacy/)
 - [Terms](https://alternativebot.com/terms/)

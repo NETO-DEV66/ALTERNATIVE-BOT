@@ -2,7 +2,6 @@ import type {
   CacheCapabilities as ConnectionCacheCapabilities,
   ConnectionCatalogItem,
   ModelApiProtocol,
-  PurchaseCardField,
   SandboxKind,
 } from "@alternativebot/contracts";
 
@@ -748,7 +747,6 @@ export interface BackgroundJobPayloads {
   "messaging.credential-cleanup": { installationId: string; ref: string };
   /** Reconcile durable remote-agent intent; scope is loaded from the database. */
   "cloud_agent.poll": { agentId: string };
-  "purchase.poll": { purchaseId: string };
   /** Read an Expo push receipt; the token is identified by its digest, never stored. */
   "push.receipt": { userId: string; ticketId: string; tokenDigest: string };
 }
@@ -1071,25 +1069,9 @@ export type BrowserActStep =
       origin?: string;
       /**
        * What `text` is: a saved login's hidden field ("password", typed only into a password
-       * field) or visible field ("username"), or an approved purchase's card detail. A card fill
-       * always carries `origin`.
+       * field) or visible field ("username").
        */
-      field?: "username" | "password" | "card";
-    }
-  | {
-      kind: "fill";
-      ref?: undefined;
-      text: string;
-      origin: string;
-      field: "card";
-      cardField: PurchaseCardField;
-    }
-  | {
-      kind: "pay_token";
-      ref?: undefined;
-      text: string;
-      origin: string;
-      merchantAccountId: string;
+      field?: "username" | "password";
     };
 
 export interface BrowserActRequest {
@@ -1209,72 +1191,6 @@ export interface AutoReviewResult {
   model: string;
 }
 
-/** Provider-neutral subscription state. Vendor-specific states map onto these. */
-export type BillingSubscriptionStatus =
-  | "trialing"
-  | "active"
-  | "past_due"
-  | "incomplete"
-  /** No access; the subscription resumes from the billing portal, so a new checkout would double-bill. */
-  | "unpaid"
-  | "paused"
-  | "canceled";
-
-export interface BillingPrice {
-  /** Minor currency units, e.g. cents. */
-  amount: number;
-  currency: string;
-  interval: "day" | "week" | "month" | "year";
-  intervalCount: number;
-}
-
-export interface BillingCreditPurchase {
-  /** Stable provider payment identity, including any subsequent refund adjustment. */
-  id: string;
-  amountCents: number;
-  /** Subscription service-period end; absent for non-expiring top-ups. */
-  expiresAt?: string;
-}
-
-export interface BillingCreditCheckoutRequest {
-  customerId: string;
-  amountCents: number;
-  monthly: boolean;
-  successUrl: string;
-  cancelUrl: string;
-}
-
-export interface BillingByokCheckoutRequest extends Omit<BillingCreditCheckoutRequest, "monthly"> {
-  /** Omitted when the customer has already used its trial. */
-  trialDays?: number;
-}
-
-/** Full subscription state for one billing customer, re-fetched from the provider on every sync. */
-export interface BillingSubscriptionSnapshot {
-  creditAmountCents?: number;
-  subscriptionId: string;
-  subscriptionItemId: string;
-  priceId: string;
-  status: BillingSubscriptionStatus;
-  seats: number;
-  trialEndsAt: Date | null;
-  currentPeriodEndsAt: Date | null;
-  cancelAtPeriodEnd: boolean;
-  endedAt: Date | null;
-  /** The flat own-key plan, which grants access without credits. */
-  byokPlan?: boolean;
-  /** Stable identity of the subscription's card across customers, when the provider has one. */
-  cardFingerprint?: string;
-}
-
-export interface BillingCheckoutRequest {
-  customerId: string;
-  seats: number;
-  /** Omitted when the customer has already used its trial. */
-  trialDays?: number;
-  successUrl: string;
-  cancelUrl: string;
-}
 
 /** Optional provider adapter for recovering authoritative cost after an interrupted call. */
 export interface ModelUsageLookup {

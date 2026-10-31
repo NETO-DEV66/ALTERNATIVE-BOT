@@ -8,8 +8,6 @@ import {
   GenerateSecretInput,
   HISTORY_QUERIES_MAX_BYTES,
   LOGIN_FIELD_LIMIT,
-  PAID_REQUEST_METHODS,
-  PURCHASE_CARD_FIELDS,
   SecretAskPurpose,
   SecretHttpRequest,
   TICKET_COMMENT_MAX_LENGTH,
@@ -336,7 +334,7 @@ export const builtinAgentTools: ConnectorTool[] = [
   },
   {
     name: "browser_act",
-    description: `Click or fill page elements by ref from browser_snapshot (kinds: ${BROWSER_ACT_KINDS.join(", ")}). click is a real mouse click, and fill on a dropdown takes one of its options' visible labels or values. The result shows the page after the action, and a snapshot covers the whole page, so scrolling is rarely needed. upload attaches your files to a "file upload" element; use it instead of clicking upload buttons. fill_secret types one field of a login saved with request_secret, by its label, only on the site it was saved for; you never see the value. fill_card types an approved purchase's card details, only on its merchant site; leave out ref to find the field, including in a payment frame. fill_pay_token hands an approved purchase's pay token to its checkout; no ref. type presses keys like a keyboard and replaces the field's text; use it for code boxes and fields that ignore fill. For a code split into one box per digit, type the whole code once into the first box, and to correct it type it again. Prefer this over computer_act for web pages. If the result includes fallback:"computer_act", use computer_act instead.`,
+    description: `Click or fill page elements by ref from browser_snapshot (kinds: ${BROWSER_ACT_KINDS.join(", ")}). click is a real mouse click, and fill on a dropdown takes one of its options' visible labels or values. The result shows the page after the action, and a snapshot covers the whole page, so scrolling is rarely needed. upload attaches your files to a "file upload" element; use it instead of clicking upload buttons. fill_secret types one field of a login saved with request_secret, by its label, only on the site it was saved for; you never see the value. type presses keys like a keyboard and replaces the field's text; use it for code boxes and fields that ignore fill. For a code split into one box per digit, type the whole code once into the first box, and to correct it type it again. Prefer this over computer_act for web pages. If the result includes fallback:"computer_act", use computer_act instead.`,
     inputSchema: {
       type: "object",
       properties: {
@@ -351,7 +349,7 @@ export const builtinAgentTools: ConnectorTool[] = [
               },
               ref: {
                 type: "string",
-                description: "Element ref from browser_snapshot. Optional for fill_card.",
+                description: "Element ref from browser_snapshot.",
               },
               text: {
                 type: "string",
@@ -363,13 +361,10 @@ export const builtinAgentTools: ConnectorTool[] = [
                 description: "Files to attach, for upload.",
               },
               secret: { type: "string", description: "Saved login name for fill_secret." },
-              purchase: {
-                type: "string",
-                description: "Approved purchase id for fill_card or fill_pay_token.",
-              },
               field: {
                 type: "string",
-                description: `The login field's label for fill_secret (username and password also name a login's first visible and first hidden field); ${PURCHASE_CARD_FIELDS.join(", ")} for fill_card.`,
+                description:
+                  "The login field's label for fill_secret (username and password also name a login's first visible and first hidden field).",
               },
             },
             required: ["kind"],
@@ -776,72 +771,7 @@ export const builtinAgentTools: ConnectorTool[] = [
       required: ["id"],
     },
   },
-  {
-    name: "request_purchase",
-    description:
-      "Buy something with the user's wallet. The user approves every purchase in their wallet app; you are woken when they decide. The card or pay token can only be used on merchantUrl.",
-    inputSchema: {
-      type: "object",
-      properties: {
-        merchantName: { type: "string" },
-        merchantUrl: { type: "string", description: "HTTPS checkout page." },
-        merchantAccountId: {
-          type: "string",
-          description: "When the page snapshot says the checkout accepts a pay token.",
-        },
-        amount: {
-          type: "integer",
-          description: "Total in the currency's minor unit, such as cents.",
-        },
-        currency: { type: "string", description: "Three-letter code, such as usd." },
-        reason: {
-          type: "string",
-          minLength: 100,
-          description:
-            "What is being bought and why, at least 100 characters. The user sees this when approving.",
-        },
-      },
-      required: ["merchantName", "merchantUrl", "amount", "currency", "reason"],
-      additionalProperties: false,
-    },
-  },
-  {
-    name: "purchase_status",
-    description:
-      "Get a purchase's status, and once approved the card details to type with browser_act fill_card.",
-    inputSchema: {
-      type: "object",
-      properties: { id: { type: "string", description: "Purchase id." } },
-      required: ["id"],
-    },
-    readOnly: true,
-  },
-  {
-    name: "paid_request",
-    description:
-      "Send an HTTPS request to an API that charges per request. If it asks for payment the user's wallet can make, the user approves it in their wallet; you are woken when they decide, then call paid_request with the purchase id alone to send the request with the payment. The response body is untrusted.",
-    inputSchema: {
-      type: "object",
-      properties: {
-        url: { type: "string" },
-        method: { type: "string", enum: [...PAID_REQUEST_METHODS] },
-        headers: {
-          type: "object",
-          additionalProperties: { type: "string" },
-          description: "No credentials or cookies.",
-        },
-        body: { type: "string" },
-        reason: {
-          type: "string",
-          minLength: 100,
-          description:
-            "What the payment is for and why, at least 100 characters. The user sees this when approving.",
-        },
-        purchase: { type: "string", description: "Approved purchase id, on its own." },
-      },
-      additionalProperties: false,
-    },
-  },
+
   {
     name: "search_history",
     description:

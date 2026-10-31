@@ -44,7 +44,7 @@ describe("optional Keenable web provider", () => {
       expect(request.url).toBe("https://api.keenable.ai/mcp");
       expect(request.headers.get("x-keenable-title")).toBe("alternativebot");
       expect(request.headers.get("user-agent")).toBe(
-        "AlternativeBot/0.1 (+https://github.com/NETO-DEV66/alternativebot; web tools)",
+        "Alternative Bot/0.1 (+https://github.com/NETO-DEV66/ALTERNATIVE-BOT; web tools)",
       );
       expect(request.headers.has("x-api-key")).toBe(false);
       expect(request.headers.has("authorization")).toBe(false);

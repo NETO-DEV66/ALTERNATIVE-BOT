@@ -16,7 +16,7 @@ import { clampMaxChars, clampMaxResults, clampOffset, pageWindow } from "./web-l
 import { assertSafeWebUrl, withAbort } from "./web-ssrf.js";
 
 const ENDPOINT = "https://search.parallel.ai/mcp";
-const USER_AGENT = "AlternativeBot/0.1 (+https://github.com/NETO-DEV66/alternativebot; web tools)";
+const USER_AGENT = "Alternative Bot/0.1 (+https://github.com/NETO-DEV66/ALTERNATIVE-BOT; web tools)";
 const MAX_SNIPPET_CHARS = 8_000;
 const pageSchema = z.object({
   url: z.string().max(8_192),

@@ -869,7 +869,7 @@ export const NL_MESSAGES: Record<string, string> = {
   "AI models": "AI-modellen",
   Memory: "Geheugen",
   "Privacy policies": "Privacybeleid",
-  AlternativeBot: "Alternative Bot",
+  "Alternative Bot": "Alternative Bot",
   "Withdraw all permissions": "Alle toestemmingen intrekken",
   "Withdraw all permissions?": "Alle toestemmingen intrekken?",
   "New mobile actions won't send data to these services. Runs already in progress and routines keep going until you stop them.":

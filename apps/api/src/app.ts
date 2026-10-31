@@ -4,7 +4,6 @@ import { RPCHandler } from "@orpc/server/fetch";
 import type {
   AgentContextStrategy,
   AgentRuntime,
-  BillingProvider,
   ConnectorProvider,
   JobPublisher,
   ManagedConnectorProvider,
@@ -46,8 +45,6 @@ import {
   createMessagingContextLoader,
   createMessagingTeamChatHistory,
   createMessagingTeamChatSender,
-  createModelCreditReconciler,
-  createPaymentWalletProvider,
   createProductAnalytics,
   createRunExecutor,
   createRunSandbox,
@@ -81,14 +78,11 @@ import {
   RunStarter,
   reconcileCloudAgents,
   reconcileComputerUpdates,
-  reconcilePurchases,
   removePiUserSessions,
   resolveDeploymentModel,
   ScriptedAgentRuntime,
   SpaceMemoryProviderResolver,
-  StripeBillingProvider,
   sandboxProviderOptionsFromEnv,
-  stripeBillingConfigFromEnv,
   toTeamChatInbound,
   UserDeviceHub,
   UserDevices,
@@ -142,8 +136,6 @@ import { mountAccountExportRoute } from "./account-export.js";
 import { mountAccountImportRoute } from "./account-import.js";
 import { mountAppAssociation, nativePasskeys } from "./app-association.js";
 import { storeInboundAttachment } from "./artifacts.js";
-import { createBillingService } from "./billing.js";
-import { mountBillingRoutes } from "./billing-webhook.js";
 import { clientBuildMiddleware, readDeployedWebBuild } from "./client-build.js";
 import {
   clientIpMiddleware,
@@ -170,7 +162,6 @@ import { createMessagingReceipts } from "./messaging-receipts.js";
 import { mountMessagingWebhookRoutes } from "./messaging-webhook.js";
 import { monitoringRoutes } from "./monitoring.js";
 import { pluginSubmissionRoutes } from "./plugin-submissions.js";
-import { sendReferralEmails, startReferralEmails } from "./referral-email.js";
 import { mountApiRequestBodyLimits } from "./request-body-limit.js";
 import { createRouter } from "./router.js";
 import { mountScreenTarget } from "./screen-proxy.js";
@@ -239,7 +230,6 @@ type CreateAppOverrides = Partial<AppEnv> & {
   messaging?: MessagingSurface;
   email?: TransactionalEmailProvider;
   notifications?: NotificationProvider;
-  billing?: BillingProvider;
   remoteConnectors?: RemoteConnectorDependencies;
   pluginRepoFetcher?: PluginRepoFetcher;
   pluginMarketplaceRead?: PluginTextReader;
@@ -262,7 +252,6 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
     messaging: messagingOverride,
     email: emailOverride,
     notifications: notificationsOverride,
-    billing: billingOverride,
     remoteConnectors,
     modelConnectionFetch,
     pluginRepoFetcher,
@@ -448,26 +437,6 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
   const email: TransactionalEmailProvider | undefined = configuredEmail ?? localEmailEmulator;
   const onEmailError = (error: unknown) =>
     getLogger().error("transactional email delivery failed", error);
-  const stripeBilling = stripeBillingConfigFromEnv(env);
-  const billingProvider: BillingProvider | undefined =
-    billingOverride ?? (stripeBilling ? new StripeBillingProvider(stripeBilling) : undefined);
-  const billing = billingProvider
-    ? createBillingService({
-        prisma,
-        provider: billingProvider,
-        webOrigin: env.webOrigin,
-        managedModelsAvailable: resolveDeploymentModel().configured,
-      })
-    : undefined;
-  const modelCreditsEnabled = billing?.modelCreditsEnabled ?? false;
-  await prisma.deploymentSettings.upsert({
-    where: { id: "default" },
-    create: {
-      id: "default",
-      modelCreditsEnabled,
-    },
-    update: { modelCreditsEnabled },
-  });
   const installed = new InstalledConnectorProvider(
     prisma,
     secrets,
@@ -543,8 +512,6 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
     extraOrigins: MOBILE_AUTH_ORIGINS,
     androidAppCertFingerprints: env.passkeyAndroidCertFingerprints,
     beforeDeleteUser: async (userId) => {
-      // First, so a provider failure aborts deletion before anything is destroyed.
-      await billing?.cancelForDeletedUser(userId);
       await deleteAccountContent(
         {
           prisma,
@@ -590,10 +557,6 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
     CURSOR_API_KEY: env.cursorApiKey,
     CLOUD_AGENT_SPACE_ID: env.cloudAgentSpaceId,
   });
-  const paymentWallet = await createPaymentWalletProvider({
-    PAYMENT_WALLET_PROVIDER: env.paymentWalletProvider,
-    PAYMENT_WALLET_CLIENT_ID: env.paymentWalletClientId,
-  });
   // One cache serves models.list, selection validation, and run-time model
   // resolution alike, so a list call warms the run path in this process.
   const codexCatalog = new CodexCatalogCache();
@@ -605,7 +568,6 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
     ? new UserDevices({ prisma, forwardSecret: userDeviceSecret, hub: userDeviceHub })
     : undefined;
   const executor = createRunExecutor({
-    billingEnabled: modelCreditsEnabled,
     maxUploadSizeBytes: env.maxUploadSizeBytes,
     contextStrategy,
     prisma,
@@ -653,7 +615,6 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
     web: createWebProvider(),
     cloudAgent,
     userDevices: userDevicesOverride ?? userDevices,
-    paymentWallet,
     shutdownSignal: shutdown.signal,
   });
 
@@ -675,7 +636,6 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
     deploymentModelConfigured: env.deploymentModelConfigured,
     messaging,
     cloudAgent,
-    paymentWallet,
   });
   if (inMemoryJobs) {
     await inMemoryJobs.start(jobHandlers);
@@ -687,12 +647,7 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
         jobs,
         events,
         notifications,
-        reconcileModelCredits: createModelCreditReconciler({
-          prisma,
-          lookup: deploymentModelUsageLookup(),
-        }),
         reconcileCloudAgents: () => reconcileCloudAgents({ prisma, jobs, cloudAgent }),
-        reconcilePurchases: () => reconcilePurchases({ prisma, jobs, paymentWallet }),
         reconcileComputerUpdates: () => reconcileComputerUpdates({ prisma, jobs }),
         reconcileSecurityEventRetention: createSecurityEventPruner(
           prisma,
@@ -702,20 +657,6 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
       })
     : undefined;
   reconciler?.start();
-  const stopReferralEmails =
-    email && env.welcomeEmailEnabled && billing?.referralsEnabled
-      ? startReferralEmails(
-          sendReferralEmails({
-            prisma,
-            email,
-            appUrl: new URL("/app", env.webOrigin).href,
-            origin: env.authUrl,
-            secret: env.authSecret,
-            onError: onEmailError,
-          }),
-          onEmailError,
-        )
-      : undefined;
 
   const router = createRouter({
     speechSummary:
@@ -733,7 +674,6 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
     pluginRepoFetcher,
     pluginMarketplaceRead,
     cloudAgent,
-    paymentWallet,
     codexCatalog,
     prisma,
     pushTokens,
@@ -761,7 +701,6 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
     email,
     onEmailError,
     dataDir: env.dataDir,
-    billing,
     messagingInstallations,
     messaging: {
       enabled: Boolean(messaging),
@@ -836,10 +775,8 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
       resetUrl:
         env.passwordAuth !== false && email ? new URL("/reset-password", env.webOrigin).href : null,
       emailCode: auth.emailCodeSignIn,
-      billing: Boolean(billing),
       passkeyRpId: auth.passkeyRpId,
       nativePasskeys: nativePasskeys(env, auth.passkeyRpId),
-      crispWebsiteId: billing ? (env.crispWebsiteId ?? null) : null,
     } satisfies AuthCapabilities);
   });
   mountAppAssociation(app, env);
@@ -984,14 +921,6 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
     sessionActor,
   );
   mountWebhookHttpRoutes(app, { prisma, secrets, events, jobs });
-  if (billing && billingProvider) {
-    mountBillingRoutes(app, {
-      billing,
-      provider: billingProvider,
-      webOrigin: env.webOrigin,
-      authenticate: sessionActor,
-    });
-  }
   // Shared with stop so a shutdown during retry delays does not restart polling.
   let messagingStopped = false;
   let stopInstalledBridges: (() => Promise<void>) | undefined;
@@ -1362,7 +1291,6 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
         pipedream: Boolean(pipedream),
         messaging: Boolean(messaging),
         email: email?.describe().id ?? null,
-        billing: billingProvider?.describe().id ?? null,
         jobs: jobKind,
         realtime: realtime.describe().id,
         secrets: secrets.describe(),
@@ -1418,7 +1346,6 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
       await messaging?.shutdown?.();
       await teamChatBridge?.stop();
       await stopInstalledBridges?.();
-      await stopReferralEmails?.();
       await email?.drain?.();
       await reconciler?.stop();
       await oauthTokenUpgrade;

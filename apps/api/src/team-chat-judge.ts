@@ -3,8 +3,6 @@ import type { AgentRunModel, AgentRuntime, SecretStore } from "@alternativebot/a
 import {
   deploymentModelRole,
   formatCurrentTimeInstruction,
-  hasHostedModelCredits,
-  hostedModelCreditObserver,
   parseModelSecret,
   resolveMemberMainModel,
   resolveModelAuth,
@@ -235,14 +233,8 @@ export class ModelTeamChatEngagementJudge implements TeamChatEngagementJudge {
     const useOverride = Boolean(
       requestedProvider && requestedModel && (explicitJudgeOverride || overrideCredential),
     );
-    // The member's main model runs on its connection, or on funded deployment credits.
-    const main =
-      member &&
-      (member.credential ||
-        (settings?.modelCreditsEnabled &&
-          (await hasHostedModelCredits(this.deps.prisma, scope, member.provider))))
-        ? member
-        : null;
+    // The member's main model runs on its connection.
+    const main = member && member.credential ? member : null;
     const fallback = deploymentModelRole("main", {
       settings,
       deployment: { provider: this.deps.deploymentProvider, model: this.deps.deploymentModel },
@@ -252,16 +244,10 @@ export class ModelTeamChatEngagementJudge implements TeamChatEngagementJudge {
     const modelId = useOverride ? requestedModel : (main ?? fallback)?.modelId;
     if (!provider || !modelId) return null;
 
-    const hosted =
-      settings?.modelCreditsEnabled &&
-      (await hasHostedModelCredits(this.deps.prisma, scope, provider));
-    if (!credential || hosted) {
+    if (!credential) {
       const apiKey =
         provider === this.deps.deploymentProvider ? this.deps.deploymentModelKey : undefined;
-      const callObserver = settings?.modelCreditsEnabled
-        ? await hostedModelCreditObserver(this.deps.prisma, scope)
-        : undefined;
-      return { model: { provider, id: modelId, ...(apiKey ? { apiKey } : {}), callObserver } };
+      return { model: { provider, id: modelId, ...(apiKey ? { apiKey } : {}) } };
     }
 
     const secret = await this.deps.prisma.secret.findFirst({

@@ -78,9 +78,6 @@ export interface AppEnv {
   cloudAgentProvider: string;
   cloudAgentSpaceId: string | undefined;
   cursorApiKey: string | undefined;
-  /** Raw PAYMENT_WALLET_* values; createPaymentWalletProvider resolves them. */
-  paymentWalletProvider: string | undefined;
-  paymentWalletClientId: string | undefined;
   agentRuntime: string;
   deploymentModelKey: string | undefined;
   /** The deployment default model can run; see resolveDeploymentModel. */
@@ -113,10 +110,6 @@ export interface AppEnv {
   emailApiKey?: string;
   emailFrom: string | undefined;
   emailReplyTo?: string;
-  /** Billing turns on only when all three are set; self-hosted installs leave them unset. */
-  stripeSecretKey: string | undefined;
-  stripeWebhookSecret: string | undefined;
-  stripePriceId: string | undefined;
   emailEmulator: boolean;
   slackClientId?: string;
   slackClientSecret?: string;
@@ -254,8 +247,6 @@ export function loadEnv(source: NodeJS.ProcessEnv = process.env): AppEnv {
     cloudAgentProvider,
     cloudAgentSpaceId: optional(source.CLOUD_AGENT_SPACE_ID),
     cursorApiKey: optional(source.CURSOR_API_KEY),
-    paymentWalletProvider: optional(source.PAYMENT_WALLET_PROVIDER),
-    paymentWalletClientId: optional(source.PAYMENT_WALLET_CLIENT_ID),
     agentRuntime: source.AGENT_RUNTIME ?? "pi",
     // Provider, model and key resolve together: see resolveDeploymentModel.
     deploymentModelKey: deploymentModel.key,
@@ -287,9 +278,6 @@ export function loadEnv(source: NodeJS.ProcessEnv = process.env): AppEnv {
     emailFrom: optional(source.EMAIL_FROM),
     emailReplyTo: optional(source.EMAIL_REPLY_TO),
     welcomeEmailEnabled: source.WELCOME_EMAIL_ENABLED === "true",
-    stripeSecretKey: optional(source.STRIPE_SECRET_KEY),
-    stripeWebhookSecret: optional(source.STRIPE_WEBHOOK_SECRET),
-    stripePriceId: optional(source.STRIPE_PRICE_ID),
     emailEmulator: source.EMAIL_EMULATOR === "true" && source.NODE_ENV !== "production",
     slackClientId: optional(source.SLACK_CLIENT_ID),
     slackClientSecret: optional(source.SLACK_CLIENT_SECRET),

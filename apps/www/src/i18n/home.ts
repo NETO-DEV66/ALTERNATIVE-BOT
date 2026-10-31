@@ -1,6 +1,5 @@
 import type { RosterBot } from "../demo";
 import { SITE_DESCRIPTION } from "../site";
-import { CLAUDE_CHATGPT_SUBSCRIPTION_FAQ } from "../subscription-faq";
 import type { Locale } from "./locales";
 
 export const HOME_MODEL_PROVIDERS = ["Claude", "ChatGPT", "OpenRouter", "Grok", "Ollama", "LM Studio"];
@@ -962,7 +961,6 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     faq: {
       heading: "FAQ",
       items: [
-        CLAUDE_CHATGPT_SUBSCRIPTION_FAQ,
         {
           question: "Do I need an API key if I already pay for Claude or ChatGPT?",
           answer:

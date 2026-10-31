@@ -77,15 +77,15 @@ describe("graphical computer spec", () => {
     // Explicit "" stands for unset, so exported ALTERNATIVEBOT_COMPUTER_IMAGE* values cannot leak in.
     expect(resolveComputerImage("", "")).toBe("alternativebot/computer:local");
     expect(resolveComputerImage("", "edge")).toBe("alternativebot/computer:local");
-    expect(resolveComputerImage("ghcr.io/NETO-DEV66/alternativebot/computer", "edge")).toBe(
-      "ghcr.io/NETO-DEV66/alternativebot/computer:edge",
+    expect(resolveComputerImage("ghcr.io/neto-dev66/alternative-bot/computer", "edge")).toBe(
+      "ghcr.io/neto-dev66/alternative-bot/computer:edge",
     );
-    expect(resolveComputerImage("ghcr.io/NETO-DEV66/alternativebot/computer", "")).toBe(
-      "ghcr.io/NETO-DEV66/alternativebot/computer",
+    expect(resolveComputerImage("ghcr.io/neto-dev66/alternative-bot/computer", "")).toBe(
+      "ghcr.io/neto-dev66/alternative-bot/computer",
     );
     // Compose already appends the tag, so a tagged or pinned image is never tagged twice.
-    expect(resolveComputerImage("ghcr.io/NETO-DEV66/alternativebot/computer:edge", "edge")).toBe(
-      "ghcr.io/NETO-DEV66/alternativebot/computer:edge",
+    expect(resolveComputerImage("ghcr.io/neto-dev66/alternative-bot/computer:edge", "edge")).toBe(
+      "ghcr.io/neto-dev66/alternative-bot/computer:edge",
     );
     expect(resolveComputerImage("registry.example.com:5000/alternativebot/computer", "v1.2.3")).toBe(
       "registry.example.com:5000/alternativebot/computer:v1.2.3",
@@ -381,7 +381,7 @@ describe("graphical computer spec", () => {
   it("derives deterministic host bridge names within the 15-byte interface limit", () => {
     for (const botId of ["bot", "a/b", "bot with spaces", "x".repeat(80)]) {
       const name = computerBridgeNameFor(botId);
-      expect(name).toMatch(/^alternativebot-c[0-9a-f]{7}$/);
+      expect(name).toMatch(/^altbot-c[0-9a-f]{7}$/);
       expect(Buffer.byteLength(name)).toBeLessThanOrEqual(15);
       expect(computerBridgeNameFor(botId)).toBe(name);
     }
@@ -451,7 +451,7 @@ describe("graphical computer spec", () => {
   });
 
   it("pulls a missing computer image only from a registry the name spells out", () => {
-    expect(isRegistryQualifiedImage("ghcr.io/NETO-DEV66/alternativebot/computer:edge")).toBe(true);
+    expect(isRegistryQualifiedImage("ghcr.io/neto-dev66/alternative-bot/computer:edge")).toBe(true);
     expect(isRegistryQualifiedImage("registry.test/alternativebot/computer@sha256:0123")).toBe(true);
     expect(isRegistryQualifiedImage("localhost:5000/alternativebot/computer")).toBe(true);
     expect(isRegistryQualifiedImage("localhost/alternativebot/computer:local")).toBe(true);

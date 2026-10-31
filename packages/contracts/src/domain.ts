@@ -1784,21 +1784,10 @@ export const MeSchema = z.object({
    * Absent from servers that predate it.
    */
   timezone: z.string().nullable().optional(),
-  billingEnabled: z.boolean(),
-  /** True until a user of a billing deployment answers or skips the signup survey. Absent from older servers. */
+  /** True until the user answers or skips the onboarding survey. Absent from older servers. */
   needsSignupSurvey: z.boolean().optional(),
-  /** The wallet bots can spend from, when this deployment offers one. Absent from older servers. */
-  paymentWalletProvider: z.object({ id: z.string(), name: z.string() }).nullable().optional(),
 });
 export type Me = z.infer<typeof MeSchema>;
-
-export const MODEL_CREDIT_AMOUNTS = [1000, 2000, 5000, 10000, 20000, 50000] as const;
-/** Monthly price in cents of running bots on your own model connection; `null` makes it free. */
-export const BYOK_MONTHLY_PRICE_CENTS: number | null = 1000;
-export const DEFAULT_MONTHLY_CREDIT_AMOUNT = 2000;
-export const ModelCreditAmountSchema = z.union(
-  MODEL_CREDIT_AMOUNTS.map((amount) => z.literal(amount)),
-);
 
 export const SIGNUP_SURVEY_USES = ["personal", "work", "both"] as const;
 export const SIGNUP_SURVEY_TEAM_SIZES = ["1", "2-10", "11-50", "51-200", "201+"] as const;
@@ -1822,55 +1811,6 @@ export function signupSurveyAsksTeamSize(use: SignupSurvey["use"]): boolean {
   return use === "work" || use === "both";
 }
 
-/** Where checkout returns: the mobile app's in-app browser instead of the web app. */
-export const BillingClientSchema = z.literal("mobile").optional();
-/** The deep link the API sends a mobile checkout back to; it closes the in-app browser. */
-export const MOBILE_BILLING_CALLBACK_URL = "alternativebot://billing";
-
-export const BillingStatusSchema = z.object({
-  funding: z.enum(["byok", "credits"]).nullable().optional(),
-  balanceUsd: z.number().optional(),
-  monthlyAmountCents: z.number().int().positive().nullable().optional(),
-  creditPurchasesEnabled: z.boolean().optional(),
-  /** Monthly price of the own-key plan; `null` when it is free. */
-  byokPriceCents: z.number().int().positive().nullable().optional(),
-  /** End of an unpaid own-key organization's free period. */
-  byokFreeUntil: z.string().nullable().optional(),
-  access: z.boolean(),
-  /** Only organization owners start checkout or open the billing portal. */
-  canManage: z.boolean(),
-  trialAvailable: z.boolean(),
-  trialDays: z.number().int().nonnegative(),
-  state: z.enum([
-    "none",
-    "trialing",
-    "active",
-    "past_due",
-    "incomplete",
-    "unpaid",
-    "paused",
-    "canceled",
-  ]),
-  price: z
-    .object({
-      amount: z.number().int().nonnegative(),
-      currency: z.string(),
-      interval: z.enum(["day", "week", "month", "year"]),
-      intervalCount: z.number().int().positive(),
-    })
-    .nullable(),
-  seats: z.number().int().nonnegative(),
-  trialEndsAt: z.string().nullable(),
-  currentPeriodEndsAt: z.string().nullable(),
-  cancelAtPeriodEnd: z.boolean(),
-  hasCustomer: z.boolean(),
-  /** Present once the organization has subscribed: its invite link and free months earned. */
-  referral: z
-    .object({ url: z.string().url(), rewards: z.number().int().nonnegative() })
-    .nullable()
-    .optional(),
-});
-export type BillingStatus = z.infer<typeof BillingStatusSchema>;
 
 export const AppBootstrapSchema = z.object({
   me: MeSchema,

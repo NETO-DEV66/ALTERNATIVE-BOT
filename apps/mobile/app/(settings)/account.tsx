@@ -703,13 +703,6 @@ export default function Account() {
         ) : null}
 
         <SettingsGroup>
-          {me?.billingEnabled ? (
-            <SettingsRow
-              title={t("Billing")}
-              chevron="right"
-              onPress={() => router.push("/billing")}
-            />
-          ) : null}
           {(
             [
               { title: t("Artifacts"), href: "/artifacts" },
@@ -729,9 +722,6 @@ export default function Account() {
           {(
             [
               { title: t("Vault"), href: "/vault" },
-              ...(me?.paymentWalletProvider
-                ? [{ title: t("Wallet"), href: "/wallet" } as const]
-                : []),
               { title: t("Integrations"), href: "/integrations" },
               { title: t("Skills"), href: "/skills" },
               { title: t("Messaging"), href: "/messaging" },

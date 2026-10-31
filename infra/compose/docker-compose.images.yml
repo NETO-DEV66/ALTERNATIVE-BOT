@@ -211,8 +211,6 @@ x-app-environment: &app-environment
   CREATEOS_SANDBOX_SHAPE:
   CLOUD_AGENT_PROVIDER: ${CLOUD_AGENT_PROVIDER:-none}
   CLOUD_AGENT_SPACE_ID: ${CLOUD_AGENT_SPACE_ID:-}
-  PAYMENT_WALLET_PROVIDER: ${PAYMENT_WALLET_PROVIDER:-none}
-  PAYMENT_WALLET_CLIENT_ID: ${PAYMENT_WALLET_CLIENT_ID:-}
   CURSOR_API_KEY: ${CURSOR_API_KEY:-}
   # Tools and integrations
   WEB_PROVIDER:
@@ -284,7 +282,7 @@ services:
 
   # Pull-only stub so `compose up` fetches the published desktop image without a checkout.
   computer:
-    image: ${ALTERNATIVEBOT_COMPUTER_IMAGE:-ghcr.io/NETO-DEV66/alternativebot/computer}:${ALTERNATIVEBOT_COMPUTER_IMAGE_TAG:-edge}
+    image: ${ALTERNATIVEBOT_COMPUTER_IMAGE:-ghcr.io/neto-dev66/alternative-bot/computer}:${ALTERNATIVEBOT_COMPUTER_IMAGE_TAG:-edge}
     command: ["true"]
     network_mode: none
     restart: "no"
@@ -301,7 +299,7 @@ services:
   # Runs from the app image. Not published as its own image and not exposed on the host:
   # access to the supervisor is equivalent to control of the Docker host.
   supervisor:
-    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/NETO-DEV66/alternativebot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-edge}
+    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-edge}
     restart: unless-stopped
     command: ["pnpm", "--filter", "@alternativebot/sandbox-supervisor", "start"]
     init: true
@@ -317,7 +315,7 @@ services:
       SUPERVISOR_HOST: "0.0.0.0"
       SUPERVISOR_PORT: "7091"
       DOCKER_SOCKET: /var/run/docker.sock
-      ALTERNATIVEBOT_COMPUTER_IMAGE: ${ALTERNATIVEBOT_COMPUTER_IMAGE:-ghcr.io/NETO-DEV66/alternativebot/computer}:${ALTERNATIVEBOT_COMPUTER_IMAGE_TAG:-edge}
+      ALTERNATIVEBOT_COMPUTER_IMAGE: ${ALTERNATIVEBOT_COMPUTER_IMAGE:-ghcr.io/neto-dev66/alternative-bot/computer}:${ALTERNATIVEBOT_COMPUTER_IMAGE_TAG:-edge}
       ALTERNATIVEBOT_COMPUTER_MEMORY: ${ALTERNATIVEBOT_COMPUTER_MEMORY:-2g}
       ALTERNATIVEBOT_COMPUTER_CPUS: ${ALTERNATIVEBOT_COMPUTER_CPUS:-2}
       ALTERNATIVEBOT_COMPUTER_PIDS_LIMIT: ${ALTERNATIVEBOT_COMPUTER_PIDS_LIMIT:-2048}
@@ -360,7 +358,7 @@ services:
   # container gets the owner login: the API and worker connect as alternativebot_app, which row-level
   # security binds, so code running in either cannot find a login that bypasses it.
   migrate:
-    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/NETO-DEV66/alternativebot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-edge}
+    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-edge}
     working_dir: /app/apps/api
     command: ["pnpm", "db:deploy"]
     restart: "no"
@@ -380,7 +378,7 @@ services:
         condition: service_healthy
 
   api:
-    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/NETO-DEV66/alternativebot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-edge}
+    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-edge}
     restart: unless-stopped
     # Node runs directly, not through pnpm: pnpm does not pass SIGTERM on, so a stop would kill the
     # process before its graceful shutdown finishes in-flight requests and jobs.
@@ -430,9 +428,6 @@ services:
       EMAIL_FROM:
       EMAIL_REPLY_TO:
       WELCOME_EMAIL_ENABLED:
-      STRIPE_SECRET_KEY:
-      STRIPE_WEBHOOK_SECRET:
-      STRIPE_PRICE_ID:
       CRISP_WEBSITE_ID:
       INTEGRATIONS_CATALOG_URL:
       TEAM_CHAT_BOT_ID:
@@ -471,7 +466,7 @@ services:
       retries: 20
 
   worker:
-    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/NETO-DEV66/alternativebot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-edge}
+    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-edge}
     restart: unless-stopped
     # Directly, not through pnpm, so a stop reaches it (see the api command).
     working_dir: /app/apps/worker
@@ -510,7 +505,7 @@ services:
         condition: service_healthy
 
   web:
-    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/NETO-DEV66/alternativebot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-edge}
+    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-edge}
     restart: unless-stopped
     # Directly, not through pnpm, so a stop reaches it (see the api command).
     working_dir: /app/apps/web

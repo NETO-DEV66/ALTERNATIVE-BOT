@@ -16,14 +16,14 @@ export const OPENCLAW_SANDBOX_URL = "https://docs.openclaw.ai/gateway/sandboxing
 export const OPENCLAW_GITHUB_URL = "https://github.com/openclaw/openclaw";
 
 export const PUBLISHED_IMAGES_INSTALL = `mkdir -p alternativebot && cd alternativebot &&
-curl -fsSLO https://raw.githubusercontent.com/NETO-DEV66/alternativebot/main/infra/compose/install-images.sh &&
+curl -fsSLO https://raw.githubusercontent.com/NETO-DEV66/ALTERNATIVE-BOT/main/infra/compose/install-images.sh &&
 bash install-images.sh`;
 
 export const PUBLISHED_IMAGES_SERVER = `bash install-images.sh --prepare-only
 # Edit .env, then:
 bash install-images.sh`;
 
-export const SOURCE_CHECKOUT = `git clone https://github.com/NETO-DEV66/alternativebot.git
+export const SOURCE_CHECKOUT = `git clone https://github.com/NETO-DEV66/ALTERNATIVE-BOT.git
 cd alternativebot
 cp .env.example .env`;
 

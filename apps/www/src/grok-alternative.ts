@@ -1,5 +1,4 @@
 import { DOCS_URL, GITHUB_URL, SITE_URL } from "./site";
-import { CLAUDE_CHATGPT_SUBSCRIPTION_FAQ } from "./subscription-faq";
 
 export const GROK_ALTERNATIVE_PATH = "/grok-bot-alternative/";
 
@@ -70,7 +69,7 @@ export const GROK_SOURCES = [
 ] as const;
 
 export const INSTALL_COMMAND = `mkdir -p alternativebot && cd alternativebot &&
-curl -fsSLO https://raw.githubusercontent.com/NETO-DEV66/alternativebot/main/infra/compose/install-images.sh &&
+curl -fsSLO https://raw.githubusercontent.com/NETO-DEV66/ALTERNATIVE-BOT/main/infra/compose/install-images.sh &&
 bash install-images.sh`;
 
 export const SELF_HOST_LEAD =
@@ -267,7 +266,6 @@ export const GROK_ALTERNATIVE_FAQ = [
     answer:
       "After the install, yes. You create an account, connect a model, and manage the bot from that chat. A new bot interviews you. Routines, memory, and approval boundaries stay with the bot. Alternative Bot is that chat plus the computer you run. Grok Bot is also a chat for named bots. The difference is who hosts the service and who picks the model.",
   },
-  CLAUDE_CHATGPT_SUBSCRIPTION_FAQ,
   {
     question: "What are the other alternatives?",
     answer:

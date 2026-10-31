@@ -58,8 +58,6 @@ import {
   ArtifactWithContentSchema,
   AvailabilityKindSchema,
   AvatarStyleSchema,
-  BillingClientSchema,
-  BillingStatusSchema,
   BotMcpServerSchema,
   BotSchema,
   BotSectionName,
@@ -100,7 +98,6 @@ import {
   ModelConnectionLabelSchema,
   ModelConnectionTargetSchema,
   ModelCredentialSchema,
-  ModelCreditAmountSchema,
   ModelOAuthBeginSchema,
   OPENAI_COMPATIBLE_PROVIDER_ID,
   PluginMarketplaceCatalogSchema,
@@ -150,7 +147,6 @@ import {
 } from "./integration-settings.js";
 import { ModelHeadersSchema } from "./model-headers.js";
 import { ModelRoleSchema, ModelRoleUpdateSchema, ModelRoleViewSchema } from "./model-roles.js";
-import { PaymentWalletStatusSchema } from "./payments.js";
 import { MessageReactionSchema } from "./reactions.js";
 import { RoutineWatchSchema } from "./routine-watch.js";
 import {
@@ -257,37 +253,6 @@ export const appContract = {
   },
   health: oc.output(z.object({ ok: z.literal(true), version: z.string() })),
   me: oc.output(MeSchema),
-  billing: {
-    status: oc.output(BillingStatusSchema),
-    /** Re-reads the subscription from the provider, e.g. right after a mobile checkout. */
-    refresh: oc.output(BillingStatusSchema),
-    selectFunding: oc
-      .input(z.object({ funding: z.enum(["byok", "credits"]), client: BillingClientSchema }))
-      /** `url` is the checkout to pay for the own-key plan before it has access. */
-      .output(z.object({ ok: z.literal(true), url: z.string().url().optional() })),
-    purchaseCredits: oc
-      .input(
-        z.object({
-          amountCents: ModelCreditAmountSchema,
-          monthly: z.boolean(),
-          client: BillingClientSchema,
-        }),
-      )
-      .output(z.object({ url: z.string().url() })),
-    setMonthlyCredits: oc
-      .input(z.object({ amountCents: ModelCreditAmountSchema }))
-      .output(z.object({ ok: z.literal(true) })),
-    checkout: oc
-      .input(z.object({ client: BillingClientSchema }).optional())
-      .output(z.object({ url: z.string().url() })),
-    portal: oc
-      .input(z.object({ client: BillingClientSchema }).optional())
-      .output(z.object({ url: z.string().url() })),
-    /** Records who invited this organization; ignored once it has subscribed. */
-    claimReferral: oc
-      .input(z.object({ code: z.string().min(1).max(64) }))
-      .output(z.object({ ok: z.literal(true) })),
-  },
   preferences: {
     update: oc
       .input(
@@ -1268,13 +1233,6 @@ export const appContract = {
   },
   runs: {
     list: oc.input(z.object({ filter: z.enum(["active", "recent"]) })).output(RunsListOutputSchema),
-  },
-  /** The signed-in user's wallet; absent when the deployment offers none. */
-  paymentWallet: {
-    status: oc.output(PaymentWalletStatusSchema),
-    /** Starts a sign-in the user finishes with the provider; `status` then reports it. */
-    connect: oc.output(PaymentWalletStatusSchema),
-    disconnect: oc.output(PaymentWalletStatusSchema),
   },
   voice: {
     catalog: oc.output(z.array(VoiceCatalogEntrySchema)),

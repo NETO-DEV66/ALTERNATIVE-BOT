@@ -41,7 +41,7 @@ over SSH) but not the Docker host, the LAN, or link-local cloud metadata such as
 It takes two parts:
 
 1. `SANDBOX_COMPUTER_EGRESS=restricted` gives each computer network a deterministic host
-   bridge name (`alternativebot-c…`) instead of a generic `br-*`.
+   bridge name (`altbot-c…`) instead of a generic `br-*`.
 2. The host ruleset, applied once per Docker host:
 
    ```bash
@@ -51,14 +51,14 @@ It takes two parts:
    `install-images.sh` downloads and runs it (asking for sudo) and records the result in
    `.env`. Where the rules cannot be installed (macOS, Windows, Docker Desktop, rootless
    Docker, no iptables, or a failed run) it writes `SANDBOX_COMPUTER_EGRESS=open` and says
-   why. The script drops forwarded traffic from `alternativebot-c*` bridges to all non-public IPv4/IPv6
+   why. The script drops forwarded traffic from `altbot-c*` bridges to all non-public IPv4/IPv6
    destinations via the `DOCKER-USER` chain, adds an `INPUT` drop so computers cannot open
    connections to the host (established replies to host-initiated control and screen
    connections still flow), and installs a systemd oneshot so the rules return after a
    reboot. `--print` shows the exact rules without changing anything; `--remove` uninstalls.
 
 Before the first restricted computer starts, the supervisor checks that the host drops
-connections from a `alternativebot-c*` bridge. Without the ruleset, computers fail to start with an
+connections from a `altbot-c*` bridge. Without the ruleset, computers fail to start with an
 error naming the script instead of running unrestricted; run the script (no restart needed)
 or set `SANDBOX_COMPUTER_EGRESS=open` and recreate the supervisor.
 
@@ -74,7 +74,7 @@ whenever the rules are missing. A host-run supervisor (`pnpm dev`) and the deskt
 rules cannot reach.
 
 Screen streaming is unaffected: the supervisor and web proxy join each computer's bridge,
-and the ruleset exempts traffic whose in- and out-interface are both `alternativebot-c*` before
+and the ruleset exempts traffic whose in- and out-interface are both `altbot-c*` before
 any drop (that exemption is load-bearing on hosts where `br_netfilter` feeds bridged
 frames through `FORWARD`). Rules match interface names rather than subnets, so computer
 create/delete cycles need no firewall maintenance; deleting a computer removes its
@@ -100,7 +100,7 @@ skips IPv6 servers, so if those three are all IPv6 nothing is checked.
 If computers must reach LAN services, an internal proxy, or endpoints bound to the host,
 set `SANDBOX_COMPUTER_EGRESS=open`, recreate the supervisor, and run
 `sudo bash infra/compose/restrict-computer-egress.sh --remove`. The flag alone does not
-uninstall the host rules, which keep matching the still-named `alternativebot-c*` bridges until
+uninstall the host rules, which keep matching the still-named `altbot-c*` bridges until
 removed.
 
 The ruleset requires Linux Docker Engine with the iptables backend; Docker Desktop, rootless
@@ -117,7 +117,7 @@ a restart. The installer does not download the script on macOS. From the directo
 the stack's `.env`:
 
 ```bash
-curl -fsSLO https://raw.githubusercontent.com/NETO-DEV66/alternativebot/main/infra/compose/restrict-computer-egress.sh
+curl -fsSLO https://raw.githubusercontent.com/NETO-DEV66/ALTERNATIVE-BOT/main/infra/compose/restrict-computer-egress.sh
 ```
 
 Save the following as `egress.yml` beside that script and start it with

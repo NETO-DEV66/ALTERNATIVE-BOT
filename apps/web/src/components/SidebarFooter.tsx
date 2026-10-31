@@ -230,7 +230,7 @@ export function SidebarFooter({
             ) : null}
             <a
               className={`${buttonVariants({ variant: "ghost" })} h-9 w-full justify-start gap-2.5 font-normal`}
-              href="https://github.com/NETO-DEV66/alternativebot/blob/main/docs/self-host.md"
+              href="https://github.com/NETO-DEV66/ALTERNATIVE-BOT/blob/main/docs/self-host.md"
               target="_blank"
               rel="noreferrer"
             >

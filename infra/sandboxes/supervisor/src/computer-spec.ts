@@ -200,7 +200,7 @@ export function resolveScreenNetworkMode(value: string | undefined): ScreenNetwo
  * endpoints. `restricted` keeps public internet egress but lets the operator drop
  * everything else with one host-side iptables rule set — the supervisor gives each
  * computer network a deterministic bridge interface name so the rules match by
- * interface (`-i alternativebot-c+`) instead of ephemeral subnets. Enforcement lives on the
+ * interface (`-i altbot-c+`) instead of ephemeral subnets. Enforcement lives on the
  * Docker host (infra/compose/restrict-computer-egress.sh) and is verified before
  * computers start (egress-probe.ts). The Compose stacks default to `auto`: restricted
  * when that check passes, open otherwise, so a stack installed before the rules
@@ -413,12 +413,12 @@ export function computerMountsMatch(
 
 /**
  * Host bridge interface name for a computer network. Linux caps interface names
- * at 15 bytes (IFNAMSIZ), so "alternativebot-c" gets a 7-hex-char suffix derived from the
+ * at 15 bytes (IFNAMSIZ), so "altbot-c" gets a 7-hex-char suffix derived from the
  * same digest as the network name — deterministic across recreate, unique per bot.
  */
 export function computerBridgeNameFor(botId: string) {
   const hash = createHash("sha256").update(botId).digest("hex").slice(0, 7);
-  return `alternativebot-c${hash}`;
+  return `altbot-c${hash}`;
 }
 
 /**

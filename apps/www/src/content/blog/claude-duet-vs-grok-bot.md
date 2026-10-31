@@ -24,7 +24,7 @@ sources:
   - label: "xAI pricing"
     href: "https://x.ai/pricing"
   - label: "Alternative Bot source"
-    href: "https://github.com/NETO-DEV66/alternativebot"
+    href: "https://github.com/NETO-DEV66/ALTERNATIVE-BOT"
 related:
   - href: "/claude-duet-alternative/"
     title: "Open source Claude Duet alternative"

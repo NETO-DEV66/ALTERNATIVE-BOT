@@ -3,7 +3,6 @@ import {
   Brain,
   CloudDownload,
   Cpu,
-  CreditCard,
   Gauge,
   KeyRound,
   MessageCircle,
@@ -11,7 +10,6 @@ import {
   Settings,
   ShieldCheck,
   Volume2,
-  Wallet,
 } from "lucide-react";
 import type { ComponentType } from "react";
 import type { SettingsSection } from "./shell-overlay";
@@ -25,9 +23,7 @@ export type SettingsNavItem = {
 /** The settings sections this deployment offers, in nav order; Space opens from its own menu. */
 export function useSettingsNavItems(available: {
   messaging: boolean;
-  wallet: boolean;
   computer: boolean;
-  billing: boolean;
   updates: boolean;
 }): SettingsNavItem[] {
   const { t } = useLingui();
@@ -40,11 +36,9 @@ export function useSettingsNavItems(available: {
     ...(available.messaging
       ? [{ id: "messaging" as const, label: t`Messaging`, icon: MessageCircle }]
       : []),
-    ...(available.wallet ? [{ id: "wallet" as const, label: t`Wallet`, icon: Wallet }] : []),
     { id: "memory", label: t`Memory`, icon: Brain },
     { id: "usage", label: t`Usage`, icon: Gauge },
     ...(available.computer ? [{ id: "computer" as const, label: t`Computer`, icon: Monitor }] : []),
-    ...(available.billing ? [{ id: "billing" as const, label: t`Billing`, icon: CreditCard }] : []),
     ...(available.updates
       ? [{ id: "updates" as const, label: t`Updates`, icon: CloudDownload }]
       : []),

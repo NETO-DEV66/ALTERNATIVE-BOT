@@ -42,7 +42,6 @@ import {
   readRunTimingFields,
   recordUsage,
   settleReleasedTakeoverCards,
-  spaceHasModelAccess,
 } from "@alternativebot/db";
 import { enrichLogContext, getLogger } from "@alternativebot/logging";
 import { sanitizedError } from "@alternativebot/logging/monitoring";
@@ -94,7 +93,6 @@ import {
 } from "./history-compaction.js";
 import { createMediaGenerationProvider } from "./media-generation-factory.js";
 import { loadAgentMemoryContext } from "./memory-context.js";
-import { HostedModelCreditsRequiredError } from "./model-credit-observer.js";
 import {
   effectiveModelRole,
   resolveMemberMainModel,
@@ -108,9 +106,7 @@ import {
 } from "./model-selection.js";
 import { modelAcceptsImageInput } from "./model-vision.js";
 import { usesNativeShell } from "./native-shell.js";
-import { paymentWalletConnected } from "./payment-wallets.js";
 import { isRetiredModelCredentialError } from "./pi-oauth.js";
-import { loadPurchaseRedactions } from "./purchase-service.js";
 import { loadReplyContext, messageToAgentHistoryText } from "./reply-context.js";
 import { backOffRoutineAfterAccountError } from "./routine-backoff.js";
 import { lateRoutineRunInstruction } from "./routine-lateness.js";
@@ -151,7 +147,6 @@ import { withRunLease } from "./run-messages.js";
 import {
   cloudflareRunFields,
   isTerminalModelSetupError,
-  modelCreditBillingEnabled,
   resolveConnectedModelKey,
   resolveConnectedRunModel,
   resolveModelKey,
@@ -465,7 +460,6 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
           agentSkills,
           initialBotCommandEnvironment,
           savedLoginPasswordRedactions,
-          purchaseRedactions,
           runLoginRedactions,
         ] = await Promise.all([
           deps.prisma.bot.findUniqueOrThrow({
@@ -503,7 +497,6 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
           }),
           loadBotCommandEnvironment(deps.prisma, deps.secretStore, run),
           loadLoginPasswordRedactions(deps.prisma, deps.secretStore, run),
-          deps.paymentWallet ? loadPurchaseRedactions(deps, run) : [],
           loadRunLoginRedactions(deps.prisma, deps.secretStore, run, run.id),
         ]);
         const historySearchBeforeSeq =
@@ -521,11 +514,7 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
         runSecrets.push(...commandCredentialRedactions(initialBotCommandEnvironment));
         // A login filled in an earlier run may still be on its page, and anything this run reads
         // or is given may contain it, so every run hides its saved passwords before the model runs.
-        runSecrets.push(
-          ...savedLoginPasswordRedactions,
-          ...purchaseRedactions,
-          ...runLoginRedactions,
-        );
+        runSecrets.push(...savedLoginPasswordRedactions, ...runLoginRedactions);
         const agentEnvironmentInstruction = formatAgentEnvironmentInstruction(
           initialBotCommandEnvironment,
         );
@@ -742,21 +731,13 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
         }
         const runDeployment = deps.deploymentModelConfigured ? resolveDeploymentModel() : null;
         const runtimeFallback = runtimeFallbackModel(deps.runtime);
-        const pinError =
-          run.modelPinned &&
-          !(
-            (await modelCreditBillingEnabled(deps)) &&
-            modelChoice.modelProvider === runDeployment?.provider
-          )
-            ? pinnedModelCredentialError(modelChoice, overrideCredential)
-            : undefined;
+        const pinError = run.modelPinned
+          ? pinnedModelCredentialError(modelChoice, overrideCredential)
+          : undefined;
         const selected = selectConfiguredModel({
           override: modelChoice,
           overrideCredential,
           main,
-          hostedProvider: (await modelCreditBillingEnabled(deps))
-            ? resolveDeploymentModel().provider
-            : undefined,
           defaults: { settings, deployment: runDeployment },
         });
         const selectedProvider = selected.provider ?? runtimeFallback?.provider;
@@ -785,9 +766,6 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
           await failRunBeforeModel(PINNED_PROVIDER_NOT_CONNECTED, true);
           return;
         }
-        const modelAccessDenied = async () =>
-          (await modelCreditBillingEnabled(deps)) &&
-          !(await spaceHasModelAccess(deps.prisma, run.spaceId));
         const scripted = deps.runtime.describe().capabilities.scripted;
         let backupChoices: Promise<ModelRoleChoice[]> | undefined;
         const loadBackups = () =>
@@ -844,10 +822,6 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
         let primaryFailure = { message: MISSING_MODEL_RUN_ERROR, accountFailure: true };
         let retryPrimary: unknown;
         if (selectedProvider && selectedModelId) {
-          if (await modelAccessDenied()) {
-            await failRunBeforeModel(MODEL_ACCESS_REQUIRED_RUN_ERROR, true);
-            return;
-          }
           try {
             start = {
               provider: selectedProvider,
@@ -871,15 +845,10 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
             if (!terminal && !isModelCredentialRejected(error)) throw error;
             primaryFailure = {
               message: error instanceof Error ? error.message : "Connect the provider again.",
-              accountFailure:
-                error instanceof HostedModelCreditsRequiredError ||
-                isRetiredModelCredentialError(error),
+              accountFailure: isRetiredModelCredentialError(error),
             };
             if (!terminal) retryPrimary = error;
           }
-        } else if (await modelAccessDenied()) {
-          await failRunBeforeModel(MISSING_MODEL_RUN_ERROR, true);
-          return;
         }
         start ??= await startOnBackup();
         if (!start) {
@@ -1019,13 +988,6 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
         const hasMessagingIdentity = deps.messaging
           ? await deps.messaging.hasIdentity(bot.id)
           : false;
-        const paymentWallet = deps.paymentWallet;
-        const paymentWalletEnabled = paymentWallet
-          ? await paymentWalletConnected(
-              { prisma: deps.prisma, secretStore: deps.secretStore, paymentWallet },
-              run.userId,
-            )
-          : false;
         const messagingContext = hasMessagingIdentity
           ? [messagingDmSurfaceNote(), messagingChannelRun ? messagingChannelPrivacyBlock() : null]
               .filter(Boolean)
@@ -1095,7 +1057,6 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
             mediaImagesEnabled: Boolean(deps.artifacts && mediaGeneration?.capabilities.images),
             mediaVideoEnabled: Boolean(deps.artifacts && mediaGeneration?.capabilities.video),
             cloudAgentEnabled: cloudAgentsEnabled(cloudAgent, run.spaceId),
-            paymentWalletEnabled,
             messagingChannelRun,
             voiceCall,
             disabledBuiltinTools: bot.disabledBuiltinTools,
@@ -1573,7 +1534,6 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
                 id: runModelId,
                 ...(credential ? { connectionId: credential.id } : {}),
                 apiKey: resolved.oauth ? undefined : resolved.apiKey,
-                callObserver: resolved.callObserver,
                 ...cloudflareRunFields(resolved),
                 baseUrl: resolved.baseUrl,
                 apiProtocol: resolved.apiProtocol,

@@ -114,7 +114,6 @@ export function createRouterContext(deps: RouterDeps) {
     secretStore: deps.secrets,
     codexCatalog,
     refreshExpiredCredential,
-    hostedProvider: deps.billing?.modelCreditsEnabled ? deps.env.defaultProvider : undefined,
     defaultModel: async () => {
       const me = await meDto(deps, actor);
       return { provider: me.defaultProvider, model: me.defaultModel };
@@ -138,12 +137,7 @@ export function createRouterContext(deps: RouterDeps) {
     return deps.env.agentRuntime === "scripted" ? [...catalog, scriptedCatalogEntry] : catalog;
   };
   const catalogForSpace = async (actor: Actor) => {
-    const auth = await modelCredentialAuthKindsForSpace(
-      deps.prisma,
-      deps.secrets,
-      actor,
-      deps.billing?.modelCreditsEnabled ? deps.env.defaultProvider : undefined,
-    );
+    const auth = await modelCredentialAuthKindsForSpace(deps.prisma, deps.secrets, actor);
     const available = listAvailablePiCatalog(auth.byProvider, auth.byModel);
     const [live, providerLive] = await Promise.all([
       codexLiveCatalogsForSpace(deps.prisma, deps.secrets, actor, auth, codexCatalog, {
@@ -170,26 +164,12 @@ export function createRouterContext(deps: RouterDeps) {
       !selected &&
       merged.some(
         (entry) =>
-          (auth.byProvider[entry.provider] ||
-            auth.byModel[entry.provider] ||
-            entry.provider === auth.managedProvider) &&
+          (auth.byProvider[entry.provider] || auth.byModel[entry.provider]) &&
           hiddenCatalogModel(entry),
       )
     )
       selected = await savedCatalogSelections(deps.prisma, actor.userId);
-    return offeredCatalog(merged, selected).map((entry) =>
-      entry.provider === auth.managedProvider
-        ? {
-            ...entry,
-            managed: true,
-            billing:
-              auth.secretIdByModel[entry.provider]?.[entry.id] ||
-              auth.secretIdByProvider[entry.provider]
-                ? entry.billing
-                : "Uses Alternative Bot credits",
-          }
-        : entry,
-    );
+    return offeredCatalog(merged, selected);
   };
 
   // Shown where a member chose no model, so the list names what actually runs.

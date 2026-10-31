@@ -16,7 +16,6 @@ import { LoadingState } from "./components/ai/primitives";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { MarkdownLinkPrompt } from "./components/markdown-link-prompt";
 import { PageLoading } from "./components/PageLoading";
-import { SubscriptionGate } from "./components/SubscriptionGate";
 import { authClient } from "./lib/auth";
 import { getTicketBoardEnabled, subscribeTicketBoardEnabled } from "./lib/bootstrap";
 import { syncCallIdentity } from "./lib/call-session";
@@ -254,9 +253,7 @@ function SessionApp() {
               <Route
                 element={
                   user ? (
-                    <SubscriptionGate fallback={<PageLoading />}>
-                      <Outlet />
-                    </SubscriptionGate>
+                    <Outlet />
                   ) : (
                     <Navigate to="/sign-in" replace />
                   )

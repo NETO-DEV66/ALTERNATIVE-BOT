@@ -219,7 +219,7 @@ describe("optional Parallel web provider", () => {
       for (const request of peer.requests) {
         expect(request.url).toBe("https://search.parallel.ai/mcp");
         expect(request.headers.get("user-agent")).toBe(
-          "AlternativeBot/0.1 (+https://github.com/NETO-DEV66/alternativebot; web tools)",
+          "Alternative Bot/0.1 (+https://github.com/NETO-DEV66/ALTERNATIVE-BOT; web tools)",
         );
         expect(request.headers.has("authorization")).toBe(false);
       }

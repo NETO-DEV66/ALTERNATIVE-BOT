@@ -236,7 +236,6 @@ describe("api and worker environment allowlists", () => {
         "OIDC_CLIENT_SECRET",
         "SCREEN_PROXY_SECRET",
         "ALTERNATIVEBOT_UPDATER_TOKEN",
-        "STRIPE_SECRET_KEY",
         "POSTGRES_PASSWORD",
       ]) {
         expect(worker).not.toHaveProperty(key);

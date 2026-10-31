@@ -1021,8 +1021,8 @@ exec /usr/bin/sync "$@"
     expect(readdirSync(snapshot).sort()).toEqual([
       "SHA256SUMS",
       "SOURCE_SIZE_KB",
-      "appdata.tgz",
       "alternativebot.dump",
+      "appdata.tgz",
     ]);
   });
 });
@@ -1054,8 +1054,8 @@ describe("encrypted production backups", { timeout: 20_000 }, () => {
       expect(readdirSync(snapshot).sort()).toEqual([
         "SHA256SUMS",
         "SOURCE_SIZE_KB",
-        "appdata.tgz.age",
         "alternativebot.dump.age",
+        "appdata.tgz.age",
       ]);
       for (const name of ["alternativebot.dump.age", "appdata.tgz.age"]) {
         const sealed = readFileSync(path.join(snapshot, name), "utf8");

@@ -8,7 +8,7 @@ category: "roundups"
 tldr: "There is no single best open source agent. Alternative Bot, OpenClaw, Hermes Agent, OpenHands, and Goose are projects you can run. LangGraph and CrewAI are libraries for building your own. Dify's license is a modified Apache-2.0 with extra conditions. Pick the shape, then read that project's license."
 sources:
   - label: "Alternative Bot source"
-    href: "https://github.com/NETO-DEV66/alternativebot"
+    href: "https://github.com/NETO-DEV66/ALTERNATIVE-BOT"
   - label: "OpenClaw"
     href: "https://docs.openclaw.ai/"
   - label: "Hermes Agent"

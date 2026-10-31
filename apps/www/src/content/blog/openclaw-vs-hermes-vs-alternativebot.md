@@ -16,7 +16,7 @@ sources:
   - label: "Hermes Agent desktop"
     href: "https://hermes-agent.nousresearch.com/docs/user-guide/desktop"
   - label: "Alternative Bot self-hosting guide"
-    href: "https://github.com/NETO-DEV66/alternativebot/blob/main/docs/self-host.md"
+    href: "https://github.com/NETO-DEV66/ALTERNATIVE-BOT/blob/main/docs/self-host.md"
 related:
   - href: "/openclaw-alternative/"
     title: "Open source OpenClaw alternative"

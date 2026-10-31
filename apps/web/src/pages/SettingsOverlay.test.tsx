@@ -55,7 +55,6 @@ vi.mock("../lib/rpc", () => ({
   }),
 }));
 vi.mock("./BillingSettingsPanel", () => ({ BillingSettingsPanel: () => null }));
-vi.mock("./PaymentWalletSettingsPanel", () => ({ PaymentWalletSettingsPanel: () => null }));
 vi.mock("./MemorySettingsOverlay", () => ({
   MemorySettingsOverlay: ({
     config,
@@ -218,22 +217,6 @@ it("reports a section picked in the nav so the shell can keep it in the URL", as
   }
 });
 
-it("opens a linked billing section once billing turns out to be on", async () => {
-  const { container, rerender, cleanup } = await render({
-    section: "billing",
-    billingEnabled: false,
-  });
-  const shown = () =>
-    container.querySelector("[data-settings-section]")?.getAttribute("data-settings-section");
-  try {
-    expect(shown()).toBe("general");
-    await rerender({ section: "billing", billingEnabled: true });
-    expect(shown()).toBe("billing");
-  } finally {
-    await cleanup();
-  }
-});
-
 it("edits the account's models, voice, confirmations, and vault", async () => {
   scopes.length = 0;
   const props = { space: acme, spaces };
@@ -299,21 +282,6 @@ it("shows Updates in the desktop app", async () => {
   const { container, cleanup } = await render({});
   try {
     expect(updatesNav(container)).not.toBeNull();
-  } finally {
-    await cleanup();
-  }
-});
-
-it("offers Wallet only when the deployment has a wallet provider", async () => {
-  const { container, rerender, cleanup } = await render({ section: "wallet" });
-  const shown = () =>
-    container.querySelector("[data-settings-section]")?.getAttribute("data-settings-section");
-  try {
-    expect(container.querySelector('[data-testid="settings-nav-wallet"]')).toBeNull();
-    expect(shown()).toBe("general");
-    await rerender({ section: "wallet", paymentWalletProvider: { id: "link", name: "Link" } });
-    expect(container.querySelector('[data-testid="settings-nav-wallet"]')).not.toBeNull();
-    expect(shown()).toBe("wallet");
   } finally {
     await cleanup();
   }

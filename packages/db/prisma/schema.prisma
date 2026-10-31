@@ -41,7 +41,6 @@ model User {
   invitations                 Invitation[]
   modelCredentials            UserModelCredential[]
   voiceCredentials            UserVoiceCredential[]
-  paymentWallet               PaymentWallet?
   secrets                     Secret[]
   mcpServers                  McpServer[]
   botSections                 BotSection[]
@@ -224,62 +223,13 @@ model Organization {
   members      Member[]
   invitations  Invitation[]
   spaces       Space[]
-  billing      BillingAccount?
-  modelCredits ModelCreditAccount?
-  referralCode ReferralCode?
-  referredBy   Referral?           @relation("ReferredOrganization")
-  referrals    Referral[]          @relation("ReferrerOrganization")
 
   @@unique([slug])
   @@map("organization")
 }
 
-model BillingAccount {
-  organizationId      String       @id
-  organization        Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  customerId          String       @unique
-  creditAmountCents   Int?
-  subscriptionId      String?
-  subscriptionItemId  String?
-  priceId             String?
-  status              String?
-  seats               Int?
-  trialEndsAt         DateTime?
-  currentPeriodEndsAt DateTime?
-  cancelAtPeriodEnd   Boolean      @default(false)
-  endedAt             DateTime?
-  subscribedAt        DateTime?
-  syncedAt            DateTime?
-  /// Held while a recurring checkout opens, so only one opens per organization at a time.
-  checkoutLeaseId     String?
-  checkoutLeaseExpiresAt DateTime?
-  createdAt           DateTime     @default(now())
-  updatedAt           DateTime     @updatedAt
 
-  @@map("billing_accounts")
-}
 
-model ReferralCode {
-  code           String       @id
-  organizationId String       @unique
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  createdAt      DateTime     @default(now())
-
-  @@map("referral_codes")
-}
-
-model Referral {
-  organizationId         String       @id
-  organization           Organization @relation("ReferredOrganization", fields: [organizationId], references: [id], onDelete: Cascade)
-  referrerOrganizationId String
-  referrer               Organization @relation("ReferrerOrganization", fields: [referrerOrganizationId], references: [id], onDelete: Cascade)
-  cardFingerprint        String?      @unique
-  outcome                String?
-  rewardedAt             DateTime?
-
-  @@index([referrerOrganizationId])
-  @@map("referrals")
-}
 
 model PluginSubmission {
   id           String    @id @default(cuid())
@@ -390,7 +340,6 @@ model Space {
   mcpServers                  McpServer[]
   mcpOAuthSessions            McpOAuthSession[]
   modelOAuthSessions          ModelOAuthSession[]
-  purchases                   Purchase[]
   botMcpServers              BotMcpServer[]
   messagingIdentities         MessagingIdentity[]
   actionApprovalRules         ActionApprovalRule[]
@@ -472,7 +421,6 @@ model Invitation {
 }
 
 model DeploymentSettings {
-  modelCreditsEnabled             Boolean  @default(false)
   id                              String   @id @default("default")
   /// Deprecated: retained for rolling-release compatibility; never authorizes app users.
   ownerUserId                     String?
@@ -971,58 +919,7 @@ model CloudAgent {
   @@map("cloud_agents")
 }
 
-model PaymentWallet {
-  id         String    @id @default(cuid())
-  userId     String    @unique
-  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  provider   String
-  status     String
-  ciphertext String
-  verificationUrl String?
-  userCode   String?
-  expiresAt  DateTime?
-  nextPollAt DateTime?
-  pollIntervalMs Int?
-  refreshAt  DateTime?
-  connectedAt DateTime?
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
 
-  @@map("payment_wallets")
-}
-
-model Purchase {
-  id           String    @id @default(uuid())
-  operationKey String    @unique
-  spaceId      String
-  space        Space     @relation(fields: [spaceId], references: [id], onDelete: Cascade)
-  userId       String
-  botId        String
-  threadId     String
-  threadGeneration Int
-  provider     String
-  remoteId     String
-  merchantName String
-  merchantUrl  String
-  amount       Int
-  currency     String
-  status       String
-  approvalUrl  String?
-  nextPollAt   DateTime?
-  wokenStatus  String?
-  cardCiphertext String?
-  credentialType String  @default("card")
-  merchantAccountId String?
-  paymentChallenge String?
-  requestCiphertext String?
-  tokenCiphertext String?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-
-  @@index([nextPollAt])
-  @@index([spaceId, userId, createdAt])
-  @@map("purchases")
-}
 
 model ExternalEffect {
   id             String   @id @default(cuid())
@@ -1906,91 +1803,7 @@ model TicketComment {
   @@map("ticket_comments")
 }
 
-/// Wallet projection; financial deltas live in the append-only billing journal.
-model ModelCreditAccount {
-  organizationId        String             @id
-  organization          Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  mode                  String?
-  balanceMicros         BigInt             @default(0)
-  pendingCreditCheckout Boolean            @default(false)
-  byokFreeUntil         DateTime?
-  entries               ModelCreditEntry[]
-  lots                  ModelCreditLot[]
-  createdAt             DateTime           @default(now())
-  updatedAt             DateTime           @updatedAt
-
-  @@map("model_credit_accounts")
-}
-
-/// Current purchase, reservation, or expiry projection. Database triggers journal every change.
-model ModelCreditEntry {
-  id                     String             @id @default(cuid())
-  organizationId         String
-  account                ModelCreditAccount @relation(fields: [organizationId], references: [organizationId], onDelete: Cascade)
-  source                 String             @unique
-  amountMicros           BigInt
-  pending                Boolean            @default(false)
-  callId                 String?            @unique
-  userId                 String?
-  spaceId                String?
-  runId                  String?
-  provider               String?
-  model                  String?
-  providerRequestId      String?
-  usage                  Json?
-  reconciliationState    String?
-  reconciliationAttempts Int                @default(0)
-  nextReconcileAt        DateTime?
-  auditRevision          Int                @default(0)
-  allocations            Json?
-  /// Sum of allocations; detects settlements by older writers without inferring credit provenance.
-  fundedMicros           BigInt?
-  createdAt              DateTime           @default(now())
-
-  @@index([reconciliationState, nextReconcileAt])
-  @@index([organizationId, createdAt])
-  @@map("model_credit_entries")
-}
-
-/// Immutable financial journal. Deliberately no lifecycle foreign keys.
-model BillingAuditEvent {
-  id                String   @id @default(cuid())
-  source            String   @unique
-  kind              String
-  organizationId    String?
-  callId            String?
-  userId            String?
-  spaceId           String?
-  provider          String?
-  model             String?
-  providerRequestId String?
-  amountMicros      BigInt   @default(0)
-  currency          String   @default("usd")
-  details           Json
-  createdAt         DateTime @default(now())
-
-  @@index([organizationId, createdAt])
-  @@index([callId, createdAt])
-  @@map("billing_audit_events")
-}
-
 /// Grant allocation projection. Used funds include reservations; null expiry means non-expiring.
-model ModelCreditLot {
-  id              String             @id
-  organizationId  String
-  account         ModelCreditAccount @relation(fields: [organizationId], references: [organizationId], onDelete: Cascade)
-  amountMicros    BigInt
-  availableMicros BigInt
-  usedMicros      BigInt             @default(0)
-  expiredMicros   BigInt             @default(0)
-  expiresAt       DateTime?
-  auditRevision   Int                @default(0)
-  createdAt       DateTime           @default(now())
-
-  @@index([organizationId, expiresAt])
-  // Partial indexes for outstanding grants are managed in SQL migrations.
-  @@map("model_credit_lots")
-}
 
 model SpaceModelRoleChoice {
   spaceId       String

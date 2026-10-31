@@ -17,7 +17,7 @@ export type ClientKind = (typeof CLIENT_KINDS)[number];
 export type MinimumClientBuilds = Partial<Record<ClientKind, string>>;
 
 export const ANDROID_APK_URL =
-  "https://github.com/NETO-DEV66/alternativebot/releases/download/android/alternativebot.apk";
+  "https://github.com/NETO-DEV66/ALTERNATIVE-BOT/releases/download/android/alternativebot.apk";
 
 const BUILD_ID = /^\d{14}$/;
 

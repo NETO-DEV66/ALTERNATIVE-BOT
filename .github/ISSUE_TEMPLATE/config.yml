@@ -1,7 +1,7 @@
 blank_issues_enabled: true
 contact_links:
   - name: Security vulnerabilities
-    url: https://github.com/NETO-DEV66/alternativebot/blob/main/SECURITY.md
+    url: https://github.com/NETO-DEV66/ALTERNATIVE-BOT/blob/main/SECURITY.md
     about: Report security issues to security@alternativebot.com — do not open a public issue.
   - name: User support
     url: mailto:support@alternativebot.com

@@ -168,7 +168,7 @@ it("offers the existing Android download on Android", async () => {
     (link) => link.textContent === "Get the mobile app",
   )!;
   expect(mobile.href).toBe(
-    "https://github.com/NETO-DEV66/alternativebot/releases/download/android/alternativebot.apk",
+    "https://github.com/NETO-DEV66/ALTERNATIVE-BOT/releases/download/android/alternativebot.apk",
   );
 });
 

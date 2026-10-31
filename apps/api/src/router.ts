@@ -3,7 +3,6 @@ import type {
   ArtifactStore,
   JobPublisher,
   MemoryStore,
-  PaymentWalletProvider,
   ProductAnalytics,
   SandboxProvider,
   SecretStore,
@@ -32,7 +31,6 @@ import type {
 import type { Auth } from "@alternativebot/auth";
 import type { NavLink } from "@alternativebot/contracts";
 import type { BoardEvents, PrismaClient, ThreadEvents } from "@alternativebot/db";
-import type { BillingService } from "./billing.js";
 import { accountRoutes } from "./routes/account.js";
 import { availabilityRoutes } from "./routes/availability.js";
 import { boardsRoutes } from "./routes/boards.js";
@@ -45,7 +43,6 @@ import { mcpRoutes } from "./routes/mcp.js";
 import { memoryRoutes } from "./routes/memory.js";
 import { messagingRoutes } from "./routes/messaging.js";
 import { modelsRoutes } from "./routes/models.js";
-import { paymentWalletRoutes } from "./routes/payment-wallet.js";
 import { routinesRoutes } from "./routes/routines.js";
 import { spacesRoutes } from "./routes/spaces.js";
 import { threadsRoutes } from "./routes/threads.js";
@@ -60,8 +57,6 @@ export interface RouterDeps {
   pushTokens: PushTokenStore;
   analytics?: ProductAnalytics;
   cloudAgent?: CloudAgentConnection | null;
-  /** The deployment's wallet provider; absent hides purchases. */
-  paymentWallet?: PaymentWalletProvider | null;
   prisma: PrismaClient;
   events: ThreadEvents;
   boardEvents: BoardEvents;
@@ -107,8 +102,6 @@ export interface RouterDeps {
     addresses: Record<string, string>;
     openSignup: boolean;
   };
-  /** Present only when the deployment bills; self-hosted installs leave it unset. */
-  billing?: BillingService;
   email?: TransactionalEmailProvider;
   onEmailError?: (error: unknown) => void;
   speechSummary?: VoiceDeps["speechSummary"];
@@ -159,6 +152,5 @@ export function createRouter(deps: RouterDeps) {
     ...connectionsRoutes(ctx),
     ...messagingRoutes(ctx),
     ...contentRoutes(ctx),
-    ...paymentWalletRoutes(ctx),
   });
 }

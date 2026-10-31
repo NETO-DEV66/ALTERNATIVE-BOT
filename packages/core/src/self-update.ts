@@ -1,5 +1,5 @@
 /** The repository a stock Alternative Bot deployment tracks. */
-export const OFFICIAL_REPO_URL = "https://github.com/NETO-DEV66/alternativebot";
+export const OFFICIAL_REPO_URL = "https://github.com/NETO-DEV66/ALTERNATIVE-BOT";
 export const DEFAULT_UPDATE_BRANCH = "main";
 export const DEFAULT_UPDATE_REMOTE = "origin";
 
@@ -80,7 +80,7 @@ function normalizeRepoPath(raw: string): string | null {
   return segments.join("/");
 }
 
-/** `github.com/NETO-DEV66/alternativebot` for every spelling of the same remote, for comparison only. */
+/** `github.com/NETO-DEV66/ALTERNATIVE-BOT` for every spelling of the same remote, for comparison only. */
 export function repoIdentity(url: string): string | null {
   const normalized = normalizeRepoUrl(url);
   if ("error" in normalized) return null;

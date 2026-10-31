@@ -1,7 +1,6 @@
 import { ORPCError } from "@orpc/server";
 import {
   effectiveModelRole,
-  hasHostedModelCredits,
   isAutoReviewCheckerConfigured,
   PushSessionEndedError,
 } from "@alternativebot/adapters";
@@ -29,8 +28,6 @@ import {
   voicePreferenceTarget,
 } from "@alternativebot/db";
 import { aiConsentStatus, allowAiConsent } from "../ai-consent.js";
-import type { BillingService } from "../billing.js";
-import { firstModelConnectAnalytics } from "../model-connect-analytics.js";
 import type { RouterDeps } from "../router.js";
 import { withSerializableRetry } from "../serializable-retry.js";
 import {
@@ -79,40 +76,6 @@ export function accountRoutes(ctx: RouterContext) {
     },
     health: os.health.handler(async () => ({ ok: true as const, version: "0.1.0" })),
     me: authed.me.handler(async ({ context }): Promise<Me> => meDto(deps, context.actor)),
-    billing: {
-      selectFunding: authed.billing.selectFunding.handler(async ({ context, input }) => {
-        const billing = requireBilling(deps);
-        if (input.funding === "credits") {
-          const record = await firstModelConnectAnalytics(deps, context.actor, "credits");
-          record(undefined, { name: "model_connect_started" });
-        }
-        return billing.selectFunding(context.actor, input.funding, input.client);
-      }),
-      purchaseCredits: authed.billing.purchaseCredits.handler(async ({ context, input }) =>
-        requireBilling(deps).purchaseCredits(context.actor, input),
-      ),
-      setMonthlyCredits: authed.billing.setMonthlyCredits.handler(async ({ context, input }) =>
-        requireBilling(deps).setMonthlyCredits(context.actor, input.amountCents),
-      ),
-      status: authed.billing.status.handler(async ({ context }) =>
-        requireBilling(deps).status(context.actor),
-      ),
-      refresh: authed.billing.refresh.handler(async ({ context }) => {
-        const billing = requireBilling(deps);
-        await billing.syncForActor(context.actor);
-        return billing.status(context.actor);
-      }),
-      checkout: authed.billing.checkout.handler(async ({ context, input }) =>
-        requireBilling(deps).checkout(context.actor, input?.client),
-      ),
-      portal: authed.billing.portal.handler(async ({ context, input }) =>
-        requireBilling(deps).portal(context.actor, input?.client),
-      ),
-      claimReferral: authed.billing.claimReferral.handler(async ({ context, input }) => {
-        await requireBilling(deps).claimReferral(context.actor, input.code);
-        return { ok: true as const };
-      }),
-    },
     preferences: {
       update: authed.preferences.update.handler(async ({ context, input }): Promise<Me> => {
         await deps.prisma.user.update({
@@ -404,19 +367,6 @@ async function loadAutoReviewSettings(deps: RouterDeps, actor: Actor, scope?: Se
     ),
   );
   const checkerAvailable =
-    connections.some(Boolean) ||
-    (deploymentChecker !== null && environmentAvailable) ||
-    (
-      await Promise.all(
-        [...new Set(memberChoices.map((choice) => choice.provider))].map((provider) =>
-          hasHostedModelCredits(deps.prisma, actor, provider),
-        ),
-      )
-    ).some(Boolean);
+    connections.some(Boolean) || (deploymentChecker !== null && environmentAvailable);
   return { ...settings, checkerAvailable };
-}
-
-function requireBilling(deps: RouterDeps): BillingService {
-  if (!deps.billing) throw new ORPCError("NOT_FOUND", { message: "Billing is not enabled" });
-  return deps.billing;
 }

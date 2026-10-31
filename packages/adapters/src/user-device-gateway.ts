@@ -24,7 +24,7 @@ export const USER_DEVICE_DISCONNECT_PATH = "/internal/user-devices/disconnect";
 export const USER_DEVICE_OFFLINE_MESSAGE =
   "Your computer is not connected. Open the Alternative Bot desktop app.";
 const DISCONNECTED_MESSAGE = "Your computer disconnected. Check the result before retrying.";
-const REVOKED_MESSAGE = "This computer was disconnected from AlternativeBot.";
+const REVOKED_MESSAGE = "This computer was disconnected from Alternative Bot.";
 export const USER_DEVICE_LIMIT = 10;
 const PING_INTERVAL_MS = 25_000;
 /** A connection row older than this has lost its holding process. */

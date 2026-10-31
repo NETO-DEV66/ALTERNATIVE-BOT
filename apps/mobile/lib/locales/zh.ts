@@ -894,7 +894,7 @@ export const ZH_MESSAGES: Record<string, string> = {
   "AI models": "AI 模型",
   Memory: "记忆",
   "Privacy policies": "隐私政策",
-  AlternativeBot: "Alternative Bot",
+  "Alternative Bot": "Alternative Bot",
   "Withdraw all permissions": "撤销所有权限",
   "Withdraw all permissions?": "撤销所有权限？",
   "New mobile actions won't send data to these services. Runs already in progress and routines keep going until you stop them.":

@@ -2,7 +2,7 @@
 
 set -Eeuo pipefail
 
-DOWNLOAD_BASE="${ALTERNATIVEBOT_DOWNLOAD_BASE:-https://raw.githubusercontent.com/NETO-DEV66/alternativebot/main/infra/compose}"
+DOWNLOAD_BASE="${ALTERNATIVEBOT_DOWNLOAD_BASE:-https://raw.githubusercontent.com/NETO-DEV66/ALTERNATIVE-BOT/main/infra/compose}"
 while [[ "$DOWNLOAD_BASE" == */ ]]; do
   DOWNLOAD_BASE="${DOWNLOAD_BASE%/}"
 done

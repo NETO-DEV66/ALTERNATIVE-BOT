@@ -135,9 +135,9 @@ this repository that is:
 
 | Image | Contents |
 | --- | --- |
-| `ghcr.io/NETO-DEV66/alternativebot/app` | api, worker, web, and sandbox supervisor — one image, multiple commands |
-| `ghcr.io/NETO-DEV66/alternativebot/computer` | Linux desktop used as each bot computer |
-| `ghcr.io/NETO-DEV66/alternativebot/updater` | the updater sidecar, plus the Docker CLI |
+| `ghcr.io/neto-dev66/alternative-bot/app` | api, worker, web, and sandbox supervisor — one image, multiple commands |
+| `ghcr.io/neto-dev66/alternative-bot/computer` | Linux desktop used as each bot computer |
+| `ghcr.io/neto-dev66/alternative-bot/updater` | the updater sidecar, plus the Docker CLI |
 
 `infra/compose/docker-compose.images.yml` is the no-checkout path for those app and computer tags
 plus Postgres. The supervisor runs from the app image on the internal network only (not a separate

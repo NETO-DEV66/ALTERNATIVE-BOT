@@ -48,7 +48,6 @@ import {
 import { reviewWithBackups } from "./auto-review-backups.js";
 import type { ExecutorDeps } from "./executor-deps.js";
 import { findConnectedModelCredential } from "./model-selection.js";
-import { paidRequestEffect } from "./paid-request.js";
 import { autoReviewCheckerProvider } from "./run-auto-review.js";
 import type { RunContext, RunTrust } from "./run-context.js";
 import {
@@ -169,18 +168,16 @@ export async function gateToolCall(
     );
   const connectorProviders = ctx.tools.connectedPlugins.map((plugin) => plugin.provider);
   const connectorKind = connectorKindFromToolName(name, connectorProviders);
-  // paid_request with only a purchase id sends the request its approval already named.
-  const sendsToSite =
-    SITE_SENDING_TOOLS.has(name) && (name === "web_fetch" || args.url !== undefined);
+  const sendsToSite = SITE_SENDING_TOOLS.has(name) && args.url !== undefined;
   const fetchUrl = sendsToSite ? normalizedHttpUrl(String(args.url ?? "")) : undefined;
   const fetchSite = fetchUrl ? urlSite(fetchUrl) : undefined;
   if (sendsToSite && !fetchSite) return { result: { error: "url must be an http(s) URL" } };
   if (fetchUrl && fetchUrl.length > MAX_FETCH_URL_LENGTH)
     return { result: { error: `url must be at most ${MAX_FETCH_URL_LENGTH} characters` } };
-  // The card, the stored effect and the request all use the URL the gate checked.
+  // The stored effect and the request both use the URL the gate checked.
   if (fetchUrl) {
     args = { ...args, url: fetchUrl };
-    effectRequest = name === "paid_request" ? paidRequestEffect(args) : args;
+    effectRequest = args;
   }
   const connectorTrusts = connectorTrustKeys(
     batch?.actions,

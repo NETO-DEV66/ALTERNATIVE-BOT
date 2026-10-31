@@ -428,13 +428,12 @@ describe("account preferences", () => {
   );
 });
 
-describe("billing", () => {
+describe("signup survey", () => {
   const surveyCreatedAt = new Date("2026-10-23T12:00:00Z");
   const upsertSignupSurvey = vi.fn().mockResolvedValue({ createdAt: surveyCreatedAt });
 
-  function billingDeps(
+  function surveyDeps(
     isDeploymentOwner: boolean,
-    billing?: RouterDeps["billing"],
     signupSurvey: { userId: string } | null = null,
     analytics?: RouterDeps["analytics"],
   ) {
@@ -453,7 +452,6 @@ describe("billing", () => {
     } as unknown as PrismaClient;
     const deps = {
       prisma,
-      billing,
       analytics,
       env: {
         defaultProvider: "fake",
@@ -473,46 +471,16 @@ describe("billing", () => {
     return createRouterClient(createRouter(deps), { context: { actor } });
   }
 
-  it("is not found when the deployment does not bill", async () => {
-    const client = billingDeps(false);
-    await expect(client.billing.status()).rejects.toMatchObject({ code: "NOT_FOUND" });
-    await expect(client.billing.checkout()).rejects.toMatchObject({ code: "NOT_FOUND" });
-    await expect(client.billing.selectFunding({ funding: "credits" })).rejects.toMatchObject({
-      code: "NOT_FOUND",
-    });
-    await expect(
-      client.billing.purchaseCredits({ amountCents: 1000, monthly: true }),
-    ).rejects.toMatchObject({ code: "NOT_FOUND" });
-    await expect(client.billing.setMonthlyCredits({ amountCents: 2000 })).rejects.toMatchObject({
-      code: "NOT_FOUND",
-    });
-    await expect(client.me()).resolves.toMatchObject({ billingEnabled: false });
-  });
-
-  it("enables billing on me for admins too", async () => {
-    const billing = { status: vi.fn() } as unknown as RouterDeps["billing"];
-    await expect(billingDeps(false, billing).me()).resolves.toMatchObject({
-      billingEnabled: true,
-    });
-    await expect(billingDeps(true, billing).me()).resolves.toMatchObject({
-      billingEnabled: true,
-    });
-  });
-
-  it("asks hosted users the signup survey until they answer or skip it", async () => {
-    const billing = { status: vi.fn() } as unknown as RouterDeps["billing"];
-    await expect(billingDeps(false).me()).resolves.toMatchObject({ needsSignupSurvey: false });
-    await expect(billingDeps(false, billing).me()).resolves.toMatchObject({
-      needsSignupSurvey: true,
-    });
-    await expect(billingDeps(false, billing, { userId: "user-1" }).me()).resolves.toMatchObject({
+  it("asks users the signup survey until they answer or skip it", async () => {
+    await expect(surveyDeps(false).me()).resolves.toMatchObject({ needsSignupSurvey: true });
+    await expect(surveyDeps(false, { userId: "user-1" }).me()).resolves.toMatchObject({
       needsSignupSurvey: false,
     });
   });
 
   it("sends only the fixed survey choices to analytics", async () => {
     const capture = vi.fn();
-    const client = billingDeps(false, undefined, null, { capture, flush: async () => undefined });
+    const client = surveyDeps(false, null, { capture, flush: async () => undefined });
     await client.onboarding.signupSurvey({
       use: "work",
       teamSize: "2-10",
@@ -531,7 +499,7 @@ describe("billing", () => {
   });
 
   it("records a blank survey as skipped", async () => {
-    await billingDeps(false).onboarding.signupSurvey({});
+    await surveyDeps(false).onboarding.signupSurvey({});
     expect(upsertSignupSurvey).toHaveBeenLastCalledWith({
       where: { userId: "user-1" },
       create: { userId: "user-1", reason: null, use: null, teamSize: null, source: null },
@@ -540,7 +508,7 @@ describe("billing", () => {
   });
 
   it("keeps team size only for work or both", async () => {
-    const client = billingDeps(false);
+    const client = surveyDeps(false);
     await client.onboarding.signupSurvey({
       reason: "  Run my inbox  ",
       use: "personal",

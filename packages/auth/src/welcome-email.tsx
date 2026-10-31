@@ -36,7 +36,7 @@ export function welcomeEmail(
       </Text>
       <Text>
         Alternative Bot is open source. If you like it,{" "}
-        <Link href="https://github.com/NETO-DEV66/alternativebot" style={linkStyle}>
+        <Link href="https://github.com/NETO-DEV66/ALTERNATIVE-BOT" style={linkStyle}>
           a star on GitHub
         </Link>{" "}
         helps others find it.
@@ -44,7 +44,7 @@ export function welcomeEmail(
       <Text>
         Want to run it on your own servers?{" "}
         <Link
-          href="https://github.com/NETO-DEV66/alternativebot/blob/main/docs/self-host.md"
+          href="https://github.com/NETO-DEV66/ALTERNATIVE-BOT/blob/main/docs/self-host.md"
           style={linkStyle}
         >
           Self-host Alternative Bot

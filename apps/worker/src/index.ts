@@ -23,8 +23,6 @@ import {
   createIdleComputerSweeper,
   createJobReconciler,
   createMessagingContextLoader,
-  createModelCreditReconciler,
-  createPaymentWalletProvider,
   createPostgresReconciliationLeadership,
   createProductAnalytics,
   createReservedGraphileJobWorkerHost,
@@ -35,7 +33,6 @@ import {
   createTicketChangeNotifier,
   createWebProvider,
   databaseCapacityBackoffMs,
-  deploymentModelUsageLookup,
   ExpoPushProvider,
   GraphileJobPublisher,
   homeStorageSweeper,
@@ -60,7 +57,6 @@ import {
   RunWorkerHost,
   reconcileCloudAgents,
   reconcileComputerUpdates,
-  reconcilePurchases,
   resolveDeploymentModel,
   resolvePiSessionRoot,
   resolveSandboxProvider,
@@ -239,9 +235,7 @@ async function main() {
     prisma,
     ticketBoardEnabled,
   });
-  // One provider instance so emulator launches and polls share the same Map.
   const cloudAgent = createCloudAgentConnection();
-  const paymentWallet = await createPaymentWalletProvider();
   // Shared with the reconciler so a stuck wait uses the same push path as a finish notice.
   const pushTokens = new PrismaPushTokenStore(prisma, resolveEncryptionKey(process.env));
   const notifications = new ExpoPushProvider(pushTokens, {
@@ -301,7 +295,6 @@ async function main() {
             prisma,
             forwardSecret: userDeviceForwardSecret(resolveEncryptionKey(process.env)),
           }),
-    paymentWallet,
     shutdownSignal: shutdown.signal,
   });
 
@@ -331,7 +324,6 @@ async function main() {
     deploymentModelConfigured,
     messaging,
     cloudAgent,
-    paymentWallet,
     notifications,
   });
   const reconciler = createJobReconciler({
@@ -340,12 +332,7 @@ async function main() {
     events,
     notifications,
     leadership: createPostgresReconciliationLeadership(pool),
-    reconcileModelCredits: createModelCreditReconciler({
-      prisma,
-      lookup: deploymentModelUsageLookup(),
-    }),
     reconcileCloudAgents: () => reconcileCloudAgents({ prisma, jobs, cloudAgent }),
-    reconcilePurchases: () => reconcilePurchases({ prisma, jobs, paymentWallet }),
     reconcileComputerUpdates: () => reconcileComputerUpdates({ prisma, jobs }),
     reconcileRoutineRetryNotices: inMemoryJobs
       ? undefined

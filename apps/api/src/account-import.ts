@@ -948,7 +948,7 @@ function parseManifest(bytes: Uint8Array): AccountExportManifest {
   const manifest = AccountExportManifestSchema.safeParse(parsed);
   if (manifest.success) return manifest.data;
   if (version !== ACCOUNT_EXPORT_VERSION)
-    throw new AccountImportError("This export is from a newer version of AlternativeBot.");
+    throw new AccountImportError("This export is from a newer version of Alternative Bot.");
   throw unreadable();
 }
 

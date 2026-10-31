@@ -7,10 +7,8 @@ const SETTINGS_SECTIONS = [
   "confirmations",
   "vault",
   "messaging",
-  "wallet",
   "usage",
   "computer",
-  "billing",
   "updates",
 ] as const;
 

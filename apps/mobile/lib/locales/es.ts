@@ -817,7 +817,7 @@ export const ES_MESSAGES: Record<string, string> = {
   "AI models": "Modelos de IA",
   Memory: "Memoria",
   "Privacy policies": "Políticas de privacidad",
-  AlternativeBot: "Alternative Bot",
+  "Alternative Bot": "Alternative Bot",
   "Withdraw all permissions": "Retirar todos los permisos",
   "Withdraw all permissions?": "¿Retirar todos los permisos?",
   "New mobile actions won't send data to these services. Runs already in progress and routines keep going until you stop them.":

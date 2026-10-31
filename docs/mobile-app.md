@@ -4,7 +4,7 @@ Chat with your bots, answer their questions, watch their computers and take call
 
 ## Install
 
-- Android: [download the APK](https://github.com/NETO-DEV66/alternativebot/releases/download/android/alternativebot.apk).
+- Android: [download the APK](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/releases/download/android/alternativebot.apk).
 
 You can also choose **Get the mobile app** from the account menu in the web or desktop app.
 

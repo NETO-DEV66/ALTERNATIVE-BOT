@@ -85,8 +85,6 @@ export function threadsRoutes(ctx: RouterContext) {
     }
     const confirmingImages =
       input.imageHandling === "confirm" && Boolean(input.artifactIds?.length);
-    // Reuse the funding modelSetup resolved; a send never asks billing twice.
-    const { funding } = setup;
     const deployment = setup.hasDeployment
       ? { provider: deps.env.defaultProvider, model: deps.env.defaultModel }
       : null;
@@ -98,7 +96,6 @@ export function threadsRoutes(ctx: RouterContext) {
           ? {
               secrets: deps.secrets,
               deployment,
-              hostedProvider: funding?.funding === "credits" ? deployment?.provider : undefined,
               codexCatalog,
             }
           : undefined,

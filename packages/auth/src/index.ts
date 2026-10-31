@@ -50,7 +50,6 @@ export {
   pluginSubmissionReceivedEmail,
   pluginSubmissionReviewedEmail,
 } from "./plugin-submission-email.js";
-export { referralEmail } from "./referral-email.js";
 export { welcomeEmail } from "./welcome-email.js";
 
 export interface AuthEnv {

@@ -53,7 +53,6 @@ import {
 } from "../lib/app-badge";
 import { mobileTokens, resolveMobileAppearance } from "../lib/appearance";
 import { AvatarViewportScope, createAvatarViewport } from "../lib/avatar-life";
-import { isPaywallShown } from "../lib/billing";
 import type { CreateAction } from "../lib/create-chooser";
 import { createInboxBot } from "../lib/create-inbox-bot";
 import { useHeaderHeightIfAny } from "../lib/floating-header";
@@ -243,21 +242,6 @@ function Home({ embedded, onSelectSpace, onShareSelect }: InboxPaneProps & { emb
         apiBase !== currentApiBase()
       )
         return;
-      if (nextMe.billingEnabled) {
-        void rpc("billing/status")
-          .then((billing) => {
-            if (
-              requestId === inboxRequestId.current &&
-              generation === currentSessionGeneration() &&
-              apiBase === currentApiBase() &&
-              billing.funding !== undefined &&
-              !billing.access &&
-              !isPaywallShown()
-            )
-              router.push("/paywall");
-          })
-          .catch(() => undefined);
-      }
       setBots((current) => retainInboxValue(current, navigation.current.bots));
       setBotSections((current) => retainInboxValue(current, navigation.current.botSections));
       setGroups((current) => retainInboxValue(current, navigation.current.groups));

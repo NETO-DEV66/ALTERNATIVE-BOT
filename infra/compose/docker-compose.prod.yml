@@ -210,8 +210,6 @@ x-app-environment: &app-environment
   CREATEOS_SANDBOX_SHAPE:
   CLOUD_AGENT_PROVIDER: ${CLOUD_AGENT_PROVIDER:-none}
   CLOUD_AGENT_SPACE_ID: ${CLOUD_AGENT_SPACE_ID:-}
-  PAYMENT_WALLET_PROVIDER: ${PAYMENT_WALLET_PROVIDER:-none}
-  PAYMENT_WALLET_CLIENT_ID: ${PAYMENT_WALLET_CLIENT_ID:-}
   CURSOR_API_KEY: ${CURSOR_API_KEY:-}
   # Tools and integrations
   WEB_PROVIDER:
@@ -305,7 +303,7 @@ services:
     profiles: [pitr]
     # Tagged with a hash of Dockerfile.pitr and pitr-agent.sh, so a deploy builds it once per change
     # instead of on every run (compose-service.test.ts checks the hash).
-    image: alternativebot-pitr:aa7cf1bde2aa8051
+    image: alternativebot-pitr:ddabd01c07dd1a73
     build:
       context: .
       dockerfile: Dockerfile.pitr
@@ -362,7 +360,7 @@ services:
   # container gets the owner login: the API and worker connect as alternativebot_app, which row-level
   # security binds, so code running in either cannot find a login that bypasses it.
   migrate:
-    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/NETO-DEV66/alternativebot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-local}
+    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-local}
     build:
       context: ../..
       dockerfile: infra/compose/Dockerfile
@@ -394,7 +392,7 @@ services:
     # The default tag is `local`, which no registry serves, so a fresh install builds from the
     # checkout via `up -d --build` instead of failing on a `pull` of an image that does not exist
     # yet. Once a release is published, pin ALTERNATIVEBOT_IMAGE_TAG to it and the pull path takes over.
-    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/NETO-DEV66/alternativebot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-local}
+    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-local}
     build:
       context: ../..
       dockerfile: infra/compose/Dockerfile
@@ -448,9 +446,6 @@ services:
       EMAIL_FROM:
       EMAIL_REPLY_TO:
       WELCOME_EMAIL_ENABLED:
-      STRIPE_SECRET_KEY:
-      STRIPE_WEBHOOK_SECRET:
-      STRIPE_PRICE_ID:
       CRISP_WEBSITE_ID:
       INTEGRATIONS_CATALOG_URL:
       TEAM_CHAT_BOT_ID:
@@ -489,7 +484,7 @@ services:
       start_interval: 1s
 
   worker:
-    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/NETO-DEV66/alternativebot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-local}
+    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-local}
     build:
       context: ../..
       dockerfile: infra/compose/Dockerfile
@@ -530,7 +525,7 @@ services:
         condition: service_healthy
 
   web:
-    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/NETO-DEV66/alternativebot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-local}
+    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-local}
     build:
       context: ../..
       dockerfile: infra/compose/Dockerfile
@@ -592,7 +587,7 @@ services:
     profiles: [updater]
     # Pinned separately from the application image: the updater does not recreate itself, so moving
     # its own version is an operator action, not something an update can do underneath itself.
-    image: ${ALTERNATIVEBOT_UPDATER_IMAGE:-ghcr.io/NETO-DEV66/alternativebot/updater}:${ALTERNATIVEBOT_UPDATER_IMAGE_TAG:-local}
+    image: ${ALTERNATIVEBOT_UPDATER_IMAGE:-ghcr.io/neto-dev66/alternative-bot/updater}:${ALTERNATIVEBOT_UPDATER_IMAGE_TAG:-local}
     build:
       context: ../..
       dockerfile: infra/updater/Dockerfile
@@ -613,7 +608,7 @@ services:
       ALTERNATIVEBOT_UPDATER_TOKEN: ${ALTERNATIVEBOT_UPDATER_TOKEN:-}
       ALTERNATIVEBOT_UPDATER_HOST: "0.0.0.0"
       ALTERNATIVEBOT_UPDATER_PORT: "7092"
-      ALTERNATIVEBOT_IMAGE: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/NETO-DEV66/alternativebot/app}
+      ALTERNATIVEBOT_IMAGE: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}
       # `-p` is available to Compose interpolation but is not injected into containers unless it is
       # declared here. The sidecar must target the project the operator actually started.
       COMPOSE_PROJECT_NAME: ${COMPOSE_PROJECT_NAME:-alternativebot-prod}

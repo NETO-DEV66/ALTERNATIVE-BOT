@@ -31,11 +31,7 @@ export const READ_ONLY_AGENT_TOOLS = new Set([
   "browser_snapshot",
   "list_secrets",
   "cloud_agent_status",
-  "purchase_status",
 ]);
-
-/** Offered only to a user who connected a wallet. */
-const PURCHASE_TOOL_NAMES = new Set(["request_purchase", "purchase_status", "paid_request"]);
 
 export const BUILTIN_AGENT_TOOL_NAMES = new Set(builtinAgentTools.map((tool) => tool.name));
 
@@ -65,7 +61,6 @@ export function selectBuiltinToolsForRun(options: {
   semanticMemoryForgets?: boolean;
   cloudAgentEnabled?: boolean;
   /** The run's user connected a payment wallet. */
-  paymentWalletEnabled?: boolean;
   mediaImagesEnabled?: boolean;
   mediaVideoEnabled?: boolean;
   messagingChannelRun: boolean;
@@ -103,7 +98,6 @@ export function selectBuiltinToolsForRun(options: {
       (options.trigger !== "created" || CREATED_RUN_TOOL_NAMES.has(tool.name)) &&
       (!FLEET_TOOL_NAMES_SET.has(tool.name) ||
         (Boolean(options.fleetManagement) && fleetToolsAllowed)) &&
-      (options.paymentWalletEnabled || !PURCHASE_TOOL_NAMES.has(tool.name)) &&
       (options.mediaImagesEnabled || tool.name !== "generate_image") &&
       (options.mediaVideoEnabled || tool.name !== "generate_video") &&
       (options.ticketBoardEnabled ||

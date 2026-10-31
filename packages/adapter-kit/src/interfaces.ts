@@ -10,12 +10,6 @@ import type {
   AutoReviewResult,
   BackgroundJob,
   BackgroundJobHandlers,
-  BillingByokCheckoutRequest,
-  BillingCheckoutRequest,
-  BillingCreditCheckoutRequest,
-  BillingCreditPurchase,
-  BillingPrice,
-  BillingSubscriptionSnapshot,
   BrowserActRequest,
   BrowserActResult,
   BrowserCapabilities,
@@ -460,38 +454,6 @@ export interface TransactionalEmailProvider {
   send(message: TransactionalEmail): Promise<void>;
   /** Wait for accepted in-flight deliveries before a graceful shutdown completes. */
   drain?(): Promise<void>;
-}
-
-/**
- * Seat-based subscription billing. Product code owns access rules; adapters own the
- * vendor API. Sync is pull-based: webhooks only say which customer changed.
- */
-export interface BillingProvider {
-  /** Optional prepaid model usage capabilities; product code owns the balance ledger. */
-  createCreditCheckout?(input: BillingCreditCheckoutRequest): Promise<{ url: string }>;
-  listCreditPurchases?(customerId: string): Promise<BillingCreditPurchase[]>;
-  setMonthlyCredits?(customerId: string, amountCents: number): Promise<void>;
-  /** Flat monthly own-key plan: access without credits. */
-  createByokCheckout?(input: BillingByokCheckoutRequest): Promise<{ url: string }>;
-  /** Ends every live own-key plan at its period end. */
-  endByokPlans?(customerId: string): Promise<void>;
-  /**
-   * Credits the customer's account; future invoices draw it down before charging. Idempotent per
-   * `referenceId`, so a retry after an unknown outcome never credits twice.
-   */
-  grantBalanceCredit?(customerId: string, amountCents: number, referenceId: string): Promise<void>;
-  describe(): AdapterDescriptor<{ trials: boolean; portal: boolean; modelCredits?: boolean }>;
-  getPrice(): Promise<BillingPrice>;
-  createCustomer(input: { email: string; organizationId: string }): Promise<{ customerId: string }>;
-  createCheckout(input: BillingCheckoutRequest): Promise<{ url: string }>;
-  createPortal(input: { customerId: string; returnUrl: string }): Promise<{ url: string }>;
-  /** Current subscription for the customer, preferring one that grants access. */
-  getCustomerSubscription(customerId: string): Promise<BillingSubscriptionSnapshot | null>;
-  /** Sets seats on the customer's subscription; a no-op when none can still take updates. */
-  updateSeats(customerId: string, seats: number): Promise<void>;
-  cancelCustomerSubscriptions(customerId: string): Promise<void>;
-  /** Verifies the signature. `null` means the request is not authentic. */
-  parseWebhook(rawBody: string, headers: Headers): { customerId: string } | "ignored" | null;
 }
 
 export interface ExecutionRunner {

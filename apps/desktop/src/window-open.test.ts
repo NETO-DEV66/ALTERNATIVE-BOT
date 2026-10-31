@@ -10,7 +10,7 @@ describe("desktop child windows", () => {
 
   it("opens ordinary external links outside Electron", () => {
     expect(
-      shouldOpenInAppPopup(appOrigin, "https://github.com/NETO-DEV66/alternativebot/pull/395", "_blank"),
+      shouldOpenInAppPopup(appOrigin, "https://github.com/NETO-DEV66/ALTERNATIVE-BOT/pull/395", "_blank"),
     ).toBe(false);
   });
 
