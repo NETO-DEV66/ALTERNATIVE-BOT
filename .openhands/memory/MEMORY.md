@@ -15,7 +15,12 @@ rebranded to **Alternative Bot**, mobile-only, Android package
 - **`Token01`** (a `ghp_…` classic PAT) returns **401 Bad credentials** everywhere.
 - **`OPENHANDS_API_KEY`** is for the OpenHands Cloud API, not GitHub.
 - To push, use the **user's own PAT** (he pastes a `ghp_…` token in chat for this
-  purpose) with `git -c credential.helper= push "https://NETO-DEV66:<pat>@github.com/NETO-DEV66/ALTERNATIVE-BOT.git" main`.
+  purpose; the classic PAT has full `repo` scope + admin on this repo).
+  **Gotcha:** `~/.gitconfig` installs `gh` as the credential helper
+  (`credential.https://github.com.helper = !/usr/bin/gh auth git-credential`), so a
+  plain `git push` reuses the read-only `GITHUB_TOKEN` and still 403s even with a good
+  PAT. You must **disable the helper** for the push:
+  `git -c credential.helper= -c 'credential.https://github.com.helper=' push "https://NETO-DEV66:<pat>@github.com/NETO-DEV66/ALTERNATIVE-BOT.git" main`.
   Never persist the value; treat it as a transient secret.
 
 ## Archiving an OpenHands Cloud conversation
@@ -29,10 +34,8 @@ rebranded to **Alternative Bot**, mobile-only, Android package
 
 ## Current state (2026-10-31)
 
-- `origin/main` is at `42aa60f fix: finish Alternative Bot rebrand and remove billing leftovers`.
-  A newer local commit `8893438` (conversation archive + final billing-leftover cleanup)
-  is **committed but not pushed** — the push 403s on the read-only token; needs the
-  user's fresh PAT.
+- `origin/main` and local `main` are both at `ed3834e` (conversation archive + final
+  billing-leftover cleanup + memory notes). **Pushed** successfully.
 - Rebrand + billing removal are **verified complete**: no `rakazo`/`Rakazo` or
   `elie222` references remain outside `.git`/the original source zip; all
   billing/payment code, Prisma models, migrations and Stripe compose env are gone.
