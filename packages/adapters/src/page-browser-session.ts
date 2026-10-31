@@ -29,7 +29,7 @@ const REOPEN_SAVED_SITE = "Open the saved site with browser_navigate, then fill 
 /** Saved usernames are typed only into these input types. Textareas stay out: a username is an input. */
 const USERNAME_INPUT_TYPES = new Set(["text", "email", "tel"]);
 
-/** A saved-login or card fill declined before the page changed; reported as settled, not uncertain. */
+/** A saved-login fill declined before the page changed; reported as settled, not uncertain. */
 class FillRefused extends Error {}
 
 /** A step the page cannot take as asked, such as an option the dropdown does not have. */
@@ -42,7 +42,7 @@ type DomElement = InstanceType<DomWindow["Element"]>;
 export class PageBrowserSession {
   private dom: JSDOM;
   private refs = new Map<string, DomElement>();
-  /** Fields holding a saved login or card detail; snapshots never report their values. */
+  /** Fields holding a saved login; snapshots never report their values. */
   private loginFilled = new WeakSet<DomElement>();
   private nextRef = 1;
 
@@ -141,7 +141,9 @@ export class PageBrowserSession {
       throw new FillRefused(notHttps);
     }
     if (page.origin !== saved.origin) {
-      throw new FillRefused(`The page is not on the site this login was saved for. ${REOPEN_SAVED_SITE}`);
+      throw new FillRefused(
+        `The page is not on the site this login was saved for. ${REOPEN_SAVED_SITE}`,
+      );
     }
   }
 

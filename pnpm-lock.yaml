@@ -705,9 +705,6 @@ importers:
       '@alternativebot/logging':
         specifier: workspace:*
         version: link:../logging
-      '@stripe/link-sdk':
-        specifier: 0.15.0
-        version: 0.15.0
       chat:
         specifier: 4.43.0
         version: 4.43.0(zod@4.6.7)
@@ -4734,10 +4731,6 @@ packages:
 
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
-
-  '@stripe/link-sdk@0.15.0':
-    resolution: {integrity: sha512-EbTPhou4bGZvsNOqOFMXDqgV6H7f7iDIgcZ/NJMvTSzmqw9/I0vQpIk+nHfbDNGm6yo4rY0uqb3zYT4GOLLLqQ==}
-    engines: {node: '>=20'}
 
   '@stripe/stripe-js@9.17.0':
     resolution: {integrity: sha512-uidL4OJum5kivsOAQnVfQmYLJ2zdgirtmT0zWgskASZ4TPXxpXQ0MNrzW4NsXB90uEqmPHpSEtciLFbF1QQvNA==}
@@ -15864,10 +15857,6 @@ snapshots:
   '@stablelib/base64@1.0.1': {}
 
   '@standard-schema/spec@1.1.0': {}
-
-  '@stripe/link-sdk@0.15.0':
-    dependencies:
-      zod: 4.6.7
 
   '@stripe/stripe-js@9.17.0': {}
 

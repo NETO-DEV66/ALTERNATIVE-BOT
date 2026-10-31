@@ -558,7 +558,7 @@ describe("live page helper long dropdowns", () => {
   });
 });
 
-describe("live page helper saved logins and cards", () => {
+describe("live page helper saved logins", () => {
   const origin = "https://portal.example.test";
   const form = `<input aria-label="Email" type="email" /><input aria-label="Password" type="password" />
     <input aria-label="Notes" type="text" /><select aria-label="Plan"><option>Free</option></select>`;
@@ -574,9 +574,6 @@ describe("live page helper saved logins and cards", () => {
     );
     expect(() => browser.fill(refOf(snap, "Plan"), "fake-user", origin, "username")).toThrow(
       /Refused: A saved username can only be typed into a text, email, or telephone field/,
-    );
-    expect(() => browser.fill(refOf(snap, "Plan"), "4242", origin, "card")).toThrow(
-      /Refused: A card can only be typed into a card field/,
     );
     expect(() =>
       browser.fill(

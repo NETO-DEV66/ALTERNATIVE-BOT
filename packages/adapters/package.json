@@ -45,7 +45,6 @@
     "@alternativebot/core": "workspace:*",
     "@alternativebot/db": "workspace:*",
     "@alternativebot/logging": "workspace:*",
-    "@stripe/link-sdk": "0.15.0",
     "chat": "4.43.0",
     "chat-adapter-sendblue": "0.2.0",
     "d3-dsv": "3.0.1",

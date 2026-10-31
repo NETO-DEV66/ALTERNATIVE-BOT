@@ -20,7 +20,11 @@ beforeEach(() => {
   mock.stdin.length = 0;
   mock.inspect.mockResolvedValue({
     Config: {
-      Labels: { "alternativebot.managed": "true", "alternativebot.botId": "home", "alternativebot.spaceId": "space" },
+      Labels: {
+        "alternativebot.managed": "true",
+        "alternativebot.botId": "home",
+        "alternativebot.spaceId": "space",
+      },
     },
   });
   mock.exec.mockImplementation(async (options: { Cmd: string[] }) => ({
@@ -122,56 +126,6 @@ it.each([
     "a saved-login fill that does not say which field it is",
     { kind: "fill", ref: "e1", text: "fake-password-1", origin: "https://login.example.test" },
   ],
-  [
-    "a card fill without the merchant's origin",
-    { kind: "fill", ref: "e1", text: "4242424242424242", field: "card" },
-  ],
-  [
-    "a card fill without its ref or card field",
-    { kind: "fill", text: "4242424242424242", origin: "https://shop.example.test", field: "card" },
-  ],
-  [
-    "a ref-less fill that is not a card",
-    {
-      kind: "fill",
-      text: "fake-password-1",
-      origin: "https://login.example.test",
-      field: "password",
-      cardField: "number",
-    },
-  ],
-  [
-    "a ref-less card type",
-    {
-      kind: "type",
-      text: "4242424242424242",
-      origin: "https://shop.example.test",
-      field: "card",
-      cardField: "number",
-    },
-  ],
-  [
-    "a ref-less card fill without the merchant's origin",
-    { kind: "fill", text: "4242424242424242", field: "card", cardField: "number" },
-  ],
-  [
-    "an unknown card field",
-    {
-      kind: "fill",
-      text: "4242",
-      origin: "https://shop.example.test",
-      field: "card",
-      cardField: "track2",
-    },
-  ],
-  [
-    "a pay token without the merchant's origin",
-    { kind: "pay_token", text: "lpt_fake_secret", merchantAccountId: "acct_fake123" },
-  ],
-  [
-    "a pay token without its merchant account",
-    { kind: "pay_token", text: "lpt_fake_secret", origin: "https://shop.example.test" },
-  ],
 ])("rejects %s", async (_, action) => {
   const response = await supervisorApp.request("/computers/computer-login/browser", {
     method: "POST",
@@ -194,7 +148,8 @@ it("closes helper stdin when the request is cancelled", async () => {
   });
   const defaultExec = mock.exec.getMockImplementation()!;
   mock.exec.mockImplementation(async (options: { Cmd: string[]; AttachStdin?: boolean }) => {
-    if (!options.Cmd.includes("/usr/local/bin/alternativebot-page-browser")) return defaultExec(options);
+    if (!options.Cmd.includes("/usr/local/bin/alternativebot-page-browser"))
+      return defaultExec(options);
     expect(options.AttachStdin).toBe(true);
     return {
       start: async (options: { stdin: boolean }) => {
@@ -226,27 +181,6 @@ it.each([
   [
     "saved-login",
     { text: "fake-password-1", origin: "https://login.example.test", field: "password" },
-  ],
-  ["card", { text: "4242424242424242", origin: "https://shop.example.test", field: "card" }],
-  [
-    "ref-less card",
-    {
-      ref: undefined,
-      text: "4242424242424242",
-      origin: "https://shop.example.test",
-      field: "card",
-      cardField: "number",
-    },
-  ],
-  [
-    "pay token",
-    {
-      kind: "pay_token",
-      ref: undefined,
-      text: "lpt_fake_secret",
-      origin: "https://shop.example.test",
-      merchantAccountId: "acct_fake123",
-    },
   ],
 ])("sends a %s fill only over stdin, never in the helper's arguments", async (_, fill) => {
   const actions = [{ kind: "fill", ref: "e1", ...fill }];
@@ -423,7 +357,11 @@ describe("screen setup reuse", () => {
   beforeEach(() => {
     mock.inspect.mockResolvedValue({
       Config: {
-        Labels: { "alternativebot.managed": "true", "alternativebot.botId": "home", "alternativebot.spaceId": "space" },
+        Labels: {
+          "alternativebot.managed": "true",
+          "alternativebot.botId": "home",
+          "alternativebot.spaceId": "space",
+        },
       },
       State: { StartedAt: bootedAt },
     });
