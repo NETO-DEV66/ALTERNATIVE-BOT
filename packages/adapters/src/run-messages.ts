@@ -1,12 +1,12 @@
-import type { MessageBlock } from "@rakazo/contracts";
-import { callIdFromClientNonce, isBackgroundRunTrigger, redactSecrets } from "@rakazo/core";
-import type { Prisma, RunLease } from "@rakazo/db";
+import type { MessageBlock } from "@alternativebot/contracts";
+import { callIdFromClientNonce, isBackgroundRunTrigger, redactSecrets } from "@alternativebot/core";
+import type { Prisma, RunLease } from "@alternativebot/db";
 import {
   appendEventInTransaction,
   createThreadMessageInTransaction,
   withTransactionRetry,
-} from "@rakazo/db";
-import { getLogger } from "@rakazo/logging";
+} from "@alternativebot/db";
+import { getLogger } from "@alternativebot/logging";
 import type { ExecutorDeps } from "./executor-deps.js";
 
 /** Deps for one attempt: its run's history writes carry the lease, so a superseded attempt cannot write. */

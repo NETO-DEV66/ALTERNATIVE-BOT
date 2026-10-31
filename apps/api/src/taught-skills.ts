@@ -1,13 +1,13 @@
 import { randomUUID } from "node:crypto";
 import { ORPCError } from "@orpc/server";
-import type { AgentHomeStore, JobPublisher, SandboxProvider } from "@rakazo/adapter-kit";
+import type { AgentHomeStore, JobPublisher, SandboxProvider } from "@alternativebot/adapter-kit";
 import {
   createAdapterContext,
   runContinueJob,
   skillTeachingExpireJob,
   skillTeachingExpireJobKey,
-} from "@rakazo/adapter-kit";
-import type { ComputerExecutionLease, TaughtSkillRow, TeachComputerInput } from "@rakazo/adapters";
+} from "@alternativebot/adapter-kit";
+import type { ComputerExecutionLease, TaughtSkillRow, TeachComputerInput } from "@alternativebot/adapters";
 import {
   acquireComputerExecutionLease,
   appendRecordingEvent,
@@ -29,18 +29,18 @@ import {
   scheduleComputerControlExpiry,
   screenLeaseIdForRun,
   teachingControlLeaseExpiresAt,
-} from "@rakazo/adapters";
-import type { Actor, MessageBlock, TaughtSkill } from "@rakazo/contracts";
-import type { SkillPlaybook, TeachRecordingEvent } from "@rakazo/core";
+} from "@alternativebot/adapters";
+import type { Actor, MessageBlock, TaughtSkill } from "@alternativebot/contracts";
+import type { SkillPlaybook, TeachRecordingEvent } from "@alternativebot/core";
 import {
   ACTIVE_RUN_STATUSES,
   buildPlaybookFromRecording,
   formatSkillRunPrompt,
   teachRecordingTtlMs,
-} from "@rakazo/core";
-import type { createRepos, PrismaClient, ThreadEvents } from "@rakazo/db";
-import { clearEndedRunState, expireComputerExecutionLeases, IsolationError } from "@rakazo/db";
-import { getLogger } from "@rakazo/logging";
+} from "@alternativebot/core";
+import type { createRepos, PrismaClient, ThreadEvents } from "@alternativebot/db";
+import { clearEndedRunState, expireComputerExecutionLeases, IsolationError } from "@alternativebot/db";
+import { getLogger } from "@alternativebot/logging";
 
 export interface TaughtSkillsDeps {
   prisma: PrismaClient;

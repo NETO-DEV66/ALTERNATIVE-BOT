@@ -4,14 +4,14 @@ import {
   hasHostedModelCredits,
   isAutoReviewCheckerConfigured,
   PushSessionEndedError,
-} from "@rakazo/adapters";
-import type { ActionApprovalRule, Actor, Me, SettingsScope } from "@rakazo/contracts";
+} from "@alternativebot/adapters";
+import type { ActionApprovalRule, Actor, Me, SettingsScope } from "@alternativebot/contracts";
 import {
   approvalModeFromPreference,
   approvalPreferenceFromMode,
   previewActionApprovalRule,
-} from "@rakazo/core";
-import { urlSite } from "@rakazo/core/egress";
+} from "@alternativebot/core";
+import { urlSite } from "@alternativebot/core/egress";
 import {
   findAutoReviewPreference,
   findDefaultVoiceCredential,
@@ -27,7 +27,7 @@ import {
   saveAutoReviewPreference,
   selectVoicePreference,
   voicePreferenceTarget,
-} from "@rakazo/db";
+} from "@alternativebot/db";
 import { aiConsentStatus, allowAiConsent } from "../ai-consent.js";
 import type { BillingService } from "../billing.js";
 import { firstModelConnectAnalytics } from "../model-connect-analytics.js";

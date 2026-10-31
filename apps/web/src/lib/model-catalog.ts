@@ -1,9 +1,9 @@
 import { i18n } from "@lingui/core";
-import type { ModelCatalogEntry, ModelCredential, ThinkingLevel } from "@rakazo/contracts";
-import type { ConnectedModelChoice } from "@rakazo/core";
-import { connectedModelChoices } from "@rakazo/core";
+import type { ModelCatalogEntry, ModelCredential, ThinkingLevel } from "@alternativebot/contracts";
+import type { ConnectedModelChoice } from "@alternativebot/core";
+import { connectedModelChoices } from "@alternativebot/core";
 
-export { modelOptionKey, parseModelOptionKey } from "@rakazo/core";
+export { modelOptionKey, parseModelOptionKey } from "@alternativebot/core";
 
 /** The models the connected credentials can run, as one list for a picker. */
 export function connectedModelOptions(

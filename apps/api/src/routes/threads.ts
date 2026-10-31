@@ -1,7 +1,7 @@
 import { ORPCError } from "@orpc/server";
-import { runContinueJob, runJobKey } from "@rakazo/adapter-kit";
-import { settleCallRequest } from "@rakazo/adapters";
-import type { Actor, ProductEvent } from "@rakazo/contracts";
+import { runContinueJob, runJobKey } from "@alternativebot/adapter-kit";
+import { settleCallRequest } from "@alternativebot/adapters";
+import type { Actor, ProductEvent } from "@alternativebot/contracts";
 import {
   AttachmentValidationError,
   CALL_CLIENT_NONCE_PREFIX,
@@ -9,8 +9,8 @@ import {
   expandSkillReferencesInPrompt,
   MODEL_REQUIRED_SEND_ERROR,
   QUEUE_HOLDING_RUN_STATUSES,
-} from "@rakazo/core";
-import type { Prisma } from "@rakazo/db";
+} from "@alternativebot/core";
+import type { Prisma } from "@alternativebot/db";
 import {
   AnswerTooLongError,
   appendEventInTransaction,
@@ -19,8 +19,8 @@ import {
   IsolationError,
   lockOwnedGroup,
   touchGroupUpdatedAt,
-} from "@rakazo/db";
-import { getLogger } from "@rakazo/logging";
+} from "@alternativebot/db";
+import { getLogger } from "@alternativebot/logging";
 import { createRoutineTestRun, routineTestRunNonce, routineTestTarget } from "../routines.js";
 import { withSerializableRetry } from "../serializable-retry.js";
 import { assertTeachingSendAllowed } from "../taught-skills.js";

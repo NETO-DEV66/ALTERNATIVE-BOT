@@ -1,14 +1,14 @@
-import { ChatMarkdown, withBlockMentions } from "@rakazo/chat-ui/native";
-import type { LoginFieldInput, MessageBlock } from "@rakazo/contracts";
-import { isAttachmentAudioMimeType } from "@rakazo/contracts";
-import type { ChildBotBlock, PeerExchange } from "@rakazo/core";
+import { ChatMarkdown, withBlockMentions } from "@alternativebot/chat-ui/native";
+import type { LoginFieldInput, MessageBlock } from "@alternativebot/contracts";
+import { isAttachmentAudioMimeType } from "@alternativebot/contracts";
+import type { ChildBotBlock, PeerExchange } from "@alternativebot/core";
 import {
   formatFileSize,
   isApprovalAskBlock,
   memberName,
   selectedAskActionLabel,
-} from "@rakazo/core";
-import { fontWeight, typeScale } from "@rakazo/ui-tokens";
+} from "@alternativebot/core";
+import { fontWeight, typeScale } from "@alternativebot/ui-tokens";
 import type { ComponentProps } from "react";
 import { memo, useState } from "react";
 import type { TextProps } from "react-native";

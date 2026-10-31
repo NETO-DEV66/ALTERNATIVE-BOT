@@ -3,17 +3,17 @@ import type {
   AdapterContext,
   BackgroundJobPayloads,
   CloudAgentSnapshot,
-} from "@rakazo/adapter-kit";
+} from "@alternativebot/adapter-kit";
 import {
   CloudAgentRequestRejected,
   CloudAgentRetryLater,
   runContinueJob,
-} from "@rakazo/adapter-kit";
-import type { MessageBlock } from "@rakazo/contracts";
-import { cloudAgentHttpsUrl } from "@rakazo/core";
-import type { CloudAgent } from "@rakazo/db";
-import { appendEventInTransaction, Prisma } from "@rakazo/db";
-import { getLogger } from "@rakazo/logging";
+} from "@alternativebot/adapter-kit";
+import type { MessageBlock } from "@alternativebot/contracts";
+import { cloudAgentHttpsUrl } from "@alternativebot/core";
+import type { CloudAgent } from "@alternativebot/db";
+import { appendEventInTransaction, Prisma } from "@alternativebot/db";
+import { getLogger } from "@alternativebot/logging";
 import { cloudAgentsEnabled } from "./cloud-agent-factory.js";
 import type { CloudAgentDeps } from "./cloud-agent-service.js";
 import { cloudAgentBlock, enqueueCloudAgent } from "./cloud-agent-service.js";

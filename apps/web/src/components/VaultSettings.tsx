@@ -4,7 +4,7 @@ import type {
   LoginFieldInput,
   SettingsScope,
   VaultRevealed,
-} from "@rakazo/contracts";
+} from "@alternativebot/contracts";
 import {
   BotSecretName,
   commandVariableName,
@@ -12,10 +12,10 @@ import {
   encodeLoginSecret,
   isIdentityConfirmationRequired,
   LoginSecretValue,
-} from "@rakazo/contracts";
-import { fetchFresh, writeSaved } from "@rakazo/core/query";
-import { Button, Input, NativeSelect, NativeSelectOption } from "@rakazo/ui-web";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@rakazo/ui-web/components/ui/tooltip";
+} from "@alternativebot/contracts";
+import { fetchFresh, writeSaved } from "@alternativebot/core/query";
+import { Button, Input, NativeSelect, NativeSelectOption } from "@alternativebot/ui-web";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@alternativebot/ui-web/components/ui/tooltip";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, Copy, Eye, EyeOff, Plus, RotateCcw, X } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";

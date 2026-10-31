@@ -2,17 +2,17 @@ import type {
   JobPublisher,
   MessagingInboundAttachment,
   MessagingInboundMessage,
-} from "@rakazo/adapter-kit";
-import { messagingDeliverJob, runContinueJob } from "@rakazo/adapter-kit";
-import type { MessageBlock } from "@rakazo/contracts";
-import { ATTACHMENT_MAX_COUNT } from "@rakazo/contracts";
+} from "@alternativebot/adapter-kit";
+import { messagingDeliverJob, runContinueJob } from "@alternativebot/adapter-kit";
+import type { MessageBlock } from "@alternativebot/contracts";
+import { ATTACHMENT_MAX_COUNT } from "@alternativebot/contracts";
 import {
   displayName,
   messageBlockForArtifact,
   parseMessagingCommand,
   promptTextForAttachments,
   sanitizeMessagingLabel,
-} from "@rakazo/core";
+} from "@alternativebot/core";
 import type {
   MessagingIdentityRequest,
   Prisma,
@@ -20,14 +20,14 @@ import type {
   ProvisionedMessagingIdentity,
   SignupPolicyEnv,
   ThreadEvents,
-} from "@rakazo/db";
+} from "@alternativebot/db";
 import {
   createThreadMessage,
   crossSpaceCommunicationAllowed,
   normalizeMessagingLinkCode,
   redeemMessagingLinkCode,
-} from "@rakazo/db";
-import { getLogger } from "@rakazo/logging";
+} from "@alternativebot/db";
+import { getLogger } from "@alternativebot/logging";
 import type { MessagingReceipts } from "./messaging-receipts.js";
 import {
   MESSAGE_ROUTING_REARMED_REASON,
@@ -661,7 +661,7 @@ async function handleChannelEvent(
           idempotencyKey: `intro:${channel.id}`,
           kind: "intro",
           threadId: channel.threadId,
-          body: "Hi. This line hosts Rakazo personal agents. Some people in this group haven't messaged it yet; send any message to this line first if you want your own agent here.",
+          body: "Hi. This line hosts Alternative Bot personal agents. Some people in this group haven't messaged it yet; send any message to this line first if you want your own agent here.",
         },
       ],
       skipDuplicates: true,
@@ -752,7 +752,7 @@ async function inviteMember(
         idempotencyKey: `invite:${channel.id}:${identity.id}`,
         kind: "dm",
         identityId: identity.id,
-        body: `"${name}" was linked to your Rakazo agent. Reply YES to let your agent join the conversation there, or NO to stay out.`,
+        body: `"${name}" was linked to your Alternative Bot agent. Reply YES to let your agent join the conversation there, or NO to stay out.`,
       },
     ],
     skipDuplicates: true,

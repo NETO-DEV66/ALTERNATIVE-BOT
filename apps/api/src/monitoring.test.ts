@@ -1,4 +1,4 @@
-import { monitoringUserId } from "@rakazo/logging";
+import { monitoringUserId } from "@alternativebot/logging";
 import { describe, expect, it } from "vitest";
 import { loadEnv } from "./env.js";
 import { MAX_MONITORING_ENVELOPE_BYTES, monitoringRoutes, parseDsn } from "./monitoring.js";
@@ -34,7 +34,7 @@ describe("monitoring routes", () => {
 
   it("reads browser config from the environment", () => {
     const base = {
-      DATABASE_URL: "postgres://rakazo:rakazo@127.0.0.1:5433/rakazo",
+      DATABASE_URL: "postgres://alternativebot:alternativebot@127.0.0.1:5433/alternativebot",
       NODE_ENV: "test",
     };
     expect(loadEnv(base).browserMonitoring).toBeUndefined();

@@ -1,0 +1,9 @@
+# Optional drop-in: /etc/systemd/system/alternativebot-backup.service.d/alerts.conf
+[Unit]
+OnFailure=alternativebot-backup-alert.service
+
+[Service]
+ExecStartPost=-/usr/local/sbin/alternativebot-host-alert backup-failure ""
+ReadWritePaths=/var/lib/alternativebot/alerts
+StateDirectory=alternativebot/alerts
+StateDirectoryMode=0700

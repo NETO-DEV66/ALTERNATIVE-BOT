@@ -1,14 +1,14 @@
-import type { Actor } from "@rakazo/contracts";
-import { RoutineHistorySchema } from "@rakazo/contracts";
-import { runFailureError } from "@rakazo/core";
-import type { PrismaClient } from "@rakazo/db";
+import type { Actor } from "@alternativebot/contracts";
+import { RoutineHistorySchema } from "@alternativebot/contracts";
+import { runFailureError } from "@alternativebot/core";
+import type { PrismaClient } from "@alternativebot/db";
 import { describe, expect, it, vi } from "vitest";
 import { listRoutineRuns } from "./routine-runs.js";
 
 const actor: Actor = {
   userId: "user-1",
   spaceId: "space-1",
-  email: "user@rakazo.test",
+  email: "user@alternativebot.test",
   isDeploymentOwner: false,
 };
 const at = new Date("2026-01-02T12:00:00Z");

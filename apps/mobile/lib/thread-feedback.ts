@@ -1,10 +1,10 @@
-import type { AgentSkillCatalogEntry, RpcPath } from "@rakazo/contracts";
-import type { ComposerMention, resolveComposerSendPlan } from "@rakazo/core";
+import type { AgentSkillCatalogEntry, RpcPath } from "@alternativebot/contracts";
+import type { ComposerMention, resolveComposerSendPlan } from "@alternativebot/core";
 import {
   isImageInputConfirmation,
   isModelRequiredSendError,
   isServerUnreachable,
-} from "@rakazo/core";
+} from "@alternativebot/core";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { RpcOptions, rpc } from "./api";
 import { t } from "./i18n";

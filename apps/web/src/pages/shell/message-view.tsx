@@ -1,15 +1,15 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { ChatMarkdown, LinkifiedText, withBlockMentions } from "@rakazo/chat-ui/web";
+import { ChatMarkdown, LinkifiedText, withBlockMentions } from "@alternativebot/chat-ui/web";
 import type {
   BotAvatarSet,
   LoginFieldInput,
   MessageReaction,
   ThreadMessage,
-} from "@rakazo/contracts";
-import type { ChildBotBlock, PeerExchange } from "@rakazo/core";
-import { isPeerReceiptBlocks, isSecretAskBlock, isToolActivityBlock } from "@rakazo/core";
-import { BotAvatar, Button, cn, resolvePersonaColorDef } from "@rakazo/ui-web";
+} from "@alternativebot/contracts";
+import type { ChildBotBlock, PeerExchange } from "@alternativebot/core";
+import { isPeerReceiptBlocks, isSecretAskBlock, isToolActivityBlock } from "@alternativebot/core";
+import { BotAvatar, Button, cn, resolvePersonaColorDef } from "@alternativebot/ui-web";
 import { UserRound } from "lucide-react";
 import { memo, useMemo } from "react";
 import { ArtifactFileCard } from "../../components/ArtifactFileCard";

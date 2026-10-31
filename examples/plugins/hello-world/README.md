@@ -1,7 +1,7 @@
 # Hello world plugin
 
-A minimal Rakazo plugin: a manifest and one skill. Copy this folder to start your own, then read
-[Build a plugin](https://rakazo.com/docs/build-a-plugin/).
+A minimal Alternative Bot plugin: a manifest and one skill. Copy this folder to start your own, then read
+[Build a plugin](https://alternativebot.com/docs/build-a-plugin/).
 
 For hosted tools, start with the [MCP server example](../mcp-server/README.md).
 

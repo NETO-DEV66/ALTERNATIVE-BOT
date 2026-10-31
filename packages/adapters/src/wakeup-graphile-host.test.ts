@@ -1,12 +1,12 @@
 import { getHeapStatistics } from "node:v8";
-import type { BackgroundJobHandlers } from "@rakazo/adapter-kit";
+import type { BackgroundJobHandlers } from "@alternativebot/adapter-kit";
 import {
   HISTORY_COMPACT_MAX_ATTEMPTS,
   historyCompactJob,
   messagingDeliverJob,
-} from "@rakazo/adapter-kit";
-import type { PrismaClient } from "@rakazo/db";
-import { createLogger, createTestSink, installLogger, wrapJobPayload } from "@rakazo/logging";
+} from "@alternativebot/adapter-kit";
+import type { PrismaClient } from "@alternativebot/db";
+import { createLogger, createTestSink, installLogger, wrapJobPayload } from "@alternativebot/logging";
 import type { Runner } from "graphile-worker";
 import { makeWorkerUtils } from "graphile-worker";
 import type { Pool } from "pg";
@@ -783,7 +783,7 @@ describe("GraphileJobWorkerHost runner lifecycle", () => {
     const first = mockRunner();
     run.mockResolvedValueOnce(first.runner);
     const sink = createTestSink();
-    installLogger(createLogger({ service: "rakazo-worker", sinks: [sink] }));
+    installLogger(createLogger({ service: "alternativebot-worker", sinks: [sink] }));
     const host = new GraphileJobWorkerHost({} as Pool, {
       sleep: async () => undefined,
     });
@@ -823,7 +823,7 @@ describe("GraphileJobWorkerHost runner lifecycle", () => {
       });
     } finally {
       await host.stop();
-      installLogger(createLogger({ service: "rakazo-worker", level: "off", sinks: [] }));
+      installLogger(createLogger({ service: "alternativebot-worker", level: "off", sinks: [] }));
     }
 
     expect(sink.events).toEqual([

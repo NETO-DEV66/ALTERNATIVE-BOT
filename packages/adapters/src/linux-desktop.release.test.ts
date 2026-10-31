@@ -1,4 +1,4 @@
-import type { AdapterContext, ComputerRef } from "@rakazo/adapter-kit";
+import type { AdapterContext, ComputerRef } from "@alternativebot/adapter-kit";
 import { describe, expect, it } from "vitest";
 import { BrowserStoppedReleaseError } from "./computer-screens.js";
 import { LinuxDesktop } from "./linux-desktop.js";
@@ -25,9 +25,9 @@ type Result = { code: number; stdout: string; stderr?: string };
 function host(result: Result | ((command: string) => Result), commands: string[] = []) {
   return {
     environment: async () => ({
-      homeDir: "/home/rakazo",
-      workspaceDir: "/home/rakazo",
-      browserProfilesDir: "/home/rakazo/.browser-profiles",
+      homeDir: "/home/alternativebot",
+      workspaceDir: "/home/alternativebot",
+      browserProfilesDir: "/home/alternativebot/.browser-profiles",
       displayStart: 1,
     }),
     run: async (_computer: ComputerRef, command: string) => {
@@ -38,12 +38,12 @@ function host(result: Result | ((command: string) => Result), commands: string[]
   };
 }
 
-const releasesBrowser = (command: string) => command.includes("RAKAZO_DESKTOP_RELEASED");
+const releasesBrowser = (command: string) => command.includes("ALTERNATIVEBOT_DESKTOP_RELEASED");
 
 describe("LinuxDesktop.releaseScreen", () => {
   it("reports the browser stopped when slot cleanup fails after the release marker", async () => {
     const desktop = new LinuxDesktop(
-      host({ code: 1, stdout: "RAKAZO_DESKTOP_RELEASED=0\n", stderr: "slot lock failed" }),
+      host({ code: 1, stdout: "ALTERNATIVEBOT_DESKTOP_RELEASED=0\n", stderr: "slot lock failed" }),
     );
 
     await expect(desktop.releaseScreen(computer, context)).rejects.toBeInstanceOf(

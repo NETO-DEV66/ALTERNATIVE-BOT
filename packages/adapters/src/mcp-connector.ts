@@ -17,19 +17,19 @@ import type {
   ConnectorProvider,
   ConnectorTool,
   SecretStore,
-} from "@rakazo/adapter-kit";
-import { SecretStoreUnavailableError } from "@rakazo/adapter-kit";
-import type { McpOAuthEnvField } from "@rakazo/contracts";
+} from "@alternativebot/adapter-kit";
+import { SecretStoreUnavailableError } from "@alternativebot/adapter-kit";
+import type { McpOAuthEnvField } from "@alternativebot/contracts";
 import {
   isLocalhostOrLoopbackIp,
   mcpOAuthEnvReferences,
   resolveMcpOAuthEnv,
   resolveMcpOAuthFileTemplate,
-} from "@rakazo/contracts";
-import type { McpServer, PrismaClient, ThreadEvents } from "@rakazo/db";
-import { availableInSpace, itemSecretIn } from "@rakazo/db";
-import { getLogger } from "@rakazo/logging";
-import { sanitizedError } from "@rakazo/logging/monitoring";
+} from "@alternativebot/contracts";
+import type { McpServer, PrismaClient, ThreadEvents } from "@alternativebot/db";
+import { availableInSpace, itemSecretIn } from "@alternativebot/db";
+import { getLogger } from "@alternativebot/logging";
+import { sanitizedError } from "@alternativebot/logging/monitoring";
 import { catalogToolPrefix } from "./approval-effect.js";
 import { composioToolBatch } from "./composio-batch.js";
 import {
@@ -198,7 +198,7 @@ function recoveredSince(
 }
 
 /** Route name of the stand-in tool for an assigned server whose discovery failed. */
-const UNAVAILABLE_TOOL = "__rakazo_unavailable";
+const UNAVAILABLE_TOOL = "__alternativebot_unavailable";
 /** Skip rewriting an unchanged health observation more often than this. */
 const HEALTH_REWRITE_MS = 60_000;
 
@@ -1000,7 +1000,7 @@ export class McpConnector implements ConnectorProvider {
     credentialDir?: string;
     launchSecrets?: string[];
   }> {
-    const session = new McpSession({ name: `rakazo-${server.slug}` });
+    const session = new McpSession({ name: `alternativebot-${server.slug}` });
     let credentialDir: string | undefined;
     const launchSecrets: string[] = [];
     // Hoisted so a throw after the secret is decoded can still hand the material out.
@@ -1140,7 +1140,7 @@ export class McpConnector implements ConnectorProvider {
           // One private directory per launched process. A file path replaces an env value of
           // the same name; the API rejects such overlaps, so this is only a safe fallback.
           credentialDir = await mkdtemp(
-            join(this.options.credentialTempRoot ?? tmpdir(), "rakazo-mcp-"),
+            join(this.options.credentialTempRoot ?? tmpdir(), "alternativebot-mcp-"),
           );
           const dir = credentialDir;
           const previousOnClose = session.client.onclose;

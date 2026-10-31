@@ -5,29 +5,29 @@ import type {
   ComputerRef,
   JobPublisher,
   SandboxProvider,
-} from "@rakazo/adapter-kit";
+} from "@alternativebot/adapter-kit";
 import {
   computerControlExpireJobKey,
   SandboxRateLimitError,
   SandboxUnavailableError,
   SandboxUnresponsiveError,
-} from "@rakazo/adapter-kit";
-import type { ComputerUpdate } from "@rakazo/contracts";
+} from "@alternativebot/adapter-kit";
+import type { ComputerUpdate } from "@alternativebot/contracts";
 import {
   ACTIVE_RUN_STATUSES,
   abortableDelay,
   isRetryableError,
   parseScreenLeaseId,
   screenLeaseId,
-} from "@rakazo/core";
-import type { Prisma, PrismaClient, ThreadEvents } from "@rakazo/db";
+} from "@alternativebot/core";
+import type { Prisma, PrismaClient, ThreadEvents } from "@alternativebot/db";
 import {
   expireComputerExecutionLeases,
   parseComputerMode,
   recordComputerRunEnd,
   recordComputerRunStart,
-} from "@rakazo/db";
-import { getLogger } from "@rakazo/logging";
+} from "@alternativebot/db";
+import { getLogger } from "@alternativebot/logging";
 import {
   clearInactiveUserComputerControl,
   expireComputerControl,

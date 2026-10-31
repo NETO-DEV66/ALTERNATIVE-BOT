@@ -1,4 +1,4 @@
-import { groupBotsForSidebar } from "@rakazo/core";
+import { groupBotsForSidebar } from "@alternativebot/core";
 
 type SidebarChat = {
   id: string;

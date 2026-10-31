@@ -1,7 +1,7 @@
-import type { TransactionalEmailProvider } from "@rakazo/adapter-kit";
-import { referralEmail } from "@rakazo/auth";
-import { ActorSchema } from "@rakazo/contracts";
-import type { PrismaClient } from "@rakazo/db";
+import type { TransactionalEmailProvider } from "@alternativebot/adapter-kit";
+import { referralEmail } from "@alternativebot/auth";
+import { ActorSchema } from "@alternativebot/contracts";
+import type { PrismaClient } from "@alternativebot/db";
 import { unsubscribeUrl } from "./marketing-email.js";
 
 const HOUR_MS = 60 * 60 * 1000;

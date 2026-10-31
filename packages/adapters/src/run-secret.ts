@@ -1,14 +1,14 @@
-import type { AdapterContext, ManagedConnectorProvider, SecretStore } from "@rakazo/adapter-kit";
+import type { AdapterContext, ManagedConnectorProvider, SecretStore } from "@alternativebot/adapter-kit";
 import {
   BOT_SECRET_VALUE_MAX_LENGTH,
   encodeLoginSecret,
   loginAnswerValue,
   MessageBlock as MessageBlockSchema,
   SecretAskPurpose,
-} from "@rakazo/contracts";
-import { isSecretAskBlock } from "@rakazo/core";
-import type { PrismaClient, RunSecretWriter } from "@rakazo/db";
-import { runLoginKind, runSecretKind, withTransactionRetry } from "@rakazo/db";
+} from "@alternativebot/contracts";
+import { isSecretAskBlock } from "@alternativebot/core";
+import type { PrismaClient, RunSecretWriter } from "@alternativebot/db";
+import { runLoginKind, runSecretKind, withTransactionRetry } from "@alternativebot/db";
 import type { ApprovalPausedToolResult } from "./approval-effect.js";
 import { resolveDuplicateEffectGate } from "./approval-effect.js";
 import { encodeRunLogin, prepareBotSecret } from "./bot-secrets.js";

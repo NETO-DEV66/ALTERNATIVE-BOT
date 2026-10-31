@@ -1,0 +1,11 @@
+[Unit]
+Description=Notify operators when a production backup fails
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/alternativebot-host-alert backup-failure "Nightly backup failed. Inspect alternativebot-backup.service on the server."
+StateDirectory=alternativebot/alerts
+StateDirectoryMode=0700
+ProtectSystem=strict
+ReadWritePaths=/var/lib/alternativebot/alerts
+PrivateTmp=true

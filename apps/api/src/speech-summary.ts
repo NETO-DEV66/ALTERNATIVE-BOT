@@ -1,9 +1,9 @@
 import { createHash, randomUUID } from "node:crypto";
-import type { AgentRunRequest, AgentRuntime, AgentRuntimeEvent } from "@rakazo/adapter-kit";
-import type { Actor } from "@rakazo/contracts";
-import type { PrismaClient } from "@rakazo/db";
-import { recordUsage } from "@rakazo/db";
-import { getLogger } from "@rakazo/logging";
+import type { AgentRunRequest, AgentRuntime, AgentRuntimeEvent } from "@alternativebot/adapter-kit";
+import type { Actor } from "@alternativebot/contracts";
+import type { PrismaClient } from "@alternativebot/db";
+import { recordUsage } from "@alternativebot/db";
+import { getLogger } from "@alternativebot/logging";
 
 const SUMMARY_MAX_CHARS = 500;
 // Under the phone's 8-second request timeout, so a slow summary falls back to the full reply.

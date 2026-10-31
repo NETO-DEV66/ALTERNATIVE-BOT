@@ -1,7 +1,7 @@
-import type { AgentRunRequest, AgentSteeringMessage } from "@rakazo/adapter-kit";
-import type { MessageBlock } from "@rakazo/contracts";
-import { ATTACHMENT_MAX_BYTES, isAttachmentImageMimeType } from "@rakazo/contracts";
-import { blocksToAgentHistoryText } from "@rakazo/core";
+import type { AgentRunRequest, AgentSteeringMessage } from "@alternativebot/adapter-kit";
+import type { MessageBlock } from "@alternativebot/contracts";
+import { ATTACHMENT_MAX_BYTES, isAttachmentImageMimeType } from "@alternativebot/contracts";
+import { blocksToAgentHistoryText } from "@alternativebot/core";
 import type { ExecutorDeps } from "./executor-deps.js";
 import { loadReplyContext } from "./reply-context.js";
 import { currentTurnFilesInstruction, listCurrentTurnFiles } from "./thread-artifacts.js";

@@ -1,11 +1,11 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import type { AccountSecurity, UsageSummary } from "@rakazo/contracts";
+import type { AccountSecurity, UsageSummary } from "@alternativebot/contracts";
 import {
   accountDisplay,
   displayName,
   MAX_PASSWORD_LENGTH,
   MIN_PASSWORD_LENGTH,
-} from "@rakazo/core";
+} from "@alternativebot/core";
 import {
   Button,
   Field,
@@ -18,8 +18,8 @@ import {
   Switch,
   ToggleGroup,
   ToggleGroupItem,
-} from "@rakazo/ui-web";
-import { Disclosure } from "@rakazo/ui-web/components/ui/disclosure";
+} from "@alternativebot/ui-web";
+import { Disclosure } from "@alternativebot/ui-web/components/ui/disclosure";
 import {
   Table,
   TableBody,
@@ -27,7 +27,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@rakazo/ui-web/components/ui/table";
+} from "@alternativebot/ui-web/components/ui/table";
 import type { RefObject } from "react";
 import { useId, useRef, useState, useSyncExternalStore } from "react";
 import { AccountAccess } from "../components/AccountAccess";

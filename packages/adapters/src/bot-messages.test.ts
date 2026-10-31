@@ -1,5 +1,5 @@
-import type { PrismaClient } from "@rakazo/db";
-import { RunHistoryWriteError } from "@rakazo/db";
+import type { PrismaClient } from "@alternativebot/db";
+import { RunHistoryWriteError } from "@alternativebot/db";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   currentBotMessageHop,

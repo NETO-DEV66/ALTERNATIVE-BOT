@@ -1,17 +1,17 @@
 import { createORPCClient } from "@orpc/client";
 import { RPCLink } from "@orpc/client/fetch";
 import type { ContractRouterClient } from "@orpc/contract";
-import type { AppContract, ProductEvent } from "@rakazo/contracts";
-import { CLIENT_BUILD_HEADER, formatClientBuild } from "@rakazo/contracts";
-import { displayIdentityEvent, displayIdentityResult } from "@rakazo/core";
-import { clientCorrelationHeaders, responseCorrelation } from "@rakazo/logging/monitoring";
+import type { AppContract, ProductEvent } from "@alternativebot/contracts";
+import { CLIENT_BUILD_HEADER, formatClientBuild } from "@alternativebot/contracts";
+import { displayIdentityEvent, displayIdentityResult } from "@alternativebot/core";
+import { clientCorrelationHeaders, responseCorrelation } from "@alternativebot/logging/monitoring";
 import { authClient } from "./auth";
 import { CLIENT_BUILD } from "./client-build";
 import { i18n } from "./i18n";
 import { identityLabels } from "./identity-display";
 import { reportClientError } from "./monitoring";
 
-const SPACE_STORAGE_KEY = "rakazo:space-id";
+const SPACE_STORAGE_KEY = "alternativebot:space-id";
 
 type RpcClientContext = { spaceId?: string | null };
 
@@ -46,14 +46,14 @@ export function clearSpaceSelection(): void {
   }
 }
 
-/** Adds `x-rakazo-space-id` when a space is selected. */
+/** Adds `x-alternativebot-space-id` when a space is selected. */
 export function withSpaceHeaders(
   init?: HeadersInit,
   spaceId: string | null = selectedSpaceId(),
 ): Headers {
   const headers = new Headers(init);
-  if (spaceId) headers.set("x-rakazo-space-id", spaceId);
-  else headers.delete("x-rakazo-space-id");
+  if (spaceId) headers.set("x-alternativebot-space-id", spaceId);
+  else headers.delete("x-alternativebot-space-id");
   return headers;
 }
 

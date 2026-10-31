@@ -1,5 +1,5 @@
-import type { HttpPaymentChallenge } from "@rakazo/adapter-kit";
-import { PaymentWalletRequestRejected } from "@rakazo/adapter-kit";
+import type { HttpPaymentChallenge } from "@alternativebot/adapter-kit";
+import { PaymentWalletRequestRejected } from "@alternativebot/adapter-kit";
 import type * as Mppx from "mppx";
 
 type Challenge = Mppx.Challenge.Challenge;

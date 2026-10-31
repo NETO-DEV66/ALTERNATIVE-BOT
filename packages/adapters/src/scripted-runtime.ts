@@ -3,7 +3,7 @@ import type {
   AgentRunRequest,
   AgentRuntime,
   AgentRuntimeEvent,
-} from "@rakazo/adapter-kit";
+} from "@alternativebot/adapter-kit";
 import {
   APPROVED_ACTION_NOT_RUN_ERROR,
   abortableDelay,
@@ -14,7 +14,7 @@ import {
   MODEL_REQUEST_LIMIT_ERROR,
   modelFallbackFailure,
   STEERING_CONTINUATION_PROMPT,
-} from "@rakazo/core";
+} from "@alternativebot/core";
 
 const running = new Map<string, AbortController>();
 
@@ -603,7 +603,7 @@ code-b
         toolCalls: [
           {
             name: "destination.write",
-            args: { collection: "notes", title: "Rakazo result", body: prompt },
+            args: { collection: "notes", title: "Alternative Bot result", body: prompt },
           },
         ],
         complete: true,

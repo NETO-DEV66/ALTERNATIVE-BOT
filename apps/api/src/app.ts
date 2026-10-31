@@ -14,14 +14,14 @@ import type {
   RealtimeFanout,
   SandboxProvider,
   TransactionalEmailProvider,
-} from "@rakazo/adapter-kit";
+} from "@alternativebot/adapter-kit";
 import {
   SandboxDamagedError,
   SandboxRateLimitError,
   SandboxUnavailableError,
   SandboxUnresponsiveError,
   VoiceAccountError,
-} from "@rakazo/adapter-kit";
+} from "@alternativebot/adapter-kit";
 import type {
   ComposioProvider,
   ConnectorRegistry,
@@ -29,7 +29,7 @@ import type {
   PluginTextReader,
   RemoteConnectorDependencies,
   UserDeviceGateway,
-} from "@rakazo/adapters";
+} from "@alternativebot/adapters";
 import {
   applyMessagingOutboundStatus,
   ChatSdkMessagingSurface,
@@ -96,16 +96,16 @@ import {
   userDeviceInternalAddress,
   verifyModelServesAgents,
   withSecretPersistence,
-} from "@rakazo/adapters";
-import { createAuth, isBlockedAuthPath, loopbackTwinOrigins } from "@rakazo/auth";
-import type { Actor, AuthCapabilities } from "@rakazo/contracts";
+} from "@alternativebot/adapters";
+import { createAuth, isBlockedAuthPath, loopbackTwinOrigins } from "@alternativebot/auth";
+import type { Actor, AuthCapabilities } from "@alternativebot/contracts";
 import {
   isLocalhostOrLoopbackIp,
   PLUGIN_SUBMISSIONS_PATH,
   SERVER_BUILD_HEADER,
-} from "@rakazo/contracts";
-import { encryptionKeyWarning, signupPolicyFromEnv } from "@rakazo/core";
-import type { Pool, PrismaClient } from "@rakazo/db";
+} from "@alternativebot/contracts";
+import { encryptionKeyWarning, signupPolicyFromEnv } from "@alternativebot/core";
+import type { Pool, PrismaClient } from "@alternativebot/db";
 import {
   createBoardEvents,
   createDb,
@@ -124,17 +124,17 @@ import {
   runAsSystem,
   securityEventRetentionDays,
   verifyContentKeys,
-} from "@rakazo/db";
-import type { Logger } from "@rakazo/logging";
+} from "@alternativebot/db";
+import type { Logger } from "@alternativebot/logging";
 import {
   createServiceLogger,
   enrichLogContext,
   getLogger,
   installLogger,
   SERVICE_NAMES,
-} from "@rakazo/logging";
-import { requestLogging } from "@rakazo/logging/hono";
-import { MarkdownMemoryStore } from "@rakazo/memory";
+} from "@alternativebot/logging";
+import { requestLogging } from "@alternativebot/logging/hono";
+import { MarkdownMemoryStore } from "@alternativebot/memory";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { deleteAccountContent } from "./account-deletion.js";
@@ -195,7 +195,7 @@ import { mountWebhookHttpRoutes } from "./webhook.js";
  * The loopback entries are the Expo web dev server.
  */
 export const MOBILE_AUTH_ORIGINS = [
-  "rakazo://",
+  "alternativebot://",
   "http://localhost:8081",
   "http://127.0.0.1:8081",
   "http://localhost:19006",
@@ -280,7 +280,7 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
     ? { prisma: prismaOverride, pool: undefined }
     : createDb(env.databaseUrl, {
         poolMax: parsePositiveInteger(process.env.DB_POOL_MAX, 4),
-        applicationName: "rakazo-api",
+        applicationName: "alternativebot-api",
         keyProvider: contentKeyProviderFromEnv(),
         encryptContent: env.contentEncryption,
       });
@@ -346,7 +346,7 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
   if (!inMemoryJobs && !created.pool) {
     ownedJobPool = createPool(env.databaseUrl, {
       poolMax: parsePositiveInteger(process.env.DB_POOL_MAX, 4),
-      applicationName: "rakazo-api-jobs",
+      applicationName: "alternativebot-api-jobs",
     });
   }
   const jobPool = created.pool ?? ownedJobPool;
@@ -907,7 +907,7 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
     const session = await auth.api.getSession({ headers: request.headers });
     if (!session?.user) return null;
     const actor = await actorFromMembership(
-      requireMembership(prisma, session.user.id, request.headers.get("x-rakazo-space-id")),
+      requireMembership(prisma, session.user.id, request.headers.get("x-alternativebot-space-id")),
     );
     return actor && { actor, sessionId: session.session.id };
   };
@@ -1442,7 +1442,7 @@ export function isTrustedOrigin(
   env: Pick<AppEnv, "webOrigin" | "apiUrl" | "authUrl">,
 ) {
   if (!origin) return true;
-  if (origin.startsWith("rakazo://")) return true;
+  if (origin.startsWith("alternativebot://")) return true;
   const allowed = new Set(
     [env.webOrigin, env.apiUrl, env.authUrl, ...MOBILE_AUTH_ORIGINS].flatMap(originVariants),
   );
@@ -1450,7 +1450,7 @@ export function isTrustedOrigin(
 }
 
 function originVariants(origin: string): string[] {
-  if (!origin || origin === "rakazo://") return [];
+  if (!origin || origin === "alternativebot://") return [];
   const variants = [origin, ...loopbackTwinOrigins(origin)];
   try {
     const url = new URL(origin);

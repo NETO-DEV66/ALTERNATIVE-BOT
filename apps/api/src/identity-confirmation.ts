@@ -1,7 +1,7 @@
 import { ORPCError } from "@orpc/server";
-import type { Auth } from "@rakazo/auth";
-import type { Actor } from "@rakazo/contracts";
-import { IDENTITY_CONFIRMATION_REQUIRED } from "@rakazo/contracts";
+import type { Auth } from "@alternativebot/auth";
+import type { Actor } from "@alternativebot/contracts";
+import { IDENTITY_CONFIRMATION_REQUIRED } from "@alternativebot/contracts";
 
 /**
  * Guards a procedure that reveals sensitive data: the calling session must have confirmed its

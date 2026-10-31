@@ -1,8 +1,8 @@
-import type { AdapterContext, ManagedConnectorProvider } from "@rakazo/adapter-kit";
-import type { MessageBlock } from "@rakazo/contracts";
-import { appConnectCard, matchAppCatalog, matchesAppConnection } from "@rakazo/core";
-import type { PrismaClient, ThreadEvents } from "@rakazo/db";
-import { appendEventInTransaction, createThreadMessageInTransaction } from "@rakazo/db";
+import type { AdapterContext, ManagedConnectorProvider } from "@alternativebot/adapter-kit";
+import type { MessageBlock } from "@alternativebot/contracts";
+import { appConnectCard, matchAppCatalog, matchesAppConnection } from "@alternativebot/core";
+import type { PrismaClient, ThreadEvents } from "@alternativebot/db";
+import { appendEventInTransaction, createThreadMessageInTransaction } from "@alternativebot/db";
 
 const RECENT_MESSAGES = 50;
 

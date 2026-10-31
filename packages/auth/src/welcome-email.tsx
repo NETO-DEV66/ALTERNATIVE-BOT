@@ -1,16 +1,16 @@
 /** @jsxRuntime automatic */
-import type { TransactionalEmail } from "@rakazo/adapter-kit";
-import { ANDROID_APK_URL, IOS_APP_STORE_URL } from "@rakazo/contracts";
-import { displayName } from "@rakazo/core";
+import type { TransactionalEmail } from "@alternativebot/adapter-kit";
+import { ANDROID_APK_URL, IOS_APP_STORE_URL } from "@alternativebot/contracts";
+import { displayName } from "@alternativebot/core";
 import { Link, Text } from "react-email";
 import { linkStyle, message } from "./email.js";
 
 const APPS = [
   ["iPhone", IOS_APP_STORE_URL],
   ["Android", ANDROID_APK_URL],
-  ["Mac", "https://rakazo.com/api/download?platform=mac"],
-  ["Windows", "https://rakazo.com/api/download?platform=windows"],
-  ["Linux", "https://rakazo.com/api/download?platform=linux"],
+  ["Mac", "https://alternativebot.com/api/download?platform=mac"],
+  ["Windows", "https://alternativebot.com/api/download?platform=windows"],
+  ["Linux", "https://alternativebot.com/api/download?platform=linux"],
 ] as const;
 
 export function welcomeEmail(
@@ -19,12 +19,12 @@ export function welcomeEmail(
 ): Promise<TransactionalEmail> {
   return message(
     user.email,
-    "Welcome to Rakazo",
+    "Welcome to Alternative Bot",
     <>
       <Text>Hi {displayName(user.name, "there")},</Text>
-      <Text>Thanks for signing up for Rakazo.</Text>
+      <Text>Thanks for signing up for AlternativeBot.</Text>
       <Text>
-        Rakazo also has apps for{" "}
+        Alternative Bot also has apps for{" "}
         {APPS.map(([name, href], index) => (
           <span key={name}>
             {index === APPS.length - 1 ? "and " : ""}
@@ -43,8 +43,8 @@ export function welcomeEmail(
         .
       </Text>
       <Text>
-        Rakazo is open source. If you like it,{" "}
-        <Link href="https://github.com/elie222/rakazo" style={linkStyle}>
+        Alternative Bot is open source. If you like it,{" "}
+        <Link href="https://github.com/elie222/alternativebot" style={linkStyle}>
           a star on GitHub
         </Link>{" "}
         helps others find it.
@@ -52,10 +52,10 @@ export function welcomeEmail(
       <Text>
         Want to run it on your own servers?{" "}
         <Link
-          href="https://github.com/elie222/rakazo/blob/main/docs/self-host.md"
+          href="https://github.com/elie222/alternativebot/blob/main/docs/self-host.md"
           style={linkStyle}
         >
-          Self-host Rakazo
+          Self-host Alternative Bot
         </Link>
         .
       </Text>

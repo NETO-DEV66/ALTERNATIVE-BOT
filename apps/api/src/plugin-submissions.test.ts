@@ -1,10 +1,10 @@
-import { EmailEmulator } from "@rakazo/adapters";
-import { PLUGIN_SUBMISSIONS_PATH } from "@rakazo/contracts";
+import { EmailEmulator } from "@alternativebot/adapters";
+import { PLUGIN_SUBMISSIONS_PATH } from "@alternativebot/contracts";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const preview = vi.hoisted(() => vi.fn());
-vi.mock("@rakazo/adapters", async (original) => ({
-  ...(await original<typeof import("@rakazo/adapters")>()),
+vi.mock("@alternativebot/adapters", async (original) => ({
+  ...(await original<typeof import("@alternativebot/adapters")>()),
   previewPluginInstall: preview,
 }));
 
@@ -225,7 +225,7 @@ describe("reviewing submissions", () => {
       expect.objectContaining({
         name: "acme-tickets",
         displayName: "Acme Tickets",
-        registry: "Rakazo",
+        registry: "Alternative Bot",
         source: `https://github.com/acme/plugins@${SHA}#tickets`,
         installedSource: "https://github.com/acme/plugins#tickets",
         hasConnector: false,

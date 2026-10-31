@@ -3,10 +3,10 @@ import type {
   ArtifactStore,
   ComputerRef,
   SandboxProvider,
-} from "@rakazo/adapter-kit";
-import type { MessageBlock } from "@rakazo/contracts";
-import { ATTACHMENT_MAX_COUNT } from "@rakazo/contracts";
-import type { PrismaClient } from "@rakazo/db";
+} from "@alternativebot/adapter-kit";
+import type { MessageBlock } from "@alternativebot/contracts";
+import { ATTACHMENT_MAX_COUNT } from "@alternativebot/contracts";
+import type { PrismaClient } from "@alternativebot/db";
 import { describe, expect, it, vi } from "vitest";
 import {
   attachWorkspaceFileToThread,

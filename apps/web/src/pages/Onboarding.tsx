@@ -1,5 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import type { ModelHeaderRow, ThinkingLevel } from "@rakazo/contracts";
+import type { ModelHeaderRow, ThinkingLevel } from "@alternativebot/contracts";
 import {
   CLOUDFLARE_AI_GATEWAY_PROVIDER_ID,
   cloudflareModelRouting,
@@ -18,7 +18,7 @@ import {
   parseModelContextWindow,
   parseModelMaxImagesPerPrompt,
   parseModelMaxTokens,
-} from "@rakazo/contracts";
+} from "@alternativebot/contracts";
 import {
   COMPATIBLE_THINKING_LEVELS,
   clampCatalogThinkingLevel,
@@ -26,7 +26,7 @@ import {
   initialModelProbeState,
   pickCatalogModelId,
   popularModelProvidersFirst,
-} from "@rakazo/core";
+} from "@alternativebot/core";
 import {
   Button,
   Input,
@@ -38,7 +38,7 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from "@rakazo/ui-web";
+} from "@alternativebot/ui-web";
 import { Check, Copy } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -64,9 +64,9 @@ import { useModelOAuthSignIn } from "../lib/use-model-oauth-signin";
 import { errorText } from "../lib/user-error";
 import { CompatibleKeyField } from "./model-settings/compatible-key-field";
 
-const CUSTOM_MODEL_OPTION = "__rakazo_custom_model__";
-/** Rakazo credits sit among the providers as the one choice that needs no account of its own. */
-const CREDITS_OPTION = "__rakazo_credits__";
+const CUSTOM_MODEL_OPTION = "__alternativebot_custom_model__";
+/** Alternative Bot credits sit among the providers as the one choice that needs no account of its own. */
+const CREDITS_OPTION = "__alternativebot_credits__";
 /** A provider whose catalog entry offers both sign-in and a key appears once per way to connect. */
 type ProviderAuth = "sign-in" | "key";
 
@@ -84,7 +84,7 @@ function providerOptionValue(provider: string, auth?: ProviderAuth): string {
 }
 const FIRST_BOT_NAME = "Chief";
 const FIRST_BOT_SPAWN_KEY = "onboarding:first";
-const FIRST_BOT_LOCK = "rakazo:onboarding-first-bot";
+const FIRST_BOT_LOCK = "alternativebot:onboarding-first-bot";
 
 /** Survives StrictMode remounts; concurrent first-bot creates share one in-flight attempt. */
 let firstBotEnsure: Promise<{ id: string }> | null = null;
@@ -275,7 +275,7 @@ export function OnboardingPage() {
       return providerDisplayName(id, byId.get(id)?.providerName ?? id, auth);
     };
     const main = [
-      ...(billingEnabled ? [{ value: CREDITS_OPTION, label: t`Rakazo credits` }] : []),
+      ...(billingEnabled ? [{ value: CREDITS_OPTION, label: t`Alternative Bot credits` }] : []),
       ...MAIN_PROVIDER_OPTIONS.filter((option) => byId.has(option.provider)).map((option) => ({
         value: providerOptionValue(option.provider, option.auth),
         label: optionLabel(option.provider, option.auth),
@@ -556,7 +556,7 @@ export function OnboardingPage() {
   if (step === "loading" || (step === "bot" && !error)) return <PageLoading />;
 
   return (
-    <div className="min-h-full bg-background px-6 py-12" data-rakazo-surface="onboarding">
+    <div className="min-h-full bg-background px-6 py-12" data-alternativebot-surface="onboarding">
       <div className="mx-auto w-full max-w-[560px]">
         {step === "survey" ? <SignupSurvey onDone={() => setSurveyDone(true)} /> : null}
         {step === "model" ? (

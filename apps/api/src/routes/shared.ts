@@ -4,13 +4,13 @@ import {
   hostCredentialSource,
   mcpStdioAvailable,
   resolveMemberMainModel,
-} from "@rakazo/adapters";
-import type { Actor, Me } from "@rakazo/contracts";
-import { attachmentMaxBytes, attachmentMaxCount, canonicalPiProviderId } from "@rakazo/contracts";
+} from "@alternativebot/adapters";
+import type { Actor, Me } from "@alternativebot/contracts";
+import { attachmentMaxBytes, attachmentMaxCount, canonicalPiProviderId } from "@alternativebot/contracts";
 import { isAdmin } from "../admins.js";
 import type { RouterDeps } from "../router.js";
 
-export { createAdapterContext as computerContext } from "@rakazo/adapter-kit";
+export { createAdapterContext as computerContext } from "@alternativebot/adapter-kit";
 
 function hostCredentials(active: boolean, provider: string) {
   return active

@@ -1,4 +1,4 @@
-import { redactSecrets } from "@rakazo/core";
+import { redactSecrets } from "@alternativebot/core";
 
 export function formatAgentEnvironmentInstruction(
   environment: Record<string, string>,

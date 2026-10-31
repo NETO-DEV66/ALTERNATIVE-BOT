@@ -1,4 +1,4 @@
-import type { ActionAutoReviewSettings, ApprovalMode } from "@rakazo/contracts";
+import type { ActionAutoReviewSettings, ApprovalMode } from "@alternativebot/contracts";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { Alert } from "react-native";

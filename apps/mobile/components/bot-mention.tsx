@@ -1,7 +1,7 @@
-import type { BotAvatarSet } from "@rakazo/contracts";
-import type { ChildBotBlock } from "@rakazo/core";
-import { resolvePersonaColorDef } from "@rakazo/core";
-import type { ColorTokens } from "@rakazo/ui-tokens";
+import type { BotAvatarSet } from "@alternativebot/contracts";
+import type { ChildBotBlock } from "@alternativebot/core";
+import { resolvePersonaColorDef } from "@alternativebot/core";
+import type { ColorTokens } from "@alternativebot/ui-tokens";
 import type { ReactNode } from "react";
 import { Text, View } from "react-native";
 import { MessageMentionsContext } from "../lib/message-mentions";

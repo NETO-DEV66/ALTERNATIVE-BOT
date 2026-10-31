@@ -1,5 +1,5 @@
-import type { LoginFieldInput } from "@rakazo/contracts";
-import { LOGIN_FIELD_LIMIT } from "@rakazo/contracts";
+import type { LoginFieldInput } from "@alternativebot/contracts";
+import { LOGIN_FIELD_LIMIT } from "@alternativebot/contracts";
 import type { RefObject } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { mobileTokens } from "../lib/appearance";

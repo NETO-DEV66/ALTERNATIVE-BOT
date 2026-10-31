@@ -7,14 +7,14 @@ import type {
   SandboxProvider,
   SemanticMemoryProvider,
   WebProvider,
-} from "@rakazo/adapter-kit";
-import type { ComputerMode, MessageBlock } from "@rakazo/contracts";
-import type { ToolCallStreak } from "@rakazo/core";
-import { createStreamingRedactor } from "@rakazo/core";
-import { toolEffectIdempotencyKey } from "@rakazo/core/node/approval-effect-key";
-import type { Bot, Computer, effectiveMemoryScope, Run, Task, Thread } from "@rakazo/db";
-import { dropRunTurnCheckpoint, saveRunTurnCheckpoint } from "@rakazo/db";
-import { getLogger } from "@rakazo/logging";
+} from "@alternativebot/adapter-kit";
+import type { ComputerMode, MessageBlock } from "@alternativebot/contracts";
+import type { ToolCallStreak } from "@alternativebot/core";
+import { createStreamingRedactor } from "@alternativebot/core";
+import { toolEffectIdempotencyKey } from "@alternativebot/core/node/approval-effect-key";
+import type { Bot, Computer, effectiveMemoryScope, Run, Task, Thread } from "@alternativebot/db";
+import { dropRunTurnCheckpoint, saveRunTurnCheckpoint } from "@alternativebot/db";
+import { getLogger } from "@alternativebot/logging";
 import type { ApprovalPausedToolResult, ApprovedEffectReplayQueue } from "./approval-effect.js";
 import { approvalPausedToolResult, approvedEffectOccurrence } from "./approval-effect.js";
 import type { loadBotMessageContext } from "./bot-messages.js";

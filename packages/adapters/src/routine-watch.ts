@@ -8,20 +8,20 @@ import type {
   JobPublisher,
   SandboxProvider,
   SecretStore,
-} from "@rakazo/adapter-kit";
-import { routineJobKey, routineWakeupJob } from "@rakazo/adapter-kit";
-import type { RoutineWatch, RoutineWatchState } from "@rakazo/contracts";
-import { RoutineWatchSchema, RoutineWatchStateSchema } from "@rakazo/contracts";
-import type { ActionApprovalRule } from "@rakazo/core";
-import { connectorKindFromToolName, redactSecrets, watchToolRefusal } from "@rakazo/core";
-import type { ComputerMode, PrismaClient, ThreadEvents } from "@rakazo/db";
+} from "@alternativebot/adapter-kit";
+import { routineJobKey, routineWakeupJob } from "@alternativebot/adapter-kit";
+import type { RoutineWatch, RoutineWatchState } from "@alternativebot/contracts";
+import { RoutineWatchSchema, RoutineWatchStateSchema } from "@alternativebot/contracts";
+import type { ActionApprovalRule } from "@alternativebot/core";
+import { connectorKindFromToolName, redactSecrets, watchToolRefusal } from "@alternativebot/core";
+import type { ComputerMode, PrismaClient, ThreadEvents } from "@alternativebot/db";
 import {
   appendEventInTransaction,
   createThreadMessageInTransaction,
   listApprovalRules,
   parseComputerMode,
-} from "@rakazo/db";
-import { getLogger } from "@rakazo/logging";
+} from "@alternativebot/db";
+import { getLogger } from "@alternativebot/logging";
 import { shellCommandEnvironment } from "./bot-secrets.js";
 import { scheduleComputerSleep } from "./computer-idle.js";
 import { ComputerBusyError, provisionComputer } from "./computer-lifecycle.js";
@@ -36,7 +36,7 @@ import { nativeShellCommandArgv, usesNativeShell } from "./native-shell.js";
  */
 
 /** Virtual root for validating watch paths; providers resolve the actual workspace. */
-const WORKSPACE = "/home/rakazo";
+const WORKSPACE = "/home/alternativebot";
 const CHECK_TIMEOUT_MS = 60_000;
 /** Starting a stopped computer can take longer than a check; it gets its own budget. */
 const PROVISION_TIMEOUT_MS = 5 * 60_000;

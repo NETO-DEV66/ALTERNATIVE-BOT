@@ -4,7 +4,7 @@ import type {
   ComputerRef,
   JobPublisher,
   SandboxProvider,
-} from "@rakazo/adapter-kit";
+} from "@alternativebot/adapter-kit";
 import {
   computerSleepJob,
   runJobKey,
@@ -12,17 +12,17 @@ import {
   SandboxUnavailableError,
   SandboxUnresponsiveError,
   WorkspaceTooLargeError,
-} from "@rakazo/adapter-kit";
-import { QUEUE_HOLDING_RUN_STATUSES, withAbort } from "@rakazo/core";
-import type { PrismaClient, ThreadEvents } from "@rakazo/db";
+} from "@alternativebot/adapter-kit";
+import { QUEUE_HOLDING_RUN_STATUSES, withAbort } from "@alternativebot/core";
+import type { PrismaClient, ThreadEvents } from "@alternativebot/db";
 import {
   appendEventInTransaction,
   createGroupRepos,
   createThreadMessageInTransaction,
   recordComputerRunEnd,
   recordComputerRunSeen,
-} from "@rakazo/db";
-import { getLogger } from "@rakazo/logging";
+} from "@alternativebot/db";
+import { getLogger } from "@alternativebot/logging";
 import { activeCodingAgent } from "./coding-agent-activity.js";
 import { expireComputerControl, hasActiveComputerControl } from "./computer-control.js";
 import { screenLeaseIdForRun, toComputerRef } from "./computer-lifecycle.js";
@@ -53,8 +53,8 @@ export const ABANDONED_SUSPEND_CLAIM_MS = 60 * 60 * 1000;
 const IDLE_SWEEP_INTERVAL_MS = 10 * 60 * 1000;
 const STATUS_CHECK_TIMEOUT_MS = 15_000;
 const EXECUTING_RUN_STATUSES = ["leased", "running"] as const;
-const BACKGROUND_WORK_MARKER_PREFIX = "/tmp/rakazo-background-";
-const BACKGROUND_WORK_IDLE_SENTINEL = "rakazo-background-idle";
+const BACKGROUND_WORK_MARKER_PREFIX = "/tmp/alternativebot-background-";
+const BACKGROUND_WORK_IDLE_SENTINEL = "alternativebot-background-idle";
 
 export const BACKGROUND_WORK_LAUNCH = [
   `marker="${BACKGROUND_WORK_MARKER_PREFIX}$1-$2-$3"`,
@@ -154,7 +154,7 @@ export const CANCEL_COMPUTER_RUN_WORK = [
   "  fi",
   "  exit 0",
   'elif [ "$(uname -s 2>/dev/null)" = "Darwin" ] && command -v lsof >/dev/null 2>&1; then',
-  `  pkill -TERM -f "rakazo-background-launch $computerId $runId " 2>/dev/null || true`,
+  `  pkill -TERM -f "alternativebot-background-launch $computerId $runId " 2>/dev/null || true`,
   '  for marker in "$prefix"*; do',
   '    [ -e "$marker" ] || continue',
   '    for pid in $(lsof -t -- "$marker" 2>/dev/null); do',
@@ -165,7 +165,7 @@ export const CANCEL_COMPUTER_RUN_WORK = [
   "  exit 0",
   "fi",
   "sleep 0.2",
-  `pkill -KILL -f "rakazo-background-launch $computerId $runId " 2>/dev/null || true`,
+  `pkill -KILL -f "alternativebot-background-launch $computerId $runId " 2>/dev/null || true`,
   'if [ "$(uname -s 2>/dev/null)" = "Darwin" ] && command -v lsof >/dev/null 2>&1; then',
   '  for marker in "$prefix"*; do',
   '    [ -e "$marker" ] || continue',
@@ -214,7 +214,7 @@ export const CANCEL_PRIMARY_BROWSER_WORK = [
 ].join("; ");
 
 export function cancelComputerRunWorkArgv(computerId: string, runId: string): string[] {
-  return ["bash", "-c", CANCEL_COMPUTER_RUN_WORK, "rakazo-cancel-run-work", computerId, runId];
+  return ["bash", "-c", CANCEL_COMPUTER_RUN_WORK, "alternativebot-cancel-run-work", computerId, runId];
 }
 
 export async function cancelComputerRunWork(
@@ -1006,7 +1006,7 @@ async function hasActiveBackgroundWork(
     for await (const event of sandbox.execute(
       computer,
       {
-        argv: ["bash", "-c", BACKGROUND_WORK_PROBE, "rakazo-background-probe", computerId],
+        argv: ["bash", "-c", BACKGROUND_WORK_PROBE, "alternativebot-background-probe", computerId],
         timeoutMs: 10_000,
       },
       context,

@@ -1,5 +1,5 @@
-import type { RoutineHistory, RoutineRun, RoutineRunCursor } from "@rakazo/contracts";
-import { mergeRoutineRunPages, routineHistoryPage } from "@rakazo/core";
+import type { RoutineHistory, RoutineRun, RoutineRunCursor } from "@alternativebot/contracts";
+import { mergeRoutineRunPages, routineHistoryPage } from "@alternativebot/core";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useFocusEffect } from "expo-router";
 import { useCallback } from "react";

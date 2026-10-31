@@ -7,22 +7,22 @@ import { UI_LOCALES } from "./ui-locale";
 const resources = resolve(
   dirname(fileURLToPath(import.meta.url)),
   "..",
-  "modules/rakazo-notifications/android/src/main/res",
+  "modules/alternativebot-notifications/android/src/main/res",
 );
 const keys = [
-  "rakazo_channel_live",
-  "rakazo_channel_messages",
-  "rakazo_channel_scheduled",
-  "rakazo_channel_attention",
-  "rakazo_live_one",
-  "rakazo_live_many",
-  "rakazo_live_working",
-  "rakazo_scheduled_title",
-  "rakazo_replied_group",
-  "rakazo_replied",
-  "rakazo_attention_failed",
-  "rakazo_attention_takeover",
-  "rakazo_attention_input",
+  "alternativebot_channel_live",
+  "alternativebot_channel_messages",
+  "alternativebot_channel_scheduled",
+  "alternativebot_channel_attention",
+  "alternativebot_live_one",
+  "alternativebot_live_many",
+  "alternativebot_live_working",
+  "alternativebot_scheduled_title",
+  "alternativebot_replied_group",
+  "alternativebot_replied",
+  "alternativebot_attention_failed",
+  "alternativebot_attention_takeover",
+  "alternativebot_attention_input",
 ];
 
 const resourceDirectories = {

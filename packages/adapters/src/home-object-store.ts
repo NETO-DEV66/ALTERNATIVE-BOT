@@ -7,8 +7,8 @@ import type {
   AgentHomeStore,
   ObjectStorage,
   PortableFile,
-} from "@rakazo/adapter-kit";
-import type { ContentKeyRing, ContentLocation, DataKey, PrismaClient } from "@rakazo/db";
+} from "@alternativebot/adapter-kit";
+import type { ContentKeyRing, ContentLocation, DataKey, PrismaClient } from "@alternativebot/db";
 import {
   ContentDecryptionError,
   ciphertextKeyId,
@@ -18,8 +18,8 @@ import {
   openArtifact,
   runAsSystem,
   sealArtifact,
-} from "@rakazo/db";
-import { getLogger } from "@rakazo/logging";
+} from "@alternativebot/db";
+import { getLogger } from "@alternativebot/logging";
 import { LocalAgentHomeStore, newRevision } from "./home.js";
 import type { HomeArchiveLimits } from "./home-archive.js";
 import {

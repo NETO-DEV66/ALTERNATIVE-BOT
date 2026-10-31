@@ -53,32 +53,32 @@ describe("Team Computer bot folders", () => {
     expect(displayBotWorkspacePath("team", "bot-1", "~/bots", "bots/bot-1")).toBe("bots/bot-1");
   });
 
-  it("treats a leading /home/rakazo as the workspace root", () => {
-    expect(resolveBotWorkspacePath("team", "bot-1", "/home/rakazo")).toBe("");
-    expect(resolveBotWorkspacePath("team", "bot-1", "/home/rakazo/notes/x.md")).toBe("notes/x.md");
-    expect(resolveBotWorkspacePath("team", "bot-1", String.raw`\home\rakazo\notes\x.md`)).toBe(
+  it("treats a leading /home/alternativebot as the workspace root", () => {
+    expect(resolveBotWorkspacePath("team", "bot-1", "/home/alternativebot")).toBe("");
+    expect(resolveBotWorkspacePath("team", "bot-1", "/home/alternativebot/notes/x.md")).toBe("notes/x.md");
+    expect(resolveBotWorkspacePath("team", "bot-1", String.raw`\home\alternativebot\notes\x.md`)).toBe(
       "notes/x.md",
     );
-    expect(resolveBotWorkspacePath("team", "bot-1", "/home/rakazo/shared/brief.md")).toBe(
+    expect(resolveBotWorkspacePath("team", "bot-1", "/home/alternativebot/shared/brief.md")).toBe(
       "shared/brief.md",
     );
-    expect(resolveBotWorkspacePath("dedicated", "bot-1", "/home/rakazo/notes/x.md")).toBe(
+    expect(resolveBotWorkspacePath("dedicated", "bot-1", "/home/alternativebot/notes/x.md")).toBe(
       "/notes/x.md",
     );
-    expect(resolveBotWorkspacePath("dedicated", "bot-1", "/home/rakazo")).toBe("/");
-    expect(resolveBotWorkspacePath("dedicated", "bot-1", String.raw`\home\rakazo\notes\x.md`)).toBe(
+    expect(resolveBotWorkspacePath("dedicated", "bot-1", "/home/alternativebot")).toBe("/");
+    expect(resolveBotWorkspacePath("dedicated", "bot-1", String.raw`\home\alternativebot\notes\x.md`)).toBe(
       String.raw`\notes\x.md`,
     );
-    expect(resolveBotWorkspacePath("team", "bot-1", "/home/rakazotest/file.txt")).toBe(
-      "home/rakazotest/file.txt",
+    expect(resolveBotWorkspacePath("team", "bot-1", "/home/alternativebottest/file.txt")).toBe(
+      "home/alternativebottest/file.txt",
     );
-    expect(() => resolveBotWorkspacePath("team", "bot-1", "/home/rakazo/../x")).toThrow(
+    expect(() => resolveBotWorkspacePath("team", "bot-1", "/home/alternativebot/../x")).toThrow(
       "Path escapes the computer workspace",
     );
   });
 
-  it("keeps root paths for a listing requested under /home/rakazo", () => {
-    expect(displayBotWorkspacePath("team", "bot-1", "/home/rakazo/bots", "bots/bot-1")).toBe(
+  it("keeps root paths for a listing requested under /home/alternativebot", () => {
+    expect(displayBotWorkspacePath("team", "bot-1", "/home/alternativebot/bots", "bots/bot-1")).toBe(
       "bots/bot-1",
     );
   });

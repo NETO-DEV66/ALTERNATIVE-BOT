@@ -1,6 +1,6 @@
-import type { ConnectorCall, ConnectorTool } from "@rakazo/adapter-kit";
-import { redactSecrets } from "@rakazo/core";
-import { reserveInstructionProposal, validateInstructionProposal } from "@rakazo/db";
+import type { ConnectorCall, ConnectorTool } from "@alternativebot/adapter-kit";
+import { redactSecrets } from "@alternativebot/core";
+import { reserveInstructionProposal, validateInstructionProposal } from "@alternativebot/db";
 import { prepareAgentConnectionResponse } from "./agent-connections.js";
 import type { FleetCardSummary } from "./approval-ask.js";
 import {

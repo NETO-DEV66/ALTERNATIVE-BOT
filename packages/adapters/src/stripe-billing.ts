@@ -8,13 +8,13 @@ import type {
   BillingProvider,
   BillingSubscriptionSnapshot,
   BillingSubscriptionStatus,
-} from "@rakazo/adapter-kit";
+} from "@alternativebot/adapter-kit";
 import {
   BillingCheckoutCompletedError,
   BillingCustomerNotFoundError,
   BillingNoMonthlyCreditsError,
-} from "@rakazo/adapter-kit";
-import { ModelCreditAmountSchema } from "@rakazo/contracts";
+} from "@alternativebot/adapter-kit";
+import { ModelCreditAmountSchema } from "@alternativebot/contracts";
 import { z } from "zod";
 
 export const STRIPE_API_VERSION = "2026-09-30.endive";
@@ -185,7 +185,7 @@ export class StripeBillingProvider implements BillingProvider {
       )
         throw new BillingCheckoutCompletedError();
     }
-    const metadata = { rakazo_credit_cents: String(input.amountCents) };
+    const metadata = { alternativebot_credit_cents: String(input.amountCents) };
     const session = urlSchema.parse(
       await this.request("POST", "/v1/checkout/sessions", {
         customer: input.customerId,
@@ -197,9 +197,9 @@ export class StripeBillingProvider implements BillingProvider {
             ? {
                 quantity: 1,
                 price: await this.monthlyPrice(
-                  `rakazo_monthly_credits_${input.amountCents}`,
+                  `alternativebot_monthly_credits_${input.amountCents}`,
                   input.amountCents,
-                  "Rakazo monthly model credits",
+                  "Alternative Bot monthly model credits",
                 ),
               }
             : {
@@ -207,7 +207,7 @@ export class StripeBillingProvider implements BillingProvider {
                 price_data: {
                   currency: "usd",
                   unit_amount: input.amountCents,
-                  product_data: { name: "Rakazo model credits" },
+                  product_data: { name: "Alternative Bot model credits" },
                 },
               },
         ],
@@ -226,11 +226,11 @@ export class StripeBillingProvider implements BillingProvider {
     if (!creditAmount(String(amountCents))) throw new Error("Invalid credit amount");
     const subscription = (await this.listSubscriptions(customerId)).find(
       (s) =>
-        creditAmount(s.metadata?.rakazo_credit_cents) &&
+        creditAmount(s.metadata?.alternativebot_credit_cents) &&
         holdsBillingSubscription(mapStripeSubscriptionStatus(s.status)),
     );
     const item = subscription?.items.data[0];
-    const previousAmount = creditAmount(subscription?.metadata?.rakazo_credit_cents);
+    const previousAmount = creditAmount(subscription?.metadata?.alternativebot_credit_cents);
     if (!subscription || !item || !previousAmount) throw new BillingNoMonthlyCreditsError();
     if (amountCents === previousAmount) return;
     const upgrading = amountCents > previousAmount;
@@ -239,14 +239,14 @@ export class StripeBillingProvider implements BillingProvider {
         {
           id: item.id,
           price: await this.monthlyPrice(
-            `rakazo_monthly_credits_${amountCents}`,
+            `alternativebot_monthly_credits_${amountCents}`,
             amountCents,
-            "Rakazo monthly model credits",
+            "Alternative Bot monthly model credits",
           ),
           quantity: 1,
         },
       ],
-      metadata: { rakazo_credit_cents: String(amountCents) },
+      metadata: { alternativebot_credit_cents: String(amountCents) },
       proration_behavior: upgrading ? "always_invoice" : "none",
       payment_behavior: "error_if_incomplete",
     });
@@ -272,9 +272,9 @@ export class StripeBillingProvider implements BillingProvider {
           {
             quantity: 1,
             price: await this.monthlyPrice(
-              `rakazo_byok_monthly_${input.amountCents}`,
+              `alternativebot_byok_monthly_${input.amountCents}`,
               input.amountCents,
-              "Rakazo own-key plan",
+              "Alternative Bot own-key plan",
             ),
           },
         ],
@@ -440,7 +440,7 @@ export class StripeBillingProvider implements BillingProvider {
     }
     const purchases: BillingCreditPurchase[] = [];
     for (const session of sessions) {
-      const amount = creditAmount(session.metadata.rakazo_credit_cents);
+      const amount = creditAmount(session.metadata.alternativebot_credit_cents);
       if (
         session.mode !== "payment" ||
         session.payment_status !== "paid" ||
@@ -457,7 +457,7 @@ export class StripeBillingProvider implements BillingProvider {
     }
     for (const invoice of invoices) {
       const amount = creditAmount(
-        invoice.parent?.subscription_details?.metadata.rakazo_credit_cents,
+        invoice.parent?.subscription_details?.metadata.alternativebot_credit_cents,
       );
       if (
         !amount ||
@@ -553,7 +553,7 @@ export class StripeBillingProvider implements BillingProvider {
       const chosen = pickStripeSubscription(await this.listLiveSubscriptions(customerId));
       if (!chosen || !holdsBillingSubscription(chosen.status)) return;
       if (
-        creditAmount(chosen.subscription.metadata?.rakazo_credit_cents) ||
+        creditAmount(chosen.subscription.metadata?.alternativebot_credit_cents) ||
         isByokPlan(chosen.subscription)
       )
         return;
@@ -606,7 +606,7 @@ export class StripeBillingProvider implements BillingProvider {
         description: "Referral reward",
         metadata: { [BALANCE_REFERENCE_METADATA]: referenceId },
       },
-      `rakazo-balance-${referenceId}`,
+      `alternativebot-balance-${referenceId}`,
     );
   }
 
@@ -798,7 +798,7 @@ function toSnapshot(
   const method = subscription.default_payment_method;
   const fingerprint = typeof method === "object" ? method?.card?.fingerprint : undefined;
   return {
-    creditAmountCents: creditAmount(subscription.metadata?.rakazo_credit_cents),
+    creditAmountCents: creditAmount(subscription.metadata?.alternativebot_credit_cents),
     subscriptionId: subscription.id,
     subscriptionItemId: item.id,
     priceId: item.price.id,
@@ -912,8 +912,8 @@ export function stripeBillingConfigFromEnv(env: {
   };
 }
 
-const BYOK_PLAN_METADATA = "rakazo_plan";
-const BALANCE_REFERENCE_METADATA = "rakazo_reference";
+const BYOK_PLAN_METADATA = "alternativebot_plan";
+const BALANCE_REFERENCE_METADATA = "alternativebot_reference";
 
 function isByokPlan(subscription: StripeSubscription) {
   return subscription.metadata?.[BYOK_PLAN_METADATA] === "byok";

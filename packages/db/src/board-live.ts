@@ -1,5 +1,5 @@
-import type { RealtimeFanout } from "@rakazo/adapter-kit";
-import type { BoardEvent } from "@rakazo/contracts";
+import type { RealtimeFanout } from "@alternativebot/adapter-kit";
+import type { BoardEvent } from "@alternativebot/contracts";
 
 /** A transient "this board changed" signal. Clients refetch the list on any frame. */
 export interface BoardEvents {

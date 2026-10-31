@@ -1,5 +1,5 @@
-import type { AgentImportFile } from "@rakazo/contracts";
-import { BOT_INSTRUCTIONS_MAX_LENGTH } from "@rakazo/contracts";
+import type { AgentImportFile } from "@alternativebot/contracts";
+import { BOT_INSTRUCTIONS_MAX_LENGTH } from "@alternativebot/contracts";
 import { describe, expect, it } from "vitest";
 import { parseSkillMd } from "../agent-skill.js";
 import {

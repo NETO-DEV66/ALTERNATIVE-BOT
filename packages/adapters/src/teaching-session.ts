@@ -4,21 +4,21 @@ import type {
   ControlLeaseRef,
   JobPublisher,
   SandboxProvider,
-} from "@rakazo/adapter-kit";
-import { computerControlExpireJobKey, skillTeachingExpireJobKey } from "@rakazo/adapter-kit";
-import type { Actor, MessageBlock, TaughtSkill } from "@rakazo/contracts";
-import type { SkillPlaybook, TeachRecordingEvent, TeachSnapshot } from "@rakazo/core";
+} from "@alternativebot/adapter-kit";
+import { computerControlExpireJobKey, skillTeachingExpireJobKey } from "@alternativebot/adapter-kit";
+import type { Actor, MessageBlock, TaughtSkill } from "@alternativebot/contracts";
+import type { SkillPlaybook, TeachRecordingEvent, TeachSnapshot } from "@alternativebot/core";
 import {
   buildPlaybookFromRecording,
   computerInputForDomKey,
   sanitizeTeachRecordingEvent,
-} from "@rakazo/core";
-import type { Prisma, PrismaClient, ThreadEvents } from "@rakazo/db";
+} from "@alternativebot/core";
+import type { Prisma, PrismaClient, ThreadEvents } from "@alternativebot/db";
 import {
   appendEventInTransaction,
   createThreadMessageInTransaction,
   IsolationError,
-} from "@rakazo/db";
+} from "@alternativebot/db";
 import { revokeScreenControl } from "./computer-control.js";
 import { scheduleComputerSleep } from "./computer-idle.js";
 import { toComputerRef } from "./computer-support.js";

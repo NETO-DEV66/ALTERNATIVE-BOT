@@ -1,10 +1,10 @@
-import type { Board, Ticket, TicketComment, TicketPriority, TicketStatus } from "@rakazo/contracts";
+import type { Board, Ticket, TicketComment, TicketPriority, TicketStatus } from "@alternativebot/contracts";
 import {
   parseTicketRef,
   TicketPrioritySchema,
   TicketStatusSchema,
   ticketRef,
-} from "@rakazo/contracts";
+} from "@alternativebot/contracts";
 import type {
   Board as BoardRow,
   Prisma,

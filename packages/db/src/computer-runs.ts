@@ -1,4 +1,4 @@
-import { getLogger } from "@rakazo/logging";
+import { getLogger } from "@alternativebot/logging";
 import type { PrismaClient } from "./generated/prisma/client.js";
 
 /**
@@ -42,7 +42,7 @@ export async function recordComputerRunStart(
   startedAt: Date,
   previousEnd: ComputerRunEnd = "reconciled",
 ): Promise<void> {
-  // Host computers run on the user's own machine, and Electron, not Rakazo, sees them stop.
+  // Host computers run on the user's own machine, and Electron, not Alternative Bot, sees them stop.
   if (computer.kind === "desktop") return;
   try {
     await prisma.$executeRaw`

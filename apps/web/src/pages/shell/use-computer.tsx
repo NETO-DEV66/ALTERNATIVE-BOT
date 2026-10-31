@@ -6,7 +6,7 @@ import type {
   Me,
   Run,
   ThreadSnapshot,
-} from "@rakazo/contracts";
+} from "@alternativebot/contracts";
 import {
   createScreenReconnects,
   isRetryableError,
@@ -14,8 +14,8 @@ import {
   SCREEN_RECONNECT_EVERY_MS,
   screenProbeUrl,
   waitForScreenPage,
-} from "@rakazo/core";
-import { Button, Spinner } from "@rakazo/ui-web";
+} from "@alternativebot/core";
+import { Button, Spinner } from "@alternativebot/ui-web";
 import type { RefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ComputerMaintenanceActions } from "../../components/ComputerMaintenanceActions";
@@ -141,13 +141,13 @@ export function useComputerState({
       if (!message) return;
       if (screenFrameStarted(message)) screenFrameReported.current = true;
       if (
-        message.rakazoScreen === "connected" &&
+        message.alternativebotScreen === "connected" &&
         screenRefocus.current.connected(document.activeElement, screenFrame, document.body)
       ) {
         screenFrame.focus();
-        screenFrame.contentWindow?.postMessage({ rakazoScreenFocus: true }, "*");
+        screenFrame.contentWindow?.postMessage({ alternativebotScreenFocus: true }, "*");
       }
-      const ended = message.rakazoScreen === "failed" || message.rakazoScreen === "disconnected";
+      const ended = message.alternativebotScreen === "failed" || message.alternativebotScreen === "disconnected";
       if (screenUrl?.startsWith("wuying:") && ended) {
         // A Wuying login code works once, so a frame that loaded a spent one, or a session
         // another viewer took over, can only come back with a fresh read of the screen.
@@ -163,7 +163,7 @@ export function useComputerState({
           return;
         }
       }
-      if (screenReconnect().report(message.rakazoScreen) === "reconnect") {
+      if (screenReconnect().report(message.alternativebotScreen) === "reconnect") {
         screenRefocus.current.dropped(document.activeElement === screenFrame);
         clearTimeout(reconnect);
         const url = embeddableScreenUrl(screenUrl);

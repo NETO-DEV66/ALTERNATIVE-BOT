@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="alternativebot_call_channel">通話中</string>
+  <string name="alternativebot_call_title">Alternative Botの通話</string>
+  <string name="alternativebot_call_text">マイクがオンです</string>
+</resources>

@@ -8,9 +8,9 @@ import type {
   AgentToolExecutionResult,
   ConnectorTool,
   ModelCallObserver,
-} from "@rakazo/adapter-kit";
-import { DEFAULT_CONTEXT_STRATEGY } from "@rakazo/adapter-kit";
-import { FLEET_TOOL_NAMES } from "@rakazo/contracts";
+} from "@alternativebot/adapter-kit";
+import { DEFAULT_CONTEXT_STRATEGY } from "@alternativebot/adapter-kit";
+import { FLEET_TOOL_NAMES } from "@alternativebot/contracts";
 import { isToolPauseResult } from "./approval-effect.js";
 import {
   connectionIdArgument,

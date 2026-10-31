@@ -1,4 +1,4 @@
-import type { PluginMarketplaceEntry } from "@rakazo/contracts";
+import type { PluginMarketplaceEntry } from "@alternativebot/contracts";
 import { describe, expect, it } from "vitest";
 import {
   comparePlugins,

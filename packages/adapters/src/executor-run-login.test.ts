@@ -1,6 +1,6 @@
-import type { ComputerRef } from "@rakazo/adapter-kit";
-import { encodeLoginSecret } from "@rakazo/contracts";
-import { runLoginKind } from "@rakazo/db";
+import type { ComputerRef } from "@alternativebot/adapter-kit";
+import { encodeLoginSecret } from "@alternativebot/contracts";
+import { runLoginKind } from "@alternativebot/db";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { encodeRunLogin } from "./bot-secrets.js";
 import { builtinAgentTools } from "./builtin-tools.js";

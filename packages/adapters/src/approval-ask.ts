@@ -1,6 +1,6 @@
-import type { ToolBatch } from "@rakazo/adapter-kit";
-import type { MessageBlock } from "@rakazo/contracts";
-import { BOT_INSTRUCTIONS_MAX_LENGTH } from "@rakazo/contracts";
+import type { ToolBatch } from "@alternativebot/adapter-kit";
+import type { MessageBlock } from "@alternativebot/contracts";
+import { BOT_INSTRUCTIONS_MAX_LENGTH } from "@alternativebot/contracts";
 import {
   batchActions,
   CARD_TITLE_ESCAPED_CHARACTERS,
@@ -9,8 +9,8 @@ import {
   redactSecrets,
   sanitizeMessagingLabel,
   toolRequiresExplicitApproval,
-} from "@rakazo/core";
-import { urlSite } from "@rakazo/core/egress";
+} from "@alternativebot/core";
+import { urlSite } from "@alternativebot/core/egress";
 
 export const MAX_APPROVAL_SUMMARY_LENGTH = 500;
 export const MAX_APPROVAL_DETAIL_LENGTH = 4_000;

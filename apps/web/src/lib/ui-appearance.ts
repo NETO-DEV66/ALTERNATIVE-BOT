@@ -1,10 +1,10 @@
-import type { AppearancePreference, ResolvedAppearance } from "@rakazo/ui-tokens";
+import type { AppearancePreference, ResolvedAppearance } from "@alternativebot/ui-tokens";
 import {
   persistAppearancePreference,
   resolveAppearance,
   resolveAppearancePreference,
   webTokensForAppearance,
-} from "@rakazo/ui-tokens";
+} from "@alternativebot/ui-tokens";
 
 export type { AppearancePreference, ResolvedAppearance };
 

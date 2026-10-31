@@ -4,8 +4,8 @@ import type {
   AutoReviewRequest,
   ConnectorCall,
   ToolBatch,
-} from "@rakazo/adapter-kit";
-import { runContinueJob } from "@rakazo/adapter-kit";
+} from "@alternativebot/adapter-kit";
+import { runContinueJob } from "@alternativebot/adapter-kit";
 import {
   applyJudgeDecision,
   approvalModeFromPreference,
@@ -25,11 +25,11 @@ import {
   toolRequiresApproval,
   toolRequiresExplicitApproval,
   unattendedTriggerToolRequiresApproval,
-} from "@rakazo/core";
-import { normalizedHttpUrl, urlSite } from "@rakazo/core/egress";
-import { approvalEffectKey, toolEffectIdempotencyKey } from "@rakazo/core/node/approval-effect-key";
-import { runSecretKind } from "@rakazo/db";
-import { getLogger } from "@rakazo/logging";
+} from "@alternativebot/core";
+import { normalizedHttpUrl, urlSite } from "@alternativebot/core/egress";
+import { approvalEffectKey, toolEffectIdempotencyKey } from "@alternativebot/core/node/approval-effect-key";
+import { runSecretKind } from "@alternativebot/db";
+import { getLogger } from "@alternativebot/logging";
 import type { FleetCardSummary } from "./approval-ask.js";
 import { buildApprovalAskBlock, MAX_FETCH_URL_LENGTH, SITE_SENDING_TOOLS } from "./approval-ask.js";
 import {

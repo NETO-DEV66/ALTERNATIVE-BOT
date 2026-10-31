@@ -1,6 +1,6 @@
-import { withConnectionName } from "@rakazo/contracts";
-import type { ChatModelChoice } from "@rakazo/core";
-import { groupModelChoices } from "@rakazo/core";
+import { withConnectionName } from "@alternativebot/contracts";
+import type { ChatModelChoice } from "@alternativebot/core";
+import { groupModelChoices } from "@alternativebot/core";
 import { useNavigation } from "expo-router";
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { ViewToken } from "react-native";

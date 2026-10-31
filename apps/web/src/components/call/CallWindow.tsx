@@ -1,6 +1,6 @@
-import { Dialog, DialogContent } from "@rakazo/ui-web/components/ui/dialog";
-import { useIsMobile } from "@rakazo/ui-web/hooks/use-mobile";
-import { cn } from "@rakazo/ui-web/lib/utils";
+import { Dialog, DialogContent } from "@alternativebot/ui-web/components/ui/dialog";
+import { useIsMobile } from "@alternativebot/ui-web/hooks/use-mobile";
+import { cn } from "@alternativebot/ui-web/lib/utils";
 import type { ReactNode } from "react";
 import { useRef } from "react";
 

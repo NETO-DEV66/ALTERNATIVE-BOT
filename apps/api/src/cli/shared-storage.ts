@@ -6,10 +6,10 @@ import {
   migrateLocalArtifacts,
   migrateLocalPushTokens,
   PrismaPushTokenStore,
-} from "@rakazo/adapters";
-import { resolveEncryptionKey } from "@rakazo/core";
-import { loadRootEnv } from "@rakazo/core/node/load-root-env";
-import { createDb } from "@rakazo/db";
+} from "@alternativebot/adapters";
+import { resolveEncryptionKey } from "@alternativebot/core";
+import { loadRootEnv } from "@alternativebot/core/node/load-root-env";
+import { createDb } from "@alternativebot/db";
 
 loadRootEnv();
 const { values, positionals } = parseArgs({
@@ -22,7 +22,7 @@ if (positionals.length !== 1 || !["artifacts", "push-tokens"].includes(positiona
   );
 if (!process.env.DATABASE_URL) throw new Error("DATABASE_URL is required");
 const { prisma, pool, contentKeys } = createDb(process.env.DATABASE_URL, {
-  applicationName: "rakazo-storage-migration",
+  applicationName: "alternativebot-storage-migration",
   keyProvider: contentKeyProviderFromEnv(),
 });
 const dataDir = process.env.DATA_DIR ?? "./data";

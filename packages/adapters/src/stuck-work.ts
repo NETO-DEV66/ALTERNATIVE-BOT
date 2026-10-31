@@ -1,6 +1,6 @@
-import type { JobPublisher, NotificationMessage, NotificationProvider } from "@rakazo/adapter-kit";
-import { runContinueJob } from "@rakazo/adapter-kit";
-import type { StuckWorkStatus } from "@rakazo/core";
+import type { JobPublisher, NotificationMessage, NotificationProvider } from "@alternativebot/adapter-kit";
+import { runContinueJob } from "@alternativebot/adapter-kit";
+import type { StuckWorkStatus } from "@alternativebot/core";
 import {
   isStuckWorkStatus,
   STUCK_WORK_NOTICE,
@@ -10,10 +10,10 @@ import {
   stuckWorkDueAfterMs,
   stuckWorkReminder,
   stuckWorkStoppedNotification,
-} from "@rakazo/core";
-import type { Prisma, PrismaClient, ThreadEvents } from "@rakazo/db";
-import { appendEventInTransaction, expireStuckRun, withTransactionRetry } from "@rakazo/db";
-import { getLogger } from "@rakazo/logging";
+} from "@alternativebot/core";
+import type { Prisma, PrismaClient, ThreadEvents } from "@alternativebot/db";
+import { appendEventInTransaction, expireStuckRun, withTransactionRetry } from "@alternativebot/db";
+import { getLogger } from "@alternativebot/logging";
 import { ExpoPushProvider } from "./expo-push.js";
 
 type StuckCursor = { at: Date; id: string };

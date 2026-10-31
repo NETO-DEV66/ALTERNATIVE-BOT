@@ -7,14 +7,14 @@ import type {
   ModelRoleSettings as ModelRoleSettingsValue,
   SettingsScope,
   ThinkingLevel,
-} from "@rakazo/contracts";
+} from "@alternativebot/contracts";
 import {
   canonicalPiProviderId,
   connectedBackupOptions,
   MAX_MODEL_BACKUPS,
   modelRoleChoiceKey,
-} from "@rakazo/contracts";
-import { createModelRoleSettings, modelRoleListPatch } from "@rakazo/core";
+} from "@alternativebot/contracts";
+import { createModelRoleSettings, modelRoleListPatch } from "@alternativebot/core";
 import {
   Button,
   DropdownMenu,
@@ -28,7 +28,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
   Spinner,
-} from "@rakazo/ui-web";
+} from "@alternativebot/ui-web";
 import { useQueryClient } from "@tanstack/react-query";
 import { GripVertical, MoreHorizontal, Plus } from "lucide-react";
 import type { ReactNode } from "react";

@@ -1,12 +1,12 @@
-import type { ModelCallObserver } from "@rakazo/adapter-kit";
-import { HOSTED_MODEL_CREDITS_REQUIRED_ERROR } from "@rakazo/core";
-import type { PrismaClient } from "@rakazo/db";
+import type { ModelCallObserver } from "@alternativebot/adapter-kit";
+import { HOSTED_MODEL_CREDITS_REQUIRED_ERROR } from "@alternativebot/core";
+import type { PrismaClient } from "@alternativebot/db";
 import {
   creditAccount,
   organizationForMember,
   recordModelCreditReceipt,
   reserveModelCredits,
-} from "@rakazo/db";
+} from "@alternativebot/db";
 
 export class HostedModelCreditsRequiredError extends Error {}
 

@@ -8,7 +8,7 @@ import type {
   SandboxProvider,
   SecretStore,
   TransactionalEmailProvider,
-} from "@rakazo/adapter-kit";
+} from "@alternativebot/adapter-kit";
 import type {
   CloudAgentConnection,
   CodexLiveCatalog,
@@ -28,10 +28,10 @@ import type {
   RemoteConnectorDependencies,
   TicketChangeNotifier,
   verifyModelServesAgents,
-} from "@rakazo/adapters";
-import type { Auth } from "@rakazo/auth";
-import type { NavLink } from "@rakazo/contracts";
-import type { BoardEvents, PrismaClient, ThreadEvents } from "@rakazo/db";
+} from "@alternativebot/adapters";
+import type { Auth } from "@alternativebot/auth";
+import type { NavLink } from "@alternativebot/contracts";
+import type { BoardEvents, PrismaClient, ThreadEvents } from "@alternativebot/db";
 import type { BillingService } from "./billing.js";
 import { accountRoutes } from "./routes/account.js";
 import { availabilityRoutes } from "./routes/availability.js";

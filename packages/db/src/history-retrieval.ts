@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
-import type { HistoryReadInput, HistorySearchInput } from "@rakazo/contracts";
-import { HistoryQueriesSchema } from "@rakazo/contracts";
-import { shortenedTextLength, textBoundary } from "@rakazo/core";
+import type { HistoryReadInput, HistorySearchInput } from "@alternativebot/contracts";
+import { HistoryQueriesSchema } from "@alternativebot/contracts";
+import { shortenedTextLength, textBoundary } from "@alternativebot/core";
 import type { PrismaClient } from "./client.js";
 import { Prisma } from "./client.js";
 import { searchTerms } from "./content-crypto.js";

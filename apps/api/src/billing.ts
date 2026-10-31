@@ -4,15 +4,15 @@ import type {
   BillingPrice,
   BillingProvider,
   BillingSubscriptionSnapshot,
-} from "@rakazo/adapter-kit";
+} from "@alternativebot/adapter-kit";
 import {
   BillingCheckoutCompletedError,
   BillingCustomerNotFoundError,
   BillingNoMonthlyCreditsError,
-} from "@rakazo/adapter-kit";
-import type { Actor, BillingStatus } from "@rakazo/contracts";
-import { BYOK_MONTHLY_PRICE_CENTS } from "@rakazo/contracts";
-import type { BillingAccount, PrismaClient } from "@rakazo/db";
+} from "@alternativebot/adapter-kit";
+import type { Actor, BillingStatus } from "@alternativebot/contracts";
+import { BYOK_MONTHLY_PRICE_CENTS } from "@alternativebot/contracts";
+import type { BillingAccount, PrismaClient } from "@alternativebot/db";
 import {
   billingAccountForOrganization,
   byokFreeUntil,
@@ -31,8 +31,8 @@ import {
   releaseCheckoutLease,
   replaceBillingCustomer,
   syncBillingSnapshot,
-} from "@rakazo/db";
-import { getLogger } from "@rakazo/logging";
+} from "@alternativebot/db";
+import { getLogger } from "@alternativebot/logging";
 import { createReferrals } from "./referrals.js";
 
 export const TRIAL_DAYS = 7;

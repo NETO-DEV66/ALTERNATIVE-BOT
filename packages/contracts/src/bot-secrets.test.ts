@@ -457,7 +457,7 @@ describe("command variables", () => {
     "LD_ANYTHING",
     "DYLD_INSERT_LIBRARIES",
     "DYLD_ANYTHING",
-    "RAKAZO_TOKEN",
+    "ALTERNATIVEBOT_TOKEN",
   ])("reserves $%s", (variable) => {
     expect(commandVariableProblem(variable)).toBe("reserved");
   });
@@ -504,7 +504,7 @@ describe("command variables", () => {
     ["ld_preload", "$LD_PRELOAD"],
     ["dyld-insert-libraries", "$DYLD_INSERT_LIBRARIES"],
     ["path", "$PATH"],
-    ["rakazo-token", "$RAKAZO_TOKEN"],
+    ["alternativebot-token", "$ALTERNATIVEBOT_TOKEN"],
   ])("rejects %s because %s is reserved", (name, variable) => {
     const result = BotSecretDestination.safeParse({ name, auth: command });
     expect(result.success).toBe(false);

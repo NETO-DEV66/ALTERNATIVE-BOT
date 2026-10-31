@@ -1,6 +1,6 @@
 import { EventEmitter } from "node:events";
-import type { PrismaClient } from "@rakazo/db";
-import { asSystem, createDb } from "@rakazo/db";
+import type { PrismaClient } from "@alternativebot/db";
+import { asSystem, createDb } from "@alternativebot/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import type { UserDeviceSocket } from "./user-device-gateway.js";
 import {

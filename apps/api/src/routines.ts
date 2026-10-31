@@ -1,15 +1,15 @@
 import { ORPCError } from "@orpc/server";
-import { routineWakeupJob } from "@rakazo/adapter-kit";
-import { parseRoutineWatch, parseRoutineWatchState, routineRunModelPin } from "@rakazo/adapters";
-import type { Actor, CreateRoutineInput, Routine } from "@rakazo/contracts";
-import { canonicalPiProviderId } from "@rakazo/contracts";
+import { routineWakeupJob } from "@alternativebot/adapter-kit";
+import { parseRoutineWatch, parseRoutineWatchState, routineRunModelPin } from "@alternativebot/adapters";
+import type { Actor, CreateRoutineInput, Routine } from "@alternativebot/contracts";
+import { canonicalPiProviderId } from "@alternativebot/contracts";
 import {
   hasMixedOneShotSchedule,
   isOneShotRoutineCrons,
   nextCronDateAcrossStrict,
-} from "@rakazo/core";
-import type { Prisma, PrismaClient } from "@rakazo/db";
-import { IsolationError } from "@rakazo/db";
+} from "@alternativebot/core";
+import type { Prisma, PrismaClient } from "@alternativebot/db";
+import { IsolationError } from "@alternativebot/db";
 import type { RouterDeps } from "./router.js";
 import type { RouterContext } from "./routes/context.js";
 

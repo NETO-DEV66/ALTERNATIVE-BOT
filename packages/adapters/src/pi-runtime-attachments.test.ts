@@ -146,17 +146,17 @@ describe("Pi runtime attachments", () => {
           },
         ],
         timestamp: expect.any(Number),
-        rakazoHistory: true,
-        rakazoMessageId: "message-1",
-        rakazoCreatedAt: undefined,
+        alternativebotHistory: true,
+        alternativebotMessageId: "message-1",
+        alternativebotCreatedAt: undefined,
       },
       {
         role: "user",
         content: "Assistant: Got it.",
         timestamp: expect.any(Number),
-        rakazoHistory: true,
-        rakazoMessageId: "message-2",
-        rakazoCreatedAt: undefined,
+        alternativebotHistory: true,
+        alternativebotMessageId: "message-2",
+        alternativebotCreatedAt: undefined,
       },
     ]);
     expect(promptCalls.images).toBeUndefined();
