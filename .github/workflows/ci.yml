@@ -458,7 +458,7 @@ jobs:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
           if [[ -z "$EXPO_TOKEN" ]]; then
-            echo "Add an EXPO_TOKEN repository secret with access to the inbox-zero/alternativebot Expo project." >&2
+            echo "Add an EXPO_TOKEN repository secret with access to the Expo project linked in apps/mobile/app.json." >&2
             exit 1
           fi
 

@@ -2,13 +2,13 @@
 
 [English](./README.md) | [简体中文](./README.zh-CN.md) | [日本語](./README.ja.md)
 
-[![GitHub stars](https://img.shields.io/github/stars/NETO-DEV66/alternativebot?labelColor=black&style=for-the-badge&color=2563EB)](https://github.com/NETO-DEV66/alternativebot/stargazers)
-[![Android APK をダウンロード](https://img.shields.io/badge/Android-Download%20APK-black?labelColor=black&style=for-the-badge&logo=android&logoColor=white)](https://github.com/NETO-DEV66/alternativebot/releases/download/android/alternativebot.apk)
+[![GitHub stars](https://img.shields.io/github/stars/NETO-DEV66/ALTERNATIVE-BOT?labelColor=black&style=for-the-badge&color=2563EB)](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/stargazers)
+[![Android APK をダウンロード](https://img.shields.io/badge/Android-Download%20APK-black?labelColor=black&style=for-the-badge&logo=android&logoColor=white)](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/releases/download/android/alternativebot.apk)
 
 ![Alternative Bot：本当に自分のものにできる AI チームメイト](./docs/readme-hero.png)
 
 Alternative Bot は、常駐型の AI チームメイトを持てるオープンソースの AI エージェントです。自分のマシンで動かせる
-セルフホスト型の AI アシスタントでもあります。Web 版、Electron デスクトップアプリ、[Android](https://github.com/NETO-DEV66/alternativebot/releases/download/android/alternativebot.apk) 版で利用できます。
+セルフホスト型の AI アシスタントでもあります。Web 版、Electron デスクトップアプリ、[Android](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/releases/download/android/alternativebot.apk) 版で利用できます。
 モデルやコンピューターのプロバイダーは自分で選べるほか、スタック全体をローカルで動かすこともできます。
 
 Grok Bot、Meta Muse、OpenAI Dots、Instinct、OpenClaw、Hermes Agent、Claude Duet の
@@ -60,7 +60,7 @@ Docker Engine、Compose プラグイン、curl、OpenSSL が必要です。リ�
 
 ```bash
 mkdir -p alternativebot && cd alternativebot &&
-curl -fsSLO https://raw.githubusercontent.com/NETO-DEV66/alternativebot/main/infra/compose/install-images.sh &&
+curl -fsSLO https://raw.githubusercontent.com/NETO-DEV66/ALTERNATIVE-BOT/main/infra/compose/install-images.sh &&
 bash install-images.sh
 ```
 
@@ -104,7 +104,7 @@ Node.js 22.x 系の 22.22.2 以降、Node.js 24.x、または Node.js 26 以降�
 pnpm 9、Docker が必要です。Node.js 23.x と 25.x はサポートしていません。
 
 ```bash
-git clone https://github.com/NETO-DEV66/alternativebot.git
+git clone https://github.com/NETO-DEV66/ALTERNATIVE-BOT.git
 cd alternativebot
 cp .env.example .env
 ```

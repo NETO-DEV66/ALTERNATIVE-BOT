@@ -9,7 +9,7 @@ export const CATALOG_URL =
   "https://alternativebot-public.fsn1.your-objectstorage.com/integrations/catalog.json";
 export const GITHUB_URL = "https://github.com/NETO-DEV66/ALTERNATIVE-BOT";
 export const ANDROID_APK_URL = "https://github.com/NETO-DEV66/ALTERNATIVE-BOT/releases/download/android/alternativebot.apk";
-export const GITHUB_API_REPO = "https://api.github.com/repos/NETO-DEV66/alternativebot";
+export const GITHUB_API_REPO = "https://api.github.com/repos/NETO-DEV66/ALTERNATIVE-BOT";
 export const DOCS_URL = "https://github.com/NETO-DEV66/ALTERNATIVE-BOT/blob/main/docs/self-host.md";
 export const SELF_HOST_SECRETS_URL =
   "https://github.com/NETO-DEV66/ALTERNATIVE-BOT/blob/main/docs/self-host-secrets.md";

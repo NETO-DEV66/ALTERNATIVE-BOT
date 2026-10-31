@@ -2,7 +2,6 @@
   "expo": {
     "name": "Alternative Bot",
     "slug": "alternativebot",
-    "owner": "inbox-zero",
     "scheme": "alternativebot",
     "version": "1.0.11",
     "orientation": "default",

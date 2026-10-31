@@ -103,7 +103,7 @@ describeLive("live release-watch eval (GPT 5.6 Luna + GitHub emulator)", () => {
     await rpc(handles.app, cookie, "threads/send", {
       botId: bot.id,
       text: [
-        "Create a daily task to watch for new releases of NETO-DEV66/alternativebot",
+        "Create a daily task to watch for new releases of NETO-DEV66/ALTERNATIVE-BOT",
         "and stay current on the project's capabilities.",
       ].join(" "),
     });
@@ -118,7 +118,8 @@ describeLive("live release-watch eval (GPT 5.6 Luna + GitHub emulator)", () => {
     );
     expect(routines.length).toBeGreaterThan(0);
     const routine =
-      routines.find((row) => /alternativebot|release/i.test(`${row.name}\n${row.prompt}`)) ?? routines[0]!;
+      routines.find((row) => /alternativebot|release/i.test(`${row.name}\n${row.prompt}`)) ??
+      routines[0]!;
 
     const dueAt = new Date(Date.now() - 1_000);
     await handles.prisma.routine.update({

@@ -106,7 +106,7 @@ export function assessReleaseWatchRoutinePrompt(prompt: string): {
 
   if (!mentionsRepo || !mentionsReleases || !mentionsGithubTool) {
     const missing = [
-      !mentionsRepo ? "repo (NETO-DEV66/alternativebot)" : null,
+      !mentionsRepo ? "repo (NETO-DEV66/ALTERNATIVE-BOT)" : null,
       !mentionsReleases ? "releases" : null,
       !mentionsGithubTool ? "GitHub/releases tool steps" : null,
     ]

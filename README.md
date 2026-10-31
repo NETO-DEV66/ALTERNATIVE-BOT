@@ -2,13 +2,13 @@
 
 [English](./README.md) | [简体中文](./README.zh-CN.md) | [日本語](./README.ja.md)
 
-[![GitHub stars](https://img.shields.io/github/stars/NETO-DEV66/alternativebot?labelColor=black&style=for-the-badge&color=2563EB)](https://github.com/NETO-DEV66/alternativebot/stargazers)
-[![Download the Android APK](https://img.shields.io/badge/Android-Download%20APK-black?labelColor=black&style=for-the-badge&logo=android&logoColor=white)](https://github.com/NETO-DEV66/alternativebot/releases/download/android/alternativebot.apk)
+[![GitHub stars](https://img.shields.io/github/stars/NETO-DEV66/ALTERNATIVE-BOT?labelColor=black&style=for-the-badge&color=2563EB)](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/stargazers)
+[![Download the Android APK](https://img.shields.io/badge/Android-Download%20APK-black?labelColor=black&style=for-the-badge&logo=android&logoColor=white)](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/releases/download/android/alternativebot.apk)
 
 ![Alternative Bot — AI teammates you actually own](./docs/readme-hero.png)
 
 Alternative Bot is an open source AI agent for persistent teammates, and a self-hosted AI assistant you
-can run on your own machine. It is available on the web, as an Electron desktop app, and on [Android](https://github.com/NETO-DEV66/alternativebot/releases/download/android/alternativebot.apk).
+can run on your own machine. It is available on the web, as an Electron desktop app, and on [Android](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/releases/download/android/alternativebot.apk).
 Bring your own model
 and computer provider, or run the complete stack locally.
 
@@ -59,7 +59,7 @@ You need Docker Engine, the Compose plugin, curl, and OpenSSL. No clone or Node 
 
 ```bash
 mkdir -p alternativebot && cd alternativebot &&
-curl -fsSLO https://raw.githubusercontent.com/NETO-DEV66/alternativebot/main/infra/compose/install-images.sh &&
+curl -fsSLO https://raw.githubusercontent.com/NETO-DEV66/ALTERNATIVE-BOT/main/infra/compose/install-images.sh &&
 bash install-images.sh
 ```
 
@@ -103,7 +103,7 @@ You need Node.js 22.22.2 or newer in the 22.x line, Node.js 24.x, or Node.js 26+
 pnpm 9; and Docker. Node.js 23.x and 25.x are not supported.
 
 ```bash
-git clone https://github.com/NETO-DEV66/alternativebot.git
+git clone https://github.com/NETO-DEV66/ALTERNATIVE-BOT.git
 cd alternativebot
 cp .env.example .env
 ```

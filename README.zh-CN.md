@@ -2,13 +2,13 @@
 
 [English](./README.md) | [简体中文](./README.zh-CN.md) | [日本語](./README.ja.md)
 
-[![GitHub stars](https://img.shields.io/github/stars/NETO-DEV66/alternativebot?labelColor=black&style=for-the-badge&color=2563EB)](https://github.com/NETO-DEV66/alternativebot/stargazers)
-[![下载 Android APK](https://img.shields.io/badge/Android-Download%20APK-black?labelColor=black&style=for-the-badge&logo=android&logoColor=white)](https://github.com/NETO-DEV66/alternativebot/releases/download/android/alternativebot.apk)
+[![GitHub stars](https://img.shields.io/github/stars/NETO-DEV66/ALTERNATIVE-BOT?labelColor=black&style=for-the-badge&color=2563EB)](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/stargazers)
+[![下载 Android APK](https://img.shields.io/badge/Android-Download%20APK-black?labelColor=black&style=for-the-badge&logo=android&logoColor=white)](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/releases/download/android/alternativebot.apk)
 
 ![Alternative Bot：由你掌控的 AI 队友](./docs/readme-hero.png)
 
 Alternative Bot 是一个开源 AI 智能体项目，让你拥有可长期协作的 AI 队友，也可以作为自托管 AI 助手在自己的电脑上运行。
-它提供网页版、Electron 桌面应用，以及 [Android](https://github.com/NETO-DEV66/alternativebot/releases/download/android/alternativebot.apk) 应用。
+它提供网页版、Electron 桌面应用，以及 [Android](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/releases/download/android/alternativebot.apk) 应用。
 你可以接入自己的模型和计算环境提供商，也可以在本地运行完整服务。
 
 它是 Grok Bot、Meta Muse、OpenAI Dots、Instinct、OpenClaw、Hermes Agent、Claude Duet 和 Hark Pro 的开源、自托管替代方案。
@@ -76,7 +76,7 @@ https://github.com/user-attachments/assets/dccdeddb-2134-4a56-8eed-b2e591736b1c
 
 ```bash
 mkdir -p alternativebot && cd alternativebot &&
-curl -fsSLO https://raw.githubusercontent.com/NETO-DEV66/alternativebot/main/infra/compose/install-images.sh &&
+curl -fsSLO https://raw.githubusercontent.com/NETO-DEV66/ALTERNATIVE-BOT/main/infra/compose/install-images.sh &&
 bash install-images.sh
 ```
 
@@ -116,7 +116,7 @@ bash install-images.sh
 不支持 Node.js 23.x 和 25.x。
 
 ```bash
-git clone https://github.com/NETO-DEV66/alternativebot.git
+git clone https://github.com/NETO-DEV66/ALTERNATIVE-BOT.git
 cd alternativebot
 cp .env.example .env
 ```
