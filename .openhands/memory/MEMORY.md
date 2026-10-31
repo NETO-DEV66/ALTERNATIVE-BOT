@@ -34,12 +34,17 @@ rebranded to **Alternative Bot**, mobile-only, Android package
 
 ## Current state (2026-10-31)
 
-- `origin/main` and local `main` are both at `ed3834e` (conversation archive + final
-  billing-leftover cleanup + memory notes). **Pushed** successfully.
+- `origin/main` and local `main` are both at **`d464e4a`** — "chore: drop billing
+  leftovers and the 24 MB source zip". **Pushed** successfully.
 - Rebrand + billing removal are **verified complete**: no `rakazo`/`Rakazo` or
-  `elie222` references remain outside `.git`/the original source zip; all
-  billing/payment code, Prisma models, migrations and Stripe compose env are gone.
-- **T5 (APK build + GitHub release) is still open** — no release exists, no APK built.
+  `elie222` references remain outside `.git`; all billing/payment code, Prisma models,
+  migrations and Stripe compose env are gone. The last dead remnant (the `pay_token`
+  browser action + `card`/`cardField` fill fields, unreachable from the tool schema)
+  was deleted along with `@stripe/link-sdk` and the 24 MB `ALTERNATIVE BOT.zip`.
+- **T5 (APK build + GitHub release) is still open** — repo has **0 releases** and **0
+  Actions secrets** (no `EXPO_TOKEN`); no java/Android SDK in the sandbox. The ready
+  workflow `.github/workflows/release-android-apk.yml` needs an `EXPO_TOKEN` secret and
+  a `GOOGLE_SERVICES_JSON` file var in the EAS *production* environment.
 - 4 test files fail on clean `HEAD` for environmental reasons (no `::1` loopback,
   npm-in-pnpm, process-reaping timing, real model HTTP) — not regressions.
 
