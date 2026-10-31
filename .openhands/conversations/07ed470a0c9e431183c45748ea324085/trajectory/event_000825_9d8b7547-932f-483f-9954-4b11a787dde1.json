@@ -1,0 +1,36 @@
+{
+  "id": "9d8b7547-932f-483f-9954-4b11a787dde1",
+  "timestamp": "2026-10-31T10:39:05.310874",
+  "source": "environment",
+  "parent_id": "93d75398-a02b-4717-9d8b-ec3a54fb6b63",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-ac78e9b91d39d4c4",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== index.ts billing lines ===\n11:export * from \"./billing-emulator.js\";\n110:export { hostedModelCreditObserver } from \"./model-credit-observer.js\";\n111:export * from \"./model-credit-reconciler.js\";\n124:export * from \"./payment-wallet-factory.js\";\n125:export * from \"./payment-wallets.js\";\n141:export * from \"./purchase-poll.js\";\n142:export * from \"./purchase-service.js\";\n171:export * from \"./stripe-billing.js\";\n\n=== executor.ts billing/payment/credit refs ===\n97:import { HostedModelCreditsRequiredError } from \"./model-credit-observer.js\";\n111:import { paymentWalletConnected } from \"./payment-wallets.js\";\n113:import { loadPurchaseRedactions } from \"./purchase-service.js\";\n154:  modelCreditBillingEnabled,\n468:          purchaseRedactions,\n506:          deps.paymentWallet ? loadPurchaseRedactions(deps, run) : [],\n526:          ...purchaseRedactions,\n748:            (await modelCreditBillingEnabled(deps)) &&\n757:          hostedProvider: (await modelCreditBillingEnabled(deps))\n789:          (await modelCreditBillingEnabled(deps)) &&\n875:                error instanceof HostedModelCreditsRequiredError ||\n1022:        const paymentWallet = deps.paymentWallet;\n1023:        const paymentWalletEnabled = paymentWallet\n1024:          ? await paymentWalletConnected(\n1025:              { prisma: deps.prisma, secretStore: deps.secretStore, paymentWallet },\n1098:            paymentWalletEnabled,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && echo \"=== index.ts billing lines ===\"; grep -n -iE 'billing|payment|wallet|purchase|paid|credit|stripe|mpp' packages/adapters/src/index.ts; echo; echo \"=== executor.ts billing/payment/credit refs ===\"; grep -n -iE 'billing|payment|wallet|purchase|paid|credit|stripe' packages/adapters/src/executor.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "9966f020-42eb-497b-be30-3ffa04c2cc33",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

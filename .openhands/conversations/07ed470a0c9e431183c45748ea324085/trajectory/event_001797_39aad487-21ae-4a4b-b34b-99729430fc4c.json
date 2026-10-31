@@ -1,0 +1,36 @@
+{
+  "id": "39aad487-21ae-4a4b-b34b-99729430fc4c",
+  "timestamp": "2026-10-31T11:05:17.336876",
+  "source": "environment",
+  "parent_id": "9abd1782-0a42-4a7a-a0bc-63e759d64044",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8e02918713bc88a8",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "UserDeviceGateway,\n} from \"@alternativebot/adapters\";\nimport {\n  applyMessagingOutboundStatus,\n  ChatSdkMessagingSurface,\n  CodexCatalogCache,\n  ComposioConnector,\n  contentKeyProviderFromEnv,\n  createAgentHomeStore,\n  createArtifactStore,\n  createBackgroundJobHandlers,\n  createCloudAgentConnection,\n  createConnectorStack,\n  createIdleComputerSweeper,\n  createJobReconciler,\n  createMessagingContextLoader,\n  createMessagingTeamChatHistory,\n  createMessagingTeamChatSender,\n  createModelCreditReconciler,\n  createProductAnalytics,\n  createRunExecutor,\n  createRunSandbox,\n  createRunSecretWriter,\n  createSecretStore,\n  createTicketChangeNotifier,\n  createWebProvider,\n  deploymentModelUsageLookup,\n  EmailEmulator,\n  ExpoPushProvider,\n  GraphileJobPublisher,\n  InMemoryJobQueue,\n=== 75-90 ===\n  PrismaPushTokenStore,\n  pipedreamConfigFromEnv,\n  piSessionsRoot,\n  RunJobPublisher,\n  RunStarter,\n  reconcileCloudAgents,\n  reconcileComputerUpdates,\n  removePiUserSessions,\n  resolveDeploymentModel,\n  ScriptedAgentRuntime,\n  SpaceMemoryProviderResolver,\n  sandboxProviderOptionsFromEnv,\n  toTeamChatInbound,\n  UserDeviceHub,\n  UserDevices,\n  userDeviceForwardSecret,\n=== 655,675 ===\n  const reconciler = inMemoryJobs\n    ? createJobReconciler({\n        prisma,\n        jobs,\n        events,\n        notifications,\n        reconcileModelCredits: createModelCreditReconciler({\n          prisma,\n          lookup: deploymentModelUsageLookup(),\n        }),\n        reconcileCloudAgents: () => reconcileCloudAgents({ prisma, jobs, cloudAgent }),\n        reconcileComputerUpdates: () => reconcileComputerUpdates({ prisma, jobs }),\n        reconcileSecurityEventRetention: createSecurityEventPruner(\n          prisma,\n          securityEventRetentionDays(),\n        ),\n        reconcileIdleComputers: createIdleComputerSweeper({ prisma, jobs }),\n      })\n    : undefined;\n  reconciler?.start();"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '30,60p' apps/api/src/app.ts; echo \"=== 75-90 ===\"; sed -n '75,90p' apps/api/src/app.ts; echo \"=== 655,675 ===\"; sed -n '655,675p' apps/api/src/app.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "d414b666-41c9-40a9-bab8-65cb5ae417d8",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

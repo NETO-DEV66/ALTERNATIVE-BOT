@@ -1,0 +1,36 @@
+{
+  "id": "bb037aa1-4b21-40aa-8123-18587554bedd",
+  "timestamp": "2026-10-31T11:43:55.052894",
+  "source": "environment",
+  "parent_id": "b180f5b6-b45e-4072-b2c9-7fa348a6464e",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b8bdf140cae9af26",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "isDefault: true,\n  modelId: \"deepseek-chat\",\n};\n\nfunction account(provider: string, modelId: string) {\n  return {\n    userId: \"user-1\",\n    email: \"ada@example.test\",\n    name: \"Ada\",\n    spaceId: \"space-1\",\n    isDeploymentOwner: false,\n    isAdmin: false,\n    needsModel: false,\n    defaultProvider: provider,\n    defaultModel: modelId,\n    hostCredentialProvider: null,\n    hostCredentialSource: null,\n    computerHost: null,\n    canChooseHostComputer: false,\n    sandboxProvider: \"docker\",\n    mcpStdioEnabled: false,\n    avatarStyle: \"organic\" as const,\n    billingEnabled: false,\n    ticketBoardEnabled: false,\n    navLinks: [],\n    phoneCallsEnabled: false,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '175,200p' apps/web/src/pages/ModelSettingsOverlay.test.tsx",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 21955,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "7bae2df2-261b-4183-b8f8-cbe619cc6155",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

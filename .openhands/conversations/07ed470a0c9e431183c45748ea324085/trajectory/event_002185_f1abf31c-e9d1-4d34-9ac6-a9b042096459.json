@@ -1,0 +1,36 @@
+{
+  "id": "f1abf31c-e9d1-4d34-9ac6-a9b042096459",
+  "timestamp": "2026-10-31T11:13:16.794047",
+  "source": "environment",
+  "parent_id": "a01ec94d-5249-435b-93ac-711b16d33d2d",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-a4961222008a5c30",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "843:         let start: Awaited<ReturnType<typeof startOnBackup>>;\n844:         let primaryFailure = { message: MISSING_MODEL_RUN_ERROR, accountFailure: true };\n845:         let retryPrimary: unknown;\n846:         if (selectedProvider && selectedModelId) {\n847:           if (await modelAccessDenied()) {\n848:             await failRunBeforeModel(MODEL_ACCESS_REQUIRED_RUN_ERROR, true);\n849:             return;\n850:           }\n851:           try {\n852:             start = {\n853:               provider: selectedProvider,\n854:               id: selectedModelId,\n855:               credential: selected.credential,\n856:               thinkingLevel: selected.thinkingLevel,\n857:               resolved: await resolveModelKey(\n858:                 deps,\n859:                 run.userId,\n860:                 run.spaceId,\n861:                 selected.credential,\n862:                 selectedProvider,\n863:                 selectedModelId,\n864:                 (values) => runSecrets.push(...values),\n865:               ),\n866:             };\n867:           } catch (error) {\n868:             // An incompatible saved model or a dead (already retired) credential is a\n869:             // configuration error: record it on the run rather than retrying setup.\n870:             const terminal = isTerminalModelSetupError(error);\n871:             if (!terminal && !isModelCredentialRejected(error)) throw error;\n872:             primaryFailure = {\n873:               message: error instanceof Error ? error.message : \"Connect the provider again.\",\n874:               accountFailure:\n875:                 error instanceof HostedModelCreditsRequiredError ||\n876:                 isRetiredModelCredentialError(error),\n877:             };\n878:             if (!terminal) retryPrimary = error;\n879:           }\n880:         } else if (await modelAccessDenied()) {"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && git --no-pager show HEAD:packages/adapters/src/executor.ts | awk 'NR>=843 && NR<=880 {printf \"%d: %s\\n\", NR, $0}'",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "401d805f-22d2-4bf4-ae4a-78b83d19ae12",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "9f547c2a-e93b-4282-9a76-9c2deecd3547",
+  "timestamp": "2026-10-31T11:43:47.373350",
+  "source": "agent",
+  "parent_id": "364becbf-c828-4603-831e-ceaa16aa3695",
+  "thought": [
+    {
+      "cache_prompt": false,
+      "type": "text",
+      "text": "Now the remaining test-only and doc leftovers:\n\n"
+    }
+  ],
+  "reasoning_content": "So `Me` schema has no `billingEnabled` \u2014 the e2e fixtures/marketing-shots assign extra property `billingEnabled: false` to a `Me`-typed object. That would be an excess property error... unless the object is typed loosely. `const subscriptionMe: Me = {... billingEnabled: false}` \u2014 excess property check WOULD error. But e2e is not typechecked by `tsc -p tsconfig.json` (only `src`), and Playwright's own transform doesn't typecheck. So it's fine at build time.\n\nBut the tests I edited (ModelSettingsOverlay.test.tsx is under src, and it has `billingEnabled: false` at line 197). That IS typechecked... yet turbo check passed. So maybe the object there isn't strictly typed as Me either, or it's in a `as` cast. Since check passes, leave it. Actually \u2014 those `billingEnabled: false` in test files may be passed to a function with a loose param type. Fine.\n\nSo the web UI cleanup for billing is essentially done already, except: `apps/web/src/pages/ModelRoleSettings.tsx:167 billing: \"\"` and `model-picker.tsx:163 option.billing...`. Those reference the ModelCatalogEntry.billing field which still exists in contracts (the field carries *provider* billing notes like \"Uses your OpenAI API key...\", not the app's billing system). That's legitimate \u2014 keep it.\n\nNow the e2e marketing-shots has `SubscriptionShot` / subscription catalog \u2014 that's about *model provider subscriptions* (ChatGPT/Claude sign-in), not the app's billing. Legit. Keep.\n\nSo actually the web billing UI removal is done. Good.\n\nNow let me handle:\n1. `packages/testkit/src/cli/flows.ts` \u2014 remove STRIPE_* lines (they're just clearing env that no longer exists; harmless but dead). Update comment.\n2. `packages/testkit/src/cli/harness.ts` \u2014 remove PAYMENT_WALLET_PROVIDER=emulator line + comment.\n3. `apps/www/src/guide.ts` \u2014 remove \"Purchases with Stripe Link\" bullet.\n4. `infra/updater/src/compose-env.test.ts` \u2014 remove STRIPE_SECRET_KEY from the denylist (it's checking the key is NOT in worker env; since STRIPE_* no longer exists it's vacuous, but harmless). Actually it asserts `expect(worker).not.toHaveProperty(\"STRIPE_SECRET_KEY\")` \u2014 always true now. Harmless but should remove for cleanliness. Let me remove.\n5. `packages/adapters/src/routine-watch.test.ts:625` \u2014 `unsetEnv: [\"STRIPE_API_KEY\"]` \u2014 this is a generic secret-unset test using a stripe-named secret as fixture data. Harmless/legit (tests secret redaction). Keep? It's using \"stripe-api-key\" as an arbitrary secret name. That's fine \u2014 it's not the billing system. Keep.\n6. `apps/www/src/guide.ts` line 289 \u2014 remove.\n7. `docs` \u2014 check for other billing references in docs (account.md already done, self-host-billing.md deleted). Let me grep docs for billing/credit/subscription.\n\nLet me also check `packages/testkit/src/cli/flows.ts` \u2014 is it in tsconfig? testkit check passed. Removing lines is safe.\n\nLet me do these edits.\n\nAlso need to check: `apps/www/src/guide.ts` \u2014 www check had failed earlier with Shiki warnings. Let me check if that's still failing (it wasn't in the 22/22 run... wait run 3 and 4 both 22/22 successful). So www check now passes? Earlier run 2 failed www#check with Shiki warnings exit 1. Now 22/22 pass. Maybe the earlier failure was fixed by prior edits or a flake. Anyway current state is green.\n\nLet me make the remaining edits.",
+  "thinking_blocks": [],
+  "responses_reasoning_item": null,
+  "action": {
+    "command": "str_replace",
+    "path": "/workspace/project/packages/testkit/src/cli/flows.ts",
+    "file_text": null,
+    "old_str": "      // Flow MCP servers, such as connect-mcp's task tracker, listen on loopback in this process.\n      MCP_ALLOW_PRIVATE_ENDPOINT: \"true\",\n      // Billing would require a funded credits account; flows pay the model directly.\n      STRIPE_SECRET_KEY: \"\",\n      STRIPE_WEBHOOK_SECRET: \"\",\n      STRIPE_PRICE_ID: \"\",\n    });",
+    "new_str": "      // Flow MCP servers, such as connect-mcp's task tracker, listen on loopback in this process.\n      MCP_ALLOW_PRIVATE_ENDPOINT: \"true\",\n    });",
+    "insert_line": null,
+    "view_range": null,
+    "kind": "FileEditorAction"
+  },
+  "tool_name": "file_editor",
+  "tool_call_id": "chatcmpl-tool-a7b52b79497b370f",
+  "tool_call": {
+    "id": "chatcmpl-tool-a7b52b79497b370f",
+    "responses_item_id": null,
+    "name": "file_editor",
+    "arguments": "{\"command\": \"str_replace\", \"new_str\": \"      // Flow MCP servers, such as connect-mcp's task tracker, listen on loopback in this process.\\n      MCP_ALLOW_PRIVATE_ENDPOINT: \\\"true\\\",\\n    });\", \"old_str\": \"      // Flow MCP servers, such as connect-mcp's task tracker, listen on loopback in this process.\\n      MCP_ALLOW_PRIVATE_ENDPOINT: \\\"true\\\",\\n      // Billing would require a funded credits account; flows pay the model directly.\\n      STRIPE_SECRET_KEY: \\\"\\\",\\n      STRIPE_WEBHOOK_SECRET: \\\"\\\",\\n      STRIPE_PRICE_ID: \\\"\\\",\\n    });\", \"path\": \"/workspace/project/packages/testkit/src/cli/flows.ts\"}",
+    "origin": "completion"
+  },
+  "llm_response_id": "gen-1793447014-NZME0Fp3przNG0JQwYmC",
+  "security_risk": "UNKNOWN",
+  "critic_result": null,
+  "summary": "file_editor: {\"command\": \"str_replace\", \"new_str\": \"      // Flow MCP servers, such as connect-mcp's task tracker, listen on loopback in this process.\\n      MCP_ALLOW_PRIVATE_ENDPOINT: \\\"true\\\",\\n    });\", \"old_str\": \"      // Flow MCP servers, such as connect-mcp's task tracker, listen on loopback in this process.\\n      MCP_ALLOW_PRIVATE_ENDPOINT: \\\"true\\\",\\n      // Billing would require a funded credits account; flows pay the model directly.\\n      STRIPE_SECRET_KEY: \\\"\\\",\\n      STRIPE_WEBHOOK_SECRET: \\\"\\\",\\n      STRIPE_PRICE_ID: \\\"\\\",\\n    });\", \"path\": \"/workspace/project/packages/testkit/src/cli/flows.ts\"}",
+  "kind": "ActionEvent"
+}

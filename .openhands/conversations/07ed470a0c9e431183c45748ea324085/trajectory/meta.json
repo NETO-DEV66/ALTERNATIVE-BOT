@@ -1,0 +1,40 @@
+{
+  "id": "07ed470a0c9e431183c45748ea324085",
+  "created_by_user_id": "96cabaab-b286-4523-9e51-5dc9857e0f56",
+  "sandbox_id": "68xncEGj8mItYmaunBjTDK",
+  "selected_repository": "NETO-DEV66/ALTERNATIVE-BOT",
+  "selected_branch": "main",
+  "git_provider": "github",
+  "title": "Alternative Bot",
+  "trigger": "gui",
+  "pr_number": [],
+  "llm_model": "openhands/deepseek-v4.1-flash",
+  "agent_kind": "openhands",
+  "metrics": {
+    "model_name": "default",
+    "accumulated_cost": 0.058315879999999994,
+    "max_budget_per_task": null,
+    "accumulated_token_usage": {
+      "model": "",
+      "prompt_tokens": 88971163,
+      "completion_tokens": 300646,
+      "cache_read_tokens": 12800,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_window": 1000000,
+      "per_turn_token": 69405,
+      "response_id": ""
+    }
+  },
+  "parent_conversation_id": null,
+  "sub_conversation_ids": [],
+  "public": true,
+  "tags": {
+    "archiveworkspacepath": "/workspace/project",
+    "clientsource": "agentcanvas"
+  },
+  "created_at": "2026-10-31T10:02:20.141486Z",
+  "updated_at": "2026-10-31T14:11:17.454974Z",
+  "acp_server": null,
+  "launched_agent_profile": null
+}

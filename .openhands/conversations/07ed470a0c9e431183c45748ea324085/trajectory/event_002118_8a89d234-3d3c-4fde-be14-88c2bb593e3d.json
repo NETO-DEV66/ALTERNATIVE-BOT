@@ -1,0 +1,37 @@
+{
+  "id": "8a89d234-3d3c-4fde-be14-88c2bb593e3d",
+  "timestamp": "2026-10-31T11:10:41.876913",
+  "source": "agent",
+  "parent_id": "363ee171-5a88-4394-a48c-a02fd3e37289",
+  "thought": [
+    {
+      "cache_prompt": false,
+      "type": "text",
+      "text": ""
+    }
+  ],
+  "reasoning_content": "The `resolved` is defined. `backup.resolved` also defined. The TS error says `credential` type is `{...} | null`. But there's a check `if (!credential) throw`. Hmm, but the error is `selected.credential` at line 828, which is the *selected* from selectConfiguredModel, whose credential is `overrideCredential | main.credential | null`. So when `selected.provider && selected.id` are set (from fallback), credential is null. That's the legit case: the fallback provider has no credential \u2192 the deployment-model path (previously `hostedProvider` allowed a null credential). Since we removed the hosted provider, now the fallback with a null credential is invalid.\n\nSo we need to handle: when selected came from fallback (credential null), we should not try to start. Actually the original code with hostedProvider allowed this. But now that we removed the deployment/hosted model, the deployment default model has no credential \u2192 run fails.\n\nWait, but is the deployment model itself removed? The task says de-monetize, not remove deployment model. Hmm. Actually the deployment model might rely on deployment-owned credentials stored elsewhere. Let me check how `resolveModelKey` works with a null credential \u2014 probably `credential` is needed.\n\nActually, before my changes, `hostedProvider` was set only when `modelCreditBillingEnabled(deps)` was true, i.e. when credits were enabled. Since credits are now disabled, `hostedProvider` was `undefined` even before my change. So `selected.credential` could already be null in that case. So this error existed before? No\u2014the error is in the current (modified) file. Let me check the original file at HEAD around line 855 to see if there's a null guard.\n\nAt HEAD line 855: `credential: selected.credential,`. Same. So how did it typecheck before? Because `selectConfiguredModel` at HEAD had `runnable = (provider, credential) => Boolean(credential || (provider && provider === input.hostedProvider))`. When `hostedProvider` is undefined and credential null, `useOverride`/`useMain` false \u2192 fallback branch `{ provider: fallback?.provider, id: ..., credential: null }`. So `selected.credential` is still null. Type-wise, `credential` in the union... Actually the return type of selectConfiguredModel is inferred. The union includes `credential: null` from fallback branch. So TS would complain at HEAD too? Unless `selectedProvider` guard narrows.\n\nHmm, actually wait. At HEAD, was there a `!selected.credential` check? Let me look at HEAD lines 846-870 fully. Actually the `if (selectedProvider && selectedModelId)` and then `credential: selected.credential`. Let me check HEAD more carefully - maybe there's an assertion.\n\nLet me just check git stash / compare. Actually, let me check: does the HEAD version typecheck? Let me run tsc on a clean checkout? That's expensive. Instead, look: maybe `ModelCredential` type includes null? `credential: ModelCredential` where ModelCredential = Awaited<...>|null. Let me check `ModelCredential` type.\n\nActually the error message says the type `{...} | null` is not assignable to `{...}`. The target type is `AgentRunRequest[\"model\"][\"credential\"]`? No... Let me look at `start` type: `Awaited<ReturnType<typeof startOnBackup>>` which is `{ provider; id; credential: backup.credential; ...} | undefined`. `backup.credential` is from resolveConnectedModelKey which returns `{ credential, resolved }` where credential is non-null (guarded). So the target type has `credential: {non-null}`. And `selected.credential` is `{...}|null`. At HEAD this same mismatch should exist... unless at HEAD `resolveConnectedModelKey` returned a nullable credential.\n\nLet me check git diff of run-model.ts.",
+  "thinking_blocks": [],
+  "responses_reasoning_item": null,
+  "action": {
+    "command": "cd /workspace/project && git --no-pager diff packages/adapters/src/run-model.ts",
+    "is_input": false,
+    "timeout": null,
+    "reset": false,
+    "kind": "TerminalAction"
+  },
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b71d15fa99e65d8e",
+  "tool_call": {
+    "id": "chatcmpl-tool-b71d15fa99e65d8e",
+    "responses_item_id": null,
+    "name": "terminal",
+    "arguments": "{\"command\": \"cd /workspace/project && git --no-pager diff packages/adapters/src/run-model.ts\", \"security_risk\": \"LOW\", \"summary\": \"Diff run-model.ts\"}",
+    "origin": "completion"
+  },
+  "llm_response_id": "gen-1793445034-6S2H6K2aGAeNyDLlu1Lx",
+  "security_risk": "LOW",
+  "critic_result": null,
+  "summary": "Diff run-model.ts",
+  "kind": "ActionEvent"
+}

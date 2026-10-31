@@ -1,0 +1,34 @@
+{
+  "id": "b85f25fa-ba6e-44e1-8c26-4704e59bde96",
+  "timestamp": "2026-10-31T10:52:21.515633",
+  "source": "agent",
+  "parent_id": "7dfdd2da-42db-49a2-885c-908eefd15321",
+  "thought": [],
+  "reasoning_content": null,
+  "thinking_blocks": [],
+  "responses_reasoning_item": null,
+  "action": {
+    "command": "str_replace",
+    "path": "/workspace/project/packages/adapters/src/run-model.ts",
+    "file_text": null,
+    "old_str": "    override,\n    overrideCredential,\n    main,\n    hostedProvider: (await modelCreditBillingEnabled(deps))\n      ? resolveDeploymentModel().provider\n      : undefined,\n    defaults: {\n      settings,\n      deployment: deps.deploymentModelConfigured ? resolveDeploymentModel() : null,\n    },\n  });",
+    "new_str": "    override,\n    overrideCredential,\n    main,\n    hostedProvider: undefined,\n    defaults: {\n      settings,\n      deployment: deps.deploymentModelConfigured ? resolveDeploymentModel() : null,\n    },\n  });",
+    "insert_line": null,
+    "view_range": null,
+    "kind": "FileEditorAction"
+  },
+  "tool_name": "file_editor",
+  "tool_call_id": "chatcmpl-tool-8cd8ca199fb9e6fa",
+  "tool_call": {
+    "id": "chatcmpl-tool-8cd8ca199fb9e6fa",
+    "responses_item_id": null,
+    "name": "file_editor",
+    "arguments": "{\"command\": \"str_replace\", \"new_str\": \"    override,\\n    overrideCredential,\\n    main,\\n    hostedProvider: undefined,\\n    defaults: {\\n      settings,\\n      deployment: deps.deploymentModelConfigured ? resolveDeploymentModel() : null,\\n    },\\n  });\", \"old_str\": \"    override,\\n    overrideCredential,\\n    main,\\n    hostedProvider: (await modelCreditBillingEnabled(deps))\\n      ? resolveDeploymentModel().provider\\n      : undefined,\\n    defaults: {\\n      settings,\\n      deployment: deps.deploymentModelConfigured ? resolveDeploymentModel() : null,\\n    },\\n  });\", \"path\": \"/workspace/project/packages/adapters/src/run-model.ts\"}",
+    "origin": "completion"
+  },
+  "llm_response_id": "gen-1793443939-e35t6seQ3C5stgqCQC4q",
+  "security_risk": "UNKNOWN",
+  "critic_result": null,
+  "summary": "file_editor: {\"command\": \"str_replace\", \"new_str\": \"    override,\\n    overrideCredential,\\n    main,\\n    hostedProvider: undefined,\\n    defaults: {\\n      settings,\\n      deployment: deps.deploymentModelConfigured ? resolveDeploymentModel() : null,\\n    },\\n  });\", \"old_str\": \"    override,\\n    overrideCredential,\\n    main,\\n    hostedProvider: (await modelCreditBillingEnabled(deps))\\n      ? resolveDeploymentModel().provider\\n      : undefined,\\n    defaults: {\\n      settings,\\n      deployment: deps.deploymentModelConfigured ? resolveDeploymentModel() : null,\\n    },\\n  });\", \"path\": \"/workspace/project/packages/adapters/src/run-model.ts\"}",
+  "kind": "ActionEvent"
+}

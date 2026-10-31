@@ -1,0 +1,36 @@
+{
+  "id": "e679b01f-de5c-4a0d-8081-8a136096b51a",
+  "timestamp": "2026-10-31T11:14:59.900363",
+  "source": "environment",
+  "parent_id": "ccf3eceb-a3b9-4a3a-bb76-d19a9902c036",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-bb62cb200e62aaf4",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "import {\n  deploymentModelRole,\n  hostCredentialSource,\n  mcpStdioAvailable,\n  resolveMemberMainModel,\n} from \"@alternativebot/adapters\";\nimport type { Actor, Me } from \"@alternativebot/contracts\";\nimport { attachmentMaxBytes, attachmentMaxCount, canonicalPiProviderId } from \"@alternativebot/contracts\";\nimport { isAdmin } from \"../admins.js\";\nimport type { RouterDeps } from \"../router.js\";\n\nexport { createAdapterContext as computerContext } from \"@alternativebot/adapter-kit\";\n\nfunction hostCredentials(active: boolean, provider: string) {\n  return active\n    ? { hostCredentialProvider: provider, hostCredentialSource: hostCredentialSource(provider) }\n    : { hostCredentialProvider: null, hostCredentialSource: null };\n}\n\nexport async function meDto(deps: RouterDeps, actor: Actor): Promise<Me> {\n  const [user, setup, admin] = await Promise.all([\n    deps.prisma.user.findUniqueOrThrow({\n      where: { id: actor.userId },\n      select: {\n        email: true,\n        name: true,\n        timezone: true,\n        signupSurvey: { select: { userId: true } },\n      },\n    }),\n    modelSetup(deps, actor),\n    isAdmin(deps, actor.userId),\n  ]);\n  return {\n    ticketBoardEnabled: deps.env.ticketBoardEnabled === true,\n    phoneCallsEnabled: deps.env.phoneCallsEnabled === true,\n    navLinks: deps.env.navLinks ?? [],\n    maxUploadSizeBytes: attachmentMaxBytes(deps.env),\n    maxAttachmentsPerMessage: attachmentMaxCount(deps.env),\n    userId: actor.userId,\n    email: user.email,\n    name: user.name,\n    spaceId: actor.spaceId,\n    isDeploymentOwner: false,\n    isAdmin: admin,\n    needsModel: setup.needsModel,\n    defaultProvider: canonicalPiProviderId(setup.model?.provider ?? deps.env.defaultProvider),\n    defaultModel: setup.model?.modelId ?? deps.env.defaultModel,\n    // Set only while the active default is the deployment's own, running on host credentials.\n    ...hostCredentials(\n      !setup.main &&\n        !setup.settings?.defaultModelProvider &&\n        Boolean(deps.env.deploymentModelHostCredentials),\n      deps.env.defaultProvider,\n    ),\n    computerHost: computerHostFor(setup.settings?.computerHost, deps.env.sandboxProvider),\n    canChooseHostComputer:\n      Boolean(deps.env.desktopHostChoiceEnabled) && deps.env.sandboxProvider === \"docker\",\n    sandboxProvider: deps.env.sandboxProvider,\n    mcpStdioEnabled:\n      admin &&\n      mcpStdioAvailable({\n        stdioEnabled: deps.env.mcpStdioEnabled,\n        allowedCommands: deps.env.mcpStdioAllowedCommands,\n      }),\n    avatarStyle: \"organic\",\n    timezone: user.timezone ?? null,\n  };\n}\n\nfunction computerHostFor(\n  stored: string | null | undefined,\n  sandboxProvider: string,\n): \"docker\" | \"this-mac\" | null {\n  if (sandboxProvider === \"desktop\") return \"this-mac\";\n  if (sandboxProvider !== \"docker\") return null;\n  if (stored === \"this-mac\" || stored === \"docker\") return stored;\n  return null;\n}\n\n/** The main model chat runs: the member's while it can run, else the deployment's. */\nexport async function modelSetup(deps: RouterDeps, actor: Actor) {\n  const [member, settings] = await Promise.all([\n    resolveMemberMainModel({ prisma: deps.prisma, secretStore: deps.secrets }, actor),\n    deps.prisma.deploymentSettings.findUnique({ where: { id: \"default\" } }),\n  ]);\n  const main = member && member.credential ? member : null;\n  const hasDeployment = Boolean(deps.env.deploymentModelConfigured);\n  return {\n    main,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '1,90p' apps/api/src/routes/shared.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "08c47693-ff8d-4aaa-a519-8d58fd87bc04",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

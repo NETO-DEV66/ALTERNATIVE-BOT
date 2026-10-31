@@ -1,0 +1,36 @@
+{
+  "id": "1437d250-a454-4c98-973f-cf347305dde6",
+  "timestamp": "2026-10-31T11:20:17.953964",
+  "source": "environment",
+  "parent_id": "5939591b-518f-43ce-a76f-9a7e8f4d77f2",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-af3edce5030ee294",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "message: \"This model is currently experiencing high demand. Please try again later.\",\n      status: \"UNAVAILABLE\",\n    }),\n    '429: {\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"example/model:free is temporarily rate-limited upstream. Please retry shortly.\"}}',\n    '429 {\"status\":429,\"title\":\"Too Many Requests\"}',\n  ])(\"leaves a transient failure to its retry advice: %s\", (details) => {\n    const error = action(details);\n    expect(error.summary).toMatch(/Try again/);\n    expect(error.recovery).toBeUndefined();\n  });\n\n  it.each([MISSING_MODEL_RUN_ERROR, HOSTED_MODEL_CREDITS_REQUIRED_ERROR])(\n    \"keeps the app's own advice and opens the connections: %s\",\n    (details) => {\n      expect(normalizeRunError(details)).toEqual({\n        summary: details,\n        details,\n        recovery: \"connection\",\n      });\n    },\n  );\n});\n=== imports ===\nimport { COMPUTER_RATE_LIMIT_ERROR } from \"@alternativebot/contracts\";\nimport { beforeEach, describe, expect, it, vi } from \"vitest\";\nimport {\n  APPROVED_ACTION_NOT_RUN_ERROR,\n  HOSTED_MODEL_CREDITS_REQUIRED_ERROR,\n  isImageInputConfirmation,\n  isModelRequiredSendError,\n  MISSING_MODEL_RUN_ERROR,\n  MISSING_TOOL_FINAL_RESPONSE_ERROR,\n  MODEL_CONTEXT_TOO_SMALL_ERROR,\n  MODEL_IMAGE_INPUT_ERROR,\n  MODEL_OUTPUT_CUT_ERROR,\n  MODEL_OUTPUT_LIMIT_ERROR,\n  MODEL_REQUEST_LIMIT_ERROR,\n  MODEL_REQUIRED_SEND_ERROR,\n  modelFallbackFailure,\n  normalizeRunError,\n  userRunError,\n} from \"./run-error.js\";"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '830,860p' packages/core/src/run-error.test.ts; echo \"=== imports ===\"; sed -n '1,20p' packages/core/src/run-error.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "d5f2012c-81de-42f5-af10-f34fea226092",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "637e9b9c-ec36-4fb0-94c3-d7de974fb8fd",
+  "timestamp": "2026-10-31T12:02:27.475251",
+  "source": "environment",
+  "parent_id": "0ef80d03-fd3c-4b99-87a5-fe057d02352b",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8df935be3b86661d",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "FAIL  apps/api/src/account-import.test.ts|account import archive > rejects a newer version\n FAIL  apps/api/src/models-backups.test.ts|lets a deployment-managed model lead the main model like any other purpose\n FAIL  apps/desktop/src/browser-auth.test.ts|system browser authentication > uses the remaining loopback family when 127.0.0.1 is unavailable\n FAIL  apps/mobile/lib/api.test.ts|mobile API authentication > accepts complete pre-SSO capabilities as password-only\n FAIL  apps/mobile/lib/i18n.test.ts|mobile i18n > translates every mobile chrome t() id in every non-English catalog\n FAIL  apps/mobile/lib/sign-in.test.tsx|asks the signup survey after an external sign-in creates the account\n FAIL  apps/mobile/lib/sign-in.test.tsx|asks the signup survey before opening the app\n FAIL  infra/sandboxes/supervisor/src/computer-spec.test.ts|graphical computer spec > derives deterministic host bridge names within the 15-byte interface limit\n FAIL  infra/sandboxes/supervisor/src/computer-spec.test.ts|graphical computer spec > forwards a URL to the live browser when SingletonLock misses that process\n FAIL  infra/sandboxes/supervisor/src/computer-spec.test.ts|graphical computer spec > pulls a missing computer image only from a registry the name spells out\n FAIL  infra/sandboxes/supervisor/src/computer-spec.test.ts|graphical computer spec > spawns Chromium when the wrapper is invoked as ./alternativebot-browser\n FAIL  infra/sandboxes/supervisor/src/egress-probe.test.ts|egress probe > probes from a named alternativebot-c bridge and cleans up\n FAIL  infra/updater/src/compose-service.test.ts|the point-in-time recovery sidecar > is tagged with a hash of what it is built from, so a deploy rebuilds it only on change\n FAIL  packages/adapters/src/browser-tools.test.ts|browser tools > settles an unsupported kind before anything runs, without pointing at desktop tools\n FAIL  packages/adapters/src/desktop-sandbox-paths.test.ts|desktop sandbox path rules > compares Windows roots case-insensitively without accepting siblings or other drives\n FAIL  packages/adapters/src/host-computer.test.ts|native host computer transport > cancel owns background children after their shell request finishes\n FAIL  packages/adapters/src/host-computer.test.ts|native host computer transport > revoke owns background children after their shell request finishes\n FAIL  packages/adapters/src/index.test.ts|builtin tools > exposes the tools the executor actually applies\n FAIL  packages/adapters/src/model-selection.test.ts|space catalog auth > keeps a saved personal connection in the catalog\n FAIL  packages/adapters/src/user-device-gateway.test.ts|user device gateway in the holding process > closes the socket and fails requests on revoke\n FAIL  packages/testkit/src/backup-scripts.test.ts|encrypted production backups > streams every artifact through age without plaintext on disk (file: false)\n FAIL  packages/testkit/src/backup-scripts.test.ts|encrypted production backups > streams every artifact through age without plaintext on disk (file: true)\n FAIL  packages/testkit/src/backup-scripts.test.ts|production backup deployment and archive behavior > warns that a backup without recipients is plaintext"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -E '^ FAIL ' /tmp/vitest-all.log | sed 's/ > /|/' | sort -u",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 25122,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "150fd318-f61e-4fdd-a029-de10cf652679",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "a511f3e9-b3ff-4378-a67a-f98f927c36d9",
+  "timestamp": "2026-10-31T12:09:19.587807",
+  "source": "environment",
+  "parent_id": "7df20f94-bdcd-4065-9db9-d6de77ae5f62",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b55621210ed67859",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": ""
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && git --no-pager grep -n 'managed' HEAD -- packages/adapters/src/*.ts | grep -v '\\.test\\.' | grep -viE 'connector|desktop|bots|package|policy' | head -30",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 25122,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": null,
+    "kind": "TerminalObservation"
+  },
+  "action_id": "78f2e1ab-489d-4245-9fbd-66e9eab19890",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

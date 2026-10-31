@@ -1,0 +1,36 @@
+{
+  "id": "214cefa0-91a1-406c-b2c8-e8c2c7db260b",
+  "timestamp": "2026-10-31T11:12:29.312648",
+  "source": "environment",
+  "parent_id": "f22b10e7-aad0-4dc5-a3fb-5b0b009f2368",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-acc3ecf71f4589c6",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "808:                credential: backup.credential,\n814:              // Resolver errors can carry credential details, so only the outcome is kept.\n828:              credential: selected.credential,\n834:                selected.credential,\n841:            // An incompatible saved model or a dead (already retired) credential is a\n861:          credential,\n1442:              (candidate.credentialId !== undefined && candidate.credentialId !== credential?.id)),\n1534:                ...(credential ? { connectionId: credential.id } : {}),\n1552:                      credential: resolved.oauth,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -n '\\bcredential\\b' packages/adapters/src/executor.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "19074ddf-5e2a-4f22-8c81-fcfdcae2cdb6",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

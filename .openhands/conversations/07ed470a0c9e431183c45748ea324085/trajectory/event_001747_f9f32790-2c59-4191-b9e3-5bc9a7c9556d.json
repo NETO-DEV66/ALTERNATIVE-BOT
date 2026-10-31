@@ -1,0 +1,36 @@
+{
+  "id": "f9f32790-2c59-4191-b9e3-5bc9a7c9556d",
+  "timestamp": "2026-10-31T11:04:32.809043",
+  "source": "environment",
+  "parent_id": "4ef9d1c8-6cc9-4ea7-8d94-a2a6cb1a67ea",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-91ad6ecc0c0ef83c",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "throw new ORPCError(\"BAD_REQUEST\", { message: MODEL_REQUIRED_SEND_ERROR });\n    }\n    const target = await resolveThreadTarget(deps.prisma, actor, input);\n    if (target.kind === \"bot\") {\n      await assertTeachingSendAllowed(deps.prisma, actor.spaceId, target.botId);\n    }\n    const confirmingImages =\n      input.imageHandling === \"confirm\" && Boolean(input.artifactIds?.length);\n    // Reuse the funding modelSetup resolved; a send never asks billing twice.\n    const { funding } = setup;\n    const deployment = setup.hasDeployment\n      ? { provider: deps.env.defaultProvider, model: deps.env.defaultModel }\n      : null;\n    return sendThreadMessage(\n      {\n        ...deps,\n        maxAttachmentsPerMessage: deps.env.maxAttachmentsPerMessage,\n        imageAdmission: confirmingImages\n          ? {\n              secrets: deps.secrets,\n              deployment,\n              hostedProvider: funding?.funding === \"credits\" ? deployment?.provider : undefined,\n              codexCatalog,\n            }\n          : undefined,\n      },\n      actor,\n      target,\n      input,\n      target.kind === \"bot\"\n        ? (runId) => releaseComputerControl(deps, actor, target.botId, \"done\", runId)\n        : undefined,\n      startRoutines,\n    ).catch((error: unknown) => {\n      if (error instanceof AttachmentValidationError) {\n        throw new ORPCError(\"BAD_REQUEST\", { message: error.message });\n=== shared.ts modelSetup ===\n  const [member, settings] = await Promise.all([\n    resolveMemberMainModel({ prisma: deps.prisma, secretStore: deps.secrets }, actor),\n    deps.prisma.deploymentSettings.findUnique({ where: { id: \"default\" } }),\n  ]);\n  const main =\n    member &&\n    (member.credential ||\n      (deps.billing?.modelCreditsEnabled &&\n        (await hasHostedModelCredits(deps.prisma, actor, member.provider))))\n      ? member\n      : null;\n  const funding = null;\n  const hasDeployment = Boolean(deps.env.deploymentModelConfigured);\n  return {\n    main,\n    model:"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '80,115p' apps/api/src/routes/threads.ts; echo \"=== shared.ts modelSetup ===\"; sed -n '85,100p' apps/api/src/routes/shared.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "71e6dc7d-8776-47a9-a485-67fc7fa84e8c",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

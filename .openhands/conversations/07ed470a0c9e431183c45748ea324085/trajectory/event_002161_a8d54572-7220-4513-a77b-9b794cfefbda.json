@@ -1,0 +1,36 @@
+{
+  "id": "a8d54572-7220-4513-a77b-9b794cfefbda",
+  "timestamp": "2026-10-31T11:12:24.302226",
+  "source": "environment",
+  "parent_id": "2ae2f2b9-8966-4f1a-b838-445655b04fb6",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-9ea91322f3cf15d7",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "893:          credential,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && git --no-pager show HEAD:packages/adapters/src/executor.ts | grep -n '\\bcredential\\b' | awk -F: '$1>880 && $1<1120' | head -20",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "034e5374-4e39-4043-a27e-9ec6374666c4",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

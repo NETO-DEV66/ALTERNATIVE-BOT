@@ -1,0 +1,36 @@
+{
+  "id": "88329e1c-5495-4ae2-a297-e53920196979",
+  "timestamp": "2026-10-31T12:10:39.741964",
+  "source": "environment",
+  "parent_id": "ab297d1e-3573-4d31-abfb-0af54cb01527",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-bb687e4a69b3dddc",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "secretId: string;\n    iso: string;\n  }) {\n    return {\n      id: input.id,\n      modelId: input.modelId,\n      updatedAt: stamp(input.iso),\n      credential: storedCredential(input.credentialId, input.secretId, input.iso),\n    };\n  }\n\n  function authPrisma(options: {\n    credentials: ReturnType<typeof storedCredential>[];\n    preferences: ReturnType<typeof storedPreference>[];\n    secrets: Array<{ id: string; ciphertext: string }>;\n  }) {\n    const credentialFindMany = vi.fn().mockResolvedValue(options.credentials);\n    const preferenceFindMany = vi.fn().mockResolvedValue(options.preferences);\n    const secretFindMany = vi.fn().mockResolvedValue(options.secrets);\n    const prisma = {\n      userModelCredential: { findMany: credentialFindMany },\n      userModelPreference: { findMany: preferenceFindMany },\n      secret: { findMany: secretFindMany },\n    } as unknown as PrismaClient;\n    return { prisma, credentialFindMany, preferenceFindMany, secretFindMany };\n  }\n\n  function listsSpark(auth: Awaited<ReturnType<typeof modelCredentialAuthKindsForSpace>>) {\n    return listAvailablePiCatalog(auth.byProvider, auth.byModel).some(\n      (entry) => entry.provider === \"openai-codex\" && entry.id === spark,\n    );\n  }\n\n  it(\"keeps saved keys when selecting a model\", async () => {\n    vi.stubEnv(\"PI_DEFAULT_PROVIDER\", \"openrouter\");\n    vi.stubEnv(\"OPENROUTER_API_KEY\", \"fixture-deployment-key\");"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '200,235p' packages/adapters/src/model-selection.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 25122,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "03b854ef-264f-4d8d-81a8-91a1757795c3",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

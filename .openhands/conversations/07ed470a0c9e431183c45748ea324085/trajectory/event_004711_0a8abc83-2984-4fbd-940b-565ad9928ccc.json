@@ -1,0 +1,36 @@
+{
+  "id": "0a8abc83-2984-4fbd-940b-565ad9928ccc",
+  "timestamp": "2026-10-31T12:33:02.962279",
+  "source": "environment",
+  "parent_id": "52ba91d9-df26-4189-badc-7141a208d3d5",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-986fd1af9d7557e4",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "20:    credits?: boolean;\n105:      findFirst: vi.fn(async () => ({ organization: { modelCredits: { mode: \"credits\" } } })),\n112:        !options.credits &&\n119:        !options.credits && where.userId === owner.userId && where.id === credential.id\n152:    billing: options.credits ? { modelCreditsEnabled: true } : undefined,\n719:it(\"lets a deployment-managed model lead the main model like any other purpose\", async () => {\n720:  vi.stubEnv(\"PI_DEFAULT_PROVIDER\", \"openrouter\");\n721:  vi.stubEnv(\"OPENROUTER_API_KEY\", \"fake-hosted-key\");\n723:    const { call, prisma, roles } = setup({ credits: true });\n727:      expect.objectContaining({ id: primary.modelId, managed: true }),"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -n 'credits\\|managed\\|PI_DEFAULT_PROVIDER\\|OPENROUTER_API_KEY' apps/api/src/models-backups.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 65061,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "2db15c91-5b98-47d9-9efd-37b36d021830",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

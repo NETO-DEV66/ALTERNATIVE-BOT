@@ -32,11 +32,6 @@ msgstr ""
 msgid "{0, plural, one {# file} other {# files}}"
 msgstr ""
 
-#. placeholder {0}: referral.rewards
-#: src/components/InviteDialog.tsx
-msgid "{0, plural, one {# free month earned} other {# free months earned}}"
-msgstr "{0, plural, one {Получен # бесплатный месяц} few {Получено # бесплатных месяца} many {Получено # бесплатных месяцев} other {Получено # бесплатного месяца}}"
-
 #. placeholder {0}: skills.length - shownSkills.length
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "{0, plural, one {# more} other {# more}}"
@@ -146,10 +141,6 @@ msgstr "{0} ТБ"
 msgid "{0} will still respond to direct mentions."
 msgstr "{0} по-прежнему будет отвечать на прямые упоминания."
 
-#: src/lib/billing.ts
-msgid "{amount} / {period}"
-msgstr ""
-
 #: src/pages/shell/dialogs.tsx
 msgid "{botCount, plural, one {Delete {name} and its # bot?} other {Delete {name} and its # bots?}}"
 msgstr "{botCount, plural, one {Удалить {name} и # бота?} few {Удалить {name} и # бота?} many {Удалить {name} и # ботов?} other {Удалить {name} и # бота?}}"
@@ -173,22 +164,6 @@ msgstr "{count, plural, one {# сообщение с {peer}} few {# сообще
 #: src/components/markdown-copy.tsx
 msgid "{count, plural, one {# row} other {# rows}}"
 msgstr "{count, plural, one {# строка} few {# строки} many {# строк} other {# строки}}"
-
-#: src/lib/billing.ts
-msgid "{count} days"
-msgstr ""
-
-#: src/lib/billing.ts
-msgid "{count} months"
-msgstr ""
-
-#: src/lib/billing.ts
-msgid "{count} weeks"
-msgstr ""
-
-#: src/lib/billing.ts
-msgid "{count} years"
-msgstr ""
 
 #: src/lib/relative-time.ts
 msgid "{days}d ago"
@@ -356,10 +331,6 @@ msgstr "{provider} не ответил вовремя. Повторите поп
 msgid "{remaining} left"
 msgstr "Осталось: {remaining}"
 
-#: src/pages/BillingSettingsPanel.tsx
-msgid "{seats, plural, one {# seat} other {# seats}}"
-msgstr ""
-
 #: src/components/ArtifactFileCard.tsx
 msgid "{size} B"
 msgstr "{size} Б"
@@ -470,7 +441,6 @@ msgstr "Действия для {0}"
 msgid "Actions for space"
 msgstr "Действия для пространства"
 
-#: src/pages/BillingSettingsPanel.tsx
 #: src/pages/RoutineEditor.tsx
 msgid "Active"
 msgstr "Активный"
@@ -538,10 +508,6 @@ msgstr "Добавить еще"
 
 #: src/components/VaultSettings.tsx
 msgid "Add credential"
-msgstr ""
-
-#: src/components/ModelCredits.tsx
-msgid "Add credits"
 msgstr ""
 
 #: src/pages/PluginsOverlay.tsx
@@ -639,10 +605,6 @@ msgstr "Агенты:"
 msgid "All"
 msgstr ""
 
-#: src/components/ModelCredits.tsx
-msgid "All {credit} goes to model usage."
-msgstr "Все {credit} идут на использование моделей."
-
 #: src/pages/Artifacts.tsx
 #: src/pages/shell/agent-import.tsx
 msgid "All bots"
@@ -665,6 +627,10 @@ msgstr ""
 msgid "Allow"
 msgstr "Разрешить"
 
+#: src/lib/dictation.ts
+msgid "Allow Alternative Bot to use Speech Recognition and the microphone in System Settings."
+msgstr ""
+
 #: src/pages/shell/bot-panel.tsx
 msgid "Allow cross-space bot communication"
 msgstr "Разрешить общение ботов из разных пространств"
@@ -676,10 +642,6 @@ msgstr ""
 #: src/components/AskCard.tsx
 msgid "Allow once"
 msgstr "Разрешить один раз"
-
-#: src/lib/dictation.ts
-msgid "Allow Alternative Bot to use Speech Recognition and the microphone in System Settings."
-msgstr ""
 
 #: src/components/ApprovalRulePreview.tsx
 msgid "Allow rule"
@@ -704,6 +666,14 @@ msgstr "Уже подключено"
 #: src/pages/Auth.tsx
 msgid "Already have an account?"
 msgstr "У вас уже есть аккаунт?"
+
+#: src/pages/shell/avatar-studio-popover.tsx
+msgid "Alternative Bot"
+msgstr "Alternative Bot"
+
+#: src/pages/memory-providers/HonchoSettingsForm.tsx
+msgid "alternativebot-shared and IDs starting with bot- are reserved for AlternativeBot."
+msgstr ""
 
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Always act"
@@ -772,10 +742,6 @@ msgstr "Ответ: {answer}"
 
 #: src/pages/Onboarding.tsx
 msgid "Anthropic API"
-msgstr ""
-
-#: src/pages/Paywall.tsx
-msgid "Any model, with your own key"
 msgstr ""
 
 #: src/components/AskCard.tsx
@@ -944,10 +910,6 @@ msgstr "Автоматические отправители появятся п�
 msgid "Available after the routine is saved"
 msgstr "Доступно после сохранения задачи"
 
-#: src/components/ModelCredits.tsx
-msgid "Available credits"
-msgstr ""
-
 #: src/components/integrations/space-availability.tsx
 msgid "Available in"
 msgstr ""
@@ -994,10 +956,6 @@ msgstr ""
 #: src/pages/PluginsOverlay.tsx
 msgid "Bearer token"
 msgstr "Bearer-токен"
-
-#: src/pages/settings-nav.ts
-msgid "Billing"
-msgstr ""
 
 #: src/components/ApprovalRulePreview.tsx
 #: src/components/ApprovalRulesSettings.tsx
@@ -1069,14 +1027,6 @@ msgstr ""
 msgid "Bots"
 msgstr ""
 
-#: src/components/ModelCredits.tsx
-msgid "Bots and browser automation"
-msgstr ""
-
-#: src/pages/Paywall.tsx
-msgid "Bots with their own computer and browser"
-msgstr ""
-
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 msgid "Brain label"
 msgstr ""
@@ -1144,7 +1094,6 @@ msgstr "Не может читать изображения"
 #: src/pages/model-settings/space-bots-model.tsx
 #: src/pages/ModelSettingsOverlay.tsx
 #: src/pages/Onboarding.tsx
-#: src/pages/PaymentWalletSettingsPanel.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
 #: src/pages/shell/create-bot-dialog.tsx
 #: src/pages/shell/dialogs.tsx
@@ -1163,10 +1112,6 @@ msgstr "Отменить создание группы"
 #: src/pages/shell/chat-context.tsx
 msgid "Cancel reply"
 msgstr "Отменить ответ"
-
-#: src/pages/BillingSettingsPanel.tsx
-msgid "Canceled"
-msgstr ""
 
 #: src/components/CloudAgentCard.tsx
 msgid "cancelled"
@@ -1310,11 +1255,6 @@ msgstr "Выбрать файл"
 #: src/pages/shell/agent-import.tsx
 msgid "Choose folder"
 msgstr "Выбрать папку"
-
-#: src/components/ModelCredits.tsx
-#: src/components/SubscriptionGate.tsx
-msgid "Choose how to use Alternative Bot"
-msgstr ""
 
 #: src/lib/localized-provider-hint.ts
 msgid "Claude subscription"
@@ -1561,7 +1501,6 @@ msgstr "Убедитесь, что URL доступен из этого сеан
 #: src/pages/memory-providers/SupermemorySettingsForm.tsx
 #: src/pages/MessagingSettingsPanel.tsx
 #: src/pages/model-settings/role-model-picker.tsx
-#: src/pages/PaymentWalletSettingsPanel.tsx
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Connect"
 msgstr "Подключить"
@@ -1601,10 +1540,6 @@ msgstr "Подключите MCP-сервер «{name}»"
 msgid "Connect memory provider"
 msgstr "Подключить поставщика памяти"
 
-#: src/components/ModelCredits.tsx
-msgid "Connect my own"
-msgstr ""
-
 #: src/pages/McpServersOverlay.tsx
 msgid "Connect OAuth"
 msgstr "Подключить OAuth"
@@ -1612,11 +1547,6 @@ msgstr "Подключить OAuth"
 #: src/lib/agent-import-errors.ts
 msgid "Connect this model's provider first."
 msgstr "Сначала подключите провайдера этой модели."
-
-#. js-lingui-explicit-id
-#: src/lib/run-error.ts
-msgid "Connect your own API key in Models or choose Alternative Bot credits in Billing."
-msgstr "Подключите свой API-ключ в разделе «Модели» или выберите кредиты Alternative Bot в разделе «Оплата»."
 
 #: src/components/ComputerDeviceSettings.tsx
 #: src/components/integrations/IntegrationSetup.tsx
@@ -1686,10 +1616,6 @@ msgstr "Продолжить"
 msgid "Continue in Background"
 msgstr "Продолжить в фоне"
 
-#: src/components/ModelCredits.tsx
-msgid "Continue to checkout"
-msgstr ""
-
 #. placeholder {0}: reset.sso.name
 #: src/pages/Auth.tsx
 msgid "Continue with {0}"
@@ -1700,7 +1626,6 @@ msgid "Conversations"
 msgstr ""
 
 #: src/components/ComputersUnavailableHint.tsx
-#: src/components/InviteDialog.tsx
 #: src/components/markdown-copy.tsx
 #: src/components/VaultSettings.tsx
 #: src/pages/model-settings/connection-controls.tsx
@@ -1709,7 +1634,6 @@ msgstr ""
 msgid "Copied"
 msgstr "Скопировано"
 
-#: src/components/InviteDialog.tsx
 #: src/components/VaultSettings.tsx
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
@@ -1955,10 +1879,6 @@ msgstr "Не удалось загрузить правила одобрения
 msgid "Could not load artifacts."
 msgstr ""
 
-#: src/pages/BillingSettingsPanel.tsx
-msgid "Could not load billing"
-msgstr ""
-
 #: src/pages/IntegrationSetup.tsx
 msgid "Could not load bots. Reload to try again."
 msgstr "Не удалось загрузить ботов. Обновите страницу и попробуйте снова."
@@ -2013,13 +1933,6 @@ msgstr "Не удалось загрузить голосовые настрой
 #: src/lib/sign-out.ts
 msgid "Could not log out. Try again."
 msgstr "Не удалось выйти. Попробуйте ещё раз."
-
-#: src/components/ModelCredits.tsx
-#: src/pages/BillingSettingsPanel.tsx
-#: src/pages/Onboarding.tsx
-#: src/pages/Paywall.tsx
-msgid "Could not open billing"
-msgstr ""
 
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Could not play a test clip"
@@ -2226,10 +2139,6 @@ msgstr "Не удалось обновить"
 msgid "Could not update agent access"
 msgstr "Не удалось обновить доступ агента."
 
-#: src/components/ModelCredits.tsx
-msgid "Could not update billing"
-msgstr ""
-
 #: src/components/ComputerMaintenanceActions.tsx
 msgid "Could not update computer"
 msgstr "Не удалось обновить компьютер"
@@ -2258,20 +2167,12 @@ msgstr "Не удалось загрузить настройки обмена �
 msgid "Couldn't load submissions"
 msgstr ""
 
-#: src/pages/PaymentWalletSettingsPanel.tsx
-msgid "Couldn't load your wallet"
-msgstr ""
-
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Couldn't update messaging settings"
 msgstr "Не удалось обновить настройки обмена сообщениями."
 
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Couldn't update your timezone"
-msgstr ""
-
-#: src/pages/PaymentWalletSettingsPanel.tsx
-msgid "Couldn't update your wallet"
 msgstr ""
 
 #: src/pages/Board.tsx
@@ -2335,10 +2236,6 @@ msgstr "Учётные данные зашифрованы и никогда н�
 msgid "Credentials: {names}"
 msgstr "Учётные данные: {names}"
 
-#: src/components/ModelCredits.tsx
-msgid "Credit amount"
-msgstr ""
-
 #: src/lib/cron.ts
 msgid "Cron"
 msgstr "Крон"
@@ -2385,7 +2282,6 @@ msgstr "Тёмная"
 msgid "Data"
 msgstr ""
 
-#: src/lib/billing.ts
 #: src/lib/cron.ts
 msgid "day"
 msgstr "день"
@@ -2563,17 +2459,12 @@ msgstr "Удалить запись"
 #: src/pages/MemorySettingsOverlay.tsx
 #: src/pages/MessagingSettingsPanel.tsx
 #: src/pages/ModelSettingsOverlay.tsx
-#: src/pages/PaymentWalletSettingsPanel.tsx
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Disconnect"
 msgstr "Отключить"
 
 #: src/pages/ModelSettingsOverlay.tsx
 msgid "Disconnect {disconnectName}?"
-msgstr ""
-
-#: src/pages/PaymentWalletSettingsPanel.tsx
-msgid "Disconnect {name}?"
 msgstr ""
 
 #: src/pages/VoiceSettingsOverlay.tsx
@@ -2643,10 +2534,6 @@ msgstr "У вас нет учетной записи?"
 #: src/pages/shell/message-view.tsx
 msgid "Done"
 msgstr "Готово"
-
-#: src/components/ModelCredits.tsx
-msgid "Downgrade at renewal"
-msgstr ""
 
 #: src/pages/Artifacts.tsx
 #: src/pages/KnowledgeSection.tsx
@@ -2724,10 +2611,6 @@ msgstr "Требуется подтверждение электронной п�
 #: src/pages/shell/bot-panel.tsx
 msgid "Enable {0}"
 msgstr "Включить {0}"
-
-#: src/pages/BillingSettingsPanel.tsx
-msgid "Ends {day}"
-msgstr ""
 
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Engage when... Ignore..."
@@ -2983,14 +2866,9 @@ msgstr "Завершение подключения MCP…"
 msgid "Forgot password?"
 msgstr "Забыли пароль?"
 
-#: src/components/ModelCredits.tsx
 #: src/pages/model-settings/model-picker.tsx
 msgid "Free"
 msgstr "Бесплатно"
-
-#: src/pages/shell/shell-sidebar.tsx
-msgid "Free plan ends {day}"
-msgstr "Бесплатный тариф закончится {day}"
 
 #: src/lib/cron.ts
 msgid "Friday"
@@ -3023,10 +2901,6 @@ msgstr "ID шлюза"
 #: src/pages/SettingsOverlay.tsx
 msgid "General"
 msgstr "Общие"
-
-#: src/components/InviteDialog.tsx
-msgid "Get a free month for each friend who starts a trial."
-msgstr "Получайте бесплатный месяц за каждого друга, который начнёт пробный период."
 
 #: src/components/SidebarFooter.tsx
 msgid "Get the mobile app"
@@ -3222,10 +3096,6 @@ msgstr ""
 msgid "In this bot"
 msgstr ""
 
-#: src/pages/BillingSettingsPanel.tsx
-msgid "Inactive"
-msgstr ""
-
 #: src/pages/shell/message-cards.tsx
 msgid "Inbox & email"
 msgstr ""
@@ -3314,14 +3184,9 @@ msgstr "Единица интервала"
 msgid "Invalid code"
 msgstr "Неверный код"
 
-#: src/components/InviteDialog.tsx
 #: src/components/SidebarFooter.tsx
 msgid "Invite friends"
 msgstr "Пригласить друзей"
-
-#: src/components/InviteDialog.tsx
-msgid "Invite link"
-msgstr "Ссылка-приглашение"
 
 #: src/pages/MemorySettingsOverlay.tsx
 #: src/pages/shell/bot-panel.tsx
@@ -3497,9 +3362,7 @@ msgstr "Локальный доступ позволяет ботам выпол
 msgid "Local computer access requires the latest desktop app."
 msgstr ""
 
-#: src/components/ModelCredits.tsx
 #: src/components/SidebarFooter.tsx
-#: src/pages/Paywall.tsx
 msgid "Log out"
 msgstr "Выйти"
 
@@ -3526,7 +3389,6 @@ msgstr ""
 msgid "Main model"
 msgstr "Основная модель"
 
-#: src/pages/BillingSettingsPanel.tsx
 #: src/pages/SettingsOverlay.tsx
 msgid "Manage"
 msgstr "Управлять"
@@ -3537,11 +3399,6 @@ msgstr "Управлять"
 #: src/pages/SettingsOverlay.tsx
 msgid "Manage {0}"
 msgstr "Управление {0}"
-
-#: src/components/ModelCredits.tsx
-#: src/pages/Paywall.tsx
-msgid "Manage billing"
-msgstr ""
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Manage MCP servers"
@@ -3792,10 +3649,6 @@ msgstr "Варианты модели"
 msgid "Models"
 msgstr "Модели"
 
-#: src/components/ModelCredits.tsx
-msgid "Models at provider cost"
-msgstr ""
-
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
 msgid "Models from server"
@@ -3809,21 +3662,9 @@ msgstr "Список моделей в порядке. {modelCount, plural, one 
 msgid "Monday"
 msgstr "понедельник"
 
-#: src/lib/billing.ts
-msgid "month"
-msgstr ""
-
 #: src/lib/cron.ts
 msgid "Monthly"
 msgstr "Ежемесячно"
-
-#: src/components/ModelCredits.tsx
-msgid "Monthly credits"
-msgstr ""
-
-#: src/components/ModelCredits.tsx
-msgid "Monthly credits expire at renewal. Top-ups do not expire."
-msgstr ""
 
 #: src/pages/PluginsOverlay.tsx
 #: src/pages/shell/message-hover-actions.tsx
@@ -4209,12 +4050,7 @@ msgstr "1-го числа в {0}"
 msgid "One-time"
 msgstr "Один раз"
 
-#: src/components/ModelCredits.tsx
-msgid "One-time purchase. Credits do not expire."
-msgstr ""
-
 #: src/components/markdown-link-prompt.tsx
-#: src/pages/PaymentWalletSettingsPanel.tsx
 #: src/pages/shell/computer-panel.tsx
 #: src/pages/shell/import-setup-card.tsx
 #: src/pages/shell/message-view.tsx
@@ -4369,10 +4205,6 @@ msgstr "Пароль обновлён"
 #: src/pages/Auth.tsx
 msgid "Passwords do not match"
 msgstr "Пароли не совпадают"
-
-#: src/pages/BillingSettingsPanel.tsx
-msgid "Past due"
-msgstr ""
 
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/VoiceSettingsOverlay.tsx
@@ -4553,19 +4385,6 @@ msgstr "Запрос на слияние"
 msgid "Queued"
 msgstr "В очереди"
 
-#: src/pages/shell/avatar-studio-popover.tsx
-msgid "Alternative Bot"
-msgstr "Alternative Bot"
-
-#: src/components/ModelCredits.tsx
-#: src/pages/Onboarding.tsx
-msgid "Alternative Bot credits"
-msgstr ""
-
-#: src/pages/memory-providers/HonchoSettingsForm.tsx
-msgid "alternativebot-shared and IDs starting with bot- are reserved for AlternativeBot."
-msgstr ""
-
 #: src/pages/shell/message-hover-actions.tsx
 msgid "React"
 msgstr ""
@@ -4687,13 +4506,8 @@ msgstr "URI перенаправления"
 
 #: src/App.tsx
 #: src/components/ErrorBoundary.tsx
-#: src/components/ModelCredits.tsx
 msgid "Refresh"
 msgstr "Обновить"
-
-#: src/components/ModelCredits.tsx
-msgid "Refresh credits"
-msgstr ""
 
 #: src/components/teach/TeachComputerOverlay.tsx
 msgid "Refresh view"
@@ -4824,10 +4638,6 @@ msgstr "Переименовать"
 msgid "Rename section"
 msgstr "Переименовать раздел"
 
-#: src/pages/BillingSettingsPanel.tsx
-msgid "Renews {day}"
-msgstr ""
-
 #: src/pages/ScratchpadSection.tsx
 msgid "Reopen"
 msgstr "Открыть заново"
@@ -4954,15 +4764,15 @@ msgstr "Повторить попытку сейчас"
 msgid "Retry screen"
 msgstr "Повторить загрузку экрана"
 
-#. placeholder {0}: call.botName
-#: src/components/call/CallCard.tsx
-msgid "Return to call with {0}"
-msgstr "Вернуться к звонку с {0}"
-
 #: src/pages/McpOAuthCallback.tsx
 #: src/pages/SlackInstallCallback.tsx
 msgid "Return to Alternative Bot"
 msgstr "Вернуться в Alternative Bot"
+
+#. placeholder {0}: call.botName
+#: src/components/call/CallCard.tsx
+msgid "Return to call with {0}"
+msgstr "Вернуться к звонку с {0}"
 
 #: src/lib/model-connection-preflight.ts
 msgid "Review provider settings and test again."
@@ -4991,10 +4801,6 @@ msgstr "Задача"
 #: src/pages/shell/bot-panel.tsx
 msgid "Routines"
 msgstr "Задачи"
-
-#: src/pages/Paywall.tsx
-msgid "Routines that run while you're away"
-msgstr ""
 
 #: src/components/markdown-copy.tsx
 msgid "Row"
@@ -5119,10 +4925,6 @@ msgstr "Сохранение…"
 #: src/lib/call-session.ts
 msgid "Say yes or no, or answer in a sentence."
 msgstr "Скажите «да» или «нет» или ответьте предложением."
-
-#: src/components/ModelCredits.tsx
-msgid "Scheduled routines"
-msgstr ""
 
 #: src/pages/McpServersOverlay.tsx
 msgid "Scopes (optional)"
@@ -5544,11 +5346,6 @@ msgstr "SSO временно недоступен. Попробуйте снов
 msgid "Start"
 msgstr ""
 
-#: src/components/ModelCredits.tsx
-#: src/pages/Paywall.tsx
-msgid "Start {trialDays}-day free trial"
-msgstr "Начать бесплатный пробный период на {trialDays} дн."
-
 #: src/components/teach/TeachComputerOverlay.tsx
 msgid "Start recording"
 msgstr "Начать запись"
@@ -5620,27 +5417,6 @@ msgstr "Отправить"
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Submit a plugin"
-msgstr ""
-
-#: src/components/ModelCredits.tsx
-#: src/pages/Paywall.tsx
-msgid "Subscribe"
-msgstr "Оформить подписку"
-
-#: src/components/ModelCredits.tsx
-msgid "Subscribe for {price} / month"
-msgstr "Подписаться за {price} / месяц"
-
-#: src/components/ModelCredits.tsx
-msgid "Subscribe to Alternative Bot credits"
-msgstr "Оформить подписку на кредиты Alternative Bot"
-
-#: src/components/ModelCredits.tsx
-msgid "Subscribe with your own AI"
-msgstr "Оформить подписку со своим ИИ"
-
-#: src/pages/Paywall.tsx
-msgid "Subscription required"
 msgstr ""
 
 #: src/lib/cron.ts
@@ -6034,14 +5810,6 @@ msgstr "Считать человеком"
 msgid "Treg token"
 msgstr "Токен Treg"
 
-#: src/pages/BillingSettingsPanel.tsx
-msgid "Trial"
-msgstr ""
-
-#: src/pages/BillingSettingsPanel.tsx
-msgid "Trial ends {day}"
-msgstr ""
-
 #: src/components/TrustedLinkSitesSettings.tsx
 msgid "Trusted sites"
 msgstr "Доверенные сайты"
@@ -6105,10 +5873,6 @@ msgstr "Неподдерживаемый тип файла: {0}."
 msgid "Up to date"
 msgstr "Актуально"
 
-#: src/components/ModelCredits.tsx
-msgid "Update"
-msgstr "Обновить"
-
 #: src/components/ComputerMaintenanceActions.tsx
 msgid "Update computer"
 msgstr "Обновить компьютер"
@@ -6153,14 +5917,6 @@ msgstr "Обновление компьютера команды"
 #: src/components/ComputerMaintenanceActions.tsx
 msgid "Updating…"
 msgstr "Обновление…"
-
-#: src/pages/shell/shell-sidebar.tsx
-msgid "Upgrade"
-msgstr "Улучшить тариф"
-
-#: src/components/ModelCredits.tsx
-msgid "Upgrade now"
-msgstr ""
 
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Upload"
@@ -6214,16 +5970,8 @@ msgstr "Использовать ваши настройки: {label}"
 msgid "Use in this bot"
 msgstr ""
 
-#: src/components/ModelCredits.tsx
-msgid "Use my subscription or API key"
-msgstr ""
-
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "Use Protected input for passwords."
-msgstr ""
-
-#: src/components/ModelCredits.tsx
-msgid "Use Alternative Bot credits"
 msgstr ""
 
 #: src/pages/model-settings/space-bots-model.tsx
@@ -6254,14 +6002,6 @@ msgstr "Использует пути на вашем компьютере"
 #: src/pages/ModelSettingsOverlay.tsx
 msgid "Uses this server's own {hostCredentialSource} credentials to access {selectedProviderName}."
 msgstr "Использует собственные учётные данные {hostCredentialSource} этого сервера для доступа к {selectedProviderName}."
-
-#: src/components/ModelCredits.tsx
-msgid "Using your API key"
-msgstr ""
-
-#: src/components/ModelCredits.tsx
-msgid "Using your API key. Free plan ends {freeUntil}."
-msgstr "Используется ваш API-ключ. Бесплатный тариф закончится {freeUntil}."
 
 #: src/components/LoginFields.tsx
 #: src/components/VaultSettings.tsx
@@ -6317,18 +6057,6 @@ msgstr "Ожидание в очереди…"
 msgid "Waiting…"
 msgstr "Ожидание…"
 
-#: src/pages/settings-nav.ts
-msgid "Wallet"
-msgstr ""
-
-#: src/components/ModelCredits.tsx
-msgid "Web, desktop and mobile"
-msgstr ""
-
-#: src/pages/Paywall.tsx
-msgid "Web, desktop and mobile apps"
-msgstr ""
-
 #: src/pages/RoutineEditor.tsx
 msgid "Webhook"
 msgstr "Вебхук"
@@ -6340,10 +6068,6 @@ msgstr ""
 #: src/lib/cron.ts
 msgid "Wednesday"
 msgstr "среда"
-
-#: src/lib/billing.ts
-msgid "week"
-msgstr ""
 
 #: src/lib/cron.ts
 #: src/pages/RoutineEditor.tsx
@@ -6438,16 +6162,8 @@ msgstr "Рабочие инструкции"
 msgid "Working…"
 msgstr "Выполняется…"
 
-#: src/components/ModelCredits.tsx
-msgid "Works with your ChatGPT or Claude plan."
-msgstr "Работает с вашей подпиской ChatGPT или Claude."
-
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
 msgid "Workspace"
-msgstr ""
-
-#: src/lib/billing.ts
-msgid "year"
 msgstr ""
 
 #: src/pages/shell/chat-context.tsx
@@ -6513,10 +6229,6 @@ msgstr "Ваш OpenRouter"
 
 #: src/components/integrations/skills-dialog.tsx
 msgid "Your skills"
-msgstr ""
-
-#: src/components/ModelCredits.tsx
-msgid "Your subscription or API key"
 msgstr ""
 
 #: src/pages/Welcome.tsx

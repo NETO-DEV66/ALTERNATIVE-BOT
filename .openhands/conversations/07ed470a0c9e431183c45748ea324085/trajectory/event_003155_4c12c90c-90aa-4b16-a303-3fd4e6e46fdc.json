@@ -1,0 +1,36 @@
+{
+  "id": "4c12c90c-90aa-4b16-a303-3fd4e6e46fdc",
+  "timestamp": "2026-10-31T11:37:00.330314",
+  "source": "environment",
+  "parent_id": "37635457-ced2-4c17-8c7a-b5bb9116bce8",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-a89616d46d422d78",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "});\n      expect(empty).toEqual([]);\n      expect(interpolationMismatches).toEqual([]);\n    }\n  });\n\n  it(\"translates every mobile chrome t() id in every non-English catalog\", async () => {\n    const { ZH_MESSAGES } = await import(\"./locales/zh\");\n    const { ZH_TW_MESSAGES } = await import(\"./locales/zh-TW\");\n    const { RU_MESSAGES } = await import(\"./locales/ru\");\n    const { DE_MESSAGES } = await import(\"./locales/de\");\n    const { NL_MESSAGES } = await import(\"./locales/nl\");\n    const { JA_MESSAGES } = await import(\"./locales/ja\");\n    const { ES_MESSAGES } = await import(\"./locales/es\");\n    const { EMPTY_PLUGIN_CATALOG_MESSAGE, SLASH_ACTIONS, RUN_ERROR_LIMIT_MESSAGES } = await import(\n      \"@alternativebot/core\"\n    );\n    const { AI_DATA_DISCLOSURES, OPENAI_COMPATIBLE_BASE_URL_HINT } = await import(\n      \"@alternativebot/contracts\"\n    );\n    const { createMenuItems } = await import(\"./create-chooser\");\n    const mobileRoot = join(dirname(fileURLToPath(import.meta.url)), \"..\");\n    const ids = new Set<string>([\n      ...Object.values(AI_DATA_DISCLOSURES),\n      ...Object.values(RUN_ERROR_LIMIT_MESSAGES).flatMap(Object.values),\n      \"{summary} Your backup models also failed.\",\n      \"{summary} No backup model was usable for this request.\",\n      \"{summary} Backup models failed or were unavailable for this request.\",\n      \"Your OpenRouter\",\n      \"Your OpenAI\",\n      \"Your Anthropic\",\n      \"Your model provider\",\n      \"The model provider returned an error.\",\n      \"Connect a model in Settings before running bots.\",\n      \"Connect your own API key in Models or choose Alternative Bot credits in Billing.\",\n      \"{provider} is rate limiting requests. Try again shortly.\",\n      \"{summary} Resets {date}.\",\n      \"{provider} rejected the API key. Check your connection settings.\",\n      \"{provider} can't run this model.\",\n      \"{provider} denied access to this model.\",\n      \"The model returned an unusable response. Try again.\",\n      \"The model hit its output limit before finishing its reply.\",\n      \"This model's context window is too small. Choose another model.\",\n      \"This connection's request limit is too small. Choose another model.\",\n      \"{provider} took too long to respond. Try again.\",\n      \"{provider} is overloaded right now. Try again in a moment.\",\n      \"{provider} couldn't be reached. Check that it's running.\",\n      \"This conversation is too long for the model. Retrying won't help. Start a new chat or shorten your message.\",\n\n      EMPTY_PLUGIN_CATALOG_MESSAGE,\n      OPENAI_COMPATIBLE_BASE_URL_HINT,\n      ...SLASH_ACTIONS.map((action) => action.label),\n      ...createMenuItems.map((item) => item.label),\n      \"Sign-in did not return a session\",\n      \"Sign-up did not return a session\",\n      \"{count} model\",\n      \"{count} models\",\n      // Labels the t() literal scan cannot see: built from maps or ternaries.\n      \"System\",\n      \"Light\",\n      \"Dark\",\n      \"Allow once\",\n      \"Always allow\",\n      \"Deny\",\n    ]);\n    for (const file of collectSourceFiles(mobileRoot)) {\n      const source = readFileSync(file, \"utf8\");\n      for (const id of translationIds(source)) ids.add(id);\n    }\n    for (const messages of [\n      ZH_MESSAGES,\n      ZH_TW_MESSAGES,\n      RU_MESSAGES,\n      DE_MESSAGES,\n      NL_MESSAGES,\n      JA_MESSAGES,\n      ES_MESSAGES,\n    ]) {\n      const missing = [...ids].filter((id) => !messages[id]?.trim()).sort();\n      expect(missing).toEqual([]);\n    }"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '140,220p' apps/mobile/lib/i18n.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 19912,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "a48422b4-74ac-4c4e-81bd-6fabf83e832e",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

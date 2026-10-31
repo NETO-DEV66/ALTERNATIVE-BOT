@@ -1,0 +1,36 @@
+{
+  "id": "085d0428-36f8-4296-a6a5-b27b4fd7ae3d",
+  "timestamp": "2026-10-31T11:35:32.376481",
+  "source": "environment",
+  "parent_id": "92943789-e8bf-4f2c-8307-4c0df1db776b",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-9fe2cdc9cf8a9ff4",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "===== packages/db/prisma/migrations/20261109120000_drop_billing_and_payments/migration.sql =====\n-- Alternative Bot is free and BYOK-only: the subscription, credit, referral and\n-- purchase systems are removed entirely.\n\n-- Triggers and functions that only served the removed billing journal.\nDROP TRIGGER IF EXISTS usage_audit_revision ON usage_records;\nDROP TRIGGER IF EXISTS usage_audit_write ON usage_records;\nDROP TRIGGER IF EXISTS credit_audit_revision ON model_credit_entries;\nDROP TRIGGER IF EXISTS credit_audit_write ON model_credit_entries;\nDROP TRIGGER IF EXISTS credit_identity_immutable ON model_credit_entries;\nDROP TRIGGER IF EXISTS credit_audit_account_closed ON model_credit_accounts;\nDROP TRIGGER IF EXISTS lot_audit_revision ON model_credit_lots;\nDROP TRIGGER IF EXISTS lot_audit_write ON model_credit_lots;\nDROP TRIGGER IF EXISTS billing_audit_no_mutation ON billing_audit_events;\n\nDROP FUNCTION IF EXISTS billing_audit_revision();\nDROP FUNCTION IF EXISTS billing_audit_usage();\nDROP FUNCTION IF EXISTS billing_audit_credit();\nDROP FUNCTION IF EXISTS billing_audit_account_closed();\nDROP FUNCTION IF EXISTS billing_audit_lot();\nDROP FUNCTION IF EXISTS billing_credit_identity_immutable();\nDROP FUNCTION IF EXISTS billing_audit_immutable();\n\nDROP TABLE IF EXISTS \"model_credit_entries\";\nDROP TABLE IF EXISTS \"model_credit_lots\";\nDROP TABLE IF EXISTS \"model_credit_accounts\";\nDROP TABLE IF EXISTS \"billing_audit_events\";\nDROP TABLE IF EXISTS \"payment_wallets\";\nDROP TABLE IF EXISTS \"purchases\";\nDROP TABLE IF EXISTS \"billing_accounts\";\nDROP TABLE IF EXISTS \"billing_card_fingerprints\";\nDROP TABLE IF EXISTS \"referrals\";\nDROP TABLE IF EXISTS \"referral_codes\";\n\nALTER TABLE \"deployment_settings\" DROP COLUMN IF EXISTS \"model_credits_enabled\";\n===== packages/db/prisma/migrations/20261103120000_drop_dead_bot_and_referral_columns/migration.sql =====\n-- The previous release no longer reads these.\nALTER TABLE \"bots\" DROP COLUMN \"title\";\nALTER TABLE \"bots\" DROP COLUMN \"selfUpdateInstructions\";\n\nALTER TABLE \"referrals\" DROP COLUMN \"rewardKind\";\nALTER TABLE \"referrals\" DROP COLUMN \"declinedAt\";\n===== packages/db/prisma/migrations/20261102120000_drop_unused_referral_tables/migration.sql =====\n-- The previous release no longer reads these. bots.title, bots.selfUpdateInstructions,\n-- referrals.rewardKind and referrals.declinedAt are dropped by a later migration.\nDROP TABLE \"billing_card_fingerprints\";\n\nALTER TABLE \"referrals\" DROP COLUMN \"createdAt\";\n\n-- Decisions the release before last saved only in the old columns while it overlapped the last one.\nUPDATE \"referrals\"\nSET \"outcome\" = COALESCE(\"rewardKind\", CASE WHEN \"declinedAt\" IS NOT NULL THEN 'declined' END)\nWHERE \"outcome\" IS NULL;"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && for f in packages/db/prisma/migrations/20261109120000_drop_billing_and_payments/migration.sql packages/db/prisma/migrations/20261103120000_drop_dead_bot_and_referral_columns/migration.sql packages/db/prisma/migrations/20261102120000_drop_unused_referral_tables/migration.sql; do echo \"===== $f =====\"; cat \"$f\"; done",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 17917,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "0f81bf13-eaa9-4ffe-ae82-b6c1041e55a8",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -83,7 +83,7 @@ function serialize(directives: Record<string, string[]>) {
 export interface ContentSecurityPolicyExtensions {
   scriptSrc?: readonly string[];
   connectSrc?: readonly string[];
-  /** Allows the Crisp chat widget the paywall loads when `CRISP_WEBSITE_ID` is set. */
+  /** Allows the Crisp support chat widget when `CRISP_WEBSITE_ID` is set. */
   crisp?: boolean;
 }
 

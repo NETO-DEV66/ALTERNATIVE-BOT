@@ -1,0 +1,36 @@
+{
+  "id": "9c265e71-4e4b-4719-84e0-a9cf385861e5",
+  "timestamp": "2026-10-31T13:14:35.144616",
+  "source": "environment",
+  "parent_id": "d9288f46-fc4f-4042-a221-32c7173bb4b0",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b04fc94ffffb3275",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "apps/web/src/lib/bootstrap.test.ts:220:    const { primeSpaceBootstrap, peekInitialBootstrap } = await import(\"./bootstrap\");\napps/web/src/lib/bootstrap.test.ts:222:    expect(peekInitialBootstrap()).toBeUndefined();\napps/web/src/lib/bootstrap.test.ts:231:    const { peekInitialBootstrap, takeInitialBootstrap, getTicketBoardEnabled } = await import(\napps/web/src/lib/bootstrap.test.ts:234:    await expect(peekInitialBootstrap()).resolves.toBe(initial);\napps/web/src/lib/bootstrap.ts:47:export function peekInitialBootstrap(): Promise<AppBootstrap> | undefined {\n=== test 215-235 ===\n  it(\"does not expose a switch bootstrap to the subscription gate\", async () => {\n    vi.stubGlobal(\"window\", { location: { pathname: \"/sign-in\" } });\n    vi.mocked(rpc.bootstrap).mockResolvedValue({ me: {} } as Awaited<\n      ReturnType<typeof rpc.bootstrap>\n    >);\n    const { primeSpaceBootstrap, peekInitialBootstrap } = await import(\"./bootstrap\");\n    await primeSpaceBootstrap(\"space-b\");\n    expect(peekInitialBootstrap()).toBeUndefined();\n  });\n\n  it(\"keeps the first-load speculative bootstrap available without an explicit space\", async () => {\n    vi.stubGlobal(\"window\", { location: { pathname: \"/app\" } });\n    const initial = { me: { ticketBoardEnabled: true } } as Awaited<\n      ReturnType<typeof rpc.bootstrap>\n    >;\n    vi.mocked(rpc.bootstrap).mockReset().mockResolvedValue(initial);\n    const { peekInitialBootstrap, takeInitialBootstrap, getTicketBoardEnabled } = await import(\n      \"./bootstrap\"\n    );\n    await expect(peekInitialBootstrap()).resolves.toBe(initial);\n    expect(getTicketBoardEnabled()).toBe(true);"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -rn 'peekInitialBootstrap' apps/web/src --include=*.ts --include=*.tsx | grep -v node_modules; echo \"=== test 215-235 ===\"; sed -n '215,235p' apps/web/src/lib/bootstrap.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": -1,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-5ddfbc867f-s4kjx",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "e40a8411-3380-4c7b-b28f-ae0d1f07e41a",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

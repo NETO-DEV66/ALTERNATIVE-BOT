@@ -1,0 +1,36 @@
+{
+  "id": "6a6a14bd-91a4-46a3-9d60-e9540f80339c",
+  "timestamp": "2026-10-31T12:06:45.888309",
+  "source": "environment",
+  "parent_id": "7974d5fa-fd82-4d1b-afaa-a8aaca9de85a",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b81da7bc727334ca",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "// @vitest-environment jsdom\nimport { tokensForAppearance } from \"@alternativebot/ui-tokens\";\nimport type { ReactNode } from \"react\";\nimport { act } from \"react\";\nimport type { Root } from \"react-dom/client\";\nimport { createRoot } from \"react-dom/client\";\nimport { afterEach, beforeEach, expect, it, vi } from \"vitest\";\nimport SignIn from \"../app/sign-in\";\nimport {\n  loadSessionToken,\n  passwordResetCapabilities,\n  rpc,\n  sendSignInCode,\n  signIn,\n  signInWithCode,\n  signUp,\n} from \"./api\";\nimport type { NativeActionButtonProps } from \"./native-controls\";\nimport { passkeysAvailable, signInWithPasskey } from \"./passkey\";\nimport { continueWithSso } from \"./sso\";\n\nconst route = vi.hoisted(() => ({ mode: \"in\", waiting: false, redirect: vi.fn() }));\nconst router = vi.hoisted(() => ({ push: vi.fn(), replace: vi.fn() }));\nconst server = vi.hoisted(() => ({ base: \"https://example.invalid\", refocus: () => {} }));\n\nvi.mock(\"expo-router\", () => ({\n  Redirect: ({ href }: { href: string }) => {\n    route.redirect(href);\n    return null;\n  },\n  useRouter: () => router,\n  useLocalSearchParams: () => route,\n  useFocusEffect: (effect: () => void) => {\n    server.refocus = effect;\n  },\n}));\nvi.mock(\"react-native\", () => {\n  const Container = ({ children }: { children: ReactNode }) => <div>{children}</div>;\n  return {\n    Platform: { OS: \"ios\" },\n    Keyboard: { dismiss: vi.fn() },\n    AccessibilityInfo: { announceForAccessibility: vi.fn() },\n    KeyboardAvoidingView: Container,\n    TouchableWithoutFeedback: Container,\n    ActivityIndicator: ({ accessibilityLabel }: { accessibilityLabel?: string }) => (\n      <div role=\"progressbar\" aria-label={accessibilityLabel} />\n    ),\n    View: Container,\n    ScrollView: Container,\n    Text: ({ children }: { children: ReactNode }) => <span>{children}</span>,\n    TextInput: ({\n      accessibilityLabel,\n      placeholder,\n      secureTextEntry,\n      textContentType,\n      autoComplete,\n      keyboardType,\n      maxLength,\n      value,\n      onChangeText,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '1,60p' apps/mobile/lib/sign-in.test.tsx",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 25122,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "422e33ec-bb75-40ab-ba71-e16250e58c4d",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

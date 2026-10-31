@@ -1,0 +1,36 @@
+{
+  "id": "aa5db38e-dc6f-46ed-b97f-22ce5db6d091",
+  "timestamp": "2026-10-31T10:55:16.367024",
+  "source": "environment",
+  "parent_id": "eac41b73-c605-4131-ab85-0eb91709653b",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8ad3fd58cf6e30be",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "export * from \"./agent-connections.js\";\nexport * from \"./agent-environment.js\";\nexport * from \"./agent-import-settings.js\";\nexport * from \"./ai-consent.js\";\nexport * from \"./artifact-store-factory.js\";\nexport * from \"./artifacts.js\";\nexport * from \"./auto-review.js\";\nexport * from \"./auto-review-factory.js\";\nexport * from \"./aws-kms-key-provider.js\";\nexport * from \"./background-job-handlers.js\";\nexport * from \"./billing-emulator.js\";\nexport * from \"./boat-sandbox.js\";\nexport * from \"./bot-avatar.js\";\nexport * from \"./bot-messages.js\";\nexport {\n  forgetBotSecret,\n  getBotSecretMetadata,\n  listBotSecretMetadata,\n  normalizeSecretDestination,\n  pageUrlOrigin,\nexport * from \"./media-generation-provider.js\";\nexport * from \"./memory-provider-factory.js\";\nexport * from \"./messaging-composition.js\";\nexport * from \"./messaging-context.js\";\nexport * from \"./messaging-delivery.js\";\nexport * from \"./messaging-installations.js\";\nexport * from \"./messaging-platforms.js\";\nexport * from \"./messaging-team-chat-emulator.js\";\nexport * from \"./model-connect.js\";\nexport * from \"./model-connect-check.js\";\nexport { hostedModelCreditObserver } from \"./model-credit-observer.js\";\nexport * from \"./model-credit-reconciler.js\";\nexport * from \"./model-roles.js\";\nexport * from \"./model-selection.js\";\nexport * from \"./model-vision.js\";\nexport * from \"./none-sandbox.js\";\nexport * from \"./novita-sandbox.js\";\nexport * from \"./novita-template.js\";\nexport * from \"./openai-compatible-url.js\";\nexport * from \"./openai-compatible-voice.js\";\nexport * from \"./openai-voice.js\";\nexport * from \"./openrouter-usage.js\";\nexport * from \"./page-browser-session.js\";\nexport * from \"./parallel-web.js\";\nexport * from \"./payment-wallet-factory.js\";\nexport * from \"./payment-wallets.js\";\nexport * from \"./pi-catalog-availability.js\";\nexport * from \"./pi-codex-catalog.js\";\nexport * from \"./pi-credentials.js\";\nexport * from \"./pi-live-catalog.js\";\nexport * from \"./pi-live-model.js\";\nexport * from \"./pi-models.js\";\nexport * from \"./pi-oauth.js\";\nexport * from \"./pi-openai-compatible-provider.js\";\nexport * from \"./pi-runtime.js\";\nexport * from \"./pi-session.js\";\nexport { shutdownPiTelemetry } from \"./pi-telemetry.js\";\nexport * from \"./pipedream-connector.js\";\nexport * from \"./plugin-connectors.js\";\nexport * from \"./plugin-marketplace.js\";\nexport * from \"./product-analytics.js\";\nexport * from \"./purchase-poll.js\";\nexport * from \"./purchase-service.js\";\nexport * from \"./push-token-store.js\";\nexport * from \"./railway-sandbox.js\";\nexport * from \"./realtime.js\";\nexport * from \"./release-watch.js\";\nexport * from \"./remote-mcp.js\";\nexport * from \"./resend-email.js\";\nexport * from \"./routine-watch.js\";\nexport * from \"./run-secret.js\";\nexport * from \"./sendblue-emulator.js\";\nexport { SerenityMemoryProvider } from \"./serenity-memory-provider.js\";\nexport * from \"./skill-tools.js\";\nexport * from \"./slack-install-provider.js\";\nexport * from \"./smtp-email.js\";\nexport * from \"./storage-migration.js\";\nexport * from \"./stripe-billing.js\";\nexport { SupermemoryMemoryProvider } from \"./supermemory-memory-provider.js\";\nexport * from \"./task-catalog.js\";\nexport * from \"./teaching-session.js\";\nexport * from \"./team-chat-messaging.js\";\nexport * from \"./third-party-connector-emulator.js\";\nexport * from \"./ticket-changes.js\";\nexport * from \"./ticket-tools.js\";\nexport { dispatcherFetch } from \"./undici-fetch.js\";\nexport * from \"./user-device-emulator.js\";"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '1,20p;100,150p;165,180p' packages/adapters/src/index.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "52b6b2fc-bdaa-47fb-ba1f-8c2a7268575d",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

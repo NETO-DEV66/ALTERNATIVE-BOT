@@ -1,0 +1,36 @@
+{
+  "id": "21f71bf1-0cd5-4311-9bda-711ccee087c4",
+  "timestamp": "2026-10-31T10:35:07.584064",
+  "source": "environment",
+  "parent_id": "fae0f5fd-3202-4b78-a82e-392cf38a3541",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-adf352809769bb29",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "/** Omitted by older servers and ordinary chat connections. */\n  protocol: z.enum([\"chat\", \"decisions\"]).optional(),\n  /** Preselected for a new connection when there is no saved model choice. */\n  recommended: z.boolean().optional(),\n  /** The provider's connections that can run it, when not all of them can. */\n  credentialIds: z.array(z.string()).optional(),\n  /** Available through the deployment without a personal credential. */\n  managed: z.boolean().optional(),\n  provider: z.string(),\n  providerName: z.string().optional(),\n  id: z.string(),\n  label: z.string(),\n  billing: z.string(),\n  auth: z.enum([\"api-key\", \"oauth\", \"both\"]).optional(),\n  oauthLabel: z.string().optional(),\n  authHint: z.string().optional(),\n  subscription: z.boolean().optional(),\n  signIn: ModelOAuthSignInModeSchema.optional(),\n  reasoning: z.boolean().optional(),\n  thinkingLevels: z.array(ThinkingLevelSchema).optional(),\n  /** The model reads images. Left out where a connection setting decides it. */\n  images: z.boolean().optional(),\n  /** Catalog stand-in so a provider appears before the user enters a real model id. */\n  placeholder: z.boolean().optional(),\n  /** Models share one pinned HTTPS models-list URL that can be probed. */\n  catalogProbe: z.boolean().optional(),\n  /** Listed by the provider's live models list but not in the bundled catalog. */\n  live: z.literal(true).optional(),\n});\nexport type ModelCatalogEntry = z.infer<typeof ModelCatalogEntrySchema>;\n\n=== 1795-1880 ===\nexport const MODEL_CREDIT_AMOUNTS = [1000, 2000, 5000, 10000, 20000, 50000] as const;\n/** Monthly price in cents of running bots on your own model connection; `null` makes it free. */\nexport const BYOK_MONTHLY_PRICE_CENTS: number | null = 1000;\nexport const DEFAULT_MONTHLY_CREDIT_AMOUNT = 2000;\nexport const ModelCreditAmountSchema = z.union(\n  MODEL_CREDIT_AMOUNTS.map((amount) => z.literal(amount)),\n);\n\nexport const SIGNUP_SURVEY_USES = [\"personal\", \"work\", \"both\"] as const;\nexport const SIGNUP_SURVEY_TEAM_SIZES = [\"1\", \"2-10\", \"11-50\", \"51-200\", \"201+\"] as const;\n\n/** Team sizes as shown: en dashes for ranges, and the open-ended bucket as \"200+\". */\nexport function signupSurveyTeamSizeLabel(size: (typeof SIGNUP_SURVEY_TEAM_SIZES)[number]): string {\n  return size === \"201+\" ? \"200+\" : size.replace(\"-\", \"\u2013\");\n}\n\n/** Every answer is optional; an empty survey records that the user skipped it. */\nexport const SignupSurveySchema = z.object({\n  reason: z.string().trim().max(2000).optional(),\n  use: z.enum(SIGNUP_SURVEY_USES).optional(),\n  /** Only kept when the survey asks it; see signupSurveyAsksTeamSize. */\n  teamSize: z.enum(SIGNUP_SURVEY_TEAM_SIZES).optional(),\n  source: z.string().trim().max(500).optional(),\n});\nexport type SignupSurvey = z.infer<typeof SignupSurveySchema>;\n\nexport function signupSurveyAsksTeamSize(use: SignupSurvey[\"use\"]): boolean {\n  return use === \"work\" || use === \"both\";\n}\n\n/** Where checkout returns: the mobile app's in-app browser instead of the web app. */\nexport const BillingClientSchema = z.literal(\"mobile\").optional();\n/** The deep link the API sends a mobile checkout back to; it closes the in-app browser. */\nexport const MOBILE_BILLING_CALLBACK_URL = \"alternativebot://billing\";\n\nexport const BillingStatusSchema = z.object({\n  funding: z.enum([\"byok\", \"credits\"]).nullable().optional(),\n  balanceUsd: z.number().optional(),\n  monthlyAmountCents: z.number().int().positive().nullable().optional(),\n  creditPurchasesEnabled: z.boolean().optional(),\n  /** Monthly price of the own-key plan; `null` when it is free. */\n  byokPriceCents: z.number().int().positive().nullable().optional(),\n  /** End of an unpaid own-key organization's free period. */\n  byokFreeUntil: z.string().nullable().optional(),\n  access: z.boolean(),\n  /** Only organization owners start checkout or open the billing portal. */\n  canManage: z.boolean(),\n  trialAvailable: z.boolean(),\n  trialDays: z.number().int().nonnegative(),\n  state: z.enum([\n    \"none\",\n    \"trialing\",\n    \"active\",\n    \"past_due\",\n    \"incomplete\",\n    \"unpaid\",\n    \"paused\",\n    \"canceled\",\n  ]),\n  price: z\n    .object({\n      amount: z.number().int().nonnegative(),\n      currency: z.string(),\n      interval: z.enum([\"day\", \"week\", \"month\", \"year\"]),\n      intervalCount: z.number().int().positive(),\n    })\n    .nullable(),\n  seats: z.number().int().nonnegative(),\n  trialEndsAt: z.string().nullable(),\n  currentPeriodEndsAt: z.string().nullable(),\n  cancelAtPeriodEnd: z.boolean(),\n  hasCustomer: z.boolean(),\n  /** Present once the organization has subscribed: its invite link and free months earned. */\n  referral: z\n    .object({ url: z.string().url(), rewards: z.number().int().nonnegative() })\n    .nullable()\n    .optional(),\n});\nexport type BillingStatus = z.infer<typeof BillingStatusSchema>;\n\nexport const AppBootstrapSchema = z.object({\n  me: MeSchema,\n  bots: z.array(BotSchema),\n  groups: z.array(GroupSchema),\n  botSections: z.array(BotSectionSchema),\n  archivedBots: z.array(BotSchema),"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '1570,1600p' packages/contracts/src/domain.ts; echo \"=== 1795-1880 ===\"; sed -n '1795,1880p' packages/contracts/src/domain.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "d68719f1-5950-4eb8-bb31-3486cc01ec56",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

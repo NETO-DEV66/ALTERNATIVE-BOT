@@ -1,0 +1,36 @@
+{
+  "id": "465fed61-791a-4256-a0e8-2388e5075659",
+  "timestamp": "2026-10-31T12:34:03.324726",
+  "source": "environment",
+  "parent_id": "3cca712c-97d1-4d21-a6fb-cc7858fb01f5",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-aaf061f720ffb7be",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "\u23af\u23af\u23af\u23af\u23af\u23af\u23af Failed Tests 2 \u23af\u23af\u23af\u23af\u23af\u23af\u23af\n\n FAIL  infra/sandboxes/supervisor/src/computer-spec.test.ts > graphical computer spec > spawns Chromium when the wrapper is invoked as ./alternativebot-browser\nAssertionError: spawnSync ./alternativebot-browser EACCES: expected null to be +0 // Object.is equality\n\n- Expected:\n0\n\n+ Received:\nnull\n\n \u276f infra/sandboxes/supervisor/src/computer-spec.test.ts:883:71\n    881|           },\n    882|         );\n    883|         expect(result.status, result.error?.message ?? result.stderr).\u2026\n       |                                                                       ^\n    884|         const args = readFileSync(capture, \"utf8\");\n    885|         expect(args).toContain(`--user-data-dir=${profile}`);\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af[1/2]\u23af\n\n FAIL  infra/sandboxes/supervisor/src/computer-spec.test.ts > graphical computer spec > forwards a URL to the live browser when SingletonLock misses that process\nError: ENOENT: no such file or directory, open '/tmp/alternativebot-browser-live-75DOj8/accepted'\n \u276f infra/sandboxes/supervisor/src/computer-spec.test.ts:1571:16\n    1569|         );\n    1570|         expect(reported.status, reported.stdout + reported.stderr).toB\u2026\n    1571|         expect(readFileSync(acceptedFile, \"utf8\")).toContain(\"accepted\u2026\n       |                ^\n    1572|         expect(readFileSync(prefsPath, \"utf8\")).toBe(prefs);\n    1573|         expect(() => readFileSync(capture, \"utf8\")).toThrow();\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af[2/2]\u23af\n\n\n Test Files  1 failed (1)\n      Tests  2 failed | 88 passed (90)\n   Start at  12:33:56\n   Duration  6.04s (transform 110ms, setup 32ms, import 111ms, tests 5.78s, environment 0ms)"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && timeout 500 npx vitest run infra/sandboxes/supervisor/src/computer-spec.test.ts 2>&1 | tail -40",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 65061,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "00aacc26-5857-46f9-b034-b3e4c9558427",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

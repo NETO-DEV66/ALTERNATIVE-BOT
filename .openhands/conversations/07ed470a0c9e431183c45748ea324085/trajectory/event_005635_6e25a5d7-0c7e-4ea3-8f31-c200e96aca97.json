@@ -1,0 +1,36 @@
+{
+  "id": "6e25a5d7-0c7e-4ea3-8f31-c200e96aca97",
+  "timestamp": "2026-10-31T13:43:56.112844",
+  "source": "environment",
+  "parent_id": "49d6e83f-3c08-4b77-94ef-97b7dfb4ddd5",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-a81d226331c54d33",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== self-update.ts 1-120 ===\n/** The repository a stock Alternative Bot deployment tracks. */\nexport const OFFICIAL_REPO_URL = \"https://github.com/elie222/alternativebot\";\nexport const DEFAULT_UPDATE_BRANCH = \"main\";\nexport const DEFAULT_UPDATE_REMOTE = \"origin\";\n\nconst SCP_LIKE = /^(?<user>[A-Za-z0-9._-]+)@(?<host>[A-Za-z0-9._-]+):(?<path>[^:]+)$/;\nconst SAFE_PATH_SEGMENT = /^[A-Za-z0-9._-]+$/;\nconst BRANCH_REJECT = /[\\s~^:?*[\\\\]/;\nconst COMMIT = /^[0-9a-f]{40}(?:[0-9a-f]{24})?$/i;\n\n  return segments.join(\"/\");\n}\n\n/** `github.com/elie222/alternativebot` for every spelling of the same remote, for comparison only. */\nexport function repoIdentity(url: string): string | null {\n  const normalized = normalizeRepoUrl(url);\n  if (\"error\" in normalized) return null;\n\n  const scp = SCP_LIKE.exec(normalized.url);\n  const host = scp?.groups?.host ?? safeHost(normalized.url);\n  const path = scp?.groups?.path ?? safePath(normalized.url);\n  if (host === null || path === null) return null;\n  return `${host}/${path.replace(/\\.git$/, \"\")}`.toLowerCase();\n}\n\nfunction safeHost(url: string): string | null {\n  try {\n    return new URL(url).hostname;\n  } catch {\n    return null;\n  }\n}\n\nfunction safePath(url: string): string | null {\n  try {\n    return new URL(url).pathname.replace(/^\\/+/, \"\");\n  } catch {\n    return null;\n  }\n}\n\nexport function isOfficialRepoUrl(url: string): boolean {\n  const identity = repoIdentity(url);\n  return identity !== null && identity === repoIdentity(OFFICIAL_REPO_URL);\n}\n\n=== self-update.test.ts elie222 lines ===\n6:  isOfficialRepoUrl,\n9:  OFFICIAL_REPO_URL,\n12:  repoIdentity,\n20:    expect(normalizeRepoUrl(OFFICIAL_REPO_URL)).toEqual({\n21:      url: \"https://github.com/elie222/alternativebot\",\n70:describe(\"repoIdentity\", () => {\n72:    const identity = \"github.com/elie222/alternativebot\";\n73:    expect(repoIdentity(\"https://github.com/elie222/alternativebot\")).toBe(identity);\n74:    expect(repoIdentity(\"https://github.com/elie222/alternativebot.git\")).toBe(identity);\n75:    expect(repoIdentity(\"git@github.com:elie222/alternativebot.git\")).toBe(identity);\n76:    expect(repoIdentity(\"ssh://git@github.com/Elie222/AlternativeBot\")).toBe(identity);\n77:    expect(repoIdentity(\"not a url\")).toBeNull();\n81:    expect(isOfficialRepoUrl(\"git@github.com:elie222/alternativebot.git\")).toBe(true);\n82:    expect(isOfficialRepoUrl(\"https://github.com/attacker/alternativebot\")).toBe(false);\n83:    expect(isOfficialRepoUrl(\"https://githubb.com/elie222/alternativebot\")).toBe(false);\n133:      remoteUrl: OFFICIAL_REPO_URL,\n169:      remoteUrl: OFFICIAL_REPO_URL,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && echo \"=== self-update.ts 1-120 ===\"; sed -n '1,10p;80,115p' packages/core/src/self-update.ts; echo \"=== self-update.test.ts elie222 lines ===\"; grep -n 'elie222\\|repoIdentity\\|isOfficialRepoUrl\\|OFFICIAL_REPO' packages/core/src/self-update.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": -1,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-5ddfbc867f-s4kjx",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "4fa6f382-f4d8-431a-8c11-f61bfb512d5c",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

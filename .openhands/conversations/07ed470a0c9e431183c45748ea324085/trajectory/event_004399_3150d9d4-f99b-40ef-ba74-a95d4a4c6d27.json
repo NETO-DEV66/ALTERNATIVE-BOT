@@ -1,0 +1,36 @@
+{
+  "id": "3150d9d4-f99b-40ef-ba74-a95d4a4c6d27",
+  "timestamp": "2026-10-31T12:20:34.131793",
+  "source": "environment",
+  "parent_id": "3e8b4707-3ee1-426e-8e81-e5963f74127b",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-a478c13f4e9e0d2c",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "#!/usr/bin/env bash\n# Restricted egress for Alternative Bot bot computers (SANDBOX_COMPUTER_EGRESS=restricted).\n#\n# Computers keep full public-internet egress (browsing, DNS, apt, git over SSH)\n# but can no longer reach the destinations below. Docker before 28, and DNS\n# servers set for computers or the daemon, forward lookups from the computers'\n# own network, so a private resolver there (a VPC or LAN resolver) needs\n# SANDBOX_COMPUTER_DNS set to public resolvers (docs/self-host-docker-computers.md).\n# Blocked:\n#   - the Docker host itself (INPUT drop; replies to host-initiated connections\n#     stay open so supervisor control and published screen ports keep working),\n#   - RFC1918 / CGNAT / link-local destinations, including cloud metadata at\n#     169.254.169.254 (and AWS's IPv6 fd00:ec2::254),\n#   - multicast and reserved space.\n#\n# Rules key on the deterministic bridge names the supervisor assigns in\n# restricted mode (alternativebot-c<hash>), never on Docker's dynamic subnets \u2014 so\n# computer churn, network recreate, and subnet reuse need no firewall changes.\n#\n# Same-bridge peers stay reachable: the supervisor and web screen proxy join the\n# computer's bridge. Docker loads br_netfilter with bridge-nf-call-iptables, so\n# same-bridge frames DO traverse FORWARD/DOCKER-USER \u2014 the first rule below\n# returns traffic whose in- and out-interface are the same bridge family before\n# any drop applies. On hosts where bridged frames skip iptables entirely, that\n# rule is simply never matched.\n#\n# Requires Linux Docker Engine with the iptables firewall backend (the\n# DOCKER-USER chain). Docker Desktop, rootless Docker, and the nftables\n# backend are not supported.\n#\n#   sudo bash restrict-computer-egress.sh          # apply now + persist via systemd\n#   bash restrict-computer-egress.sh --print       # show the rules, change nothing\n#   sudo bash restrict-computer-egress.sh --remove # uninstall\n\nset -Eeuo pipefail\n\nIPTABLES=\"${ALTERNATIVEBOT_IPTABLES:-iptables}\"\nIP6TABLES=\"${ALTERNATIVEBOT_IP6TABLES:-ip6tables}\"\nSYSTEMCTL=\"${ALTERNATIVEBOT_SYSTEMCTL:-systemctl}\"\nIF_INET6=\"${ALTERNATIVEBOT_IF_INET6:-/proc/net/if_inet6}\"\nBRIDGE_PREFIX=\"alternativebot-c\"\nINSTALLED_PATH=/usr/local/sbin/alternativebot-computer-egress\nUNIT_PATH=/etc/systemd/system/alternativebot-computer-egress.service\n\nusage() {\n  cat <<'EOF'\nUsage: restrict-computer-egress.sh [--install|--apply|--remove|--print]\n  (default)   apply the rules now and persist them across reboots via systemd\n  --apply     apply the rules now only (used by the systemd unit)\n  --remove    delete the rules and the systemd unit\n  --print     show the iptables commands without changing anything\nEOF\n}\n\n# Forwarded destinations a computer may never reach: every non-public IPv4 block.\nblocked_destinations_v4() {\n  cat <<'EOF'\n0.0.0.0/8\n10.0.0.0/8\n100.64.0.0/10\n[1]+  Done                    cd /workspace/project && ( npx vitest run > /tmp/vitest-all.log 2>&1; echo \"EXIT=$?\" >> /tmp/vitest-all.log )"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '1,60p' infra/compose/restrict-computer-egress.sh",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 65061,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "970931a2-f6b1-4975-b53a-68691bca4b8f",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

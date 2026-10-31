@@ -1,0 +1,37 @@
+{
+  "id": "20a62e34-5db6-4b07-bd3e-7e9997b4cff3",
+  "timestamp": "2026-10-31T11:45:25.015906",
+  "source": "agent",
+  "parent_id": "0bc000a7-7b08-4c73-b32c-02dd1eaec900",
+  "thought": [
+    {
+      "cache_prompt": false,
+      "type": "text",
+      "text": ""
+    }
+  ],
+  "reasoning_content": "These are all in test mocks that are now dead. Since they're `as unknown as PrismaClient` casts and just extra mock props, they're harmless, but for cleanliness let me remove them. Let me look at each context. Actually these mocks may be for functions that still access `organization.modelCredits` \u2014 but the schema no longer has it, so the executor can't access it. Let me check whether the code under test still reads `modelCredits`.\n\nSince `grep modelCredits` in non-test returned nothing, the production code doesn't read it. So these test mocks are vestigial. Remove them for cleanliness.\n\nLet me handle each:\n- `executor-backup-start.test.ts:221` and `executor-oauth-retire.test.ts:168`: remove `billingEnabled: false,` line.\n- `executor-readonly-approval.test.ts:368`: `modelCreditEntry: { findUnique: vi.fn(async () => null) },` \u2014 remove.\n- `history-compaction-pi.test.ts:64` and `parallel-web.test.ts:93`: `modelCreditEntry: { findUnique: async () => null },` \u2014 remove.\n- `team-chat-judge.test.ts` and `models-backups.test.ts`: more complex \u2014 `modelCreditsEnabled`, `organization: { modelCredits: {...} }`. Let me inspect those more carefully; removing might break tests if the code reads them. But code doesn't read modelCredits. However these tests might be specifically testing credits behavior. Let me look.",
+  "thinking_blocks": [],
+  "responses_reasoning_item": null,
+  "action": {
+    "command": "cd /workspace/project && echo \"=== team-chat-judge.test.ts 220,300 ===\"; sed -n '220,300p' apps/api/src/team-chat-judge.test.ts",
+    "is_input": false,
+    "timeout": null,
+    "reset": false,
+    "kind": "TerminalAction"
+  },
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-85cf1bbfc187439f",
+  "tool_call": {
+    "id": "chatcmpl-tool-85cf1bbfc187439f",
+    "responses_item_id": null,
+    "name": "terminal",
+    "arguments": "{\"command\": \"cd /workspace/project && echo \\\"=== team-chat-judge.test.ts 220,300 ===\\\"; sed -n '220,300p' apps/api/src/team-chat-judge.test.ts\", \"security_risk\": \"LOW\", \"summary\": \"Inspect team-chat-judge credits context\"}",
+    "origin": "completion"
+  },
+  "llm_response_id": "gen-1793447122-n3pHbGyTLHInlenP3qmc",
+  "security_risk": "LOW",
+  "critic_result": null,
+  "summary": "Inspect team-chat-judge credits context",
+  "kind": "ActionEvent"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "72d82d6c-bff3-4c83-98a8-b17d819984a7",
+  "timestamp": "2026-10-31T11:36:32.980314",
+  "source": "environment",
+  "parent_id": "886864dd-7f28-4829-8cc5-afb568adce38",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8ad7449133ff15ed",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "'/** Provider-neutral subscription state. Vendor-specific sta'\n'/** Optional provider adapter for recovering authoritative cost after an interru'\nremoved 1989\n\n\n\n1196:export interface ModelUsageLookup {"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && python3 - <<'PY'\np=\"packages/adapter-kit/src/types.ts\"\ns=open(p).read()\nstart=s.index(\"/** Provider-neutral subscription state. Vendor-specific states map onto these. */\")\nend=s.index(\"/** Optional provider adapter for recovering authoritative cost after an interrupted call. */\")\nprint(repr(s[start:start+60]))\nprint(repr(s[end:end+80]))\ns=s[:start]+s[end:]\nopen(p,\"w\").write(s)\nprint(\"removed\", end-start)\nPY\ngrep -n 'Billing\\|ModelUsageLookup' packages/adapter-kit/src/types.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 17917,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "492c691d-0fb3-4af2-adfd-0748b69802df",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,44 @@
+{
+  "id": "32c372d4-b119-4b0e-84c8-2ab68f62a7b2",
+  "timestamp": "2026-10-31T12:43:22.250912",
+  "source": "environment",
+  "parent_id": "ee186f6e-b2c5-4595-836f-ecf1baa916e5",
+  "key": "stats",
+  "value": {
+    "usage_to_metrics": {
+      "agent": {
+        "model_name": "openhands/deepseek-v4.1-flash",
+        "accumulated_cost": 0.0,
+        "max_budget_per_task": null,
+        "accumulated_token_usage": {
+          "model": "openhands/deepseek-v4.1-flash",
+          "prompt_tokens": 74313070,
+          "completion_tokens": 205521,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "reasoning_tokens": 356109,
+          "context_window": 1000000,
+          "per_turn_token": 82268,
+          "response_id": ""
+        }
+      },
+      "condenser": {
+        "model_name": "openhands/deepseek-v4.1-flash",
+        "accumulated_cost": 0.047654980799999996,
+        "max_budget_per_task": null,
+        "accumulated_token_usage": {
+          "model": "openhands/deepseek-v4.1-flash",
+          "prompt_tokens": 219109,
+          "completion_tokens": 43863,
+          "cache_read_tokens": 10624,
+          "cache_write_tokens": 0,
+          "reasoning_tokens": 18037,
+          "context_window": 1000000,
+          "per_turn_token": 14934,
+          "response_id": ""
+        }
+      }
+    }
+  },
+  "kind": "ConversationStateUpdateEvent"
+}

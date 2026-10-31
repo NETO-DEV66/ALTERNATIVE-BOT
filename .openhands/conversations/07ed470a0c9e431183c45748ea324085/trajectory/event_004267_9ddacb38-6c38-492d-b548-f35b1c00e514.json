@@ -1,0 +1,36 @@
+{
+  "id": "9ddacb38-6c38-492d-b548-f35b1c00e514",
+  "timestamp": "2026-10-31T12:11:54.082679",
+  "source": "environment",
+  "parent_id": "84bce322-df75-4419-8e0e-6f876e2923e2",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-938cc2b81614f066",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "\"web_fetch\",\n  \"web_search\",\n]);\n\nconst READ_ONLY_CONNECTOR_PATTERN = /(^|_)(get|list|search|find|read)(_|$)/i;\nconst MUTATING_CONNECTOR_PATTERN =\n  /(^|_)(accept|add|approve|archive|assign|buy|cancel|charge|checkout|close|commit|copy|create|delete|deploy|disable|enable|execute|forward|grant|invite|link|mark|merge|modify|move|patch|pay|post|publish|purchase|put|register|reject|remove|rename|replace|reply|reset|revoke|run|schedule|send|set|share|start|stop|submit|subscribe|trigger|unassign|unlink|unsubscribe|update|upload|upsert|write)(_|$)/i;\nconst COMPOUND_CONNECTOR_ACTION_PATTERN = /_(and|or|then)_/i;\n\nconst EMAIL_CONNECTOR_SLUGS = new Set([\"gmail\", \"outlook\", \"microsoft_outlook\"]);\nconst PURCHASE_CONNECTOR_SLUGS = new Set([\"stripe\", \"shopify\", \"paypal\", \"square\"]);\n\nexport type ActionApprovalRule = Pick<\n  StoredActionApprovalRule,\n  \"effect\" | \"matchKind\" | \"matchValue\"\n>;\n\nexport function connectorKindFromToolName(toolName: string, connectorKinds: string[] = []): string {\n  const normalizedTool = toolName.toLowerCase();\n  const matched = connectorKinds\n    .map((kind) => kind.toLowerCase())\n    .filter((kind) => normalizedTool === kind || normalizedTool.startsWith(`${kind}_`))\n    .sort((left, right) => right.length - left.length)[0];\n  if (matched) return matched;\n  const [segment] = toolName.split(\"_\");\n  return (segment ?? toolName).toLowerCase();\n}\n\n/**\n * `readOnly` is the connector tool's declared effect (for installed APIs, derived from the stored\n * HTTP method and read-only flag). A declared write always needs approval. A declared read never\n=== run-tool-gate 160-180 ===\n    (unidentifiedAction && run.trigger === \"webhook\") ||\n    approvalToolNames.some((toolName) =>\n      unattendedTriggerToolRequiresApproval(\n        run.trigger,\n        toolName,\n        viaConnector,\n        declaredReadOnlyFor(toolName),\n      ),\n    );\n  const connectorProviders = ctx.tools.connectedPlugins.map((plugin) => plugin.provider);\n  const connectorKind = connectorKindFromToolName(name, connectorProviders);\n  // paid_request with only a purchase id sends the request its approval already named.\n  const sendsToSite =\n    SITE_SENDING_TOOLS.has(name) && (name === \"web_fetch\" || args.url !== undefined);\n  const fetchUrl = sendsToSite ? normalizedHttpUrl(String(args.url ?? \"\")) : undefined;\n  const fetchSite = fetchUrl ? urlSite(fetchUrl) : undefined;\n  if (sendsToSite && !fetchSite) return { result: { error: \"url must be an http(s) URL\" } };\n  if (fetchUrl && fetchUrl.length > MAX_FETCH_URL_LENGTH)\n    return { result: { error: `url must be at most ${MAX_FETCH_URL_LENGTH} characters` } };\n  if (fetchUrl) {\n    args = { ...args, url: fetchUrl };"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '70,100p' packages/core/src/action-approval.ts; echo \"=== run-tool-gate 160-180 ===\"; sed -n '160,180p' packages/adapters/src/run-tool-gate.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 65061,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "098bdf60-1198-4ca0-bc16-31ccc87dd8b6",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

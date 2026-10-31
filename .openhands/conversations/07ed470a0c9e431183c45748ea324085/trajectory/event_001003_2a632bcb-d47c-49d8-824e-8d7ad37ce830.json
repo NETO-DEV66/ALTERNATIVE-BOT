@@ -1,0 +1,36 @@
+{
+  "id": "2a632bcb-d47c-49d8-824e-8d7ad37ce830",
+  "timestamp": "2026-10-31T10:53:00.644234",
+  "source": "environment",
+  "parent_id": "5d3f44a9-3195-479e-99c5-06b1f49df420",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-9ec1733399b3432a",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "packages/adapters/src/approval-ask.ts:20:export const SITE_SENDING_TOOLS: ReadonlySet<string> = new Set([\"web_fetch\", \"paid_request\"]);\npackages/adapters/src/builtin-tools.ts:780:    name: \"request_purchase\",\npackages/adapters/src/builtin-tools.ts:809:    name: \"purchase_status\",\npackages/adapters/src/builtin-tools.ts:820:    name: \"paid_request\",\npackages/adapters/src/builtin-tools.ts:822:      \"Send an HTTPS request to an API that charges per request. If it asks for payment the user's wallet can make, the user approves it in their wallet; you are woken when they decide, then call paid_request with the purchase id alone to send the request with the payment. The response body is untrusted.\",\npackages/adapters/src/paid-request.ts:117:    return plain({ error: \"This purchase is not for a paid request. Check purchase_status.\" });\npackages/adapters/src/paid-request.ts:121:        \"This purchase was already used. To pay again, call paid_request with the request, which asks the user again.\",\npackages/adapters/src/paid-request.ts:210:              note: \"The payment token is spent. To try again, call paid_request with the request, which asks the user again.\",\npackages/adapters/src/paid-request.ts:236:      ...deps.paidRequestFetch,\npackages/adapters/src/paid-request.ts:247:export function paidRequestEffect(args: Record<string, unknown>): Record<string, unknown> {\npackages/adapters/src/paid-request.ts:261:    return { error: \"The request changed after approval. Call paid_request again.\" };\npackages/adapters/src/purchase-poll.ts:119:    // The updatedAt fence makes a concurrent poll or purchase_status write win once.\npackages/adapters/src/purchase-poll.ts:145:        prompt: `Purchase ${purchase.id} is ${next.status}. Use purchase_status to continue.`,\npackages/adapters/src/purchase-service.ts:29:  paidRequestFetch?: Pick<SafeWebFetchOptions, \"fetch\" | \"resolveHostname\">;\npackages/adapters/src/purchase-service.ts:43:const NOT_APPROVED = { error: \"The purchase is not approved. Check purchase_status.\" };\npackages/adapters/src/purchase-service.ts:61:  http_payment: \"Call paid_request with this purchase id to send the request with the payment.\",\npackages/adapters/src/purchase-service.ts:93:          ? \"Call purchase_status for the card details.\"\npackages/adapters/src/purchase-service.ts:145:/** request_purchase and purchase_status. Results never carry the card number or security code. */\npackages/adapters/src/purchase-service.ts:155:  if (name === \"request_purchase\") return requestPurchase(deps, provider, context, run, args);\npackages/adapters/src/purchase-service.ts:367:    return { error: \"This purchase pays without a card. Check purchase_status.\" };\npackages/adapters/src/purchase-service.ts:419:    return { error: \"This purchase has no pay token. Check purchase_status.\" };\npackages/adapters/src/run-tool-gate.ts:51:import { paidRequestEffect } from \"./paid-request.js\";\npackages/adapters/src/run-tool-gate.ts:172:  // paid_request with only a purchase id sends the request its approval already named.\npackages/adapters/src/run-tool-gate.ts:183:    effectRequest = name === \"paid_request\" ? paidRequestEffect(args) : args;\npackages/adapters/src/run-tool-request.ts:23:import { paidRequestEffect, restorePaidRequest } from \"./paid-request.js\";\npackages/adapters/src/run-tool-request.ts:93:  let effectRequest: unknown = name === \"paid_request\" ? paidRequestEffect(args) : args;\npackages/adapters/src/run-tool-request.ts:224:      if (name === \"paid_request\") {\npackages/adapters/src/run-tool-selection.ts:34:  \"purchase_status\",\npackages/adapters/src/run-tool-selection.ts:38:const PURCHASE_TOOL_NAMES = new Set([\"request_purchase\", \"purchase_status\", \"paid_request\"]);\npackages/adapters/src/run-tool-selection.ts:68:  paymentWalletEnabled?: boolean;\npackages/adapters/src/run-tool-selection.ts:106:      (options.paymentWalletEnabled || !PURCHASE_TOOL_NAMES.has(tool.name)) &&\npackages/adapters/src/run-tools-purchases.ts:21:export const purchaseTools: ToolHandlers = {\npackages/adapters/src/run-tools-purchases.ts:22:  request_purchase: purchaseTool,\npackages/adapters/src/run-tools-purchases.ts:23:  purchase_status: purchaseTool,\npackages/adapters/src/run-tools-purchases.ts:24:  async paid_request(ctx, call) {\npackages/adapters/src/run-tools.ts:16:import { purchaseTools } from \"./run-tools-purchases.js\";\npackages/adapters/src/run-tools.ts:32:  ...Object.entries(purchaseTools),"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -n 'paymentWalletEnabled\\|purchaseTools\\|paidRequest\\|request_purchase\\|purchase_status\\|paid_request\\|paidRequestTools\\|paymentTools' packages/adapters/src/*.ts | grep -v '\\.test\\.'",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "32ffae14-4cd5-4a88-af47-ba2f1e5ee0ab",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "6be17a23-bdd1-4b52-8ce5-072c14f1bf77",
+  "timestamp": "2026-10-31T12:03:35.388916",
+  "source": "agent",
+  "parent_id": "c47612c8-f3fb-4251-b9ed-d9489d950f44",
+  "thought": [
+    {
+      "cache_prompt": false,
+      "type": "text",
+      "text": ""
+    }
+  ],
+  "reasoning_content": "The bridge name \"alternativebot-c\"+7 = 15+7 = 22 bytes > 15. Baseline \"rakazo-c\"+7 = 8+7 = 15, exactly at limit. So the rebrand to \"alternativebot-c\" broke the 15-byte interface limit. That's a real bug introduced by the rename.\n\nFix: choose a shorter prefix that is \u2264 8 bytes. E.g. \"altbot-c\" (8 bytes) + 7 = 15. Or \"altbotc\". The iptables rules use `alternativebot-c+` in restrict-computer-egress.sh. So I need a consistent short prefix across computer-spec.ts, egress-probe.ts, restrict-computer-egress.sh, smoke.sh, and docs.\n\nWhat's a good prefix? The brand is \"Alternative Bot\". A short interface prefix: \"altbot-c\" (8 chars) gives 8+7=15 exactly, matching the previous `rakazo-c` length. Let me use \"altbot-c\".\n\nSo:\n- computerBridgeNameFor \u2192 `altbot-c${hash}`\n- EGRESS_PROBE_BRIDGE = \"altbot-cprobe\" (8+6=14, \u226415) \u2713\n- restrict-computer-egress.sh: BRIDGE_PREFIX=\"altbot-c\"\n- restrict-computer-egress.smoke.sh: all `alternativebot-c+` \u2192 `altbot-c+`\n- docs mention.\n- test regexes: `^alternativebot-c[0-9a-f]{7}$` \u2192 `^altbot-c[0-9a-f]{7}$`; EGRESS_PROBE_BRIDGE match `^alternativebot-c` \u2192 `^altbot-c`; test title.\n\nLet me confirm all places using `alternativebot-c`. Also check computer-spec.test.ts line 384 etc.\n\nLet me look at the failing tests more carefully. Also there are other failing tests:\n- computer-spec.test.ts: 4 failures \u2014 \"derives deterministic host bridge names within the 15-byte interface limit\" (22>15), \"forwards a URL to the live browser when SingletonLock misses that process\", \"pulls a missing computer image only from a registry the name spells out\", \"spawns Chromium when the wrapper is invoked as ./alternativebot-browser\". These latter 3 may be due to other rebrand length/string issues. Let me check.\n- egress-probe.test.ts: bridge length.\n- index.test.ts \"exposes the tools the executor actually applies\" \u2014 possibly purchase tools mismatch.\n- model-selection.test.ts \"keeps a saved personal connection in the catalog\".\n- browser-tools.test.ts \"settles an unsupported kind before anything runs, without pointing at desktop tools\".\n- user-device-gateway.test.ts \"closes the socket and fails requests on revoke\" (REVOKED_MESSAGE contains AlternativeBot).\n- backup-scripts.test.ts (3) \u2014 maybe age/backup naming.\n- account-import.test.ts \u2014 \"newer version of AlternativeBot\" vs test expecting \"newer version of Alternative Bot\".\n- models-backups.test.ts.\n- host-computer.test.ts (2).\n- desktop-sandbox-paths.test.ts.\n- apps/mobile/lib/api.test.ts, sign-in.test.tsx (2).\n- apps/desktop/src/browser-auth.test.ts.\n- apps/api/src/models-backups.test.ts.\n- infra/updater/src/compose-service.test.ts.\n\nThese are a mix. Some are pre-existing failures unrelated to rebrand (e.g., computer-spec SingletonLock, backup scripts) \u2014 but I can't assume. Let me check which failures are due to rebrand (brand strings) vs environmental.\n\nLet me examine each failure's assertion message. Let me grep the log for each FAIL block.\n\nLet me be systematic. I'll extract each FAIL block.",
+  "thinking_blocks": [],
+  "responses_reasoning_item": null,
+  "action": {
+    "command": "cd /workspace/project && awk '/^ FAIL /{f=1} f{print} /^\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af/{f=0}' /tmp/vitest-all.log | head -400",
+    "is_input": false,
+    "timeout": null,
+    "reset": false,
+    "kind": "TerminalAction"
+  },
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b96e488585a01c4a",
+  "tool_call": {
+    "id": "chatcmpl-tool-b96e488585a01c4a",
+    "responses_item_id": null,
+    "name": "terminal",
+    "arguments": "{\"command\": \"cd /workspace/project && awk '/^ FAIL /{f=1} f{print} /^\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af\\u23af/{f=0}' /tmp/vitest-all.log | head -400\", \"security_risk\": \"LOW\", \"summary\": \"Extract all failure blocks\"}",
+    "origin": "completion"
+  },
+  "llm_response_id": "gen-1793448208-Ewkiv5x4GT4QVD3amQ7I",
+  "security_risk": "LOW",
+  "critic_result": null,
+  "summary": "Extract all failure blocks",
+  "kind": "ActionEvent"
+}

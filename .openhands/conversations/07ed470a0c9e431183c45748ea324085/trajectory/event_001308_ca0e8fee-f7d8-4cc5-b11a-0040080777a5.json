@@ -1,0 +1,27 @@
+{
+  "id": "ca0e8fee-f7d8-4cc5-b11a-0040080777a5",
+  "timestamp": "2026-10-31T10:56:41.087410",
+  "source": "environment",
+  "parent_id": "0aa8fdeb-5188-41ff-9674-cfc4e6691959",
+  "tool_name": "file_editor",
+  "tool_call_id": "chatcmpl-tool-b3fc7355e61e8fae",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "No replacement was performed, old_str `apiKey: resolved.oauth ? undefined : resolved.apiKey,\n    ...cloudflareRunFields(resolved),\n    baseUrl: resolved.baseUrl,\n    apiProtocol: resolved.apiProtocol,\n    headers: resolved.headers,\n    allowPrivateEndpoint: resolved.allowPrivateEndpoint,\n    cacheCapabilities: resolved.cacheCapabilities,\n    contextWindow: resolved.contextWindow,\n    reasoning: resolved.reasoning,\n  };` did not appear verbatim in /workspace/project/packages/adapters/src/run-model.ts."
+      }
+    ],
+    "is_error": true,
+    "command": "str_replace",
+    "path": null,
+    "prev_exist": true,
+    "old_content": null,
+    "new_content": null,
+    "kind": "FileEditorObservation"
+  },
+  "action_id": "22e44b28-faf0-471e-9abd-d12ddd9d27c1",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

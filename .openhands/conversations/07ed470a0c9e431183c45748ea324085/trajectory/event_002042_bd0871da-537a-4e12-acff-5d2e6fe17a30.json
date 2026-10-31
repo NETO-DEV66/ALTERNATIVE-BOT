@@ -1,0 +1,18 @@
+{
+  "id": "bd0871da-537a-4e12-acff-5d2e6fe17a30",
+  "timestamp": "2026-10-31T11:09:15.386344",
+  "source": "environment",
+  "parent_id": "34caee2d-a641-447d-9409-463c0324a0e0",
+  "analyzer": "LLMSecurityAnalyzer",
+  "policy": "NeverConfirm",
+  "risks": {
+    "6e057113-b9f9-40c6-818c-1271ec465756": "UNKNOWN",
+    "7582b2e1-0e80-4a5e-a561-4e2fbdf0528d": "UNKNOWN",
+    "df0b6b5b-f9fa-4b7c-bbf3-2d6cd3446455": "UNKNOWN",
+    "6d0a916f-f01d-4a27-8266-518d4e932407": "UNKNOWN",
+    "c52a95df-cc00-4efe-a792-b874c93b7ef1": "UNKNOWN",
+    "34caee2d-a641-447d-9409-463c0324a0e0": "UNKNOWN"
+  },
+  "details": {},
+  "kind": "SecurityAnalysisEvent"
+}

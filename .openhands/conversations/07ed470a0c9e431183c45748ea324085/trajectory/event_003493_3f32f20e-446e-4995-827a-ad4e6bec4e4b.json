@@ -1,0 +1,36 @@
+{
+  "id": "3f32f20e-446e-4995-827a-ad4e6bec4e4b",
+  "timestamp": "2026-10-31T11:46:07.769722",
+  "source": "environment",
+  "parent_id": "fbda265e-dd7c-4e3f-8941-d2da597dd322",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-be2d05d5ea9245f5",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "name: \"Fixture\",\n            modelProvider: null,\n            modelId: null,\n          },\n          channelId: \"channel\",\n          rules: \"\",\n          messages: [],\n        });\n        expect(run).toHaveBeenCalledOnce();\n        expect(run.mock.calls[0]?.[0]).toMatchObject({\n          model: { callObserver: expect.any(Object) },\n        });\n        if (key) expect(run.mock.calls[0]?.[0]).toHaveProperty(\"model.apiKey\", key);\n        else expect(run.mock.calls[0]?.[0]).not.toHaveProperty(\"model.apiKey\");\n        expect(load).not.toHaveBeenCalled();\n      } finally {\n        vi.unstubAllEnvs();\n      }\n    },\n  );\n\n  it(\"blocks a hosted judge without credit access before running the model\", async () => {\n    const run = vi.fn(async function* () {\n      yield { type: \"done\", text: '{\"act\":true}' };"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '262,285p' apps/api/src/team-chat-judge.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 21955,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "790f6740-95d6-4f10-8679-f1f90649b26b",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

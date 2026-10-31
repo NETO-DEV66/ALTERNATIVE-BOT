@@ -1,0 +1,36 @@
+{
+  "id": "e88e0302-56ee-4693-86ef-8ec58c8d0094",
+  "timestamp": "2026-10-31T10:19:16.766855",
+  "source": "environment",
+  "parent_id": "12570222-110d-4369-a0b2-eea3137cb388",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-9bc7fcdafb860275",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== .gitignore ===\n.deepsec/\nnode_modules\n__pycache__/\n*.py[cod]\n.turbo\ndist\nbuild\ncoverage\n.playwright-report\n.playwright-cli\ntest-results\nplaywright-report\n*.tsbuildinfo\n.env\n.env.local\n.env.*.local\ndata\napps/**/data\n.tmp\n.DS_Store\napps/web/dist\napps/desktop/dist\napps/desktop/out\napps/desktop/e2e/screenshots\napps/mobile/.expo\napps/mobile/dist\napps/mobile/android\napps/mobile/ios\npackages/db/src/generated\ninfra/sandboxes/supervisor/dist\n*.log\n.vercel\n.cache\nartifacts\nbackups\ntest-report\nverify-report\n.astro\n.deploy.lock\n.last-deployed-revision\ndesign/\nPRODUCT_PLAN.md\n\n# Lingui compiled catalogs \u2014 Vite plugin compiles .po at build time\napps/web/src/locales/**/*.mjs\napps/web/src/locales/**/*.js\napps/web/scripts/msgids.json\nplaywright-report-www\n\n# Wuying Web SDK vendor files; fetch with node scripts/wuying-web-sdk.mjs\napps/web/public/wuying/WuyingWebSDK.js\napps/web/public/wuying/sdk/\n=== pnpm-workspace ===\npackages:\n  - \"apps/*\"\n  - \"packages/*\"\n  - \"infra/sandboxes/supervisor\"\n  - \"infra/updater\"\n=== patches ===\napp-builder-lib@26.15.3.patch  dockerode@5.0.1.patch\n=== RAKAZO_ env vars in .env.example ===\n40:# RAKAZO_CSP_SCRIPT_SRC=https://static.example.com\n41:# RAKAZO_CSP_CONNECT_SRC=https://beacon.example.com\n44:# RAKAZO_MIN_CLIENT_BUILD=web=20261022093015,mobile=20261001000000\n93:RAKAZO_COMPUTER_MEMORY=\n94:RAKAZO_COMPUTER_CPUS=\n95:RAKAZO_COMPUTER_PIDS_LIMIT=\n173:# RAKAZO_NAV_LINKS='[{\"id\":\"clients\",\"label\":\"Clients\",\"path\":\"/ext/clients/\"}]'\n175:# RAKAZO_ADMIN_EMAILS=admin@example.com\n203:# RAKAZO_MESSAGE_USER_MAX_CHARS=500\n216:RAKAZO_LOCAL_VISION_MODELS=\n217:RAKAZO_OPENAI_COMPATIBLE_VISION_MODELS=\n264:# RAKAZO_AUTO_REVIEW_PROVIDER=openrouter\n265:# RAKAZO_AUTO_REVIEW_MODEL=typesafe/jev-1.14\n267:# RAKAZO_AUTO_REVIEW_PROVIDER=jev\n271:# RAKAZO_AUTO_REVIEW_MODEL=jev-latest\n272:# RAKAZO_AUTO_REVIEW_MIN_CONFIDENCE=0.5\n277:RAKAZO_LOCAL_MODELS=\n278:RAKAZO_LOCAL_MODELS_URL=http://127.0.0.1:11434/v1\n279:RAKAZO_LOCAL_CONTEXT_WINDOW=32768\n280:RAKAZO_LOCAL_MAX_TOKENS=4096\n282:RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC=\n285:RAKAZO_OPENAI_COMPAT_PRIVATE_HOSTS=\n288:RAKAZO_SECRETS_ALLOW_PRIVATE_HTTP=\n293:# RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC=0. Its connection details are entered in the UI.\n341:# Alias SLACK_RAKAZO_BOT_ID is accepted for older configs.\n419:# Linux override: RAKAZO_DEPLOY_DIR=/opt/rakazo\n421:#   RAKAZO_DEPLOY_DIR=/run/desktop/mnt/host/c/Users/you/rakazo\n422:RAKAZO_DEPLOY_DIR=\n425:#   RAKAZO_COMPOSE_FILE=infra/compose/docker-compose.prod.yml:ops/compose/overlay.yml\n428:#   RAKAZO_COMPOSE_FILE=infra/compose/docker-compose.prod.yml:infra/compose/docker-compose.prod.docker.yml\n429:RAKAZO_COMPOSE_FILE=\n433:#   RAKAZO_UPDATE_SERVICES=supervisor\n434:RAKAZO_UPDATE_SERVICES=\n436:RAKAZO_IMAGE=ghcr.io/elie222/rakazo/app\n437:RAKAZO_IMAGE_TAG=local\n438:RAKAZO_IMAGE_TAG_PREVIOUS=\n439:RAKAZO_UPDATER_IMAGE=ghcr.io/elie222/rakazo/updater\n440:RAKAZO_UPDATER_IMAGE_TAG=local\n443:RAKAZO_API_MEMORY_LIMIT=\n444:RAKAZO_WORKER_MEMORY_LIMIT=\n449:RAKAZO_UPDATER_TOKEN=\n=== RAKAZO in code ===\npackages/adapters/src/auto-review.ts:55:  return (env.RAKAZO_LOCAL_MODELS ?? \"\")\npackages/adapters/src/auto-review.ts:62:  const raw = env.RAKAZO_AUTO_REVIEW_TIMEOUT_MS?.trim();\npackages/adapters/src/auto-review.ts:76:  const raw = env.RAKAZO_AUTO_REVIEW_MIN_CONFIDENCE?.trim();\npackages/adapters/src/auto-review.ts:89: * `RAKAZO_AUTO_REVIEW_PROVIDER=jev` selects TypeSafe Jev when a key is present;\npackages/adapters/src/auto-review.ts:96:  const requested = env.RAKAZO_AUTO_REVIEW_PROVIDER?.trim().toLowerCase();\npackages/adapters/src/auto-review.ts:113:      model: env.RAKAZO_AUTO_REVIEW_MODEL?.trim() || DEFAULT_JEV_MODEL,\npackages/adapters/src/auto-review.ts:120:  const overrideProvider = env.RAKAZO_AUTO_REVIEW_PROVIDER?.trim();\npackages/adapters/src/auto-review.ts:121:  const overrideModel = env.RAKAZO_AUTO_REVIEW_MODEL?.trim();\npackages/adapters/src/pi-live-cache.ts:3:  return source.RAKAZO_LIVE_MODEL_CATALOG?.trim().toLowerCase() !== \"off\";\npackages/adapters/src/bot-secrets.ts:121:  return process.env.RAKAZO_SECRETS_ALLOW_PRIVATE_HTTP === \"1\";\npackages/adapters/src/linux-desktop.ts:95:    const match = output.match(/RAKAZO_DESKTOP=(\\d+):([a-zA-Z0-9_-]+)/);\npackages/adapters/src/linux-desktop.ts:247:    if (result.stdout.includes(\"RAKAZO_DESKTOP_RELEASED=\")) {\npackages/adapters/src/linux-desktop.ts:359:    \"done <<RAKAZO_WINDOWS\",\npackages/adapters/src/linux-desktop.ts:361:    \"RAKAZO_WINDOWS\",\npackages/adapters/src/openai-compatible-url.test.ts:13:const savedAllowPublic = process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC;\npackages/adapters/src/openai-compatible-url.test.ts:14:const savedPrivateHosts = process.env.RAKAZO_OPENAI_COMPAT_PRIVATE_HOSTS;\npackages/adapters/src/openai-compatible-url.test.ts:17:  if (savedAllowPublic === undefined) delete process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC;\npackages/adapters/src/openai-compatible-url.test.ts:18:  else process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC = savedAllowPublic;\npackages/adapters/src/openai-compatible-url.test.ts:19:  if (savedPrivateHosts === undefined) delete process.env.RAKAZO_OPENAI_COMPAT_PRIVATE_HOSTS;\npackages/adapters/src/openai-compatible-url.test.ts:20:  else process.env.RAKAZO_OPENAI_COMPAT_PRIVATE_HOSTS = savedPrivateHosts;"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && echo \"=== .gitignore ===\"; cat .gitignore; echo \"=== pnpm-workspace ===\"; cat pnpm-workspace.yaml; echo \"=== patches ===\"; ls patches/; echo \"=== RAKAZO_ env vars in .env.example ===\"; grep -nE 'RAKAZO' .env.example; echo \"=== RAKAZO in code ===\"; grep -rn 'RAKAZO_' --include=*.ts --include=*.tsx packages apps | head -20",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "18c45081-9a5b-41d5-8dcf-b1b1fdd16352",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

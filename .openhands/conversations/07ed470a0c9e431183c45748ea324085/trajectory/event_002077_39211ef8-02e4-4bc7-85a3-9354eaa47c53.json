@@ -1,0 +1,36 @@
+{
+  "id": "39211ef8-02e4-4bc7-85a3-9354eaa47c53",
+  "timestamp": "2026-10-31T11:09:52.434160",
+  "source": "environment",
+  "parent_id": "55889adb-ad60-44b9-b708-6961a78bcac9",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-80a77a4c52018bc3",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "try {\n              const backup = await resolveConnectedModelKey(\n                deps,\n                run,\n                choice.provider,\n                choice.modelId,\n                (values) => runSecrets.push(...values),\n                true,\n                choice.credentialId,\n              );\n              getLogger().warn(\"model.primary_unavailable.backup_used\", {\n                runId,\n                \"model.provider\": choice.provider,\n                \"model.id\": choice.modelId,\n              });\n              return {\n                provider: choice.provider,\n                id: choice.modelId,\n                credential: backup.credential,\n                thinkingLevel: (choice.thinkingLevel ??\n                  null) as AgentRunRequest[\"model\"][\"thinkingLevel\"],\n                resolved: backup.resolved,\n              };\n            } catch {\n              // Resolver errors can carry credential details, so only the outcome is kept.\n              backupsUnavailable.add(choice);\n            }\n          }\n          return undefined;\n        };\n        let start: Awaited<ReturnType<typeof startOnBackup>>;\n        let primaryFailure = { message: MISSING_MODEL_RUN_ERROR, accountFailure: true };\n        let retryPrimary: unknown;\n        if (selectedProvider && selectedModelId) {\n          try {\n            start = {\n              provider: selectedProvider,\n              id: selectedModelId,\n              credential: selected.credential,\n              thinkingLevel: selected.thinkingLevel,\n              resolved: await resolveModelKey(\n                deps,\n                run.userId,\n                run.spaceId,\n                selected.credential,\n                selectedProvider,\n                selectedModelId,\n                (values) => runSecrets.push(...values),\n              ),\n            };\n          } catch (error) {"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '790,840p' packages/adapters/src/executor.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "5da1743b-bce9-4f86-93a2-aea2f8240a80",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "67086606-dffa-48ac-b90f-b38b956ff02e",
+  "timestamp": "2026-10-31T10:58:32.546581",
+  "source": "environment",
+  "parent_id": "3c333720-ccbd-4193-aa9a-bb6e1a867d6c",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-a72913158bee02c1",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "apps/api/src/billing.ts:50:  readonly modelCreditsEnabled: boolean;\napps/api/src/billing.ts:270:    modelCreditsEnabled: modelCredits,\napps/api/src/app.ts:441:  const modelCreditsEnabled = false;\napps/api/src/app.ts:446:      modelCreditsEnabled,\napps/api/src/app.ts:448:    update: { modelCreditsEnabled },\napps/api/src/team-chat-judge.ts:242:        (settings?.modelCreditsEnabled &&\napps/api/src/team-chat-judge.ts:256:      settings?.modelCreditsEnabled &&\napps/api/src/team-chat-judge.ts:261:      const callObserver = settings?.modelCreditsEnabled\napps/api/src/routes/shared.ts:92:      (deps.billing?.modelCreditsEnabled &&"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -rn --include=*.ts --include=*.tsx --exclude-dir=node_modules --exclude-dir=generated 'modelCreditsEnabled' apps packages 2>/dev/null | grep -v '\\.test\\.'",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "5ef443e6-a28d-4976-a939-5a7c36ce2d11",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

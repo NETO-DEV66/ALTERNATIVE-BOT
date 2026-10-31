@@ -1,0 +1,36 @@
+{
+  "id": "e0d953d1-b3b4-4f35-9277-23f3a72f57ce",
+  "timestamp": "2026-10-31T12:27:06.011482",
+  "source": "environment",
+  "parent_id": "4db2294c-37b8-44b8-959d-c0c9685f8cb5",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-94a61920fd6db933",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "spaceModelRoleChoice,\n    spaceSettingOverride,\n    $queryRaw: vi.fn().mockResolvedValue([{ locked: 1 }]),\n  };\n  const prisma = {\n    deploymentSettings: { findUnique: vi.fn(async () => null), findFirst: vi.fn(async () => null) },\n    // Saved choices that keep a model listed after new users stop being offered it.\n    bot: { findMany: vi.fn(async () => []) },\n    routine: { findMany: vi.fn(async () => []) },\n    space: {\n      findFirst: vi.fn(async () => ({ organization: { modelCredits: { mode: \"credits\" } } })),\n    },\n    userModelRoleChoice,\n    spaceModelRoleChoice,\n    spaceSettingOverride,\n    userModelCredential: {\n      findMany: vi.fn(async ({ where }: { where: { userId: string; provider?: string } }) =>\n        !options.credits &&\n        where.userId === owner.userId &&\n        (!where.provider || where.provider === credential.provider)\n          ? [credential]\n          : [],\n      ),\n      findFirst: vi.fn(async ({ where }: { where: { id?: string; userId: string } }) =>\n        !options.credits && where.userId === owner.userId && where.id === credential.id\n          ? { ...credential, userPreferences: [] }\n          : null,\n      ),\n    },\n    userModelPreference: {\n      findMany: vi.fn().mockResolvedValue(\n        options.compatible\n          ? [\n              {\n                modelId: options.compatible.defaultModel,\n                thinkingLevel: null,\n                updatedAt: new Date(0),\n                credential,\n              },\n            ]\n          : [],\n      ),\n      findFirst: vi.fn().mockResolvedValue(null),\n      upsert: vi.fn(),\n      updateMany: vi.fn(),\n    },\n    secret: {\n      findMany: vi.fn().mockResolvedValue([{ id: \"secret-one\", ciphertext: \"fixture-ciphertext\" }]),\n      findFirst: vi.fn().mockResolvedValue({ id: \"secret-one\", ciphertext: \"fixture-ciphertext\" }),\n    },\n    $transaction: vi.fn(async (work: (client: typeof tx) => Promise<unknown>) => work(tx)),\n  } as unknown as PrismaClient;\n  Object.assign(tx, {\n    userModelPreference: prisma.userModelPreference,\n    userModelCredential: prisma.userModelCredential,\n  });\n  const deps = {\n    billing: options.credits ? { modelCreditsEnabled: true } : undefined,\n    prisma,\n    secrets: {\n      // A fixture ciphertext that is already a stored secret decrypts to itself.\n      load: vi.fn((ciphertext: string) =>\n        ciphertext.startsWith(\"{\")\n          ? ciphertext\n          : options.compatible\n            ? serializeModelSecret({"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '95,160p' apps/api/src/models-backups.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 65061,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "8663b761-6f47-45f7-b4f1-2deab13e882c",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

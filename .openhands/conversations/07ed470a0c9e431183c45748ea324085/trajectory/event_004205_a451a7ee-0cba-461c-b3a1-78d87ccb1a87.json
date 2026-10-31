@@ -1,0 +1,37 @@
+{
+  "id": "a451a7ee-0cba-461c-b3a1-78d87ccb1a87",
+  "timestamp": "2026-10-31T12:10:52.373758",
+  "source": "agent",
+  "parent_id": "4928fa02-6895-4c6b-a96e-09ffa4b86d12",
+  "thought": [
+    {
+      "cache_prompt": false,
+      "type": "text",
+      "text": ""
+    }
+  ],
+  "reasoning_content": "Now let me fix the model-selection.test.ts \"keeps a saved personal connection in the catalog\" test. The problem: the storedCredential helper hardcodes provider \"openai-codex\", but the test expects `auth.byProvider.openrouter` to be \"api_key\". In baseline, the test passed `\"openrouter\"` as the hostedProvider argument, which added `byProvider.openrouter = \"api_key\"`. Now that hosted logic is removed, the credential provider is \"openai-codex\" so openrouter isn't connected.\n\nThe test's intent now: \"keeps a saved personal connection in the catalog\" - the credential is an openai-codex credential, so it should assert `auth.byProvider[\"openai-codex\"]` is set. Let me look at the test again.\n\n```js\nit(\"keeps a saved personal connection in the catalog\", async () => {\n    vi.stubEnv(\"PI_DEFAULT_PROVIDER\", \"openrouter\");\n    vi.stubEnv(\"OPENROUTER_API_KEY\", \"fixture-deployment-key\");\n    try {\n      const { prisma } = authPrisma({\n        credentials: [storedCredential(\"cred-oauth\", \"secret-oauth\", \"2026-01-01T00:00:00.000Z\")],\n        preferences: [],\n        secrets: [{ id: \"secret-oauth\", ciphertext: \"cipher-oauth\" }],\n      });\n      const auth = await modelCredentialAuthKindsForSpace(\n        prisma,\n        { load: vi.fn().mockResolvedValue(oauth) },\n        scope,\n      );\n      expect(auth.byProvider.openrouter).toBe(\"api_key\");\n      expect(auth.byProvider[\"openai-codex\"]).toBe(\"oauth\");\n    } finally {\n```\n\nBaseline (git show HEAD): let me check. The credential helper is `storedCredential` which sets provider \"openai-codex\". In baseline the test had:\n```\nexpect(auth.managedProvider).toBe(\"openrouter\");\nexpect(auth.byProvider.openrouter).toBe(\"api_key\");\nexpect(auth.byProvider[\"openai-codex\"]).toBe(\"oauth\");\n```\nSo `byProvider.openrouter` came from the hosted provider injection (managedProvider). Now that's removed, the openrouter assertion no longer holds. The remaining meaningful assertion is `byProvider[\"openai-codex\"]` toBe \"oauth\". So I should remove the openrouter line. Actually the test title \"keeps a saved personal connection in the catalog\" \u2014 the saved connection is openai-codex. Let me just remove the openrouter assertion.\n\nWait, but is that the right behavior? The prior session modified this test incorrectly. Let me fix by removing the openrouter assertion since hosted injection is gone.\n\nLet me check the baseline test to be precise.",
+  "thinking_blocks": [],
+  "responses_reasoning_item": null,
+  "action": {
+    "command": "cd /workspace/project && git --no-pager show HEAD:packages/adapters/src/model-selection.test.ts | sed -n '255,300p'",
+    "is_input": false,
+    "timeout": null,
+    "reset": false,
+    "kind": "TerminalAction"
+  },
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-a0a206588d70a8e9",
+  "tool_call": {
+    "id": "chatcmpl-tool-a0a206588d70a8e9",
+    "responses_item_id": null,
+    "name": "terminal",
+    "arguments": "{\"command\": \"cd /workspace/project && git --no-pager show HEAD:packages/adapters/src/model-selection.test.ts | sed -n '255,300p'\", \"security_risk\": \"LOW\", \"summary\": \"Read baseline model-selection test case\"}",
+    "origin": "completion"
+  },
+  "llm_response_id": "gen-1793448648-SD5vMpH2aRQY4sE8mUwP",
+  "security_risk": "LOW",
+  "critic_result": null,
+  "summary": "Read baseline model-selection test case",
+  "kind": "ActionEvent"
+}

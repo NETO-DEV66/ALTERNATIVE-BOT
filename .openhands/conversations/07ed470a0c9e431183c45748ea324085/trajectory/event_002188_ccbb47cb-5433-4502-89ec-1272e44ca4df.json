@@ -1,0 +1,34 @@
+{
+  "id": "ccbb47cb-5433-4502-89ec-1272e44ca4df",
+  "timestamp": "2026-10-31T11:13:46.316265",
+  "source": "agent",
+  "parent_id": "757ef154-d9c5-4f3d-a692-12f0db722e94",
+  "thought": [],
+  "reasoning_content": null,
+  "thinking_blocks": [],
+  "responses_reasoning_item": null,
+  "action": {
+    "command": "str_replace",
+    "path": "/workspace/project/packages/adapters/src/executor.ts",
+    "file_text": null,
+    "old_str": "        let start: Awaited<ReturnType<typeof startOnBackup>>;",
+    "new_str": "        // A model with no connection of its own runs on the deployment's key, so `credential`\n        // stays null in that case.\n        let start:\n          | {\n              provider: string;\n              id: string;\n              credential: ModelCredential;\n              thinkingLevel: AgentRunRequest[\"model\"][\"thinkingLevel\"];\n              resolved: Awaited<ReturnType<typeof resolveModelKey>>;\n            }\n          | undefined;",
+    "insert_line": null,
+    "view_range": null,
+    "kind": "FileEditorAction"
+  },
+  "tool_name": "file_editor",
+  "tool_call_id": "chatcmpl-tool-a4a643e18030377f",
+  "tool_call": {
+    "id": "chatcmpl-tool-a4a643e18030377f",
+    "responses_item_id": null,
+    "name": "file_editor",
+    "arguments": "{\"command\": \"str_replace\", \"new_str\": \"        // A model with no connection of its own runs on the deployment's key, so `credential`\\n        // stays null in that case.\\n        let start:\\n          | {\\n              provider: string;\\n              id: string;\\n              credential: ModelCredential;\\n              thinkingLevel: AgentRunRequest[\\\"model\\\"][\\\"thinkingLevel\\\"];\\n              resolved: Awaited<ReturnType<typeof resolveModelKey>>;\\n            }\\n          | undefined;\", \"old_str\": \"        let start: Awaited<ReturnType<typeof startOnBackup>>;\", \"path\": \"/workspace/project/packages/adapters/src/executor.ts\"}",
+    "origin": "completion"
+  },
+  "llm_response_id": "gen-1793445197-INAKYqaPpAma7ZOkWlTk",
+  "security_risk": "UNKNOWN",
+  "critic_result": null,
+  "summary": "file_editor: {\"command\": \"str_replace\", \"new_str\": \"        // A model with no connection of its own runs on the deployment's key, so `credential`\\n        // stays null in that case.\\n        let start:\\n          | {\\n              provider: string;\\n              id: string;\\n              credential: ModelCredential;\\n              thinkingLevel: AgentRunRequest[\\\"model\\\"][\\\"thinkingLevel\\\"];\\n              resolved: Awaited<ReturnType<typeof resolveModelKey>>;\\n            }\\n          | undefined;\", \"old_str\": \"        let start: Awaited<ReturnType<typeof startOnBackup>>;\", \"path\": \"/workspace/project/packages/adapters/src/executor.ts\"}",
+  "kind": "ActionEvent"
+}

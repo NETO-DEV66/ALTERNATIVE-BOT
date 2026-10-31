@@ -1,0 +1,36 @@
+{
+  "id": "5c1c34e0-1e97-4dff-9314-5618f346e91a",
+  "timestamp": "2026-10-31T13:13:42.422372",
+  "source": "environment",
+  "parent_id": "2b562f9c-c808-41ef-8f20-10053a72fc6f",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-84347135ec6cdfa8",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== refs to deleted blog post ===\napps/www/src/grok-alternative.ts:175:  \"Hosted assistants and open source agents are both on the [alternatives roundup](/alternatives/). [OpenClaw vs Hermes Agent vs Alternative Bot](/blog/openclaw-vs-hermes-vs-alternativebot/) compares the three you run yourself, and [best open source AI agents in 2026](/blog/best-open-source-ai-agents-2026/) includes libraries as well as apps.\";\napps/www/src/content/blog/best-open-source-ai-agents-2026.md:27:  - href: \"/blog/openclaw-vs-hermes-vs-alternativebot/\"\napps/www/src/content/blog/best-open-source-ai-agents-2026.md:130:OpenClaw fits when the assistant should show up in chat apps you already use, and you want one gateway on hardware you run. It is a different product from a teammate UI. The [three-way note](/blog/openclaw-vs-hermes-vs-alternativebot/) compares that setup with Alternative Bot and Hermes without turning it into a race.\napps/www/src/content/blog/self-host-an-ai-agent.md:26:  - href: \"/blog/openclaw-vs-hermes-vs-alternativebot/\"\napps/www/src/content/blog/self-host-an-ai-agent.md:185:OpenClaw and Hermes Agent are also open source and can run on hardware you control. Their install docs describe a gateway or a desktop app and a CLI, plus config files under a home directory. Alternative Bot's published-image path is the script above, then chat. The [comparison of those three](/blog/openclaw-vs-hermes-vs-alternativebot/) is about that difference in shape, not a race.\napps/www/src/og-pages.ts:23:    id: \"blog-openclaw-vs-hermes-vs-alternativebot\",\n=== blog content dir ===\nbest-open-source-ai-agents-2026.md  claude-duet-vs-grok-bot.md  openclaw-vs-hermes-vs-alternativebot.md  self-host-an-ai-agent.md\n=== any rakazo in filenames anywhere ==="
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && echo \"=== refs to deleted blog post ===\"; grep -rniE 'openclaw-vs-hermes|hermes-vs|rakazo' apps/www/src apps/www/public --include=*.ts --include=*.tsx --include=*.json --include=*.md --include=*.astro 2>/dev/null | head; echo \"=== blog content dir ===\"; ls apps/www/src/content/blog/ 2>/dev/null; echo \"=== any rakazo in filenames anywhere ===\"; find . -path ./node_modules -prune -o -iname '*rakazo*' -print 2>/dev/null | grep -v node_modules | head",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": -1,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-5ddfbc867f-s4kjx",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "826f2dc2-1c67-46dd-86c9-036193ba0db0",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

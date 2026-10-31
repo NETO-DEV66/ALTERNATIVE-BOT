@@ -1,0 +1,36 @@
+{
+  "id": "a714dc3b-175e-4135-89bb-e28af4364f85",
+  "timestamp": "2026-10-31T12:32:29.308967",
+  "source": "environment",
+  "parent_id": "60083157-2a10-4cd5-9239-a85456b40d1b",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8c935cb032c4c7b9",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "apps/api/src/ai-consent.ts:118:    const deployment = deps.env.deploymentModelConfigured\napps/api/src/app.ts:416:      deploymentModelConfigured: env.deploymentModelConfigured,\napps/api/src/app.ts:594:      env.deploymentModelKey ?? \"\",\napps/api/src/app.ts:602:    deploymentModelKey: env.deploymentModelKey,\napps/api/src/app.ts:603:    deploymentModelConfigured: env.deploymentModelConfigured,\napps/api/src/app.ts:634:    deploymentModelKey: env.deploymentModelKey,\napps/api/src/app.ts:635:    deploymentModelConfigured: env.deploymentModelConfigured,\napps/api/src/app.ts:727:      deploymentModelConfigured: env.deploymentModelConfigured,\napps/api/src/app.ts:728:      deploymentModelHostCredentials: env.deploymentModelHostCredentials,\napps/api/src/app.ts:1056:              deploymentModel: env.defaultModel,\napps/api/src/app.ts:1057:              deploymentModelKey: env.deploymentModelKey,\napps/api/src/app.ts:1067:              deploymentModel: env.defaultModel,\napps/api/src/app.ts:1068:              deploymentModelKey: env.deploymentModelKey,\napps/api/src/diagnostics.ts:49:    | \"deploymentModelConfigured\"\napps/api/src/diagnostics.ts:86:    `- Deployment model configured: ${onOff(env.deploymentModelConfigured)}`,\napps/api/src/env.ts:81:  deploymentModelKey: string | undefined;\napps/api/src/env.ts:83:  deploymentModelConfigured: boolean;\napps/api/src/env.ts:85:  deploymentModelHostCredentials: boolean;\napps/api/src/env.ts:203:  const deploymentModel = resolveDeploymentModel(source);\napps/api/src/env.ts:249:    deploymentModelKey: deploymentModel.key,\napps/api/src/env.ts:250:    deploymentModelConfigured: deploymentModel.configured,\napps/api/src/env.ts:251:    deploymentModelHostCredentials: deploymentModel.hostCredentials,\napps/api/src/env.ts:299:    defaultProvider: deploymentModel.provider,\napps/api/src/env.ts:300:    defaultModel: deploymentModel.model,\napps/api/src/router.ts:121:    deploymentModelConfigured?: boolean;\napps/api/src/router.ts:122:    deploymentModelHostCredentials?: boolean;\napps/api/src/team-chat-judge.ts:4:  deploymentModelRole,\napps/api/src/team-chat-judge.ts:115:  deploymentModel: string;\napps/api/src/team-chat-judge.ts:116:  deploymentModelKey?: string;\napps/api/src/team-chat-judge.ts:238:    const fallback = deploymentModelRole(\"main\", {"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -rn 'deploymentModelConfigured\\|deploymentModelRole\\|deploymentModel' apps/api/src/*.ts packages/adapters/src/*.ts packages/contracts/src/*.ts | grep -v test | head -30",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 65061,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "6269835e-2af9-4ae6-8883-8c09e097a67c",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

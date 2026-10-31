@@ -1,0 +1,36 @@
+{
+  "id": "48d8d579-e662-437c-803f-244cad309971",
+  "timestamp": "2026-10-31T13:19:07.716088",
+  "source": "environment",
+  "parent_id": "8cb3f9c2-1db3-4cb9-8e02-f41b3a3a0790",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-82f84f6f9ad9cee6",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "238|   });\n\nCaused by: Error: Lingui: Attempted to call a translation function without setting a locale.\nMake sure to call `i18n.activate(locale)` before using Lingui functions.\nThis issue may also occur due to a race condition in your initialization logic.\n \u276f I18n._ ../../node_modules/.pnpm/@lingui+core@6.6.0_@babel+core@7.29.7_@babel+types@7.29.8/node_modules/@lingui/core/dist/index.mjs:315:13\n \u276f identityLabels src/lib/identity-display.ts:6:8\n \u276f src/lib/bootstrap.ts:74:62\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af[5/5]\u23af\n\n\n Test Files  1 failed (1)\n      Tests  5 failed | 8 passed (13)\n   Start at  13:19:04\n   Duration  2.51s (transform 1.59s, setup 0ms, import 134ms, tests 2.25s, environment 0ms)\n\nundefined\n/workspace/project/apps/web:\n\u2009ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL\u2009 Command failed with exit code 1: vitest run src/lib/bootstrap.test.ts"
+      }
+    ],
+    "is_error": false,
+    "command": "export PATH=\"/usr/local/lib/node_modules/corepack/shims:$PATH\"; cd /workspace/project && pnpm --filter @alternativebot/web exec vitest run src/lib/bootstrap.test.ts 2>&1 | tail -20",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": -1,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-5ddfbc867f-s4kjx",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "3c8dd168-f768-4b72-bf8b-0a817802f6c4",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

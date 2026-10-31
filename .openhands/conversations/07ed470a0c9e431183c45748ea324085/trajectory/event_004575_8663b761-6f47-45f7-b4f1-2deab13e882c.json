@@ -1,0 +1,37 @@
+{
+  "id": "8663b761-6f47-45f7-b4f1-2deab13e882c",
+  "timestamp": "2026-10-31T12:27:05.822710",
+  "source": "agent",
+  "parent_id": "0eae3482-ac2d-4601-87e6-1dc157bc6ff9",
+  "thought": [
+    {
+      "cache_prompt": false,
+      "type": "text",
+      "text": ""
+    }
+  ],
+  "reasoning_content": "The only test asserting on the `managed` catalog flag is models-backups.test.ts:727. That test is named \"lets a deployment-managed model lead the main model like any other purpose\". So this IS a real feature: deployment-managed models (deployment has an API key) should appear in the catalog with `managed: true` and be selectable as main.\n\nThis is NOT billing. The `managed` flag = \"runs on the deployment's own key\". This is the self-host feature: a self-hosted deployment configures `OPENROUTER_API_KEY`, and then all users can pick those models without connecting their own account.\n\nThe previous session removed this because `hostedProvider` was gated on `deps.billing?.modelCreditsEnabled` in baseline. But actually \u2014 wait, in baseline it was ALSO gated on billing. Let me re-read:\n\n```js\nhostedProvider: deps.billing?.modelCreditsEnabled ? deps.env.defaultProvider : undefined,\n```\n\nSo in baseline, deployment-managed models were only offered when `billing.modelCreditsEnabled` was true (the hosted SaaS). That means for self-hosters, managed models weren't offered anyway. Hmm, but then the \"deploymentModelConfigured\" / `withDeploymentDefault` logic handles self-host fallback separately.\n\nSo the `managed` catalog flag was purely a hosted-billing concept: \"this model runs on Rakazo's credits\". Removing it is consistent with de-monetization.\n\nBUT the test models-backups.test.ts:727 asserts it. The test is titled \"lets a deployment-managed model lead the main model like any other purpose\". This test was clearly not updated by the previous session. The question: should we delete this test, or restore the managed behavior?\n\nGiven the requirement is to remove the premium/subscription system, and `managed` was gated on `modelCreditsEnabled` (a billing flag), the correct action is to remove this test (it tests removed billing behavior). \n\nHmm, but wait. Let me reconsider. Is `managed` purely billing? The test name says \"deployment-managed model\". In the code, `managed: true` marks models whose provider === auth.managedProvider, which is set when `hasHostedModelCredits` returns true (org's modelCredits.mode === \"credits\"). So yes, `managed` = funded by the org's credits = billing. Remove the test.\n\nBut careful: maybe the intent after de-monetization is that deployment-managed models (deployment key) are ALWAYS offered. That would be a bigger design change. The prior session chose to remove the whole `managedProvider` machinery. Since we're told to remove the premium system, removing is right. But then the test must be removed too, since it tests removed behavior.\n\nActually, hold on \u2014 let me reconsider whether removing `managed` entirely is correct, or whether we should keep a non-billing notion of \"deployment-managed\". The task says remove premium/subscription/payment. The `managed` flag's *only* trigger was `hasHostedModelCredits` (billing). So there's no non-billing trigger left. Removing is correct.\n\nBut then there's `validateRoleChoices` which still references `\"managed\" in entry && entry.managed`. Since no entry will ever have `managed: true` now, that's dead but harmless (it's a type-level check). Actually it's not dead \u2014 `entry.managed` is optional. It's fine to leave, but cleaner to remove. However the type `ModelCatalogEntry` may still declare `managed?: boolean`. Let me check contracts.\n\nLet me decide the scope. The failing test models-backups.test.ts:727 must be addressed. Options:\n(a) Delete the test (it tests removed billing behavior).\n(b) Restore managed-model support in a non-billing form.\n\nGiven the requirement, (a) is aligned with de-monetization... but wait. Actually let me reconsider. Deployment-managed models ARE a real self-host feature independent of billing. Let me look at `deploymentModelConfigured`, `resolveDeploymentModel` \u2014 a deployment with OPENROUTER_API_KEY set. In baseline, was that exposed to users in the catalog?\n\nLet me check the baseline `withDeploymentDefault` and how the catalog showed deployment models for self-host. Actually the `managed` flag came only from billing. So self-hosters used their own credentials. Hmm.\n\nI think the safest, most-aligned action: since the test explicitly asserts billing-gated behavior that we intentionally removed, remove/rewrite the test. But I should be careful \u2014 the user's task is a rebrand+de-monetize, and tests that assert removed behavior should be deleted. The previous session's summary didn't mention models-backups.test.ts:727. Let me look at whether this test is genuinely billing.\n\nLet me look at the full test and the setup `credits: true`.",
+  "thinking_blocks": [],
+  "responses_reasoning_item": null,
+  "action": {
+    "command": "cd /workspace/project && sed -n '95,160p' apps/api/src/models-backups.test.ts",
+    "is_input": false,
+    "timeout": null,
+    "reset": false,
+    "kind": "TerminalAction"
+  },
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-94a61920fd6db933",
+  "tool_call": {
+    "id": "chatcmpl-tool-94a61920fd6db933",
+    "responses_item_id": null,
+    "name": "terminal",
+    "arguments": "{\"command\": \"cd /workspace/project && sed -n '95,160p' apps/api/src/models-backups.test.ts\", \"security_risk\": \"LOW\", \"summary\": \"Read models-backups setup\"}",
+    "origin": "completion"
+  },
+  "llm_response_id": "gen-1793449616-gG4aIo7A1WtDUc1dKVnR",
+  "security_risk": "LOW",
+  "critic_result": null,
+  "summary": "Read models-backups setup",
+  "kind": "ActionEvent"
+}

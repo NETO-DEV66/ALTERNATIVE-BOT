@@ -1,0 +1,36 @@
+{
+  "id": "b2d04c8b-0b02-431e-8468-d1047f68dd1c",
+  "timestamp": "2026-10-31T11:08:31.480300",
+  "source": "environment",
+  "parent_id": "cd82cbe6-1c9d-4b6e-93c6-c594ddbf07c2",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b62b93b4380fa03f",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "apps/api/src/onboarding.ts:261:  const providers = deps.connectors.managedProviders();\napps/api/src/routes/context.ts:174:            entry.provider === auth.managedProvider) &&\napps/api/src/routes/context.ts:180:      entry.provider === auth.managedProvider\napps/api/src/routes/context.ts:214:    const managedProviders = new Set(\napps/api/src/routes/context.ts:221:        ...decisions.map((entry) => ({ ...entry, managed: managedProviders.has(entry.provider) })),\napps/api/src/routes/connections.ts:219:          : deps.connectors.managedProviders();\npackages/adapters/src/executor-deps.ts:40:    managedProviders?(): ManagedConnectorProvider[];\npackages/adapters/src/run-tools-integrations.ts:99:        deps.connectors?.managedProviders?.() ?? [],\npackages/adapters/src/composio-connector.ts:839:  managedProviders(): ManagedConnectorProvider[] {\npackages/adapters/src/model-selection.ts:118:  managedProvider?: string;\npackages/adapters/src/model-selection.ts:221:    managedProvider: undefined,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -rn 'managedProvider' apps packages --include=*.ts --include=*.tsx | grep -v node_modules | grep -v '\\.test\\.'",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "8b10e2e1-c65f-42b8-b8f0-7a1b360bcbaa",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

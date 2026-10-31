@@ -1,0 +1,36 @@
+{
+  "id": "3ae7c94a-63cb-492e-90e0-202531d4d579",
+  "timestamp": "2026-10-31T11:47:11.744483",
+  "source": "environment",
+  "parent_id": "d750e424-5b59-4402-a13a-b3482033921a",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b34e4135e81f5e1a",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "it(\"translates seeded Chinese chrome and keeps interpolations\", async () => {\n    const { resetI18nForTests, t } = await import(\"./i18n\");\n    resetI18nForTests(\"zh-CN\");\n    expect(t(\"Account\")).toBe(\"\u8d26\u6237\");\n    expect(t(\"Sign in to Alternative Bot\")).toBe(\"\u767b\u5f55 Alternative Bot\");\n    expect(t(\"New bot\")).toBe(\"\u65b0\u5efa Bot\");\n    expect(t(\"{runs} runs, {tokens} tokens\", { runs: 3, tokens: 12 })).toBe(\n      \"3 \u6b21\u8fd0\u884c\uff0c12 \u4e2a token\",\n    );\n    expect(t(\"Delete {name}?\", { name: \"Scout\" })).toBe(\"\u8981\u5220\u9664 Scout \u5417\uff1f\");\n\n    resetI18nForTests(\"ru\");\n    expect(t(\"Account\")).toBe(\"\u0410\u043a\u043a\u0430\u0443\u043d\u0442\");\n    expect(t(\"Sign in to Alternative Bot\")).toBe(\"\u0412\u043e\u0439\u0442\u0438 \u0432 Alternative Bot\");\n    expect(t(\"New bot\")).toBe(\"\u041d\u043e\u0432\u044b\u0439 \u0431\u043e\u0442\");\n    expect(t(\"{runs} runs, {tokens} tokens\", { runs: 3, tokens: 12 })).toBe(\n      \"\u0417\u0430\u043f\u0443\u0441\u043a\u043e\u0432: 3, \u0442\u043e\u043a\u0435\u043d\u043e\u0432: 12\",\n    );\n    expect(t(\"Delete {name}?\", { name: \"Scout\" })).toBe(\"\u0423\u0434\u0430\u043b\u0438\u0442\u044c Scout?\");\n\n    resetI18nForTests(\"nl\");\n    expect(t(\"Account\")).toBe(\"Account\");\n    expect(t(\"Sign in to Alternative Bot\")).toBe(\"Aanmelden bij Alternative Bot\");\n    expect(t(\"New bot\")).toBe(\"Nieuwe bot\");\n    expect(t(\"{runs} runs, {tokens} tokens\", { runs: 3, tokens: 12 })).toBe(\n      \"3 uitvoeringen, 12 tokens\",\n    );\n    expect(t(\"Delete {name}?\", { name: \"Scout\" })).toBe(\"Scout verwijderen?\");\n\n    resetI18nForTests(\"ja\");\n    expect(t(\"Account\")).toBe(\"\u30a2\u30ab\u30a6\u30f3\u30c8\");\n    expect(t(\"Sign in to Alternative Bot\")).toBe(\"Alternative Bot\u306b\u30ed\u30b0\u30a4\u30f3\");\n    expect(t(\"New bot\")).toBe(\"\u65b0\u3057\u3044\u30dc\u30c3\u30c8\");\n    expect(t(\"{runs} runs, {tokens} tokens\", { runs: 3, tokens: 12 })).toBe(\n      \"3\u56de\u306e\u5b9f\u884c\u300112\u30c8\u30fc\u30af\u30f3\",\n    );\n    expect(t(\"Delete {name}?\", { name: \"Scout\" })).toBe(\"Scout\u3092\u524a\u9664\u3057\u307e\u3059\u304b\uff1f\");\n\n    resetI18nForTests(\"de\");\n    expect(t(\"Account\")).toBe(\"Konto\");\n    expect(t(\"Sign in to Alternative Bot\")).toBe(\"Bei Alternative Bot anmelden\");\n    expect(t(\"New bot\")).toBe(\"Neuer Bot\");\n    expect(t(\"{runs} runs, {tokens} tokens\", { runs: 3, tokens: 12 })).toBe(\n      \"3 Ausf\u00fchrungen, 12 Token\",\n    );\n    expect(t(\"Delete {name}?\", { name: \"Scout\" })).toBe(\"Scout l\u00f6schen?\");\n\n    resetI18nForTests(\"es\");\n    expect(t(\"Account\")).toBe(\"Cuenta\");\n    expect(t(\"Sign in to Alternative Bot\")).toBe(\"Inicia sesi\u00f3n en Alternative Bot\");\n    expect(t(\"New bot\")).toBe(\"Nuevo bot\");\n    expect(t(\"{runs} runs, {tokens} tokens\", { runs: 3, tokens: 12 })).toBe(\n      \"3 ejecuciones, 12 tokens\",\n    );\n    expect(t(\"Delete {name}?\", { name: \"Scout\" })).toBe(\"\u00bfEliminar Scout?\");\n  });\n\n  it(\"preserves interpolations in every non-English catalog\", async () => {\n    const { ZH_MESSAGES } = await import(\"./locales/zh\");\n    const { ZH_TW_MESSAGES } = await import(\"./locales/zh-TW\");\n    const { RU_MESSAGES } = await import(\"./locales/ru\");\n    const { DE_MESSAGES } = await import(\"./locales/de\");\n    const { NL_MESSAGES } = await import(\"./locales/nl\");\n    const { JA_MESSAGES } = await import(\"./locales/ja\");\n    const { ES_MESSAGES } = await import(\"./locales/es\");\n    for (const messages of [\n      ZH_MESSAGES,\n      ZH_TW_MESSAGES,\n      RU_MESSAGES,\n      DE_MESSAGES,\n      NL_MESSAGES,\n      JA_MESSAGES,\n      ES_MESSAGES,\n    ]) {\n      const empty = Object.entries(messages).filter(([, value]) => !value.trim());\n      const interpolationMismatches = Object.entries(messages).filter(([id, value]) => {\n        const tokens = (message: string) =>\n          [...message.matchAll(/\\{([A-Za-z0-9_]+)\\}/g)].map((match) => match[1]).sort();\n        return JSON.stringify(tokens(id)) !== JSON.stringify(tokens(value));\n      });\n      expect(empty).toEqual([]);\n      expect(interpolationMismatches).toEqual([]);\n    }\n  });\n\n  it(\"translates every mobile chrome t() id in every non-English catalog\", async () => {\n    const { ZH_MESSAGES } = await import(\"./locales/zh\");\n    const { ZH_TW_MESSAGES } = await import(\"./locales/zh-TW\");\n    const { RU_MESSAGES } = await import(\"./locales/ru\");\n    const { DE_MESSAGES } = await import(\"./locales/de\");\n    const { NL_MESSAGES } = await import(\"./locales/nl\");\n    const { JA_MESSAGES } = await import(\"./locales/ja\");\n    const { ES_MESSAGES } = await import(\"./locales/es\");\n    const { EMPTY_PLUGIN_CATALOG_MESSAGE, SLASH_ACTIONS, RUN_ERROR_LIMIT_MESSAGES } = await import(\n      \"@alternativebot/core\"\n    );\n    const { AI_DATA_DISCLOSURES, OPENAI_COMPATIBLE_BASE_URL_HINT } = await import(\n      \"@alternativebot/contracts\"\n    );\n    const { createMenuItems } = await import(\"./create-chooser\");\n    const mobileRoot = join(dirname(fileURLToPath(import.meta.url)), \"..\");\n    const ids = new Set<string>([\n      ...Object.values(AI_DATA_DISCLOSURES),\n      ...Object.values(RUN_ERROR_LIMIT_MESSAGES).flatMap(Object.values),\n      \"{summary} Your backup models also failed.\",\n      \"{summary} No backup model was usable for this request.\",\n      \"{summary} Backup models failed or were unavailable for this request.\",\n      \"Your OpenRouter\",\n      \"Your OpenAI\",\n      \"Your Anthropic\",\n      \"Your model provider\",\n      \"The model provider returned an error.\",\n      \"Connect a model in Settings before running bots.\",\n      \"Connect your own API key in Models or choose Alternative Bot credits in Billing.\",\n      \"{provider} is rate limiting requests. Try again shortly.\","
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '60,175p' apps/mobile/lib/i18n.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 23728,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "8df4101f-4490-4f33-9a2d-afbcb643ae88",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

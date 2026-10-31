@@ -1,0 +1,36 @@
+{
+  "id": "07e3875d-bbc8-4185-901d-2088d886e5d5",
+  "timestamp": "2026-10-31T12:11:50.135861",
+  "source": "environment",
+  "parent_id": "9331e486-a230-404f-9a00-4b90409f62e5",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-a914c81a2b03f75b",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "\"computer.update\": { updateId: string };\n  \"computer.control-expire\": { computerId: string; leaseId: string };\n  \"skill.teaching-expire\": { skillId: string };\n  /** The bot's call rang out: mark it missed if nobody answered. */\n  \"call.expire\": { threadId: string; callId: string };\n  \"history.compact\": { threadId: string };\n  \"messaging.deliver\": { runId?: string };\n  \"messaging.credential-cleanup\": { installationId: string; ref: string };\n  /** Reconcile durable remote-agent intent; scope is loaded from the database. */\n  \"cloud_agent.poll\": { agentId: string };\n  \"purchase.poll\": { purchaseId: string };\n  /** Read an Expo push receipt; the token is identified by its digest, never stored. */\n  \"push.receipt\": { userId: string; ticketId: string; tokenDigest: string };\n}\n\nexport type BackgroundJobName = keyof BackgroundJobPayloads;\n\nexport type BackgroundJob = {\n  [Name in BackgroundJobName]: {\n    name: Name;\n    payload: BackgroundJobPayloads[Name];\n=== handler keys in tests ===\npackages/adapters/src/wakeup.test.ts-18-    \"messaging.credential-cleanup\": vi.fn(async () => undefined),\npackages/adapters/src/wakeup.test.ts-19-    \"cloud_agent.poll\": vi.fn(async () => undefined),\npackages/adapters/src/wakeup.test.ts:20:    \"purchase.poll\": vi.fn(async () => undefined),\npackages/adapters/src/wakeup.test.ts-21-    \"push.receipt\": vi.fn(async () => undefined),\npackages/adapters/src/wakeup.test.ts-22-  };\n--\npackages/adapter-kit/src/background-jobs.test.ts-25-    \"messaging.credential-cleanup\": vi.fn(async () => undefined),\npackages/adapter-kit/src/background-jobs.test.ts-26-    \"cloud_agent.poll\": vi.fn(async () => undefined),\npackages/adapter-kit/src/background-jobs.test.ts:27:    \"purchase.poll\": vi.fn(async () => undefined),\npackages/adapter-kit/src/background-jobs.test.ts-28-    \"push.receipt\": vi.fn(async () => undefined),\npackages/adapter-kit/src/background-jobs.test.ts-29-  };\n--\npackages/adapters/src/wakeup-graphile-host.test.ts-51-    \"messaging.credential-cleanup\": vi.fn(async () => undefined),\npackages/adapters/src/wakeup-graphile-host.test.ts-52-    \"cloud_agent.poll\": vi.fn(async () => undefined),\npackages/adapters/src/wakeup-graphile-host.test.ts:53:    \"purchase.poll\": vi.fn(async () => undefined),\npackages/adapters/src/wakeup-graphile-host.test.ts-54-    \"push.receipt\": vi.fn(async () => undefined),\npackages/adapters/src/wakeup-graphile-host.test.ts-55-  };\n--\npackages/adapters/src/wakeup.postgres.test.ts-40-    \"messaging.credential-cleanup\": vi.fn(async () => undefined),\npackages/adapters/src/wakeup.postgres.test.ts-41-    \"cloud_agent.poll\": vi.fn(async () => undefined),\npackages/adapters/src/wakeup.postgres.test.ts:42:    \"purchase.poll\": vi.fn(async () => undefined),\npackages/adapters/src/wakeup.postgres.test.ts-43-    \"push.receipt\": vi.fn(async () => undefined),\npackages/adapters/src/wakeup.postgres.test.ts-44-    ...overrides,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '740,760p' packages/adapter-kit/src/types.ts; echo \"=== handler keys in tests ===\"; grep -n 'purchase.poll' -A2 -B2 packages/adapters/src/wakeup.test.ts packages/adapter-kit/src/background-jobs.test.ts packages/adapters/src/wakeup-graphile-host.test.ts packages/adapters/src/wakeup.postgres.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 65061,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "60d7359e-2c97-4a14-8952-e2201258208c",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

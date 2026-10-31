@@ -1,0 +1,36 @@
+{
+  "id": "a6333990-0153-4a39-b67e-b8bb5bd5bdfa",
+  "timestamp": "2026-10-31T10:51:26.576298",
+  "source": "environment",
+  "parent_id": "610f07a0-857c-44f6-b636-53e623a3e125",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-99274b3e87047de0",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "return;\n  }\n}\n\nexport async function modelCreditBillingEnabled(deps: ExecutorDeps): Promise<boolean> {\n  if (deps.billingEnabled !== undefined) return deps.billingEnabled;\n  return (\n    (\n      await deps.prisma.deploymentSettings.findUnique({\n        where: { id: \"default\" },\n        select: { modelCreditsEnabled: true },\n      })\n    )?.modelCreditsEnabled === true\n  );\n}\n\nexport async function resolveModelKey(...args: Parameters<typeof resolveModelKeyMaterial>) {\n  const [deps, userId, spaceId, , provider] = args;\n  const billingEnabled = await modelCreditBillingEnabled(deps);\n  const scope = { userId, spaceId };\n  if (billingEnabled && (await hasHostedModelCredits(deps.prisma, scope, provider))) {\n    args[3] = null;\n    // Funded managed backups use deployment credentials just like the primary.\n    args[7] = { ...args[7], requireStoredSecret: false };\n  }\n  const credential = args[3];\n  const material = await resolveModelKeyMaterial(...args);\n  const deployment = resolveDeploymentModel();\n  // Local and compatible endpoints can intentionally be keyless. Host auth is\n  // allowed only for the deployment provider that explicitly opted into it.\n  const keyless =\n    provider === LOCAL_PROVIDER_ID ||\n    (provider === OPENAI_COMPATIBLE_PROVIDER_ID && Boolean(material.baseUrl)) ||\n    (provider === \"scripted\" && deps.runtime?.describe().capabilities.scripted) ||\n    (!credential && deployment.provider === provider && deployment.hostCredentials);\n  // Match Pi's OpenRouter fallback only when no explicit key overrides it.\n  const runtimeKey =\n    material.apiKey === undefined && (provider === \"openrouter\" || provider === \"scripted\")\n      ? process.env.OPENROUTER_API_KEY\n      : undefined;\n  if (!material.apiKey?.trim() && !runtimeKey?.trim() && !keyless) {\n    throw new UnavailableModelForAuthError(MISSING_MODEL_RUN_ERROR);\n  }\n  const callObserver =\n    !credential && billingEnabled ? await hostedModelCreditObserver(deps.prisma, scope) : undefined;\n  return { ...material, apiKey: material.apiKey ?? runtimeKey, callObserver };\n}\n\nasync function resolveModelKeyMaterial(\n  deps: ExecutorDeps,\n  userId: string,\n  spaceId: string,\n  credential: {\n    id: string;\n    secretId: string;\n=== 215-230 ===\n  redact: string[];\n}> {\n  if (credential) {\n    return withModelCredentialLock(credential.secretId, async () => {\n      const row = await deps.prisma.secret.findFirst({\n        where: { id: credential.secretId, userId, spaceId: null },\n      });\n      if (!row) {\n        if (await modelCreditBillingEnabled(deps))\n          throw new Error(\"Connect that model provider again.\");\n        if (requireStoredSecret) throw new Error(\"Backup model credential is no longer available\");\n        if (credential.provider === OPENAI_COMPATIBLE_PROVIDER_ID) {\n          throw new UnavailableModelForAuthError(\"Unknown model for that provider\");\n        }\n        cloudflareProviderEnv({ provider });\n        return { apiKey: deploymentKeyFor(deps, provider), redact: [] };\n      }\n      const plaintext = await deps.secretStore.load(row.ciphertext, row.id);"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '128,182p' packages/adapters/src/run-model.ts; echo \"=== 215-230 ===\"; sed -n '215,232p' packages/adapters/src/run-model.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "d1c87856-30b5-4c38-aa0b-797469cfb6a7",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

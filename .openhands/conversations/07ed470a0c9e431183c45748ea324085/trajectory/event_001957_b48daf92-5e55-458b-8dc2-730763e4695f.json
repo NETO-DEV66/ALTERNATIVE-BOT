@@ -1,0 +1,36 @@
+{
+  "id": "b48daf92-5e55-458b-8dc2-730763e4695f",
+  "timestamp": "2026-10-31T11:08:06.965054",
+  "source": "environment",
+  "parent_id": "0825abd4-66ec-47b1-80d0-8b04d2c1619d",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-832e79bed17221a3",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "---\n58:export * from \"./deployment-model.js\";\n110:export * from \"./model-selection.js\";"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -rn 'hasHostedModelCredits\\|hostedModelCreditObserver' packages/adapters/src/index.ts; echo \"---\"; grep -n 'model-selection\\|deployment-model' packages/adapters/src/index.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "78737197-69aa-45ab-b838-8b96b728781e",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

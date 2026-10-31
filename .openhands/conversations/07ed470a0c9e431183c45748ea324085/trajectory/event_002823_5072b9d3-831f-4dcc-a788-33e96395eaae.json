@@ -1,0 +1,36 @@
+{
+  "id": "5072b9d3-831f-4dcc-a788-33e96395eaae",
+  "timestamp": "2026-10-31T11:29:48.807778",
+  "source": "environment",
+  "parent_id": "d4cd8a1a-a7c3-439b-8259-23203b743c77",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-bac6f1cc4b3b7cb5",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "import { describe, expect, it } from \"vitest\";\nimport {\n  APP_CONTENT_SECURITY_POLICY,\n  appContentSecurityPolicy,\n  CSP_REPORT_PATH,\n  CSP_REPORTING_ENDPOINTS,\n  contentSecurityPolicyFor,\n  HTML_VIEWER_PATH,\n  parseContentSecuritySources,\n  parseCrispWebsiteId,\n  WUYING_SCREEN_PATH,\n} from \"./content-security-policy.js\";\n\nfunction directives(policy: string) {\n  return new Map(\n    policy.split(\";\").map((part) => {\n      const [name = \"\", ...sources] = part.trim().split(/\\s+/);\n      return [name, sources] as const;\n    }),\n  );\n=== 155,200 ===\n  it(\"serves the extended policy on app paths and leaves the others alone\", () => {\n    const extended = appContentSecurityPolicy({ scriptSrc: [\"https://static.example.com\"] });\n    expect(contentSecurityPolicyFor(\"/\", extended)).toBe(extended);\n    expect(contentSecurityPolicyFor(\"/rpc/me\", extended)).toBeNull();\n    expect(contentSecurityPolicyFor(HTML_VIEWER_PATH, extended)).toBe(\"frame-ancestors 'self'\");\n  });\n});\n\ndescribe(\"Crisp chat widget\", () => {\n  it(\"adds Crisp's origins only when the deployment configures it\", () => {\n    const crisp = directives(\n      appContentSecurityPolicy({ crisp: true, scriptSrc: [\"https://static.example.com\"] }),\n    );\n    expect(crisp.get(\"script-src\")).toEqual([\n      \"'self'\",\n      \"https://static.example.com\",\n      \"https://client.crisp.chat\",\n    ]);\n    expect(crisp.get(\"connect-src\")).toContain(\"wss://client.relay.crisp.chat\");\n    expect(crisp.get(\"style-src\")).toEqual([\n      \"'self'\",\n      \"'unsafe-inline'\",\n      \"https://client.crisp.chat\",\n    ]);\n    expect(crisp.get(\"worker-src\")).toEqual([\"'self'\", \"blob:\", \"https://client.crisp.chat\"]);\n    expect(crisp.get(\"frame-ancestors\")).toEqual([\"'none'\"]);\n    expect(APP_CONTENT_SECURITY_POLICY).not.toContain(\"crisp\");\n  });\n\n  it(\"accepts only a website ID\", () => {\n    expect(parseCrispWebsiteId(undefined)).toBeNull();\n    expect(parseCrispWebsiteId(\" \")).toBeNull();\n    expect(parseCrispWebsiteId(\" C2C27EA6-4FDB-4350-A9FC-4B5B052DC5EC \")).toBe(\n      \"c2c27ea6-4fdb-4350-a9fc-4b5b052dc5ec\",\n    );\n    for (const value of [\"nope\", 'c2c27ea6-4fdb-4350-a9fc-4b5b052dc5ec\"; alert(1)//']) {\n      expect(() => parseCrispWebsiteId(value)).toThrow(\"CRISP_WEBSITE_ID\");\n    }\n  });\n});"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '1,20p' packages/contracts/src/content-security-policy.test.ts; echo \"=== 155,200 ===\"; sed -n '155,200p' packages/contracts/src/content-security-policy.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 16017,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "9beb32e2-4016-4872-9b13-748164a0421e",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

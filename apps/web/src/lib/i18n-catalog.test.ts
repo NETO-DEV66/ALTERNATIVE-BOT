@@ -1,8 +1,8 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { RUN_ERROR_LIMIT_MESSAGES } from "@alternativebot/core";
 import { i18n } from "@lingui/core";
 import { formatter } from "@lingui/format-po";
-import { RUN_ERROR_LIMIT_MESSAGES } from "@alternativebot/core";
 import { beforeEach, describe, expect, it } from "vitest";
 import { UI_LOCALES } from "./ui-locale";
 
@@ -71,7 +71,6 @@ describe("lingui catalogs", () => {
       "Your model provider",
       "The model provider returned an error.",
       "Connect a model in Settings before running bots.",
-      "Connect your own API key in Models or choose Alternative Bot credits in Billing.",
       "{provider} is rate limiting requests. Try again shortly.",
       "{summary} Resets {date}.",
       "{provider} rejected the API key. Check your connection settings.",

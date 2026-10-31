@@ -1,0 +1,28 @@
+{
+  "id": "c645a3b6-b2ea-4eb5-a726-563b262e6554",
+  "timestamp": "2026-10-31T10:48:05.980997",
+  "source": "user",
+  "parent_id": "68dbdf22-cc01-4a20-9e23-645025f64386",
+  "llm_message": {
+    "role": "user",
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "Ab age kya karna batao short me ok"
+      }
+    ],
+    "tool_calls": null,
+    "tool_call_id": null,
+    "name": null,
+    "reasoning_content": null,
+    "thinking_blocks": [],
+    "responses_reasoning_item": null
+  },
+  "llm_response_id": null,
+  "activated_skills": [],
+  "extended_content": [],
+  "sender": null,
+  "critic_result": null,
+  "kind": "MessageEvent"
+}

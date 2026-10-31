@@ -1,0 +1,36 @@
+{
+  "id": "4ded5e40-badf-4e68-8efa-ca49e1e49968",
+  "timestamp": "2026-10-31T13:22:03.325645",
+  "source": "environment",
+  "parent_id": "40b4eeee-633e-4b2c-8e46-104d67945c9e",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8495c4e910ecce11",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "assignee: \"Avery Patel\",\n    latestUpdate:\n      \"Engineering reproduced the audience mismatch and is testing a configuration fix.\",\n  },\n  {\n    id: \"ZD-1811\",\n    organizationId: \"zd-fairhaven-logistics\",\n    subject: \"Add a billing contact\",\n    status: \"solved\",\n    priority: \"low\",\n    assignee: \"Jamie Ortiz\",\n    latestUpdate: \"Billing contact added.\",\n  },\n] as const;\n\nfunction requiredQuery(value: unknown): string {\n=== context: what is this file ===\nimport type {\n  AdapterContext,\n  ConnectorCall,\n  ConnectorEvent,\n  ConnectorTool,\n} from \"@alternativebot/adapter-kit\";\nimport { ComposioConnector, FakeComposioClient } from \"@alternativebot/adapters\";\nimport { CUSTOMER_SUPPORT_PROVIDERS, CUSTOMER_SUPPORT_TOOLS } from \"./service-contract.js\";\n\nexport const INBOX = [\n  {\n    id: \"m1\",\n    subject: \"Launch blocker\",\n    body: \"The launch is blocked by the unsigned contract. Review it by Friday.\",\n    urgent: true,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '400,415p' packages/testkit/src/evals/services.ts; echo \"=== context: what is this file ===\"; sed -n '1,15p' packages/testkit/src/evals/services.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": -1,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-5ddfbc867f-s4kjx",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "e10e650f-5c05-4c4e-b56a-1ccdb87cd995",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

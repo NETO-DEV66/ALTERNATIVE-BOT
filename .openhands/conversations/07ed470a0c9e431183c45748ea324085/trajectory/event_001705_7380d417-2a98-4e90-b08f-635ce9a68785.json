@@ -1,0 +1,36 @@
+{
+  "id": "7380d417-2a98-4e90-b08f-635ce9a68785",
+  "timestamp": "2026-10-31T11:03:53.792013",
+  "source": "environment",
+  "parent_id": "7f87e819-ebee-42e4-bd1d-4948eb2334b0",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b28cfb492c774b8b",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "): Promise<boolean> {\n  const deployment = resolveDeploymentModel();\n  if (!deployment.configured || deployment.provider !== provider) return false;\n  const space = await prisma.space.findFirst({\n    where: { id: scope.spaceId, organization: { members: { some: { userId: scope.userId } } } },\n    select: { organization: { select: { modelCredits: { select: { mode: true } } } } },\n  });\n  return space?.organization.modelCredits?.mode === \"credits\";\n}"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '840,875p' packages/adapters/src/model-selection.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "4268da77-fd7e-4068-aa52-0d9736ab1765",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

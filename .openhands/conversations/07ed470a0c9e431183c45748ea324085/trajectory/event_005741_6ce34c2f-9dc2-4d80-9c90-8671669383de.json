@@ -1,0 +1,36 @@
+{
+  "id": "6ce34c2f-9dc2-4d80-9c90-8671669383de",
+  "timestamp": "2026-10-31T13:59:37.955663",
+  "source": "environment",
+  "parent_id": "cbc2f333-08e0-4e98-958b-9c8ca6c03426",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-be4030ac5b1335fb",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "\u276f packages/adapters/src/mcp-package-installer.test.ts (18 tests | 1 failed) 3385ms\n     \u00d7 installs a real package with npm, offline, from a local tarball 503ms\n \u276f packages/adapters/src/host-computer.test.ts (22 tests | 2 failed | 1 skipped) 2980ms\n     \u00d7 revoke owns background children after their shell request finishes 1070ms\n     \u00d7 cancel owns background children after their shell request finishes 1084ms\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af Failed Tests 3 \u23af\u23af\u23af\u23af\u23af\u23af\u23af\n FAIL  packages/adapters/src/host-computer.test.ts > native host computer transport > revoke owns background children after their shell request finishes\n FAIL  packages/adapters/src/host-computer.test.ts > native host computer transport > cancel owns background children after their shell request finishes\n FAIL  packages/adapters/src/mcp-package-installer.test.ts > ensureMcpPackage > installs a real package with npm, offline, from a local tarball\n Test Files  2 failed | 294 passed | 17 skipped (313)\n      Tests  3 failed | 7225 passed | 122 skipped (7350)"
+      }
+    ],
+    "is_error": false,
+    "command": "export PATH=\"/usr/local/lib/node_modules/corepack/shims:$PATH\"; cd /workspace/project && pnpm --filter @alternativebot/adapters test 2>&1 | grep -E '\u276f.*failed|\u00d7|FAIL |Tests |Test Files ' | head -30",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": -1,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-5ddfbc867f-s4kjx",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "bd1bb6e4-a5ce-4cf5-9bdc-dcdb968abc6a",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

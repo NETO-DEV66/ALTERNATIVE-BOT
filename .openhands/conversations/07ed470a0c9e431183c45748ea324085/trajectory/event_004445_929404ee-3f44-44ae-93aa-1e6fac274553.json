@@ -1,0 +1,36 @@
+{
+  "id": "929404ee-3f44-44ae-93aa-1e6fac274553",
+  "timestamp": "2026-10-31T12:21:52.344143",
+  "source": "environment",
+  "parent_id": "595554f0-bfe2-4c89-a915-f4175406531d",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-afa7417f20077d30",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "it.skipIf(process.platform !== \"linux\")(\n    \"spawns Chromium when the wrapper is invoked as ./rakazo-browser\",\n    () => {\n      const root = path.resolve(import.meta.dirname, \"../../computer\");\n      const temp = mkdtempSync(path.join(tmpdir(), \"rakazo-browser-rel-\"));\n      const bin = path.join(temp, \"bin\");\n      const capture = path.join(temp, \"args\");\n      const home = path.join(temp, \"home\");\n      const chromium = path.join(bin, \"chromium\");\n      mkdirSync(bin);\n      writeFileSync(chromium, '#!/bin/sh\\nprintf \"%s\\\\n\" \"$@\" > \"$RAKAZO_TEST_ARGS\"\\n');\n      chmodSync(chromium, 0o755);\n      const profile = path.join(home, \".browser-profiles\", \"chromium-bot-screen\");\n      mkdirSync(profile, { recursive: true });\n      // The kernel records the path passed to exec, so a relative invocation\n      // shows up as ./rakazo-browser rather than an absolute script path.\n      symlinkSync(path.join(root, \"rakazo-browser\"), path.join(temp, \"rakazo-browser\"));\n\n      try {\n        const result = spawnSync(\n          \"./rakazo-browser\",\n          [`--user-data-dir=${profile}`, \"--remote-debugging-port=9222\"],\n          {\n            cwd: temp,\n            env: {\n              ...process.env,\n              DISPLAY: \":1\",\n              HOME: home,\n              PATH: `${bin}${path.delimiter}${process.env.PATH ?? \"\"}`,\n              RAKAZO_TEST_ARGS: capture,\n            },\n            encoding: \"utf8\",\n          },\n        );\n        expect(result.status, result.error?.message ?? result.stderr).toBe(0);\n        const args = readFileSync(capture, \"utf8\");\n        expect(args).toContain(`--user-data-dir=${profile}`);\n        expect(args).toContain(\"--remote-debugging-port=9222\");\n      } finally {\n        rmSync(temp, { recursive: true, force: true });"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && git --no-pager show HEAD:infra/sandboxes/supervisor/src/computer-spec.test.ts | sed -n '848,888p'",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 65061,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "b92815bf-087e-4e39-bab2-acc08b190b3b",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

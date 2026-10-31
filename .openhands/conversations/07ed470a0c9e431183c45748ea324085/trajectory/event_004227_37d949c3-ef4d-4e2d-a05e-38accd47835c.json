@@ -1,0 +1,36 @@
+{
+  "id": "37d949c3-ef4d-4e2d-a05e-38accd47835c",
+  "timestamp": "2026-10-31T12:11:10.521147",
+  "source": "environment",
+  "parent_id": "8b79603a-3f44-432d-a755-45591b54f297",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-80597e5eab322b2c",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "20:    credits?: boolean;\n105:      findFirst: vi.fn(async () => ({ organization: { modelCredits: { mode: \"credits\" } } })),\n112:        !options.credits &&\n119:        !options.credits && where.userId === owner.userId && where.id === credential.id\n152:    billing: options.credits ? { modelCreditsEnabled: true } : undefined,\n723:    const { call, prisma, roles } = setup({ credits: true });"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -n 'credits' apps/api/src/models-backups.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 25122,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "596af0d2-faf9-4333-a61a-4977b1c676f7",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

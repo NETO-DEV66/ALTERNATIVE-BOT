@@ -1,0 +1,36 @@
+{
+  "id": "6f59d0c2-094d-478a-a7de-24cb9c99db65",
+  "timestamp": "2026-10-31T11:46:38.028050",
+  "source": "environment",
+  "parent_id": "0795f6de-0e6e-49d0-8101-bdd00c2680a5",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8189cb7e720fd0e8",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "import { usableModelId } from \"@alternativebot/contracts\";\nimport { vi } from \"vitest\";\n\ntype RoleRow = {\n  userId: string;\n  role: string;\n  position: number;\n  provider: string;\n  modelId: string;\n  thinkingLevel: string | null;\n};\ntype RoleWhere = { userId?: string; role?: string };\ntype Preference = {\n  isDefault?: boolean;\n  modelId?: string | null;\n  thinkingLevel?: string | null;\n  credential?: { provider: string };\n};\ntype MockClient = {\n  userModelPreference?: {\n    findFirst?: (args: unknown) => Promise<unknown>;\n    findMany?: (args: unknown) => Promise<unknown>;\n  };\n  userModelRoleChoice?: unknown;\n  spaceModelRoleChoice?: unknown;\n  spaceSettingOverride?: unknown;\n  $transaction?: ((...args: unknown[]) => Promise<unknown>) & { modelRoles?: true };\n};\n\n/** One account main-model row, as `withModelRoles` seeds it. */\nexport function mainRole(\n  scope: { userId: string; spaceId?: string },\n  provider: string,\n  modelId: string,\n  thinkingLevel: string | null = null,\n): RoleRow {\n  return { userId: scope.userId, role: \"main\", position: 0, provider, modelId, thinkingLevel };\n}\n\n/**\n * Gives a mocked client an in-memory account role table seeded with `rows`, and Spaces that\n * follow the account unless the test says otherwise. A test's own role table keeps answering\n * its pin lookups; role lists come from memory. Without seeded rows, a mocked preference\n * marked `isDefault` stands in for the main model.\n */\nexport function withModelRoles<T>(prisma: T, rows: RoleRow[] = []): T {\n  const client = prisma as MockClient | null;\n  if (!client || typeof client !== \"object\") return prisma;\n  const written = new Map<string, RoleRow[]>();\n  const key = (where: RoleWhere) => JSON.stringify([where.userId, where.role]);\n  for (const row of rows) written.set(key(row), [...(written.get(key(row)) ?? []), row]);\n  const preferences = client.userModelPreference;\n  const fromPreference = async (where: RoleWhere): Promise<RoleRow[]> => {\n    if (where.role !== \"main\" || !where.userId || !preferences) return [];\n    const scope = { userId: where.userId };\n    const found = preferences.findFirst\n      ? await preferences.findFirst({\n          where: { ...scope, isDefault: true },\n          include: { credential: true },\n          orderBy: [{ updatedAt: \"desc\" }, { credentialId: \"desc\" }],\n        })\n      : (\n          (await preferences.findMany?.({ where: scope, include: { credential: true } })) as\n            | Preference[]\n            | undefined\n        )?.find((row) => row.isDefault);\n    const preference = found as Preference | null | undefined;\n    const modelId = usableModelId(preference?.modelId);\n    return preference?.credential && preference.isDefault && modelId\n      ? [mainRole(scope, preference.credential.provider, modelId, preference.thinkingLevel ?? null)]\n      : [];\n  };\n  const roleTable = {\n    modelRoles: true as const,\n    findMany: vi.fn(async ({ where }: { where: RoleWhere }) =>\n      written.has(key(where)) ? written.get(key(where))! : fromPreference(where),\n    ),\n    deleteMany: vi.fn(async ({ where }: { where: RoleWhere }) => {\n      written.set(key(where), []);\n      return { count: 0 };\n    }),\n    createMany: vi.fn(async ({ data }: { data: RoleRow[] }) => {\n      for (const row of data) written.set(key(row), [...(written.get(key(row)) ?? []), row]);\n      return { count: data.length };\n    }),\n  };\n  const augment = (target: MockClient) => {\n    const own = target.userModelRoleChoice as\n      | { findMany?: (args: { where: RoleWhere }) => Promise<unknown>; modelRoles?: true }\n      | undefined;\n    target.userModelRoleChoice =\n      own && !own.modelRoles\n        ? {\n            ...roleTable,\n            ...own,\n            modelRoles: true,\n            findMany: vi.fn((args: { where: RoleWhere }) =>\n              args.where.role || !own.findMany ? roleTable.findMany(args) : own.findMany(args),\n            ),\n          }\n        : (own ?? roleTable);\n    target.spaceSettingOverride ??= {\n      findUnique: vi.fn(async () => null),\n      findMany: vi.fn(async () => []),\n    };\n    target.spaceModelRoleChoice ??= {\n      findMany: vi.fn(async () => []),\n      deleteMany: vi.fn(async () => ({ count: 0 })),\n    };\n    return target;\n  };\n  augment(client);\n  const transaction = client.$transaction;\n  if (typeof transaction === \"function\" && !transaction.modelRoles) {\n    client.$transaction = Object.assign(\n      vi.fn((work: unknown, ...rest: unknown[]) =>\n        transaction(\n          typeof work === \"function\"\n            ? (tx: MockClient) => (work as (tx: MockClient) => unknown)(augment(tx))\n            : work,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '1,120p' packages/adapters/src/testing/model-roles.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 21955,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "40ff0381-412b-4f66-9d32-756502035a5e",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "9779ed1b-4111-4bde-9010-b6f1378e6258",
+  "timestamp": "2026-10-31T11:47:10.174985",
+  "source": "environment",
+  "parent_id": "6e53c12b-2c5b-41d9-886a-e34bfcf9f230",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-902c5c147cb1da98",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "import { readdirSync, readFileSync } from \"node:fs\";\nimport { dirname, join } from \"node:path\";\nimport { fileURLToPath } from \"node:url\";\nimport { createScanner, ScriptTarget } from \"typescript\";\nimport { afterEach, beforeEach, describe, expect, it, vi } from \"vitest\";\n\nvi.mock(\"expo-localization\", () => ({\n  getLocales: vi.fn(() => [{ languageTag: \"en-US\" }]),\n}));\n\nvi.mock(\"expo-secure-store\", () => ({\n  getItemAsync: vi.fn(),\n  setItemAsync: vi.fn(),\n  deleteItemAsync: vi.fn(),\n}));\n\nvi.mock(\"./material-icons\", () => ({ materialIcons: {} }));\n\nvi.mock(\"./ui-direction\", () => ({\n  applyMobileUiDirection: vi.fn(),\n}));\n\nfunction collectSourceFiles(dir: string): string[] {\n  const files: string[] = [];\n  for (const entry of readdirSync(dir, { withFileTypes: true })) {\n    if (entry.name === \"node_modules\" || entry.name === \"dist\") continue;\n    const path = join(dir, entry.name);\n    if (entry.isDirectory()) files.push(...collectSourceFiles(path));\n    else if (/\\.(ts|tsx)$/.test(entry.name) && !entry.name.endsWith(\".test.ts\")) files.push(path);\n  }\n  return files;\n}\n\nfunction translationIds(source: string): string[] {\n  const scanner = createScanner(ScriptTarget.Latest, true);\n  return [...source.matchAll(/\\bt\\(\\s*(\"(?:\\\\.|[^\"\\\\])*\"|'(?:\\\\.|[^'\\\\])*')/g)].map((match) => {\n    scanner.setText(match[1]);\n    scanner.scan();\n    return scanner.getTokenValue();\n  });\n}\n\ndescribe(\"mobile i18n\", () => {\n  beforeEach(async () => {\n    vi.resetModules();\n    const { getItemAsync, setItemAsync } = await import(\"expo-secure-store\");\n    vi.mocked(getItemAsync).mockReset();\n    vi.mocked(setItemAsync).mockReset();\n  });\n\n  afterEach(() => {\n    vi.unstubAllEnvs();\n  });\n\n  it(\"falls back to the English source message when a translation is missing\", async () => {\n    const { resetI18nForTests, t } = await import(\"./i18n\");\n    resetI18nForTests(\"zh-CN\");\n    expect(t(\"Not a real string\")).toBe(\"Not a real string\");\n  });"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '1,60p' apps/mobile/lib/i18n.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 23728,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "b3971767-40b9-41c2-8e3a-2756bdfbd0f3",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

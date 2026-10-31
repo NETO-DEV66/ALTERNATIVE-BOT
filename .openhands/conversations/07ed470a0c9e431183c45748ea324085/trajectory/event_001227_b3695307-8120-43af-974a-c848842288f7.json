@@ -1,0 +1,36 @@
+{
+  "id": "b3695307-8120-43af-974a-c848842288f7",
+  "timestamp": "2026-10-31T10:55:45.151919",
+  "source": "environment",
+  "parent_id": "091a07cc-e6a6-4a1e-a46b-1a0443d982fd",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-811e1aef8c541c5d",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== README head ===\n# Alternative Bot\n\n[English](./README.md) | [\u7b80\u4f53\u4e2d\u6587](./README.zh-CN.md) | [\u65e5\u672c\u8a9e](./README.ja.md)\n\n[![GitHub stars](https://img.shields.io/github/stars/elie222/alternativebot?labelColor=black&style=for-the-badge&color=2563EB)](https://github.com/elie222/alternativebot/stargazers)\n[![Discord](https://img.shields.io/badge/Discord-Join%20the%20community-5865F2?labelColor=black&style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/RWwKa2Sn7h)\n[![Download on the App Store](https://img.shields.io/badge/App%20Store-Download%20for%20iPhone-black?labelColor=black&style=for-the-badge&logo=apple&logoColor=white)](https://apps.apple.com/app/alternativebot/id6801531099)\n[![Download the Android APK](https://img.shields.io/badge/Android-Download%20APK-black?labelColor=black&style=for-the-badge&logo=android&logoColor=white)](https://github.com/elie222/alternativebot/releases/download/android/alternativebot.apk)\n\n![Alternative Bot \u2014 AI teammates you actually own](./docs/readme-hero.png)\n\nAlternative Bot is an open source AI agent for persistent teammates, and a self-hosted AI assistant you\ncan run on your own machine. It is available on the web, as an Electron desktop app, and on\n[iPhone](https://apps.apple.com/app/alternativebot/id6801531099) and [Android](https://github.com/elie222/alternativebot/releases/download/android/alternativebot.apk). Bring your own model\nand computer provider, or run the complete stack locally.\n\nIt is an open source, self-hosted alternative to Grok Bot, Meta Muse, OpenAI Dots, Instinct,\nOpenClaw, Hermes Agent, and Claude Duet.\n\nAlternative Bot is in beta. Learn more at [alternativebot.com](https://alternativebot.com).\n\n## Features\n\n- Persistent bots with their own conversations, memory, routines, and history\n- Voice mode: speak replies, dictate, and call a bot. Bring your own ElevenLabs, OpenAI, Cartesia, or Fish Audio key, or use a Mac server's installed voices\n- Shared Team Computers and isolated Private computers\n- Browser, terminal, file, and graphical desktop access\n- Bots that can delegate to peer bots or short-lived subagents\n- Bring-your-own model credentials through Pi\n- App integrations through Composio or Pipedream Connect, plus user-installed Treg, remote MCP, and OpenAPI tool sources\n- Docker, E2B, Daytona, CreateOS, Boat, and trusted local-computer support\n\n## Demo\n\nhttps://github.com/user-attachments/assets/dccdeddb-2134-4a56-8eed-b2e591736b1c\n\n## Thanks\n\n- [PromptLayer](https://promptlayer.com/?utm_source=github&utm_medium=referral&utm_campaign=alternativebot_readme)\n- [Inbox Zero](https://getinboxzero.com/?utm_source=github&utm_medium=referral&utm_campaign=alternativebot_readme)\n=== mobile app.json ===\n{\n  \"expo\": {\n    \"name\": \"Alternative Bot\",\n    \"slug\": \"alternativebot\",\n    \"owner\": \"inbox-zero\",\n    \"scheme\": \"alternativebot\",\n    \"version\": \"1.0.11\",\n    \"orientation\": \"default\",\n    \"userInterfaceStyle\": \"automatic\",\n    \"icon\": \"./assets/icon.png\",\n    \"plugins\": [\n      [\n        \"expo-splash-screen\",\n        {\n          \"image\": \"./assets/splash-icon.png\",\n          \"resizeMode\": \"contain\",\n          \"backgroundColor\": \"#FCFCFC\",\n          \"dark\": {\n            \"backgroundColor\": \"#141414\"\n          }\n        }\n      ],\n      \"expo-router\",\n      \"expo-secure-store\",\n      [\n        \"expo-audio\",\n        {\n          \"enableBackgroundPlayback\": false,\n          \"microphonePermission\": \"Alternative Bot uses the microphone for voice calls with your bots.\"\n        }\n      ],\n      [\n        \"expo-speech-recognition\",\n        {\n          \"speechRecognitionPermission\": \"Alternative Bot turns your speech into messages during voice calls.\",\n          \"microphonePermission\": \"Alternative Bot uses the microphone for voice calls with your bots.\"\n        }\n      ],\n      \"expo-localization\",\n      \"@react-native-vector-icons/ionicons\","
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && echo \"=== README head ===\" && head -40 README.md && echo \"=== mobile app.json ===\" && cat apps/mobile/app.json 2>/dev/null | head -40",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "c4d9d88b-76da-411a-aa73-00a790c3ca2f",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

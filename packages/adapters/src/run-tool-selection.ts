@@ -60,7 +60,6 @@ export function selectBuiltinToolsForRun(options: {
   /** The configured provider can forget individual facts. */
   semanticMemoryForgets?: boolean;
   cloudAgentEnabled?: boolean;
-  /** The run's user connected a payment wallet. */
   mediaImagesEnabled?: boolean;
   mediaVideoEnabled?: boolean;
   messagingChannelRun: boolean;

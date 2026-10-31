@@ -1,0 +1,36 @@
+{
+  "id": "f2fe50db-6e8b-4db4-94e7-cc799befb4b4",
+  "timestamp": "2026-10-31T11:09:59.014662",
+  "source": "environment",
+  "parent_id": "8728c50f-b5f1-49bb-94e4-8996ee0daea2",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-841a7d291fe6cd17",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "diff --git a/packages/adapters/src/executor.ts b/packages/adapters/src/executor.ts\nindex 62eb93d..275de1d 100644\n--- a/packages/adapters/src/executor.ts\n+++ b/packages/adapters/src/executor.ts\n@@ -1,13 +1,13 @@\n-import type { AgentRunRequest, ComputerRef, SemanticMemoryProvider } from \"@rakazo/adapter-kit\";\n+import type { AgentRunRequest, ComputerRef, SemanticMemoryProvider } from \"@alternativebot/adapter-kit\";\n import {\n   DEFAULT_CONTEXT_STRATEGY,\n   isModelCredentialRejected,\n   runContinueJob,\n   SandboxUnavailableError,\n   SandboxUnresponsiveError,\n-} from \"@rakazo/adapter-kit\";\n-import type { MessageBlock, ModelRoleChoice, RunStatus } from \"@rakazo/contracts\";\n-import { disabledBuiltinToolSet } from \"@rakazo/contracts\";\n+} from \"@alternativebot/adapter-kit\";\n+import type { MessageBlock, ModelRoleChoice, RunStatus } from \"@alternativebot/contracts\";\n+import { disabledBuiltinToolSet } from \"@alternativebot/contracts\";\n import {\n   assertTransition,\n   botMessageAllowsSilence,\n@@ -20,7 +20,6 @@ import {\n   isOwnerStartedRun,\n   isTerminal,\n   MISSING_MODEL_RUN_ERROR,\n-  MODEL_ACCESS_REQUIRED_RUN_ERROR,\n   messagingChannelId,\n   messagingChannelPrivacyBlock,\n   messagingDmSurfaceNote,\n@@ -30,7 +29,7 @@ import {\n   renderBotDirectory,\n   userRunError,\n   userTurnMessageForRun,\n-} from \"@rakazo/core\";\n+} from \"@alternativebot/core\";\n import {\n   effectiveMemoryScope,\n   isPartialReplyClientNonce,\n@@ -42,10 +41,9 @@ import {\n   readRunTimingFields,\n   recordUsage,\n   settleReleasedTakeoverCards,\n-  spaceHasModelAccess,\n-} from \"@rakazo/db\";\n-import { enrichLogContext, getLogger } from \"@rakazo/logging\";\n-import { sanitizedError } from \"@rakazo/logging/monitoring\";\n+} from \"@alternativebot/db\";\n+import { enrichLogContext, getLogger } from \"@alternativebot/logging\";\n+import { sanitizedError } from \"@alternativebot/logging/monitoring\";\n import { formatAgentEnvironmentInstruction } from \"./agent-environment.js\";\n import { createApprovedEffectReplayQueue } from \"./approval-effect.js\";\n import { PARTIAL_REPLY_NOTE } from \"./automated-messages.js\";\n@@ -94,7 +92,6 @@ import {\n } from \"./history-compaction.js\";\n import { createMediaGenerationProvider } from \"./media-generation-factory.js\";\n import { loadAgentMemoryContext } from \"./memory-context.js\";\n-import { HostedModelCreditsRequiredError } from \"./model-credit-observer.js\";\n import {\n   effectiveModelRole,\n   resolveMemberMainModel,\n@@ -108,9 +105,7 @@ import {\n } from \"./model-selection.js\";\n import { modelAcceptsImageInput } from \"./model-vision.js\";\n import { usesNativeShell } from \"./native-shell.js\";\n-import { paymentWalletConnected } from \"./payment-wallets.js\";\n import { isRetiredModelCredentialError } from \"./pi-oauth.js\";\n-import { loadPurchaseRedactions } from \"./purchase-service.js\";\n import { loadReplyContext, messageToAgentHistoryText } from \"./reply-context.js\";\n import { backOffRoutineAfterAccountError } from \"./routine-backoff.js\";\n import { lateRoutineRunInstruction } from \"./routine-lateness.js\";\n@@ -151,7 +146,6 @@ import { withRunLease } from \"./run-messages.js\";\n import {\n   cloudflareRunFields,\n   isTerminalModelSetupError,\n-  modelCreditBillingEnabled,\n   resolveConnectedModelKey,\n   resolveConnectedRunModel,\n   resolveModelKey,\n@@ -465,7 +459,6 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {\n           agentSkills,\n           initialBotCommandEnvironment,\n           savedLoginPasswordRedactions,\n-          purchaseRedactions,\n           runLoginRedactions,\n         ] = await Promise.all([\n           deps.prisma.bot.findUniqueOrThrow({\n@@ -503,7 +496,6 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {\n           }),\n           loadBotCommandEnvironment(deps.prisma, deps.secretStore, run),\n           loadLoginPasswordRedactions(deps.prisma, deps.secretStore, run),\n-          deps.paymentWallet ? loadPurchaseRedactions(deps, run) : [],\n           loadRunLoginRedactions(deps.prisma, deps.secretStore, run, run.id),\n         ]);\n         const historySearchBeforeSeq =\n@@ -521,11 +513,7 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {\n         runSecrets.push(...commandCredentialRedactions(initialBotCommandEnvironment));\n         // A login filled in an earlier run may still be on its page, and anything this run reads\n         // or is given may contain it, so every run hides its saved passwords before the model runs.\n-        runSecrets.push(\n-          ...savedLoginPasswordRedactions,\n-          ...purchaseRedactions,\n-          ...runLoginRedactions,\n-        );\n+        runSecrets.push(...savedLoginPasswordRedactions, ...runLoginRedactions);\n         const agentEnvironmentInstruction = formatAgentEnvironmentInstruction(\n           initialBotCommandEnvironment,\n         );\n@@ -742,21 +730,13 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {\n         }\n         const runDeployment = deps.deploymentModelConfigured ? resolveDeploymentModel() : null;\n         const runtimeFallback = runtimeFallbackModel(deps.runtime);\n-        const pinError =\n-          run.modelPinned &&\n-          !(\n-            (await modelCreditBillingEnabled(deps)) &&\n-            modelChoice.modelProvider === runDeployment?.provider\n-          )\n-            ? pinnedModelCredentialError(modelChoice, overrideCredential)\n-            : undefined;"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && git --no-pager diff packages/adapters/src/executor.ts | head -120",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "10e71fb4-3e84-422f-9b01-53165a340b31",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

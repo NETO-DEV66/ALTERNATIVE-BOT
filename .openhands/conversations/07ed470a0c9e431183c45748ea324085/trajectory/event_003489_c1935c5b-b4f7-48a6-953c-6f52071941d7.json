@@ -1,0 +1,36 @@
+{
+  "id": "c1935c5b-b4f7-48a6-953c-6f52071941d7",
+  "timestamp": "2026-10-31T11:46:04.098594",
+  "source": "environment",
+  "parent_id": "28b89eb4-fb77-4343-b56f-99b3edd59d35",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b76724f13db351ef",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "\u00d7 meters 'openrouter' host credentials with personal=true 15ms\n     \u00d7 meters 'amazon-bedrock' host credentials with personal=true 2ms\n     \u00d7 meters 'amazon-bedrock' host credentials with personal=false 1ms\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af Failed Tests 3 \u23af\u23af\u23af\u23af\u23af\u23af\u23af\n\n FAIL  apps/api/src/team-chat-judge.test.ts > team chat engagement judge > meters 'openrouter' host credentials with personal=true\nAssertionError: expected { botId: 'bot', \u2026(9) } to match object { Object (model) }\n(12 matching properties omitted from actual)\n\n- Expected\n+ Received\n\n  {\n    \"model\": {\n-     \"callObserver\": Any<Object>,\n+     \"apiKey\": \"fixture-deployment-key\",\n+     \"id\": \"fixture-model\",\n+     \"provider\": \"openrouter\",\n    },\n  }\n\n \u276f apps/api/src/team-chat-judge.test.ts:271:40\n    269|         });\n    270|         expect(run).toHaveBeenCalledOnce();\n    271|         expect(run.mock.calls[0]?.[0]).toMatchObject({\n       |                                        ^\n    272|           model: { callObserver: expect.any(Object) },\n    273|         });\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af[1/3]\u23af"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && timeout 300 npx vitest run apps/api/src/team-chat-judge.test.ts -t \"meters\" 2>&1 | grep -A 25 'meters .openrouter. host' | head -60",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 21955,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "8c525033-6e8c-4c34-8026-0b8bb850a4c8",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

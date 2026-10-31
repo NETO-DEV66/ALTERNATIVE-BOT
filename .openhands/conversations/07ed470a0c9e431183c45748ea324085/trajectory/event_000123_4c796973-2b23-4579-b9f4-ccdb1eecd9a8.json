@@ -1,0 +1,36 @@
+{
+  "id": "4c796973-2b23-4579-b9f4-ccdb1eecd9a8",
+  "timestamp": "2026-10-31T10:16:18.934034",
+  "source": "environment",
+  "parent_id": "ddc5777e-9516-4ac0-b30e-f12ea2a8a637",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-af5c84583d934fa7",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== contracts billing files ===\n=== mobile lib billing ===\nimport type { BillingStatus } from \"@rakazo/contracts\";\nimport { MOBILE_BILLING_CALLBACK_URL } from \"@rakazo/contracts\";\nimport { Linking } from \"react-native\";\nimport { rpc } from \"./api\";\n\nexport type Plan = \"byok\" | \"credits\";\n\n/** What the own-key plan's button does: a first trial, a paid checkout, or no payment at all. */\nexport function ownKeyOffer(status: BillingStatus): \"trial\" | \"subscribe\" | \"free\" {\n  if (!status.byokPriceCents) return \"free\";\n  return status.trialAvailable && !status.byokFreeUntil ? \"trial\" : \"subscribe\";\n}\n\n/** A plan that runs out on its own: a trial, a free period, or a canceled renewal. */\nexport function planEndsAt(status: BillingStatus): string | null {\n  if (status.byokFreeUntil) return status.byokFreeUntil;\n  if (status.state === \"trialing\") return status.trialEndsAt ?? null;\n  return status.cancelAtPeriodEnd ? (status.currentPeriodEndsAt ?? null) : null;\n}\n\n/** The plan the organization pays with, once it has access. */\nexport function currentPlan(status: BillingStatus): Plan | null {\n  if (!status.access) return null;\n  return status.funding === \"byok\" ? \"byok\" : status.funding === \"credits\" ? \"credits\" : null;\n}\n\n/**\n * Whether a checkout changed the plan. A canceled checkout returns to the same status, and\n * an organization that already had access (a free period, or changing plans) still has it.\n */\nexport function purchaseCompleted(before: BillingStatus, after: BillingStatus): boolean {\n  if (!after.access) return false;\n  return (\n    !before.access ||\n    after.state !== before.state ||\n    after.funding !== before.funding ||\n    after.monthlyAmountCents !== before.monthlyAmountCents ||\n    after.byokFreeUntil !== before.byokFreeUntil\n  );\n}\n\nlet paywallShown = false;\n\n/** The paywall holds the app until a plan is chosen; the inbox must not stack a second one. */\nexport function setPaywallShown(shown: boolean) {\n  paywallShown = shown;\n}\n\nexport function isPaywallShown() {\n  return paywallShown;\n}\n\n/**\n * Opens a hosted checkout or billing portal in the in-app browser, which closes when the\n * provider returns to the app, then reads the result straight from the provider so the\n * app does not wait on the webhook.\n */\nexport async function openBillingPage(url: string): Promise<BillingStatus> {\n  // Defer the native module so billing still opens (in Safari) on older binaries.\n  const browser = await import(\"expo-web-browser\").catch(() => null);\n  // Ephemeral, so iOS opens checkout without asking to \"sign in\" with the payment site first.\n  if (browser)\n    await browser.openAuthSessionAsync(url, MOBILE_BILLING_CALLBACK_URL, {\n      preferEphemeralSession: true,\n    });\n  else await Linking.openURL(url);\n  return rpc(\"billing/refresh\");\n}"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/rakazo/rakazo-main && echo \"=== contracts billing files ===\"; ls packages/contracts/src/ | grep -iE 'billing|plan|credit|entitle|subscription'; echo \"=== mobile lib billing ===\"; sed -n '1,120p' apps/mobile/lib/billing.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": -1,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/rakazo/rakazo-main",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "0b485f38-3b7d-4d17-9314-711f011a1225",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

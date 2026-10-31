@@ -1,0 +1,36 @@
+{
+  "id": "26fc5f56-ba73-471e-9faa-5b5a2c906f8d",
+  "timestamp": "2026-10-31T11:47:23.517799",
+  "source": "environment",
+  "parent_id": "e188b745-d638-43eb-b194-e3f9e5162f53",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-a8cce5d493530c24",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "diff --git a/packages/core/src/run-error.ts b/packages/core/src/run-error.ts\nindex c69c274..5e0439c 100644\n--- a/packages/core/src/run-error.ts\n+++ b/packages/core/src/run-error.ts\n@@ -1,5 +1,5 @@\n-import type { RunErrorKind } from \"@rakazo/contracts\";\n-import { COMPUTER_RATE_LIMIT_ERROR, providerQuotaResetAt } from \"@rakazo/contracts\";\n+import type { RunErrorKind } from \"@alternativebot/contracts\";\n+import { COMPUTER_RATE_LIMIT_ERROR, providerQuotaResetAt } from \"@alternativebot/contracts\";\n import { stuckWorkStatusMessages } from \"./stuck-work.js\";\n\n export const MISSING_TOOL_FINAL_RESPONSE_ERROR =\n@@ -24,13 +24,6 @@ export const MODEL_REQUEST_LIMIT_ERROR =\n\n export const MISSING_MODEL_RUN_ERROR = \"Connect a model in Settings before running bots.\";\n\n-/** A deployment model run while the organization has not chosen Rakazo credits. */\n-export const HOSTED_MODEL_CREDITS_REQUIRED_ERROR =\n-  \"Connect your own API key in Models or choose Rakazo credits in Billing.\";\n-\n-/** A run in a billing organization without a paid plan, credits, or free period. */\n-export const MODEL_ACCESS_REQUIRED_RUN_ERROR = \"Subscribe in Billing to keep running bots.\";\n-\n /** The API rejects a send with this message until the user can reach a model. */\n export const MODEL_REQUIRED_SEND_ERROR = \"Connect a model to start a run.\";\n\n@@ -97,14 +90,10 @@ const MODEL_OUTPUT_RUN_ERRORS = new Set([\n   APPROVED_ACTION_NOT_RUN_ERROR,\n ]);\n /** App advice whose fix is connecting a model. */\n-const MODEL_CONNECTION_RUN_ERRORS = new Set([\n-  MISSING_MODEL_RUN_ERROR,\n-  HOSTED_MODEL_CREDITS_REQUIRED_ERROR,\n-]);\n+const MODEL_CONNECTION_RUN_ERRORS = new Set([MISSING_MODEL_RUN_ERROR]);\n const APP_RUN_ERRORS = new Set([\n   ...MODEL_OUTPUT_RUN_ERRORS,\n   ...MODEL_CONNECTION_RUN_ERRORS,\n-  MODEL_ACCESS_REQUIRED_RUN_ERROR,\n   COMPUTER_RATE_LIMIT_ERROR,\n   ...stuckWorkStatusMessages(),\n ]);"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && git --no-pager diff packages/core/src/run-error.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 23728,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "b660bf8b-6053-4946-9683-50eb6061a806",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

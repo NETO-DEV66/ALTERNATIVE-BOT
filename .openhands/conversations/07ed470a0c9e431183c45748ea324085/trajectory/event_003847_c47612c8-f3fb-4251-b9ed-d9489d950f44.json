@@ -1,0 +1,36 @@
+{
+  "id": "c47612c8-f3fb-4251-b9ed-d9489d950f44",
+  "timestamp": "2026-10-31T12:03:28.293296",
+  "source": "environment",
+  "parent_id": "6de65d8f-c2e1-46f2-a0e1-3b3b49000d8f",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-ac2407009e2ed2c8",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "./packages/adapters/src/supermemory-memory-provider.test.ts:122:      \"http://localhost:6767/v3/container-tags/alternativebot%3Abot-1%3Ahistory%3A2\",\n./packages/adapters/src/supermemory-memory-provider.test.ts:123:      \"http://localhost:6767/v3/container-tags/alternativebot%3Abot-1%3Ahistory%3A3\",\n./packages/adapters/src/supermemory-client.test.ts:314:    expect(url).toBe(\"http://localhost:6767/v3/container-tags/alternativebot%3Abot-123\");\n./packages/testkit/src/mention-targets.postgres.test.ts:510:    const adaBot = await rpc<{ id: string }>(app, ada, \"bots/create\", {\n./packages/testkit/src/mention-targets.postgres.test.ts:511:      name: \"AdaBot\",\n./packages/testkit/src/mention-targets.postgres.test.ts:532:      botId: adaBot.id,\n./packages/testkit/src/mention-targets.postgres.test.ts:547:      botIds: [adaBot.id, adaBotB.id],\n./packages/testkit/src/mention-targets.postgres.test.ts:566:    const routineRuns = await prisma.run.count({ where: { botId: adaBot.id, trigger: \"routine\" } });\n=== IFNAMSIZ test baseline ===\n162:    expect(networkMode).toMatch(/^rakazo-computer-bot_isolation-[0-9a-f]{32}$/);\n384:      expect(name).toMatch(/^rakazo-c[0-9a-f]{7}$/);\n385:      expect(Buffer.byteLength(name)).toBeLessThanOrEqual(15);\n407:    // still shows the readable rakazo-computer-* name while iptables matches the interface.\n414:    expect(names).toContain(\"rakazo-computer-bot_1\");\n476:    expect(start).toMatch(/rakazo-computer-control/);\n1648:        networkMode: \"rakazo-computer-bot-1\",\n1649:        networks: { \"rakazo-computer-bot-1\": { IPAddress: \"172.20.0.4\" } },\n2146:      /while true; do\\s+\\/usr\\/local\\/bin\\/rakazo-computer-control\\s+sleep 1\\s+done >\\/tmp\\/rakazo\\/control\\.log 2>&1 &/,\n2172:              ?.replace(\"/usr/local/bin/rakazo-computer-control\", \"control\")"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -rniE '\\baltbot|alt-bot|abot\\b' . --include=*.ts --include=*.tsx --include=*.sh --include=*.yml --include=*.md 2>/dev/null | grep -v node_modules | head -20; echo \"=== IFNAMSIZ test baseline ===\"; git --no-pager show HEAD:infra/sandboxes/supervisor/src/computer-spec.test.ts | grep -n 'rakazo-c\\|toBeLessThanOrEqual(15)' | head",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 25122,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "faa85e5a-3ee8-4188-8ea1-b667c8342abc",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

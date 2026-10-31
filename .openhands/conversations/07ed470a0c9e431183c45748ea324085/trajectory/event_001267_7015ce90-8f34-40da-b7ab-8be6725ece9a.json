@@ -1,0 +1,36 @@
+{
+  "id": "7015ce90-8f34-40da-b7ab-8be6725ece9a",
+  "timestamp": "2026-10-31T10:56:19.702722",
+  "source": "environment",
+  "parent_id": "c71525e7-4083-4b88-9dd2-9b585f5c799f",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8ff97c49febb2b1a",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "credentialId?: string,\n): Promise<AgentRunRequest[\"model\"]> {\n  const { credential, resolved } = await resolveConnectedModelKey(\n    deps,\n    scope,\n    provider,\n    modelId,\n    registerSecrets,\n    requireStoredSecret,\n    credentialId,\n  );\n  return {\n    provider,\n    id: modelId,\n    ...(credentialId ? { connectionId: credentialId } : {}),\n    apiKey: resolved.oauth ? undefined : resolved.apiKey,\n    callObserver: resolved.callObserver,\n    ...cloudflareRunFields(resolved),\n    baseUrl: resolved.baseUrl,\n    apiProtocol: resolved.apiProtocol,\n    headers: resolved.headers,\n    allowPrivateEndpoint: resolved.allowPrivateEndpoint,\n    cacheCapabilities: resolved.cacheCapabilities,\n    contextWindow: resolved.contextWindow,\n\n    reasoning: resolved.reasoning,\n  const resolved = await resolveModelKey(\n    deps,\n    scope.userId,\n    scope.spaceId,\n    credential,\n    provider,\n    id,\n  );\n  return {\n    provider,\n    id,\n    apiKey: resolved.oauth ? undefined : resolved.apiKey,\n    callObserver: resolved.callObserver,\n    ...cloudflareRunFields(resolved),\n    baseUrl: resolved.baseUrl,\n    apiProtocol: resolved.apiProtocol,\n    headers: resolved.headers,\n    allowPrivateEndpoint: resolved.allowPrivateEndpoint,\n    cacheCapabilities: resolved.cacheCapabilities,\n    contextWindow: resolved.contextWindow,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '415,440p;515,535p' packages/adapters/src/run-model.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "32f61d16-a2e7-4d7a-911d-651dead2ebeb",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

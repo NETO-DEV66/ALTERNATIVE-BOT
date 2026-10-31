@@ -1,0 +1,36 @@
+{
+  "id": "07e8adea-4437-4e95-9f28-cf01f8a89109",
+  "timestamp": "2026-10-31T10:16:42.953870",
+  "source": "environment",
+  "parent_id": "19e129f3-8af9-44cd-9e49-137377908662",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-9df91f7f8a1273a8",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== env billing keys ===\n116:  /** Billing turns on only when all three are set; self-hosted installs leave them unset. */\n117:  stripeSecretKey: string | undefined;\n118:  stripeWebhookSecret: string | undefined;\n119:  stripePriceId: string | undefined;\n290:    stripeSecretKey: optional(source.STRIPE_SECRET_KEY),\n291:    stripeWebhookSecret: optional(source.STRIPE_WEBHOOK_SECRET),\n292:    stripePriceId: optional(source.STRIPE_PRICE_ID),\n=== api billing.ts head ===\nimport { setTimeout as sleep } from \"node:timers/promises\";\nimport { ORPCError } from \"@orpc/server\";\nimport type {\n  BillingPrice,\n  BillingProvider,\n  BillingSubscriptionSnapshot,\n} from \"@rakazo/adapter-kit\";\nimport {\n  BillingCheckoutCompletedError,\n  BillingCustomerNotFoundError,\n  BillingNoMonthlyCreditsError,\n} from \"@rakazo/adapter-kit\";\nimport type { Actor, BillingStatus } from \"@rakazo/contracts\";\nimport { BYOK_MONTHLY_PRICE_CENTS } from \"@rakazo/contracts\";\nimport type { BillingAccount, PrismaClient } from \"@rakazo/db\";\nimport {\n  billingAccountForOrganization,\n  byokFreeUntil,\n  claimCheckoutLease,\n  createBillingAccount,\n  creditAccount,\n  expireModelCredits,\n  hasBillingAccess,\n  hasModelAccess,\n  MICROS_PER_DOLLAR,\n  needsBillingPortal,\n  organizationForMember,\n  organizationSeatCount,\n  ownedBillingAccounts,\n  reconcileCreditPurchase,\n  releaseCheckoutLease,\n  replaceBillingCustomer,\n  syncBillingSnapshot,\n} from \"@rakazo/db\";\nimport { getLogger } from \"@rakazo/logging\";\nimport { createReferrals } from \"./referrals.js\";\n\nexport const TRIAL_DAYS = 7;\nconst PRICE_CACHE_MS = 60 * 60 * 1000;\nconst CHECKOUT_LEASE_MS = 120_000;\nconst CHECKOUT_LEASE_POLL_MS = 250;\n/** Stripe returns here after checkout; served by the API through the web origin. */\nexport const BILLING_RETURN_PATH = \"/api/v1/billing/return\";\n\n/** Where checkout was opened; the mobile app's in-app browser closes on the return. */\nexport type BillingClient = \"mobile\" | undefined;\n\n/** Product-side billing: access rules, checkout, and pull-based sync from the provider. */\nexport interface BillingService {\n  readonly modelCreditsEnabled: boolean;\n=== api billing.ts wc ===\n  495 apps/api/src/billing.ts\n   52 apps/api/src/billing-webhook.ts\n  547 total"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/rakazo/rakazo-main && echo \"=== env billing keys ===\"; grep -niE 'billing|stripe|BILLING|PRICE|CREDIT' apps/api/src/env.ts | head -40; echo \"=== api billing.ts head ===\"; sed -n '1,50p' apps/api/src/billing.ts; echo \"=== api billing.ts wc ===\"; wc -l apps/api/src/billing.ts apps/api/src/billing-webhook.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": -1,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/rakazo/rakazo-main",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "1102f84d-14c3-404c-b213-be94269ade33",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

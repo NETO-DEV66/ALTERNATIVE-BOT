@@ -1,0 +1,36 @@
+{
+  "id": "573c0665-91d0-423c-b2a9-64d64e5aea3a",
+  "timestamp": "2026-10-31T11:26:05.581856",
+  "source": "environment",
+  "parent_id": "c643465d-e132-4c1d-8291-7d0cd13d2e49",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-af32b86fd956084a",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "isDeploymentOwner: false,\n    isAdmin: false,\n    needsModel: false,\n    defaultProvider: provider,\n    defaultModel: modelId,\n    hostCredentialProvider: null,\n    hostCredentialSource: null,\n    computerHost: null,\n    canChooseHostComputer: false,\n    sandboxProvider: \"docker\",\n    mcpStdioEnabled: false,\n    avatarStyle: \"organic\" as const,\n    billingEnabled: false,\n    ticketBoardEnabled: false,\n    navLinks: [],\n    phoneCallsEnabled: false,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '185,200p' apps/web/src/pages/ModelSettingsOverlay.test.tsx",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "d6cd6f11-8e47-40db-9b72-a995273a7caa",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

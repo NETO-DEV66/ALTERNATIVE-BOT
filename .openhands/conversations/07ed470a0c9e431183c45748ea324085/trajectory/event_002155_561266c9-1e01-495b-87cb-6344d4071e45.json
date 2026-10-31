@@ -1,0 +1,37 @@
+{
+  "id": "561266c9-1e01-495b-87cb-6344d4071e45",
+  "timestamp": "2026-10-31T11:12:21.774976",
+  "source": "agent",
+  "parent_id": "04300dd5-d004-4af2-869d-ceb90e16422b",
+  "thought": [
+    {
+      "cache_prompt": false,
+      "type": "text",
+      "text": ""
+    }
+  ],
+  "reasoning_content": "`credential` from `start` is destructured and used. In the fallback case, `selected.credential` can be null (deployment fallback with no credential). Let me check what `credential` is used for after. Let's grep for `credential` usages in the run body after line 864.\n\nActually the issue: `start` type is `{provider, id, credential, thinkingLevel, resolved}` where `credential` is `ModelCredential` (non-null) from `startOnBackup` (backup.credential) but `selected.credential` can be null. So the union type has `credential: ModelCredential | null`.\n\nHow did the original handle it? In original, `selected` from `selectConfiguredModel` had `credential: ModelCredential` where `runnable` allowed `credential || hostedProvider match`. So `selected.credential` was still possibly null (fallback case `credential: null`). Hmm, original `selected.credential` type: the ternary yields `{provider, id, credential: ModelCredential}` or `{provider, id, credential: null}`. So still nullable. But original typecheck passed? Wait \u2014 this repo at HEAD may already have type errors. Let me check by running tsc on HEAD version. Actually easier: the task said typecheck was clean after T2 adapter edits previously (per tracker item 1). But now errors appear. Let me check whether these errors existed at HEAD.\n\nLet me stash and check... risky. Instead, let me just look: maybe the errors are pre-existing in HEAD too. Let me check git stash approach quickly with worktree.\n\nActually simplest: run tsc on a clean checkout via git worktree in /tmp. But node_modules needed. Hmm.\n\nAlternative: check if the error is about `selected.credential` type. In HEAD, `resolveModelKey` returned callObserver possibly undefined and the `start` type... the destructure `credential` then used in `resolveModelKey` calls? Let's see line 861 `credential,` destructured from start. Then used where? Let me grep.",
+  "thinking_blocks": [],
+  "responses_reasoning_item": null,
+  "action": {
+    "command": "cd /workspace/project && awk 'NR>=855 && NR<=866 {printf \"%d: %s\\n\", NR, $0}' packages/adapters/src/executor.ts; echo \"=== usages of bare credential after ===\"; awk 'NR>=864 && NR<=1100' packages/adapters/src/executor.ts | grep -n '\\bcredential\\b' | head -20",
+    "is_input": false,
+    "timeout": null,
+    "reset": false,
+    "kind": "TerminalAction"
+  },
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-aabcfe4a69dcb928",
+  "tool_call": {
+    "id": "chatcmpl-tool-aabcfe4a69dcb928",
+    "responses_item_id": null,
+    "name": "terminal",
+    "arguments": "{\"command\": \"cd /workspace/project && awk 'NR>=855 && NR<=866 {printf \\\"%d: %s\\\\n\\\", NR, $0}' packages/adapters/src/executor.ts; echo \\\"=== usages of bare credential after ===\\\"; awk 'NR>=864 && NR<=1100' packages/adapters/src/executor.ts | grep -n '\\\\bcredential\\\\b' | head -20\", \"security_risk\": \"LOW\", \"summary\": \"Check credential usage\"}",
+    "origin": "completion"
+  },
+  "llm_response_id": "gen-1793445137-YMixtbGOSRFI6iSqZB3N",
+  "security_risk": "LOW",
+  "critic_result": null,
+  "summary": "Check credential usage",
+  "kind": "ActionEvent"
+}

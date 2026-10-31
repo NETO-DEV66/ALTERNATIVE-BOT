@@ -1,0 +1,36 @@
+{
+  "id": "25c61ecf-0a2d-41ab-8f0f-020e9a894d54",
+  "timestamp": "2026-10-31T12:07:24.467432",
+  "source": "environment",
+  "parent_id": "c1022704-006b-48e9-881b-10fc7a4a69f2",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8e887792c443db99",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "\"a fill_secret without its login\",\n      [{ kind: \"fill_secret\", ref: \"e1\", field: \"password\" }],\n      \"browser_act fill_secret needs secret: the name of a login saved with request_secret\",\n    ],\n    [\n      \"an unsupported kind\",\n      [{ kind: \"press\", ref: \"e1\" }],\n      \"browser_act action 0 needs kind: click, fill, type, upload, fill_secret, fill_card, fill_pay_token\",\n    ],\n    [\"no actions\", [], \"browser_act requires at least one action\"],\n    [\n=== baseline ===\n      \"a fill_secret without its login\",\n      [{ kind: \"fill_secret\", ref: \"e1\", field: \"password\" }],\n      \"browser_act fill_secret needs secret: the name of a login saved with request_secret\",\n    ],\n    [\n      \"an unsupported kind\",\n      [{ kind: \"press\", ref: \"e1\" }],\n      \"browser_act action 0 needs kind: click, fill, type, upload, fill_secret, fill_card, fill_pay_token\",\n    ],\n    [\"no actions\", [], \"browser_act requires at least one action\"],\n    ["
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '785,795p' packages/adapters/src/browser-tools.test.ts; echo \"=== baseline ===\"; git --no-pager show HEAD:packages/adapters/src/browser-tools.test.ts | sed -n '785,795p'",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 25122,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "83de58ad-1eae-453e-b3ec-d8fa1154797c",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

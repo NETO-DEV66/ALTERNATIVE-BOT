@@ -1,0 +1,36 @@
+{
+  "id": "7fd7ca1d-b74f-48a2-a38e-800eba727551",
+  "timestamp": "2026-10-31T11:12:21.959469",
+  "source": "environment",
+  "parent_id": "8055ee1a-3008-4462-ad31-a657fc326b1c",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-aabcfe4a69dcb928",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "855:           await failRunBeforeModel(primaryFailure.message, primaryFailure.accountFailure);\n856:           return;\n857:         }\n858:         const {\n859:           provider: runModelProvider,\n860:           id: runModelId,\n861:           credential,\n862:           thinkingLevel,\n863:           resolved,\n864:         } = start;\n865:         runSecrets.push(...resolved.redact);\n866:         // A pin stays as it was created. Unpinned runs still record the model they\n=== usages of bare credential after ==="
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && awk 'NR>=855 && NR<=866 {printf \"%d: %s\\n\", NR, $0}' packages/adapters/src/executor.ts; echo \"=== usages of bare credential after ===\"; awk 'NR>=864 && NR<=1100' packages/adapters/src/executor.ts | grep -n '\\bcredential\\b' | head -20",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "561266c9-1e01-495b-87cb-6344d4071e45",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "711cad8a-c3ef-46e3-9ff2-1e925a3beb84",
+  "timestamp": "2026-10-31T11:41:44.704332",
+  "source": "environment",
+  "parent_id": "bba3185f-4bd7-456d-b8fc-f5cbfe42969b",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-a878220e9e7bf75f",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== voice.ts OUT_OF_CREDIT ===\napps/api/src/voice.ts:659:  return code === \"VOICE_OUT_OF_CREDIT\" ? 402 : 403;\napps/api/src/voice.test.ts:660:    [\"VOICE_OUT_OF_CREDIT\", 402],\n\n=== e2e onboarding ===\n  const apiKey = page.getByLabel(\"API key\", { exact: true });\n  await apiKey.fill(\"   \");\n  await expect(continueButton).toBeDisabled();\n  await apiKey.fill(\"fake-test-key\");\n  await expect(continueButton).toBeEnabled();\n  await apiKey.fill(\"\");\n  await expect(continueButton).toBeDisabled();\n});\n\ntest(\"Alternative Bot credits are chosen like a provider, with nothing else to fill in\", async ({\n  page,\n}, testInfo) => {\n  await page.route(\"**/rpc/me\", async (route) => {\n    const response = await route.fetch();\n    const body = (await response.json()) as { json: Record<string, unknown> };\n    await route.fulfill({\n      response,\n      json: { json: { ...body.json, needsModel: true, billingEnabled: true } },\n    });\n  });\n  let funding: unknown = null;\n  await page.route(\"**/rpc/billing/selectFunding\", async (route) => {\n    funding = route.request().postDataJSON().json;\n    await route.fulfill({ json: { json: { ok: true } } });\n  });\n  await signup(page, `credits-${Date.now()}@alternativebot.test`, \"password12\", \"Credits\");\n  await expect(page.getByRole(\"heading\", { name: \"Connect a model\" })).toBeVisible({\n    timeout: 20_000,\n  });\n  await page.getByRole(\"combobox\", { name: \"Provider\" }).click();\n  await page.getByRole(\"option\", { name: \"Alternative Bot credits\", exact: true }).click();\n  await expect(page.getByRole(\"combobox\", { name: \"Model\", exact: true })).toHaveCount(0);\n  await expect(page.getByLabel(/API key/)).toHaveCount(0);\n  await captureScreenshot(page, testInfo, \"onboarding-alternativebot-credits\");\n  await page.getByRole(\"button\", { name: \"Continue\", exact: true }).click();\n  await expect.poll(() => funding).toEqual({ funding: \"credits\" });\n});\n\n=== helpers.ts 200,220 ===\n}\n\nexport async function openUserSettings(\n  page: Page,\n  section?:\n    | \"general\"\n    | \"models\"\n    | \"memory\"\n    | \"voice\"\n    | \"vault\"\n    | \"wallet\"\n    | \"usage\"\n    | \"computer\"\n    | \"billing\"\n    | \"updates\",\n) {\n  // A reload keeps settings open because the URL holds them; closing clears the URL at once.\n  if (!new URL(page.url()).searchParams.has(\"settings\")) {\n    await page.getByTestId(\"user-menu-trigger\").click();\n    await page.getByRole(\"button\", { name: \"Settings\", exact: true }).click();\n  }"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && echo \"=== voice.ts OUT_OF_CREDIT ===\"; grep -n 'VOICE_OUT_OF_CREDIT\\|OUT_OF_CREDIT' apps/api/src/voice.ts apps/api/src/voice.test.ts packages/adapter-kit/src/voice-errors.ts 2>/dev/null | head; echo; echo \"=== e2e onboarding ===\"; sed -n '50,90p' apps/web/e2e/onboarding-model-required.spec.ts; echo; echo \"=== helpers.ts 200,220 ===\"; sed -n '200,220p' apps/web/e2e/helpers.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 19912,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "45756b24-89bc-4c1d-817e-a56affde6c58",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "51762495-78a3-4179-9ec0-e239a967bdc7",
+  "timestamp": "2026-10-31T10:53:26.810496",
+  "source": "environment",
+  "parent_id": "2615d936-0f21-4150-82d3-1a2ec39ba0f7",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-97f1a62bf35396e4",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "import type { AgentToolExecutionObserver } from \"@alternativebot/adapter-kit\";\nimport { toolResultTaintsRun } from \"@alternativebot/core\";\nimport { IMAGE_RETURNING_COMPUTER_TOOLS, MODEL_CANNOT_SEE_MESSAGE } from \"./model-vision.js\";\nimport type { RunContext } from \"./run-context.js\";\nimport { pauseForApproval } from \"./run-context.js\";\nimport type { ToolHandler } from \"./run-tool-gate.js\";\nimport { gateToolCall } from \"./run-tool-gate.js\";\nimport { prepareToolRequest, resolveToolRequest } from \"./run-tool-request.js\";\nimport { PAGE_BROWSER_TOOL_NAMES } from \"./run-tool-selection.js\";\nimport { computerTools, pageBrowserTool } from \"./run-tools-computer.js\";\nimport { fileTools } from \"./run-tools-files.js\";\nimport { fleetTools } from \"./run-tools-fleet.js\";\nimport { cloudAgentTool, connectorTool, integrationTools } from \"./run-tools-integrations.js\";\nimport { memoryTools } from \"./run-tools-memory.js\";\nimport { messagingTools } from \"./run-tools-messaging.js\";\nimport { purchaseTools } from \"./run-tools-purchases.js\";\nimport { secretTools } from \"./run-tools-secrets.js\";\nimport { taskTools } from \"./run-tools-tasks.js\";\nimport { USER_COMPUTER_SHELL_TOOL, userComputerShell } from \"./run-tools-user-computer.js\";\nimport { argumentGiven } from \"./update-bot-patch.js\";\n\nconst TOOL_HANDLERS = new Map<string, ToolHandler>([\n  ...Object.entries(computerTools),\n  ...Object.entries(fileTools),\n  ...Object.entries(memoryTools),\n  ...Object.entries(integrationTools),\n  ...Object.entries(taskTools),\n  ...Object.entries(messagingTools),\n  ...Object.entries(secretTools),\n  ...Object.entries(fleetTools),\n  [USER_COMPUTER_SHELL_TOOL, userComputerShell],\n  ...Object.entries(purchaseTools),\n  ...[...PAGE_BROWSER_TOOL_NAMES].map((name) => [name, pageBrowserTool] as const),\n]);\n\nfunction toolHandler(name: string): ToolHandler {\n  return (\n    TOOL_HANDLERS.get(name) ?? (name.startsWith(\"cloud_agent_\") ? cloudAgentTool : connectorTool)\n  );\n}\n\n/** Run one tool call of this run's model: gate it, then hand it to its tool family. */\nexport async function applyTool(\n  ctx: RunContext,\n  name: string,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '1,45p' packages/adapters/src/run-tools.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "4bc04e83-4d9b-4673-8f4f-20c0a86a6c85",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

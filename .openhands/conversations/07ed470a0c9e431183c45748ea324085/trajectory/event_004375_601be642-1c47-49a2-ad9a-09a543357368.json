@@ -1,0 +1,36 @@
+{
+  "id": "601be642-1c47-49a2-ad9a-09a543357368",
+  "timestamp": "2026-10-31T12:19:38.714210",
+  "source": "environment",
+  "parent_id": "d6c1f882-0966-4155-8d1d-b1834558fade",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-ae53cbefd45e3c31",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "infra/sandboxes/supervisor/src/computer-spec.ts:203: * interface (`-i alternativebot-c+`) instead of ephemeral subnets. Enforcement lives on the\ninfra/sandboxes/supervisor/src/computer-spec.ts:416: * at 15 bytes (IFNAMSIZ), so \"alternativebot-c\" gets a 7-hex-char suffix derived from the\ninfra/sandboxes/supervisor/src/computer-spec.ts:419:export function computerBridgeNameFor(botId: string) {\ninfra/sandboxes/supervisor/src/computer-spec.ts:421:  return `alternativebot-c${hash}`;\ninfra/sandboxes/supervisor/src/computer-spec.ts:450:      ? { Options: { \"com.docker.network.bridge.name\": computerBridgeNameFor(botId) } }\ninfra/sandboxes/supervisor/src/computer-spec.ts:642:  return `alternativebot-computer-${sanitizeIdentifier(botId).slice(0, 32)}-${hash}`;\ninfra/sandboxes/supervisor/src/computer-spec.ts:651:    `alternativebot-computer-${safe}`,\ninfra/sandboxes/supervisor/src/computer-spec.ts:652:    `alternativebot-computer-${safe.slice(0, 32)}-${digest.slice(0, 8)}`,\ninfra/sandboxes/supervisor/src/egress-probe.ts:8: * throwaway container on a `alternativebot-c*` bridge tries TCP to that bridge's gateway,\ninfra/sandboxes/supervisor/src/egress-probe.ts:21:// Matches the ruleset's `alternativebot-c+` interface pattern and Linux's 15-byte limit.\ninfra/sandboxes/supervisor/src/egress-probe.ts:22:export const EGRESS_PROBE_BRIDGE = \"alternativebot-cprobe\";\ninfra/sandboxes/supervisor/src/index.ts:33:  computerBridgeNameFor,\ninfra/sandboxes/supervisor/src/index.ts:286:            computerBridgeNameFor(body.botId);\ninfra/sandboxes/supervisor/src/index.ts:1015:    const cancelRunWork = c.req.header(\"x-alternativebot-cancel-run-work\") === \"1\";\ninfra/sandboxes/supervisor/src/index.ts:1216:// Enforcement is host-side (DOCKER-USER/INPUT on alternativebot-c* bridges); the flag only\ninfra/sandboxes/supervisor/src/index.ts:1860:  const expectedBridge = computerBridgeNameFor(botId);\ninfra/sandboxes/supervisor/src/index.ts:2016:    ? `/tmp/alternativebot-command-${randomUUID()}.completed-124`"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -rn 'computerBridgeNameFor\\|alternativebot-c\\|rakazo-c' infra/sandboxes/supervisor/src/*.ts | grep -v '\\.test\\.'",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 65061,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "2e772e14-78fc-460a-8491-16dc727d9b05",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

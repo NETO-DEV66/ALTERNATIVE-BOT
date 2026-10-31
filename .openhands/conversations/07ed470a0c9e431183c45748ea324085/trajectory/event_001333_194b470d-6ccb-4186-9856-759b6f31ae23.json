@@ -1,0 +1,36 @@
+{
+  "id": "194b470d-6ccb-4186-9856-759b6f31ae23",
+  "timestamp": "2026-10-31T10:57:07.432722",
+  "source": "environment",
+  "parent_id": "e300cd5c-3405-4072-bbe4-ef22e9ca9984",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-860921872324b725",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "home: AgentHomeStore;\n  artifacts: ArtifactStore;\n  jobs: JobPublisher;\n  events: ThreadEvents;\n  workerId: string;\n  runtime: AgentRuntime;\n  secretStore: SecretStore;\n  memoryProviders: MemoryProviderResolver;\n  deploymentModelKey?: string;\n  deploymentModelConfigured?: boolean;\n  messaging?: MessagingSurface;\n  cloudAgent?: CloudAgentConnection | null;\n  paymentWallet?: PaymentWalletProvider | null;\n  notifications?: ExpoPushProvider;\n}): BackgroundJobHandlers {\n  const messagingDeps = deps.messaging\n    ? {\n        prisma: deps.prisma,\n        messaging: deps.messaging,\n        events: deps.events,\n        jobs: deps.jobs,\n        artifacts: deps.artifacts,\n      }\n    : undefined;\n  // The outbox holds every Space's pending sends, so draining it is cross-tenant.\n  const drainMessaging = async () => {\n=== index.test 235-255 ===\n      selectBuiltinToolsForRun({\n        ...options,\n        ticketBoardEnabled: true,\n        disabledBuiltinTools: ticketNames,\n      }).map((tool) => tool.name),\n    ).toEqual(disabled);\n    const purchaseNames = [\"request_purchase\", \"purchase_status\", \"paid_request\"];\n    expect(enabled.filter((name) => purchaseNames.includes(name))).toEqual([]);\n    expect(\n      selectBuiltinToolsForRun({ ...options, paymentWalletEnabled: true })\n        .map((tool) => tool.name)\n        .filter((name) => purchaseNames.includes(name)),\n    ).toEqual(purchaseNames);\n    const updateBot = builtinAgentTools.find((tool) => tool.name === \"update_bot\");\n    expect(updateBot?.inputSchema).toEqual(\n      expect.objectContaining({\n        properties: expect.objectContaining({\n          name: expect.any(Object),\n          description: expect.any(Object),\n          color: expect.any(Object),\n          artifact_id: expect.any(Object),"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '55,80p' packages/adapters/src/background-job-handlers.ts; echo \"=== index.test 235-255 ===\"; sed -n '235,255p' packages/adapters/src/index.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "6af50778-0b50-41fe-9ec8-23e5fda128ec",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

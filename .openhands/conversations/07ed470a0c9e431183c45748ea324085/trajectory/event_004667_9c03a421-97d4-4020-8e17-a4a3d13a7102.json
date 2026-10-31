@@ -1,0 +1,36 @@
+{
+  "id": "9c03a421-97d4-4020-8e17-a4a3d13a7102",
+  "timestamp": "2026-10-31T12:31:42.597178",
+  "source": "environment",
+  "parent_id": "10b12668-fe58-4f57-98dc-d14c16add77e",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-95d3212786989e3c",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "expect(computerDnsMatches([\"1.1.1.1\"], [\"1.1.1.1\"])).toBe(true);\n    expect(computerDnsMatches(null, [\"1.1.1.1\"])).toBe(false);\n    expect(computerDnsMatches([\"1.1.1.1\"], undefined)).toBe(false);\n    expect(computerDnsMatches([\"1.0.0.1\", \"1.1.1.1\"], [\"1.1.1.1\", \"1.0.0.1\"])).toBe(false);\n  });\n\n  it(\"derives deterministic host bridge names within the 15-byte interface limit\", () => {\n    for (const botId of [\"bot\", \"a/b\", \"bot with spaces\", \"x\".repeat(80)]) {\n      const name = computerBridgeNameFor(botId);\n      expect(name).toMatch(/^altbot-c[0-9a-f]{7}$/);\n      expect(Buffer.byteLength(name)).toBeLessThanOrEqual(15);\n      expect(computerBridgeNameFor(botId)).toBe(name);\n    }\n    expect(computerBridgeNameFor(\"a/b\")).not.toBe(computerBridgeNameFor(\"ab\"));\n  });\n\n  it(\"names the bridge only when egress is restricted\", () => {\n    const open = computerNetworkCreateOptions(\"bot_1\", \"owner\", \"open\");"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '375,392p' infra/sandboxes/supervisor/src/computer-spec.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 65061,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "9fa096c7-89e4-4c1a-934e-26cfdc26b51d",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

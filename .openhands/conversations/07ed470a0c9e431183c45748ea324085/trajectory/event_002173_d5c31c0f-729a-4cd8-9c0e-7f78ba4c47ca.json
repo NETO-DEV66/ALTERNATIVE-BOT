@@ -1,0 +1,36 @@
+{
+  "id": "d5c31c0f-729a-4cd8-9c0e-7f78ba4c47ca",
+  "timestamp": "2026-10-31T11:12:51.863312",
+  "source": "environment",
+  "parent_id": "b1920ca2-a00c-4ed8-a909-390f51c0ebc5",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-bf8b2a0e9e70e47d",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "userId: scope.userId,\n          credential: { provider: modelCredentialProviderFilter(provider) },\n        },\n        include: { credential: true },\n      }),\n      prisma.userModelCredential.findMany({\n        where: { userId: scope.userId, provider: modelCredentialProviderFilter(provider) },\n      }),\n    ]);\n    return credentialFromChoice(\n      chooseModelCredential({ provider, modelId, preferences, credentials }),\n    );\n  }\n\n  const requestedModelId = usableModelId(modelId);\n  // When a helper or bot selects a free-form model, prefer the preference that owns\n  // that modelId so runtime uses the same credential the picker advertised.\n  if (requestedModelId) {\n    const matching = await prisma.userModelPreference.findFirst({\n      where: {\n        userId: scope.userId,\n        modelId: requestedModelId,\n        credential: { provider: modelCredentialProviderFilter(provider) },\n      },\n      include: { credential: true },\n      orderBy: [{ updatedAt: \"desc\" }, { credentialId: \"desc\" }],\n    });\n    if (matching) {\n      return credentialFromChoice(\n        chooseModelCredential({ provider, modelId, preferences: [matching], credentials: [] }),\n      );\n    }\n  }\n  const preference = await prisma.userModelPreference.findFirst({\n    where: {\n      userId: scope.userId,\n      credential: { provider: modelCredentialProviderFilter(provider) },\n    },\n    include: { credential: true },\n    orderBy: [{ updatedAt: \"desc\" }, { credentialId: \"desc\" }],\n  });\n  if (preference) {\n    return credentialFromChoice(\n      chooseModelCredential({ provider, modelId, preferences: [preference], credentials: [] }),\n    );\n  }\n  const credential = await findNewestUserModelCredential(prisma, scope.userId, provider);\n  return credentialFromChoice(\n    chooseModelCredential({\n      provider,\n      modelId,\n      preferences: [],\n      credentials: credential ? [credential] : [],\n    }),\n  );\n}\n\n/** One connection by id, with its own model; null when it is gone. */\nexport async function findModelCredentialById(\n  prisma: Pick<PrismaClient, \"userModelCredential\">,\n=== credentialFromChoice ===\n228:function credentialFromChoice<\n229-  C extends OrderedCredential & {\n230-    userId: string;\n231-    label: string;\n232-    secretId: string;\n233-  },\n234->(choice: ReturnType<typeof chooseModelCredential<C>>) {\n235-  if (!choice) return null;\n236-  if (choice.source === \"preference\") return withModelPreference(choice.preference);\n237-  return { ...choice.credential, defaultModel: null, thinkingLevel: null };\n238-}\n239-\n240-export async function findModelCredential(\n241-  prisma: Pick<PrismaClient, \"userModelPreference\" | \"userModelCredential\">,\n242-  scope: ModelCredentialScope,\n243-  provider: string,\n244-  modelId?: string | null,\n245-) {\n246-  if (\n247-    typeof prisma.userModelPreference.findMany === \"function\" &&\n248-    typeof prisma.userModelCredential.findMany === \"function\""
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '240,312p' packages/db/src/model-credentials.ts | tail -60; echo \"=== credentialFromChoice ===\"; grep -n 'function credentialFromChoice' -A 20 packages/db/src/model-credentials.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "a467209d-e47e-4a1c-bdff-d5a6813b2784",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

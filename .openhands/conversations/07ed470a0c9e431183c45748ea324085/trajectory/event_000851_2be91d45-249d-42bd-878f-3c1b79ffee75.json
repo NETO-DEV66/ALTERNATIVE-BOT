@@ -1,0 +1,28 @@
+{
+  "id": "2be91d45-249d-42bd-878f-3c1b79ffee75",
+  "timestamp": "2026-10-31T10:50:26.017638",
+  "source": "user",
+  "parent_id": "419c37d9-92cf-421b-957f-bb0d4bd4844f",
+  "llm_message": {
+    "role": "user",
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "Thike hai pura t5 tak pura karo ok or pakage id com.alternativebot.app yahi rahega ok t1 t2 t3 t4 t5 sab karo jab tak pura na ho sab karo <REDACTED-SECRET>\nSab ke sab karo jab tak pura na ho"
+      }
+    ],
+    "tool_calls": null,
+    "tool_call_id": null,
+    "name": null,
+    "reasoning_content": null,
+    "thinking_blocks": [],
+    "responses_reasoning_item": null
+  },
+  "llm_response_id": null,
+  "activated_skills": [],
+  "extended_content": [],
+  "sender": null,
+  "critic_result": null,
+  "kind": "MessageEvent"
+}

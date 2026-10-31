@@ -1,0 +1,36 @@
+{
+  "id": "bcfa67da-9268-4d00-ba61-68ef9d01a8d1",
+  "timestamp": "2026-10-31T11:24:34.422809",
+  "source": "environment",
+  "parent_id": "a5efe285-fa7d-4599-9b23-9e7cd3be6285",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-bc7d5ebfaf07e1cd",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "src/pages/SettingsOverlay.test.tsx(223,5): error TS2322: Type '\"billing\"' is not assignable to type '\"computer\" | \"confirmations\" | \"general\" | \"memory\" | \"messaging\" | \"models\" | \"space\" | \"updates\" | \"usage\" | \"vault\" | \"voice\" | undefined'.\nsrc/pages/SettingsOverlay.test.tsx(230,22): error TS2322: Type '\"billing\"' is not assignable to type '\"computer\" | \"confirmations\" | \"general\" | \"memory\" | \"messaging\" | \"models\" | \"space\" | \"updates\" | \"usage\" | \"vault\" | \"voice\" | undefined'.\nsrc/pages/SettingsOverlay.test.tsx(308,59): error TS2322: Type '\"wallet\"' is not assignable to type '\"computer\" | \"confirmations\" | \"general\" | \"memory\" | \"messaging\" | \"models\" | \"space\" | \"updates\" | \"usage\" | \"vault\" | \"voice\" | undefined'.\nsrc/pages/SettingsOverlay.test.tsx(314,22): error TS2322: Type '\"wallet\"' is not assignable to type '\"computer\" | \"confirmations\" | \"general\" | \"memory\" | \"messaging\" | \"models\" | \"space\" | \"updates\" | \"usage\" | \"vault\" | \"voice\" | undefined'.\nsrc/pages/shell-overlay.test.ts(78,69): error TS2345: Argument of type '{ readonly kind: \"settings\"; readonly section: \"billing\"; readonly spaceId: \"sp_2\"; }' is not assignable to parameter of type 'ShellOverlay'.\n  Type '{ readonly kind: \"settings\"; readonly section: \"billing\"; readonly spaceId: \"sp_2\"; }' is not assignable to type '{ kind: \"settings\"; section: \"computer\" | \"confirmations\" | \"general\" | \"memory\" | \"messaging\" | \"models\" | \"space\" | \"updates\" | \"usage\" | \"vault\" | \"voice\"; spaceId: string | null; }'.\n    Types of property 'section' are incompatible.\n      Type '\"billing\"' is not assignable to type '\"computer\" | \"confirmations\" | \"general\" | \"memory\" | \"messaging\" | \"models\" | \"space\" | \"updates\" | \"usage\" | \"vault\" | \"voice\"'."
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project/apps/web && timeout 900 node_modules/.bin/tsc --noEmit -p tsconfig.json 2>&1 | head -40",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project/apps/web",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "3116e557-e0ba-4d7b-9d6e-141c6914b72d",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "3691b76f-411f-4860-9336-cc6ac6cecc0b",
+  "timestamp": "2026-10-31T12:51:09.526695",
+  "source": "environment",
+  "parent_id": "7253be10-a164-4361-8ced-286cac0a0306",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-95f978341ae5544e",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "import { readFileSync } from \"node:fs\";\nimport vm from \"node:vm\";\nimport { JSDOM } from \"jsdom\";\nimport { describe, expect, it, vi } from \"vitest\";\nimport { resolveRequestSecretDestination } from \"./bot-secrets.js\";\n\n/** The live page helper's isolated-world script, executed here rather than reimplemented. */\nfunction installPageHelper(url: string, html: string) {\n  const source = readFileSync(\n    new URL(\"../../../infra/sandboxes/computer/alternativebot-page-browser\", import.meta.url),\n    \"utf8\",\n  );\n  const match = source.match(/EVAL_HELPERS = r\"\"\"\\n([\\s\\S]*?)\\n\"\"\"/);\n  if (!match?.[1]) throw new Error(\"page browser helper script was not found\");\n  const dom = new JSDOM(\n    `<!doctype html><html><head><title>Sign in</title></head><body>${html}</body></html>`,\n    {\n      url,\n      pretendToBeVisual: true,\n      runScripts: \"outside-only\",\n    },\n  );\n  const domWindow = dom.window;\n  const elementPrototype = domWindow.Element.prototype as unknown as {\n    getBoundingClientRect: (this: Element) => unknown;\n  };\n  // jsdom has no layout: every element is a 10 px square unless data-rect=\"left,top,width,height\".\n  elementPrototype.getBoundingClientRect = function () {\n    const [left = 0, top = 0, width = 10, height = 10] = (\n      this.getAttribute(\"data-rect\") ?? \"0,0,10,10\"\n    )\n      .split(\",\")\n      .map(Number);\n    return {\n      width,\n      height,\n      top,\n      left,\n      right: left + width,\n      bottom: top + height,\n      x: left,\n      y: top,\n      toJSON() {\n        return {};\n      },\n    };\n  };\n  vm.runInContext(match[1], dom.getInternalVMContext());\n  const browser = (\n    domWindow as unknown as {\n      __alternativebotPageBrowser: {\n        snapshot: () => {\n          elements: Array<{ ref: string; name: string; role: string; value?: string }>;\n          tree: string;\n          frames: boolean;\n        };\n        findCard: (token: string) => number;\n        hasCardField: () => boolean;\n        focusCard: () => boolean;\n        cardHolds: () => boolean;\n        cardTyped: (length: number) => boolean;\n        emptyCard: () => void;\n        fill: (ref: string, value: string, origin?: string, field?: string) => { url: string };\n        focusForKeys: (ref: string, whole?: boolean) => { focused: boolean };\n        focusHolds: () => boolean;\n        typed: (ref: string, text: string) => boolean;\n      };\n    }\n  ).__alternativebotPageBrowser;\n  return { domWindow, browser };\n}\n\nfunction fieldValue(window: JSDOM[\"window\"], label: string): string {\n  const field = window.document.querySelector(`[aria-label=\"${label}\"]`) as {\n    value?: string;\n  } | null;\n  return field?.value ?? \"\";\n}\n\nfunction refFor(name: string, elements: Array<{ ref: string; name: string }>) {"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '1,80p' packages/adapters/src/page-browser-login-fill.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 183146,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "46930459-aeb7-44a0-a683-4cd1b569c89c",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

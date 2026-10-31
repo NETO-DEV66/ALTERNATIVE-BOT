@@ -1,0 +1,36 @@
+{
+  "id": "40606fd7-0952-48d0-93c9-f10ab3b11fb4",
+  "timestamp": "2026-10-31T10:52:26.293485",
+  "source": "environment",
+  "parent_id": "6f340705-63a1-47db-ad6d-9f2820226324",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-ad8f806ff8c51fdc",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "historyWindowSize,\n  LEGACY_HISTORY_WINDOW_SIZE,\n  MAX_RECALLED_MEMORIES,\n  selectCompactedHistory,\n} from \"./history-compaction.js\";\nimport { createMediaGenerationProvider } from \"./media-generation-factory.js\";\nimport { loadAgentMemoryContext } from \"./memory-context.js\";\nimport { HostedModelCreditsRequiredError } from \"./model-credit-observer.js\";\nimport {\n  effectiveModelRole,\n  resolveMemberMainModel,\n  selectConfiguredModel,\n} from \"./model-roles.js\";\nimport {\n  findConnectedModelCredential,\n  PINNED_PROVIDER_NOT_CONNECTED,\n  pinnedModelCredentialError,\n  runModelChoice,\n} from \"./model-selection.js\";\nimport { modelAcceptsImageInput } from \"./model-vision.js\";\nimport { usesNativeShell } from \"./native-shell.js\";\nimport { paymentWalletConnected } from \"./payment-wallets.js\";\nimport { isRetiredModelCredentialError } from \"./pi-oauth.js\";\nimport { loadPurchaseRedactions } from \"./purchase-service.js\";\nimport { loadReplyContext, messageToAgentHistoryText } from \"./reply-context.js\";\nimport { backOffRoutineAfterAccountError } from \"./routine-backoff.js\";\nimport { lateRoutineRunInstruction } from \"./routine-lateness.js\";\nimport { lazyRunComputer } from \"./run-computer.js\";\nimport type {\n  RunComputerUseState,\n  RunContext,\n  RunLeaseState,\n  RunningHelper,\n  RunState,\n} from \"./run-context.js\";\nimport { restoreTurnCheckpointEffects, settleRunningHelpers } from \"./run-context.js\";\nimport { APPROVED_EFFECT_REPLAY_ORDER, buildApprovalContinuation } from \"./run-effects.js\";\nimport {\n  BOT_DIRECTORY_LIMIT,\n  dockerComputerToolInstruction,\n  persistentComputerInstruction,\n  runIdentityInstruction,\n  threadContextForRun,\n  userTurnInstructions,\n  voiceCallInstruction,\n} from \"./run-instructions.js\";\nimport {\n  computerRetryDelay,\n  createRunWorkspaceCheckpoint,\n  failRunBeforeTurn,\n  mayOpenModelStream,\n  providerOutageRetryDelay,\n  RUN_SETUP_FAILURE_LIMIT,\n  renewRunLease,\n  requeueComputerRun,\n  requeueRunAfterShutdown,\n  setupFailureStreak,\n  startNextWaitingRun,\n  writeComputerRunRequeue,\n} from \"./run-lifecycle.js\";\nimport { withRunLease } from \"./run-messages.js\";\nimport {\n  cloudflareRunFields,\n  isTerminalModelSetupError,\n  modelCreditBillingEnabled,\n  resolveConnectedModelKey,\n  resolveConnectedRunModel,\n  resolveModelKey,\n  resolveRunModel,\n  runtimeFallbackModel,\n} from \"./run-model.js\";"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '90,160p' packages/adapters/src/executor.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "7c9fe031-3dc4-44a0-893f-1e1e408777d7",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

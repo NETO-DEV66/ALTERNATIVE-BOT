@@ -1,0 +1,36 @@
+{
+  "id": "b37983b3-6243-48b4-bbb3-d7790b4dc327",
+  "timestamp": "2026-10-31T10:59:27.264080",
+  "source": "environment",
+  "parent_id": "177898a4-bfd8-4391-8962-d178136adf7e",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-84a756f050915709",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== triggers detail ===\npackages/db/prisma/migrations/20261023000300_billing_audit/migration.sql:28:CREATE FUNCTION billing_audit_immutable() RETURNS trigger LANGUAGE plpgsql AS $$\npackages/db/prisma/migrations/20261023000300_billing_audit/migration.sql:30:CREATE TRIGGER billing_audit_no_mutation BEFORE UPDATE OR DELETE OR TRUNCATE ON billing_audit_events FOR EACH STATEMENT EXECUTE FUNCTION billing_audit_immutable();\npackages/db/prisma/migrations/20261023000300_billing_audit/migration.sql:31:CREATE FUNCTION billing_audit_revision() RETURNS trigger LANGUAGE plpgsql AS $$\npackages/db/prisma/migrations/20261023000300_billing_audit/migration.sql:33:CREATE TRIGGER credit_audit_revision BEFORE UPDATE ON model_credit_entries FOR EACH ROW EXECUTE FUNCTION billing_audit_revision();\npackages/db/prisma/migrations/20261023000300_billing_audit/migration.sql:34:CREATE TRIGGER usage_audit_revision BEFORE UPDATE ON usage_records FOR EACH ROW EXECUTE FUNCTION billing_audit_revision();\npackages/db/prisma/migrations/20261023000300_billing_audit/migration.sql:35:CREATE FUNCTION billing_audit_credit() RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER SET search_path = pg_catalog, public AS $$\npackages/db/prisma/migrations/20261023000300_billing_audit/migration.sql:53:CREATE TRIGGER credit_audit_write AFTER INSERT OR UPDATE ON model_credit_entries FOR EACH ROW EXECUTE FUNCTION billing_audit_credit();\npackages/db/prisma/migrations/20261023000300_billing_audit/migration.sql:54:CREATE FUNCTION billing_audit_usage() RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER SET search_path = pg_catalog, public AS $$\npackages/db/prisma/migrations/20261023000300_billing_audit/migration.sql:63:CREATE TRIGGER usage_audit_write AFTER INSERT OR UPDATE ON usage_records FOR EACH ROW EXECUTE FUNCTION billing_audit_usage();\npackages/db/prisma/migrations/20261023000300_billing_audit/migration.sql:64:CREATE FUNCTION billing_audit_account_closed() RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER SET search_path = pg_catalog, public AS $$\npackages/db/prisma/migrations/20261023000300_billing_audit/migration.sql:70:CREATE TRIGGER credit_audit_account_closed BEFORE DELETE ON model_credit_accounts FOR EACH ROW EXECUTE FUNCTION billing_audit_account_closed();\npackages/db/prisma/migrations/20261023000500_credit_expiration/migration.sql:17:CREATE TRIGGER lot_audit_revision BEFORE UPDATE ON model_credit_lots FOR EACH ROW EXECUTE FUNCTION billing_audit_revision();\npackages/db/prisma/migrations/20261023000500_credit_expiration/migration.sql:18:CREATE FUNCTION billing_audit_lot() RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER SET search_path = pg_catalog, public AS $$\npackages/db/prisma/migrations/20261023000500_credit_expiration/migration.sql:24:CREATE TRIGGER lot_audit_write AFTER INSERT OR UPDATE ON model_credit_lots FOR EACH ROW EXECUTE FUNCTION billing_audit_lot();\npackages/db/prisma/migrations/20261023000400_billing_audit_access/migration.sql:6:CREATE FUNCTION billing_credit_identity_immutable() RETURNS trigger LANGUAGE plpgsql AS $$\npackages/db/prisma/migrations/20261023000400_billing_audit_access/migration.sql:15:CREATE TRIGGER credit_identity_immutable BEFORE UPDATE ON model_credit_entries FOR EACH ROW EXECUTE FUNCTION billing_credit_identity_immutable();"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -rn 'CREATE TYPE' packages/db/prisma/migrations/*billing* packages/db/prisma/migrations/*credit* packages/db/prisma/migrations/*referral* packages/db/prisma/migrations/*purchase* packages/db/prisma/migrations/*payment* 2>/dev/null | head; echo \"=== triggers detail ===\"; grep -rn 'CREATE TRIGGER\\|CREATE OR REPLACE FUNCTION\\|CREATE FUNCTION' packages/db/prisma/migrations/20261023000300_billing_audit/migration.sql packages/db/prisma/migrations/20261023000500_credit_expiration/migration.sql packages/db/prisma/migrations/20261023000400_billing_audit_access/migration.sql",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "e73b31df-573c-44f1-9888-59c9ae972667",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

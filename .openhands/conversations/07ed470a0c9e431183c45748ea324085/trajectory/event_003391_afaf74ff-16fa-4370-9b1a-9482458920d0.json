@@ -1,0 +1,36 @@
+{
+  "id": "afaf74ff-16fa-4370-9b1a-9482458920d0",
+  "timestamp": "2026-10-31T11:44:05.428830",
+  "source": "environment",
+  "parent_id": "45b6b73e-8663-47ac-81b0-abf5847bd4ee",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b21ec26db4d0bf00",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== executor.test.ts billing context ===\n      },\n      message: { findMany: vi.fn(async () => []) },\n      task: { findUniqueOrThrow: vi.fn(async () => ({ id: \"task-1\", prompt: \"hello\" })) },\n      connection: { findMany: vi.fn(async () => []) },\n      space: {\n        findFirst: vi.fn(async () => ({ organization: { modelCredits: { mode: \"byok\" } } })),\n        findUnique: vi.fn(async () => ({\n          organization: {\n            modelCredits: {\n              mode: \"byok\",\n              balanceMicros: 0n,\n              byokFreeUntil: new Date(Date.now() - 1000),\n            },\n            billing: null,\n          },\n        })),\n      },\n      userModelPreference: {\n        findFirst: vi.fn(async (args: { where: { isDefault?: boolean } }) =>\n          args.where.isDefault\n            ? modelPreference({\n                provider: \"openrouter\",\n                secretId: \"secret-or\",\n                modelId: \"deepseek/deepseek-v4-flash-0731\",\n              })\n            : null,\n        ),\n      },\n      userModelCredential: { findMany: vi.fn(async () => []), findFirst: vi.fn(async () => null) },\n      deploymentSettings: { findUnique: vi.fn(async () => null) },\n      taughtSkill: { findMany: vi.fn(async () => []) },\n      secret: { findMany: vi.fn(async () => []) },\n      vaultCredential: { findMany: vi.fn(async () => []) },\n      agentSkill: { findMany: vi.fn(async () => []) },\n      scratchpadItem: { findMany: vi.fn(async () => []) },\n    } as unknown as PrismaClient;\n    withSpaceMain(prisma, \"openrouter\", \"deepseek/deepseek-v4-flash-0731\");\n    const executor = createRunExecutor({\n      prisma,\n      billingEnabled: true,\n      runtime: {\n        describe: () => ({ capabilities: { scripted: false } }),\n        run: runtimeRun,\n      },\n      memoryProviders: { resolve: vi.fn(async () => null) },\n      memory: { read: vi.fn(async () => ({ documents: [] })) },\n      events: { append: vi.fn(async () => undefined), finalizeRun },\n      jobs: { enqueue: vi.fn(async () => undefined) },\n      secrets: [],\n    } as unknown as Parameters<typeof createRunExecutor>[0]);\n\n    await executor.continueRun(\"run-1\", \"worker-1\");\n\n    expect(finalizeRun).toHaveBeenCalledWith(\n      expect.objectContaining({\n        outcome: \"failed\",\n        error: \"Subscribe in Billing to keep running bots.\",\n      }),\n    );\n    expect(runtimeRun).not.toHaveBeenCalled();\n  });"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -rniE 'billing|modelCredit|credits|subscribe in billing|funding' packages/adapters/src/executor.ts apps/api/src/executor*.ts 2>/dev/null | head; echo \"=== executor.test.ts billing context ===\"; sed -n '3150,3210p' packages/adapters/src/executor.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 21955,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "d97b76c5-e537-41df-8dae-2fa890f82622",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

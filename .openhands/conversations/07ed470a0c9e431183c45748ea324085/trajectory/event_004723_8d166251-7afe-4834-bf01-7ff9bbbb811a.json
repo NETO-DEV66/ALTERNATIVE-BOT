@@ -1,0 +1,36 @@
+{
+  "id": "8d166251-7afe-4834-bf01-7ff9bbbb811a",
+  "timestamp": "2026-10-31T12:33:25.284908",
+  "source": "environment",
+  "parent_id": "85129ffc-6c4c-4fb4-ac86-a8fe16a6392b",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8a5175aa17f84774",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "const legacy = await call(\"models/backups\", {});\n    expect((await legacy.response.json()).json).toEqual(backups);\n  });\n});\n\nit(\"lets a deployment-managed model lead the main model like any other purpose\", async () => {\n  vi.stubEnv(\"PI_DEFAULT_PROVIDER\", \"openrouter\");\n  vi.stubEnv(\"OPENROUTER_API_KEY\", \"fake-hosted-key\");\n  try {\n    const { call, prisma, roles } = setup({ credits: true });\n    const primary = { provider: availableModel.provider, modelId: availableModel.id };\n    const catalog = await call(\"models/forRole\", { role: \"main\" });\n    expect((await catalog.response.json()).json).toContainEqual(\n      expect.objectContaining({ id: primary.modelId, managed: true }),\n    );\n    const main = await call(\"models/setRole\", { role: \"main\", primary });\n    expect(main.response.status).toBe(200);\n    expect(roles()).toEqual([expect.objectContaining({ role: \"main\", position: 0 })]);\n    const preferences = prisma.userModelPreference as unknown as {\n      upsert: ReturnType<typeof vi.fn>;\n      updateMany: ReturnType<typeof vi.fn>;\n    };\n    expect(preferences.upsert).not.toHaveBeenCalled();\n    expect(preferences.updateMany).not.toHaveBeenCalled();\n    const approval = await call(\"models/setRole\", { role: \"approval\", primary });\n    expect(approval.response.status).toBe(200);\n  } finally {\n    vi.unstubAllEnvs();\n  }\n});\n=== credits option usage ===\n20:    credits?: boolean;\n105:      findFirst: vi.fn(async () => ({ organization: { modelCredits: { mode: \"credits\" } } })),\n112:        !options.credits &&\n119:        !options.credits && where.userId === owner.userId && where.id === credential.id\n152:    billing: options.credits ? { modelCreditsEnabled: true } : undefined,\n723:    const { call, prisma, roles } = setup({ credits: true });"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '714,745p' apps/api/src/models-backups.test.ts; echo \"=== credits option usage ===\"; grep -n 'credits' apps/api/src/models-backups.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 65061,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "fa91c234-f478-4554-8c11-ea4635efdb6e",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

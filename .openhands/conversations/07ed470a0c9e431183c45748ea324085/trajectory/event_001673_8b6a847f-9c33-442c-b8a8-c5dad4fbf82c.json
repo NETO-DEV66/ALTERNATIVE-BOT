@@ -1,0 +1,36 @@
+{
+  "id": "8b6a847f-9c33-442c-b8a8-c5dad4fbf82c",
+  "timestamp": "2026-10-31T11:03:17.389172",
+  "source": "environment",
+  "parent_id": "3824f71e-4712-479a-a569-4829a2802079",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-a6c6170e43fe872c",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "{\n  \"compilerOptions\": {\n    \"target\": \"ES2023\",\n    \"lib\": [\"ES2023\"],\n    \"types\": [\"node\"],\n    \"module\": \"NodeNext\",\n    \"moduleResolution\": \"NodeNext\",\n    \"strict\": true,\n    \"skipLibCheck\": true,\n    \"declaration\": true,\n    \"declarationMap\": true,\n    \"sourceMap\": true,\n    \"esModuleInterop\": true,\n    \"verbatimModuleSyntax\": true,\n    \"isolatedModules\": true,\n    \"noUncheckedIndexedAccess\": true,\n    \"noImplicitOverride\": true,\n    \"resolveJsonModule\": true,\n    \"forceConsistentCasingInFileNames\": true,\n    \"customConditions\": [\"development\"]\n  }\n}\n=== adapters tsconfig ===\n{\n  \"extends\": \"../../tsconfig.base.json\",\n  \"compilerOptions\": {\n    \"rootDir\": \"src\",\n    \"noEmit\": true\n  },\n  \"include\": [\"src\"]\n}"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && cat tsconfig.base.json 2>/dev/null | head -40; echo \"=== adapters tsconfig ===\"; cat packages/adapters/tsconfig.json",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "5b8ec22d-9ed2-42c7-b4cb-14c0094a89ec",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

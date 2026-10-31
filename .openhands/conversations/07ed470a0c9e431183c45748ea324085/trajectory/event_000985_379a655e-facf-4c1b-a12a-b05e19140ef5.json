@@ -1,0 +1,36 @@
+{
+  "id": "379a655e-facf-4c1b-a12a-b05e19140ef5",
+  "timestamp": "2026-10-31T10:52:53.777873",
+  "source": "environment",
+  "parent_id": "8e8892bc-97b7-4a2a-a64f-5a7048057311",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-bb3791991500fa4e",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "996:        const paymentWallet = deps.paymentWallet;\n997:        const paymentWalletEnabled = paymentWallet\n998:          ? await paymentWalletConnected(\n999:              { prisma: deps.prisma, secretStore: deps.secretStore, paymentWallet },\n1072:            paymentWalletEnabled,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -n 'paymentWallet\\|purchaseTools\\|paymentWalletEnabled' packages/adapters/src/executor.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "00ec60c0-fb55-48b1-8458-f34fbb563fde",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

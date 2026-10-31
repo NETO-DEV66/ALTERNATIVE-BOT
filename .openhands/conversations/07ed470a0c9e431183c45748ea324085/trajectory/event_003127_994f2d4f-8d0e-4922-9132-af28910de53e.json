@@ -1,0 +1,36 @@
+{
+  "id": "994f2d4f-8d0e-4922-9132-af28910de53e",
+  "timestamp": "2026-10-31T11:36:36.711767",
+  "source": "environment",
+  "parent_id": "95ab2572-b034-451c-a3d2-f13e5cd85d95",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-ad190d6cc12ad73b",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "exit=0"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project/packages/adapter-kit && timeout 300 node_modules/.bin/tsc --noEmit -p tsconfig.json 2>&1 | head -20; echo \"exit=$?\"",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 17917,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project/packages/adapter-kit",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "462d442d-106b-48ff-935b-2fa6346d3f28",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

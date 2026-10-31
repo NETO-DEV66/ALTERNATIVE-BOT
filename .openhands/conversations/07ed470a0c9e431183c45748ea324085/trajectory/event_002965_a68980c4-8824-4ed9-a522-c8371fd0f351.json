@@ -1,0 +1,36 @@
+{
+  "id": "a68980c4-8824-4ed9-a522-c8371fd0f351",
+  "timestamp": "2026-10-31T11:33:50.128107",
+  "source": "environment",
+  "parent_id": "faf6fb68-f00f-4e30-863d-5ad7f129fd00",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-83341a53b857cd1c",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "PAYMENT_WALLET_CLIENT_ID=\n```\n\nUsers then see a Link connect button in Settings. Connecting opens Link's sign-in page with a code to confirm. Once connected, bots get `request_purchase`, `purchase_status` and `paid_request`. Each request names the amount and reason; the user approves or denies it in Link.\n\nLink is available to users in the US and Canada only.\n\nUnknown or blank values fall back to `none` instead of failing at boot.\n\n### How a purchase is paid\n\n- **Card.** Approval issues a single-use card. The bot types it into the checkout on the purchase's own HTTPS origin, in the page or in a known payment provider's frame on it.\n- **Pay token.** A Stripe checkout that accepts Link pay tokens says so in the page snapshot, with its merchant account. The bot requests the purchase for that account, and after approval hands the token to the checkout, which then shows the user's saved Link card. Tokens expire 30 minutes after approval.\n- **Paid HTTP requests.** `paid_request` sends an HTTPS request. If the server answers `402 Payment Required` with a Machine Payments Protocol challenge for Stripe, the amount comes from the challenge and the user approves it; the bot then sends the request again and it carries the payment. Other payment methods are never paid. The request is stored encrypted until it is sent, it may not carry credentials or cookies, and redirects are reported instead of followed. A payment token is used once; a refused paid request needs a new approval.\n\n### Disconnecting\n\nDisconnecting in Settings revokes the connection with the provider. If the provider revokes it first (for example, the user signs out of the connection in Link), purchase tools stop working until the user connects again.\n\n### Offline wallet verification\n\n`PAYMENT_WALLET_PROVIDER=emulator` runs an in-process wallet for development and tests. Sign-in completes immediately; purchases are approved on the next status check, and amounts above 1,000.00 are denied. It fills the test card `4242 4242 4242 4242`, issues fake pay tokens, and pays Stripe challenges in 402 responses with a fake token. A shared conformance suite runs against the emulator and against the Link adapter backed by a fake Link API and a fake paid API, without network calls.\n=== self-host.md 115,135 ===\n  [Docker computers](./self-host-docker-computers.md): where bot computers run and how they are\n  limited.\n- [Storage and encryption](./self-host-storage.md): content encryption, object storage and upload\n  limits.\n- [Production deployment](./self-host-production.md): a public single-VM install with automatic\n  HTTPS.\n- [Backup and restore](./self-host-backups.md) and [upgrading](./self-host-upgrading.md).\n- [Logs and monitoring](./self-host-observability.md): logs, error reports, traces, security events\n  and alerts.\n- [Apps and clients](./self-host-clients.md): mobile and desktop apps, push, client updates and web\n  page settings.\n- [Billing](./self-host-billing.md): optional Stripe plans and model credits.\n- [Restricted networks](./self-host-restricted-network.md): mirrors when downloads are blocked.\n\n## Reporting a problem\n\nAttach a diagnostics report to a [self-host issue](https://github.com/elie222/alternativebot/issues/new?template=self-host.yml):\n\n```bash\ndocker compose -f docker-compose.images.yml exec api node dist/cli/diagnostics.js\n```\n=== models.md 12,25 ===\n- **OpenAI-compatible server URL** for a model you host yourself, such as Ollama or vLLM on your own\n  machine. Paste the address, choose **Find models**, and pick one. Under **Advanced** you can set\n  its context limit, whether it supports images, and its reasoning effort.\n\nConnected providers are listed under **Providers** and are available in every [space](./spaces.md).\n\n> [!NOTE]\n> On alternativebot.com you can skip this and choose **Use Alternative Bot credits**, which includes monthly model\n> credits. See [Account and billing](./account.md).\n\n## Main model and fallbacks\n\n**Main model** is what every bot uses unless you choose otherwise. Choose **Add fallback** to list\nbackup models; if the main model fails or hits a limit, the bot moves to the next one. **Move up**"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '245,275p' docs/self-host-integrations.md; echo \"=== self-host.md 115,135 ===\"; sed -n '115,135p' docs/self-host.md; echo \"=== models.md 12,25 ===\"; sed -n '12,25p' docs/models.md",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 17917,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "68e35396-2dba-4be0-af20-4415f7c927b9",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

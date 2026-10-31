@@ -1,0 +1,36 @@
+{
+  "id": "f5d870b2-dd5b-4d70-a505-d6298918ce23",
+  "timestamp": "2026-10-31T10:28:44.387687",
+  "source": "environment",
+  "parent_id": "933efd24-178e-416e-96eb-6b73871b47f5",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b7ea7f83971c098f",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== router.ts 1-70 ===\nimport type {\n  AgentHomeStore,\n  ArtifactStore,\n  JobPublisher,\n  MemoryStore,\n  PaymentWalletProvider,\n  ProductAnalytics,\n  SandboxProvider,\n  SecretStore,\n  TransactionalEmailProvider,\n} from \"@alternativebot/adapter-kit\";\nimport type {\n  CloudAgentConnection,\n  CodexLiveCatalog,\n  ComposioProvider,\n  ConnectorRegistry,\n  FaviconResolver,\n  IntegrationProviderSettings,\n  McpConnector,\n  McpOAuthBroker,\n  MemoryProviderResolver,\n  MessagingInstallations,\n  PiOAuthLogins,\n  PluginRepoFetcher,\n  PluginTextReader,\n  ProviderCatalogCache,\n  PushTokenStore,\n  RemoteConnectorDependencies,\n  TicketChangeNotifier,\n  verifyModelServesAgents,\n} from \"@alternativebot/adapters\";\nimport type { Auth } from \"@alternativebot/auth\";\nimport type { NavLink } from \"@alternativebot/contracts\";\nimport type { BoardEvents, PrismaClient, ThreadEvents } from \"@alternativebot/db\";\nimport type { BillingService } from \"./billing.js\";\nimport { accountRoutes } from \"./routes/account.js\";\nimport { availabilityRoutes } from \"./routes/availability.js\";\nimport { boardsRoutes } from \"./routes/boards.js\";\nimport { botsRoutes } from \"./routes/bots.js\";\nimport { computerRoutes } from \"./routes/computer.js\";\nimport { connectionsRoutes } from \"./routes/connections.js\";\nimport { contentRoutes } from \"./routes/content.js\";\nimport { createRouterContext } from \"./routes/context.js\";\nimport { mcpRoutes } from \"./routes/mcp.js\";\nimport { memoryRoutes } from \"./routes/memory.js\";\nimport { messagingRoutes } from \"./routes/messaging.js\";\nimport { modelsRoutes } from \"./routes/models.js\";\nimport { paymentWalletRoutes } from \"./routes/payment-wallet.js\";\nimport { routinesRoutes } from \"./routes/routines.js\";\nimport { spacesRoutes } from \"./routes/spaces.js\";\nimport { threadsRoutes } from \"./routes/threads.js\";\nimport type { VoiceDeps } from \"./voice.js\";\n\nexport { nextConnectionLabel } from \"./model-credentials.js\";\nexport { botIntroPrompt, enqueueBotIntroRun } from \"./routes/bots.js\";\nexport { HEARTBEAT_MS, SESSION_RECHECK_MS } from \"./routes/shared.js\";\nexport { callMarkerClientNonce } from \"./routes/threads.js\";\n\nexport interface RouterDeps {\n  pushTokens: PushTokenStore;\n  analytics?: ProductAnalytics;\n  cloudAgent?: CloudAgentConnection | null;\n  /** The deployment's wallet provider; absent hides purchases. */\n  paymentWallet?: PaymentWalletProvider | null;\n  prisma: PrismaClient;\n  events: ThreadEvents;\n  boardEvents: BoardEvents;\n  ticketChanges: TicketChangeNotifier;\n  auth: Auth;\n  jobs: JobPublisher;\n=== router.ts 105-115 ===\n    enabled: boolean;\n    providers: string[];\n    addresses: Record<string, string>;\n    openSignup: boolean;\n  };\n  /** Present only when the deployment bills; self-hosted installs leave it unset. */\n  billing?: BillingService;\n  email?: TransactionalEmailProvider;\n  onEmailError?: (error: unknown) => void;\n  speechSummary?: VoiceDeps[\"speechSummary\"];\n  env: {"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && echo \"=== router.ts 1-70 ===\"; sed -n '1,70p' apps/api/src/router.ts; echo \"=== router.ts 105-115 ===\"; sed -n '105,115p' apps/api/src/router.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "f48fe00a-2be2-4ec0-ad90-ac32f3166436",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

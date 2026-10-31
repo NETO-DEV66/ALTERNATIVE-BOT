@@ -1,0 +1,36 @@
+{
+  "id": "64c946ac-528a-4694-a75a-7b06245ceb3d",
+  "timestamp": "2026-10-31T11:19:19.768461",
+  "source": "environment",
+  "parent_id": "18ff345d-9e78-4d91-a963-cb04d096544f",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8e20e6de310e4deb",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "packages/core/src/run-error.ts | 8 ++++----\n 1 file changed, 4 insertions(+), 4 deletions(-)\n=== head ===\nimport type { RunErrorKind } from \"@alternativebot/contracts\";\nimport { COMPUTER_RATE_LIMIT_ERROR, providerQuotaResetAt } from \"@alternativebot/contracts\";\nimport { stuckWorkStatusMessages } from \"./stuck-work.js\";\n\nexport const MISSING_TOOL_FINAL_RESPONSE_ERROR =\n  \"The tools finished, but the model did not write a final answer. Rephrase the request and try again.\";\n\n/** Resumed without its saved turn, the model did not call the action the user approved. */\nexport const APPROVED_ACTION_NOT_RUN_ERROR =\n  \"The model did not run the approved action. Try again.\";\n\nexport const MODEL_OUTPUT_LIMIT_ERROR = \"The model hit its output limit before writing a response.\";\n\n/** The model ran out of output tokens partway through its reply, even after continuing it. */\nexport const MODEL_OUTPUT_CUT_ERROR = \"The model hit its output limit before finishing its reply.\";\n\n/** The bot's instructions and tools alone do not fit the selected model's context window. */\nexport const MODEL_CONTEXT_TOO_SMALL_ERROR =\n  \"This model's context window is too small. Choose another model.\";\n\n/** The provider account's request budget cannot fit the agent's mandatory context. */\nexport const MODEL_REQUEST_LIMIT_ERROR =\n  \"This connection's request limit is too small. Choose another model.\";\n\nexport const MISSING_MODEL_RUN_ERROR = \"Connect a model in Settings before running bots.\";\n\n/** A deployment model run while the organization has not chosen Alternative Bot credits. */\nexport const HOSTED_MODEL_CREDITS_REQUIRED_ERROR =\n  \"Connect your own API key in Models or choose Alternative Bot credits in Billing.\";\n\n/** A run in a billing organization without a paid plan, credits, or free period. */\nexport const MODEL_ACCESS_REQUIRED_RUN_ERROR = \"Subscribe in Billing to keep running bots.\";\n\n/** The API rejects a send with this message until the user can reach a model. */\nexport const MODEL_REQUIRED_SEND_ERROR = \"Connect a model to start a run.\";\n\n/** Only the structured server response enables explicit file confirmation. */\nexport function isImageInputConfirmation(error: unknown): boolean {\n  if (!error || typeof error !== \"object\") return false;\n  const value = error as { status?: unknown; data?: { reason?: unknown } };\n  return value.status === 409 && value.data?.reason === \"model_image_input_unsupported\";\n}\n\nexport const MODEL_IMAGE_INPUT_UNKNOWN = \"Image input is not configured for this model.\";\n\nexport const MODEL_IMAGE_INPUT_ERROR =\n  \"This model cannot read images. Choose a model that supports images.\";\n\n/** Recognize the send rejection across RPC errors and persisted outbox messages. */\nexport function isModelRequiredSendError(error: unknown): boolean {\n  const message =\n    typeof error === \"string\"\n      ? error\n      : error !== null && typeof error === \"object\" && \"message\" in error\n        ? error.message\n        : undefined;\n  return typeof message === \"string\" && message.trim() === MODEL_REQUIRED_SEND_ERROR;\n}\n\n/** What the API itself answers for an unexpected failure. */\n=== grep removed symbols in repo ===\napps/api/src/onboarding.ts:261:  const providers = deps.connectors.managedProviders();\napps/api/src/onboarding.test.ts:31:      managedProviders: () => [{ catalog: async () => catalog }],\napps/api/src/routes/context.ts:193:    const managedProviders = new Set(\napps/api/src/routes/context.ts:200:        ...decisions.map((entry) => ({ ...entry, managed: managedProviders.has(entry.provider) })),\napps/api/src/routes/connections.ts:219:          : deps.connectors.managedProviders();\npackages/adapters/src/executor-deps.ts:40:    managedProviders?(): ManagedConnectorProvider[];\npackages/adapters/src/run-tools-integrations.ts:99:        deps.connectors?.managedProviders?.() ?? [],\npackages/adapters/src/composio-connector.ts:839:  managedProviders(): ManagedConnectorProvider[] {\npackages/core/src/run-error.ts:32:export const MODEL_ACCESS_REQUIRED_RUN_ERROR = \"Subscribe in Billing to keep running bots.\";\npackages/core/src/run-error.ts:107:  MODEL_ACCESS_REQUIRED_RUN_ERROR,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && git --no-pager diff --stat packages/core/src/run-error.ts; echo \"=== head ===\"; sed -n '1,60p' packages/core/src/run-error.ts; echo \"=== grep removed symbols in repo ===\"; grep -rn 'MODEL_ACCESS_REQUIRED_RUN_ERROR\\|HostedModelCreditsRequiredError\\|modelCreditBillingEnabled\\|hostedModelCreditObserver\\|hasHostedModelCredits\\|spaceHasModelAccess\\|managedProvider' --include=*.ts --include=*.tsx apps packages | grep -v node_modules | grep -v '/generated/' | head -30",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "1ed8116a-ec43-4ace-88a6-a38a1153167d",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

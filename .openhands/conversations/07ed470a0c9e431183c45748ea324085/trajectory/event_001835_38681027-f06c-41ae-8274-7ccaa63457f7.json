@@ -1,0 +1,36 @@
+{
+  "id": "38681027-f06c-41ae-8274-7ccaa63457f7",
+  "timestamp": "2026-10-31T11:05:51.936818",
+  "source": "environment",
+  "parent_id": "b1609fde-bb4b-452d-a1be-7fe3dbfb1a03",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-bb128bb30857c8d2",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "420:model DeploymentSettings {\n421-  id                              String   @id @default(\"default\")\n422-  /// Deprecated: retained for rolling-release compatibility; never authorizes app users.\n423-  ownerUserId                     String?\n424-  signupsEnabled                  Boolean  @default(true)\n425-  signupAllowlist                 String   @default(\"\")\n426-  signupPolicyInitialized         Boolean  @default(false)\n427-  defaultModelProvider            String?\n428-  defaultModelId                  String?\n429-  deploymentModelCredentialCipher String?\n430-  computerHost                    String?\n431-  createdAt                       DateTime @default(now())\n432-  updatedAt                       DateTime @updatedAt\n433-\n434-  @@map(\"deployment_settings\")\n435-}\n436-\n437-/// Append-only security audit trail. No foreign keys, so an account deletion\n438-/// keeps the record of what happened; retention pruning is the only delete.\n439-/// Never stores message content, secrets, or tokens.\n440-model SecurityEvent {\n441-  id        String   @id @default(cuid())\n442-  type      String\n443-  userId    String?\n444-  spaceId   String?\n445-  ip        String?"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -n 'model DeploymentSettings' -A 25 packages/db/prisma/schema.prisma",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "a1f30815-0b8a-42af-8c0f-a5d41d115483",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

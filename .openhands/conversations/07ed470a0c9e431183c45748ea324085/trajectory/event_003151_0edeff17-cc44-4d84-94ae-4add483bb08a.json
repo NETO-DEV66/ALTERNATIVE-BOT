@@ -1,0 +1,36 @@
+{
+  "id": "0edeff17-cc44-4d84-94ae-4add483bb08a",
+  "timestamp": "2026-10-31T11:36:57.361412",
+  "source": "environment",
+  "parent_id": "1f32f147-8efb-46ed-ba36-ffe9e5854048",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-a738e46437bd348c",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "resetI18nForTests(\"nl\");\n    expect(t(\"Account\")).toBe(\"Account\");\n    expect(t(\"Sign in to Alternative Bot\")).toBe(\"Aanmelden bij Alternative Bot\");\n    expect(t(\"New bot\")).toBe(\"Nieuwe bot\");\n    expect(t(\"{runs} runs, {tokens} tokens\", { runs: 3, tokens: 12 })).toBe(\n      \"3 uitvoeringen, 12 tokens\",\n    );\n    expect(t(\"Delete {name}?\", { name: \"Scout\" })).toBe(\"Scout verwijderen?\");\n\n    resetI18nForTests(\"ja\");\n    expect(t(\"Account\")).toBe(\"\u30a2\u30ab\u30a6\u30f3\u30c8\");\n    expect(t(\"Sign in to Alternative Bot\")).toBe(\"Alternative Bot\u306b\u30ed\u30b0\u30a4\u30f3\");\n    expect(t(\"New bot\")).toBe(\"\u65b0\u3057\u3044\u30dc\u30c3\u30c8\");\n    expect(t(\"{runs} runs, {tokens} tokens\", { runs: 3, tokens: 12 })).toBe(\n      \"3\u56de\u306e\u5b9f\u884c\u300112\u30c8\u30fc\u30af\u30f3\",\n    );\n    expect(t(\"Delete {name}?\", { name: \"Scout\" })).toBe(\"Scout\u3092\u524a\u9664\u3057\u307e\u3059\u304b\uff1f\");\n\n    resetI18nForTests(\"de\");\n    expect(t(\"Account\")).toBe(\"Konto\");\n    expect(t(\"Sign in to Alternative Bot\")).toBe(\"Bei Alternative Bot anmelden\");\n    expect(t(\"New bot\")).toBe(\"Neuer Bot\");\n    expect(t(\"{runs} runs, {tokens} tokens\", { runs: 3, tokens: 12 })).toBe(\n      \"3 Ausf\u00fchrungen, 12 Token\",\n    );\n    expect(t(\"Delete {name}?\", { name: \"Scout\" })).toBe(\"Scout l\u00f6schen?\");\n\n    resetI18nForTests(\"es\");\n    expect(t(\"Account\")).toBe(\"Cuenta\");\n    expect(t(\"Sign in to Alternative Bot\")).toBe(\"Inicia sesi\u00f3n en Alternative Bot\");\n    expect(t(\"New bot\")).toBe(\"Nuevo bot\");\n    expect(t(\"{runs} runs, {tokens} tokens\", { runs: 3, tokens: 12 })).toBe(\n      \"3 ejecuciones, 12 tokens\",\n    );\n    expect(t(\"Delete {name}?\", { name: \"Scout\" })).toBe(\"\u00bfEliminar Scout?\");\n  });\n\n  it(\"preserves interpolations in every non-English catalog\", async () => {\n    const { ZH_MESSAGES } = await import(\"./locales/zh\");\n    const { ZH_TW_MESSAGES } = await import(\"./locales/zh-TW\");\n    const { RU_MESSAGES } = await import(\"./locales/ru\");\n    const { DE_MESSAGES } = await import(\"./locales/de\");\n    const { NL_MESSAGES } = await import(\"./locales/nl\");\n    const { JA_MESSAGES } = await import(\"./locales/ja\");\n    const { ES_MESSAGES } = await import(\"./locales/es\");\n    for (const messages of [\n      ZH_MESSAGES,\n      ZH_TW_MESSAGES,\n      RU_MESSAGES,\n      DE_MESSAGES,\n      NL_MESSAGES,\n      JA_MESSAGES,\n      ES_MESSAGES,\n    ]) {\n      const empty = Object.entries(messages).filter(([, value]) => !value.trim());\n      const interpolationMismatches = Object.entries(messages).filter(([id, value]) => {\n        const tokens = (message: string) =>\n          [...message.matchAll(/\\{([A-Za-z0-9_]+)\\}/g)].map((match) => match[1]).sort();\n        return JSON.stringify(tokens(id)) !== JSON.stringify(tokens(value));\n      });"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '80,140p' apps/mobile/lib/i18n.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 19912,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "cc2b629e-48d0-488d-b35e-bf2d67c99ad4",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

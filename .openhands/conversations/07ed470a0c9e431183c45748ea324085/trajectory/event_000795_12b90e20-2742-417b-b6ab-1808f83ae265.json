@@ -1,0 +1,36 @@
+{
+  "id": "12b90e20-2742-417b-b6ab-1808f83ae265",
+  "timestamp": "2026-10-31T10:38:22.794894",
+  "source": "environment",
+  "parent_id": "1620ced8-5e60-4532-b4da-cbeca45d7d3a",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b052ad75def0dc5a",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "export const MAX_BROWSER_UPLOAD_FILES = 10;\n\nexport type BrowserActStep =\n  | { kind: \"click\"; ref: string }\n  /** Attaches computer files to a file input without opening a native file chooser. */\n  | { kind: \"upload\"; ref: string; paths: string[]; roots?: string[] }\n  | {\n      kind: \"fill\" | \"type\";\n      ref: string;\n      text: string;\n      /** Refuse the step unless the page is on this origin when it is applied. */\n      origin?: string;\n      /**\n       * What `text` is: a saved login's hidden field (\"password\", typed only into a password\n       * field) or visible field (\"username\"), or an approved purchase's card detail. A card fill\n       * always carries `origin`.\n       */\n      field?: \"username\" | \"password\" | \"card\";\n    }\n  | {\n      kind: \"fill\";\n      ref?: undefined;\n      text: string;\n      origin: string;\n      field: \"card\";\n      cardField: PurchaseCardField;\n    }\n  | {\n      kind: \"pay_token\";\n      ref?: undefined;\n      text: string;\n      origin: string;\n      merchantAccountId: string;\n    };\n\nexport interface BrowserActRequest {\n  actions: BrowserActStep[];\n  signal?: AbortSignal;\n}\n\nexport interface BrowserActResult {\n  ok: boolean;\n  completed: number;\n  /** An action may have taken effect before its response was lost. Observe before continuing. */\n  uncertain?: boolean;\n  url: string;\n  title: string;\n  /** Snapshot after the actions when available. */\n  tree?: string;\n  elements?: BrowserSnapshotNode[];\n  /** The page was still loading or waiting on its own requests when that snapshot was taken. */"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '1060,1110p' packages/adapter-kit/src/types.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "6ba7af69-8b03-4455-a19b-f4bf3b7ebef6",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

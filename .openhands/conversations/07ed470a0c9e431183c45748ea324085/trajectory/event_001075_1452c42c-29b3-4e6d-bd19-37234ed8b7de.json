@@ -1,0 +1,36 @@
+{
+  "id": "1452c42c-29b3-4e6d-bd19-37234ed8b7de",
+  "timestamp": "2026-10-31T10:53:36.593710",
+  "source": "environment",
+  "parent_id": "36060b15-fb9c-451f-9040-bf48f8779c05",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-abd8d034f9df2d27",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "import type {\n  AdapterContext,\n  AgentToolExecutionResult,\n  BrowserActStep,\n  BrowserProvider,\n  ComputerRef,\n} from \"@alternativebot/adapter-kit\";\nimport { MAX_BROWSER_UPLOAD_FILES } from \"@alternativebot/adapter-kit\";\nimport type { PurchaseCardField } from \"@alternativebot/contracts\";\nimport { PURCHASE_CARD_FIELDS } from \"@alternativebot/contracts\";\nimport { getLogger } from \"@alternativebot/logging\";\nimport { redactConnectorPayload } from \"./connector-safety.js\";\nimport { TOOL_RESULT_TEXT_LIMIT } from \"./pi-runtime-limits.js\";\n\nconst MAX_BROWSER_ACTIONS = 24;\n/** The action kinds `browser_act` takes, as its tool schema lists them. */\nexport const BROWSER_ACT_KINDS = [\n  \"click\",\n  \"fill\",\n  \"type\",\n  \"upload\",\n  \"fill_secret\",\n  \"fill_card\",\n  \"fill_pay_token\",\n] as const;\nconst NAVIGATE_URL_REQUIRED = \"An HTTP(S) URL without embedded credentials is required\";\n\n/** Fills a saved website login's field by its label; the model never supplies or sees the value. */\nexport type SecretFillStep = {\n  kind: \"fill_secret\";\n  ref: string;\n  secret: string;\n  field: string;\n};\n/** The model never supplies or sees the value. */\nexport type CardFillStep = {\n  kind: \"fill_card\";\n  ref?: string;\n  purchase: string;\n  field: PurchaseCardField;\n};\n/** The model never supplies or sees the token. */\nexport type PayTokenFillStep = { kind: \"fill_pay_token\"; purchase: string };\nexport type BrowserActInput = BrowserActStep | SecretFillStep | CardFillStep | PayTokenFillStep;\n/** desktopTools: the run also has computer_act, so a page-tool failure can fall back to it. */\nexport type PageToolOptions = { desktopTools?: boolean };\nexport type ResolveSecretFill = (\n  step: SecretFillStep,\n) => Promise<{ text: string; origin: string; hidden: boolean } | { error: string }>;\n\nexport type ResolveCardFill = (\n  step: CardFillStep,\n) => Promise<{ text: string; origin: string } | { error: string }>;\n\nexport type ResolvePayTokenFill = (\n  step: PayTokenFillStep,\n) => Promise<{ text: string; origin: string; merchantAccountId: string } | { error: string }>;\n\n/**\n * A browser tool call turned down before anything ran, such as a missing argument. It is settled:\n * nothing on the page changed, so the bot fixes the call instead of turning to desktop tools.\n */\nclass BrowserToolInputError extends Error {}\n\nfunction refusedInput(message: string) {\n  return { ok: false, uncertain: false, error: message };\n}\n\nexport async function browserNavigateFromTool(\n  browser: BrowserProvider,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '1,70p' packages/adapters/src/browser-tools.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "ddb6658e-940f-4fa5-9cd1-cf5387feb4d6",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

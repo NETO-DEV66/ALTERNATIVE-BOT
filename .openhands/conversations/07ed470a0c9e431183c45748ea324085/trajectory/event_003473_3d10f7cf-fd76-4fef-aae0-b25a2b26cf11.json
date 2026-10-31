@@ -1,0 +1,36 @@
+{
+  "id": "3d10f7cf-fd76-4fef-aae0-b25a2b26cf11",
+  "timestamp": "2026-10-31T11:45:38.006477",
+  "source": "environment",
+  "parent_id": "6051c2bc-9407-4068-8c5d-9958501dcc5b",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-9079a5463e7b1a47",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "exit=1\n=== judge test 289-340 ===\n    });\n    const judge = new ModelTeamChatEngagementJudge({\n      prisma: {\n        deploymentSettings: { findUnique: async () => ({ modelCreditsEnabled: true }) },\n        userModelPreference: { findFirst: async () => null },\n        space: { findUnique: async () => ({ organizationId: \"org\" }) },\n        member: { findUnique: async () => ({ role: \"owner\" }) },\n        billingAccount: { findUnique: async () => null },\n        modelCreditAccount: { upsert: async () => ({ mode: \"byok\" }) },\n      } as never,\n      runtime: { run } as never,\n      secrets: {} as never,\n      deploymentProvider: \"openrouter\",\n      deploymentModel: \"fixture\",\n      deploymentModelKey: \"fixture\",\n    });\n    await expect(\n      judge.decide({\n        bot: {\n          id: \"bot\",\n          spaceId: \"space\",\n          userId: \"user\",\n          name: \"Fixture\",\n          modelProvider: null,\n          modelId: null,\n        },\n        channelId: \"channel\",\n        rules: \"\",\n        messages: [],\n      }),\n    ).resolves.toEqual({ act: false });\n    expect(run).not.toHaveBeenCalled();\n  });\n  it.each([\"saved\", \"lookup failure\"])(\n    \"judges with optional owner timezone (%s)\",\n    async (state) => {\n      const findUnique = vi.fn(async () => ({ timezone: \"Pacific/Auckland\" }));\n      if (state === \"lookup failure\") {\n        findUnique.mockRejectedValueOnce(new Error(\"lookup unavailable\"));\n      }\n      const prisma = {\n        user: { findUnique },\n        deploymentSettings: { findUnique: vi.fn(async () => null) },\n        userModelPreference: { findFirst: vi.fn(async () => null) },\n        usageRecord: { create: vi.fn(async () => ({ id: \"usage-1\" })) },\n      };\n      let instructions = \"\";\n      const runtime = {\n        run: async function* (request: { instructions: string }) {\n          instructions = request.instructions;\n          yield { type: \"done\", text: '{\"act\":true,\"reason\":\"Standing rule matches.\"}' };\n        },\n      };\n      const judge = new ModelTeamChatEngagementJudge({\n        prisma: prisma as never,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -i '/^    billingEnabled: false,$/d' packages/adapters/src/executor-backup-start.test.ts packages/adapters/src/executor-oauth-retire.test.ts; grep -rn 'billingEnabled' packages apps --include=*.ts --include=*.tsx; echo \"exit=$?\"; echo \"=== judge test 289-340 ===\"; sed -n '286,340p' apps/api/src/team-chat-judge.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 21955,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "14e374ba-277f-48ba-975b-a91d63ffe510",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

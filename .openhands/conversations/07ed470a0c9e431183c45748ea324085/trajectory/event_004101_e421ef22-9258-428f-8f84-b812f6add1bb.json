@@ -1,0 +1,36 @@
+{
+  "id": "e421ef22-9258-428f-8f84-b812f6add1bb",
+  "timestamp": "2026-10-31T12:08:50.963328",
+  "source": "environment",
+  "parent_id": "9289e1b4-3be8-4a29-9388-e34c75a4789b",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8d29d115479fa963",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "primary: { provider: \"openai-compatible\", modelId: \"model-b\" },\n    });\n\n    expect(response.status).toBe(200);\n    expect(roles()).toEqual([\n      expect.objectContaining({ position: 0, provider: \"openai-compatible\", modelId: \"model-b\" }),\n    ]);\n    expect(client.userModelPreference.upsert).not.toHaveBeenCalled();\n  });\n\n  it(\"retains backwards-compatible main backup storage\", async () => {\n    const { call } = setup();\n    const backups = [{ provider: availableModel.provider, modelId: availableModel.id }];\n    expect((await call(\"models/setRole\", { role: \"main\", backups })).response.status).toBe(200);\n    const legacy = await call(\"models/backups\", {});\n    expect((await legacy.response.json()).json).toEqual(backups);\n  });\n});\n\nit(\"lets a deployment-managed model lead the main model like any other purpose\", async () => {\n  vi.stubEnv(\"PI_DEFAULT_PROVIDER\", \"openrouter\");\n  vi.stubEnv(\"OPENROUTER_API_KEY\", \"fake-hosted-key\");\n  try {\n    const { call, prisma, roles } = setup({ credits: true });\n    const primary = { provider: availableModel.provider, modelId: availableModel.id };\n    const catalog = await call(\"models/forRole\", { role: \"main\" });\n    expect((await catalog.response.json()).json).toContainEqual(\n      expect.objectContaining({ id: primary.modelId, managed: true }),\n    );\n    const main = await call(\"models/setRole\", { role: \"main\", primary });\n    expect(main.response.status).toBe(200);\n    expect(roles()).toEqual([expect.objectContaining({ role: \"main\", position: 0 })]);\n    const preferences = prisma.userModelPreference as unknown as {\n      upsert: ReturnType<typeof vi.fn>;\n      updateMany: ReturnType<typeof vi.fn>;\n    };\n    expect(preferences.upsert).not.toHaveBeenCalled();\n    expect(preferences.updateMany).not.toHaveBeenCalled();\n    const approval = await call(\"models/setRole\", { role: \"approval\", primary });\n    expect(approval.response.status).toBe(200);\n  } finally {"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '700,740p' apps/api/src/models-backups.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 25122,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "9fa7a631-7153-47a1-bab1-309b4f3c14ff",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

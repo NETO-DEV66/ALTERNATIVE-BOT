@@ -1,0 +1,36 @@
+{
+  "id": "20d7d526-3704-4fc1-ab06-11464395e2da",
+  "timestamp": "2026-10-31T11:10:00.847028",
+  "source": "environment",
+  "parent_id": "35a9307f-6b46-4baa-9287-a14be5a1ce40",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8f4c0406815b50e0",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "-            : undefined;\n+        const pinError = run.modelPinned\n+          ? pinnedModelCredentialError(modelChoice, overrideCredential)\n+          : undefined;\n         const selected = selectConfiguredModel({\n           override: modelChoice,\n           overrideCredential,\n           main,\n-          hostedProvider: (await modelCreditBillingEnabled(deps))\n-            ? resolveDeploymentModel().provider\n-            : undefined,\n           defaults: { settings, deployment: runDeployment },\n         });\n         const selectedProvider = selected.provider ?? runtimeFallback?.provider;\n@@ -785,9 +765,6 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {\n           await failRunBeforeModel(PINNED_PROVIDER_NOT_CONNECTED, true);\n           return;\n         }\n-        const modelAccessDenied = async () =>\n-          (await modelCreditBillingEnabled(deps)) &&\n-          !(await spaceHasModelAccess(deps.prisma, run.spaceId));\n         const scripted = deps.runtime.describe().capabilities.scripted;\n         let backupChoices: Promise<ModelRoleChoice[]> | undefined;\n         const loadBackups = () =>\n@@ -844,10 +821,6 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {\n         let primaryFailure = { message: MISSING_MODEL_RUN_ERROR, accountFailure: true };\n         let retryPrimary: unknown;\n         if (selectedProvider && selectedModelId) {\n-          if (await modelAccessDenied()) {\n-            await failRunBeforeModel(MODEL_ACCESS_REQUIRED_RUN_ERROR, true);\n-            return;\n-          }\n           try {\n             start = {\n               provider: selectedProvider,\n@@ -871,15 +844,10 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {\n             if (!terminal && !isModelCredentialRejected(error)) throw error;\n             primaryFailure = {\n               message: error instanceof Error ? error.message : \"Connect the provider again.\",\n-              accountFailure:\n-                error instanceof HostedModelCreditsRequiredError ||\n-                isRetiredModelCredentialError(error),\n+              accountFailure: isRetiredModelCredentialError(error),\n             };\n             if (!terminal) retryPrimary = error;\n           }\n-        } else if (await modelAccessDenied()) {\n-          await failRunBeforeModel(MISSING_MODEL_RUN_ERROR, true);\n-          return;\n         }\n         start ??= await startOnBackup();\n         if (!start) {\n@@ -1019,13 +987,6 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {\n         const hasMessagingIdentity = deps.messaging\n           ? await deps.messaging.hasIdentity(bot.id)\n           : false;\n-        const paymentWallet = deps.paymentWallet;\n-        const paymentWalletEnabled = paymentWallet\n-          ? await paymentWalletConnected(\n-              { prisma: deps.prisma, secretStore: deps.secretStore, paymentWallet },\n-              run.userId,\n-            )\n-          : false;\n         const messagingContext = hasMessagingIdentity\n           ? [messagingDmSurfaceNote(), messagingChannelRun ? messagingChannelPrivacyBlock() : null]\n               .filter(Boolean)\n@@ -1095,7 +1056,6 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {\n             mediaImagesEnabled: Boolean(deps.artifacts && mediaGeneration?.capabilities.images),\n             mediaVideoEnabled: Boolean(deps.artifacts && mediaGeneration?.capabilities.video),\n             cloudAgentEnabled: cloudAgentsEnabled(cloudAgent, run.spaceId),\n-            paymentWalletEnabled,\n             messagingChannelRun,\n             voiceCall,\n             disabledBuiltinTools: bot.disabledBuiltinTools,\n@@ -1722,7 +1682,7 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {\n           redactSecrets(text, runSecrets),\n         );\n         // An outage at the computer provider is retried like any setup failure, but is not a\n-        // Rakazo bug to report.\n+        // Alternative Bot bug to report.\n         const providerOutage =\n           setupError instanceof SandboxUnavailableError ||\n           setupError instanceof SandboxUnresponsiveError;"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && git --no-pager diff packages/adapters/src/executor.ts | sed -n '120,260p'",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "160b6c13-9b92-4229-9ad2-5a9c2da2c50b",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

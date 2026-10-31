@@ -1,0 +1,36 @@
+{
+  "id": "cf3c1a34-560e-499c-9a5a-39bbaf6f8e13",
+  "timestamp": "2026-10-31T10:38:46.715454",
+  "source": "environment",
+  "parent_id": "aab9c778-35a5-43f1-a32a-4128ef647aaa",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8891b4b7f8dcd71b",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "export * from \"./adapter-context.js\";\nexport * from \"./analytics.js\";\nexport * from \"./background-jobs.js\";\nexport * from \"./billing-errors.js\";\nexport * from \"./cloud-agents.js\";\nexport * from \"./connector-errors.js\";\nexport * from \"./decisions.js\";\nexport * from \"./interfaces.js\";\nexport * from \"./media-generation.js\";\nexport * from \"./messaging-installations.js\";\n=== full BrowserActStep + cardField usages in adapter-kit ===\npackages/adapter-kit/src/payments.ts:43:export type PurchaseCredentialKind = \"card\" | \"pay_token\" | \"http_payment\";\npackages/adapter-kit/src/payments.ts:56:  | { kind: \"pay_token\"; merchantAccountId: string }\npackages/adapter-kit/src/types.ts:5:  PurchaseCardField,\npackages/adapter-kit/src/types.ts:1085:      cardField: PurchaseCardField;\npackages/adapter-kit/src/types.ts:1088:      kind: \"pay_token\";"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '1,10p' packages/adapter-kit/src/index.ts; echo \"=== full BrowserActStep + cardField usages in adapter-kit ===\"; grep -rn 'cardField\\|pay_token\\|PurchaseCardField\\|fill_card' packages/adapter-kit/src/",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "f72733d9-e133-4975-a982-7b44d6c92ab7",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

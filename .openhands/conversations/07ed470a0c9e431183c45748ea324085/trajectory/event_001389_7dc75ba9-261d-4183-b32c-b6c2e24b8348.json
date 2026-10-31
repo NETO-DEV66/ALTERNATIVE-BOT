@@ -1,0 +1,36 @@
+{
+  "id": "7dc75ba9-261d-4183-b32c-b6c2e24b8348",
+  "timestamp": "2026-10-31T10:58:23.036968",
+  "source": "environment",
+  "parent_id": "a7107256-cc90-4ebf-8272-bf5602badf8e",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-af4fd08e88933f99",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "model PaymentWallet {\n  id         String    @id @default(cuid())\n  userId     String    @unique\n  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n  provider   String\n  status     String\n  ciphertext String\n  verificationUrl String?\n  userCode   String?\n  expiresAt  DateTime?\n  nextPollAt DateTime?\n  pollIntervalMs Int?\n  refreshAt  DateTime?\n  connectedAt DateTime?\n  createdAt  DateTime  @default(now())\n  updatedAt  DateTime  @updatedAt\n\n  @@map(\"payment_wallets\")\n}\n\nmodel Purchase {\n  id           String    @id @default(uuid())\n  operationKey String    @unique\n  spaceId      String\n  space        Space     @relation(fields: [spaceId], references: [id], onDelete: Cascade)\n  userId       String\n  botId        String\n  threadId     String\n  threadGeneration Int\n  provider     String\n  remoteId     String\n  merchantName String\n  merchantUrl  String\n  amount       Int\n  currency     String\n  status       String\n  approvalUrl  String?\n  nextPollAt   DateTime?\n  wokenStatus  String?\n  cardCiphertext String?\n  credentialType String  @default(\"card\")\n  merchantAccountId String?\n  paymentChallenge String?\n  requestCiphertext String?\n  tokenCiphertext String?\n  createdAt    DateTime  @default(now())\n  updatedAt    DateTime  @updatedAt\n\n  @@index([nextPollAt])\n  @@index([spaceId, userId, createdAt])\n  @@map(\"purchases\")\n}\n\nmodel ExternalEffect {\n  id             String   @id @default(cuid())\n  spaceId        String\n  space          Space    @relation(fields: [spaceId], references: [id], onDelete: Cascade)\n  runId          String\n  run            Run      @relation(fields: [runId], references: [id], onDelete: Cascade)\n  kind           String\n  idempotencyKey String\n  status         String\n  request        Json\n  /// The actions a batch tool call runs, which approval rules and read trust judge instead of\n  /// `kind`. Empty when an entry names no action; null for any other tool.\n  batchActions   Json?\n  result         Json?\n  reviewDecision String?\n  reviewReason   String?\n  reviewModel    String?\n  createdAt      DateTime @default(now())\n  updatedAt      DateTime @updatedAt\n\n  @@unique([idempotencyKey])\n  @@index([runId, status])\n  @@map(\"external_effects\")\n}\n\nmodel Routine {\n  id             String    @id @default(cuid())\n  spaceId        String\n  space          Space     @relation(fields: [spaceId], references: [id], onDelete: Cascade)\n  botId          String\n  bot            Bot       @relation(fields: [botId], references: [id], onDelete: Cascade)\n  userId         String\n  threadId       String?\n  thread         Thread?   @relation(fields: [threadId], references: [id], onDelete: SetNull)\n  name           String\n  prompt         String\n  crons          String[]\n  timezone       String    @default(\"UTC\")\n  active         Boolean   @default(false)\n  notify         Boolean   @default(true)\n  webhookEnabled Boolean   @default(false)\n  githubEnabled  Boolean   @default(false)\n  messageProvider String?\n  modelProvider  String?\n  modelId        String?\n  thinkingLevel  String?\n  /// Change trigger (RoutineWatchSchema); null when the routine does not watch anything.\n  watch          Json?\n  /// Last check's result (RoutineWatchStateSchema), written by the checker."
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '974,1075p' packages/db/prisma/schema.prisma",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "f759777e-9e1d-48d7-ac77-0b43cc04a918",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

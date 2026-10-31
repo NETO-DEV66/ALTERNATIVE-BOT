@@ -1,0 +1,36 @@
+{
+  "id": "b56a6d43-d121-4458-97ac-aecdd85bf94b",
+  "timestamp": "2026-10-31T11:00:10.007899",
+  "source": "environment",
+  "parent_id": "e95a34ed-ab3d-4c4d-93cb-b6112a6c9bf7",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-add30d1b3046e450",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "apps/api/src/voice.ts:657:/** Spent credit is 402; any other refusal is 403, never 401, which clients read as a lost session. */\napps/api/src/voice.ts:659:  return code === \"VOICE_OUT_OF_CREDIT\" ? 402 : 403;\napps/api/src/app.ts:48:  createModelCreditReconciler,\napps/api/src/app.ts:441:  const modelCreditsEnabled = false;\napps/api/src/app.ts:446:      modelCreditsEnabled,\napps/api/src/app.ts:448:    update: { modelCreditsEnabled },\napps/api/src/app.ts:581:    billingEnabled: false,\napps/api/src/app.ts:661:        reconcileModelCredits: createModelCreditReconciler({\napps/api/src/app.ts:793:      billing: false,\napps/api/src/app.ts:1311:        billing: null,\napps/api/src/team-chat-judge.ts:6:  hasHostedModelCredits,\napps/api/src/team-chat-judge.ts:7:  hostedModelCreditObserver,\napps/api/src/team-chat-judge.ts:238:    // The member's main model runs on its connection, or on funded deployment credits.\napps/api/src/team-chat-judge.ts:242:        (settings?.modelCreditsEnabled &&\napps/api/src/team-chat-judge.ts:243:          (await hasHostedModelCredits(this.deps.prisma, scope, member.provider))))\napps/api/src/team-chat-judge.ts:256:      settings?.modelCreditsEnabled &&\napps/api/src/team-chat-judge.ts:257:      (await hasHostedModelCredits(this.deps.prisma, scope, provider));\napps/api/src/team-chat-judge.ts:261:      const callObserver = settings?.modelCreditsEnabled\napps/api/src/team-chat-judge.ts:262:        ? await hostedModelCreditObserver(this.deps.prisma, scope)\napps/api/src/security-audit.ts:64:  \"paymentWallet.connect\": { type: \"credential.changed\", kind: \"payment_wallet\" },\napps/api/src/security-audit.ts:65:  \"paymentWallet.disconnect\": { type: \"credential.deleted\", kind: \"payment_wallet\" },\napps/api/src/security-audit.ts:107:/** A wallet sign-in finishing. Clients poll `paymentWallet.status`, so it records the transition. */\napps/api/src/security-audit.ts:108:export function paymentWalletConnectedEvent(actor: {\napps/api/src/security-audit.ts:116:    metadata: { procedure: \"paymentWallet.status\", kind: \"payment_wallet\" },\napps/api/src/routes/shared.ts:3:  hasHostedModelCredits,\napps/api/src/routes/shared.ts:69:    billingEnabled: false,\napps/api/src/routes/shared.ts:92:      (deps.billing?.modelCreditsEnabled &&\napps/api/src/routes/shared.ts:93:        (await hasHostedModelCredits(deps.prisma, actor, member.provider))))\napps/api/src/routes/account.ts:4:  hasHostedModelCredits,\napps/api/src/routes/account.ts:376:          hasHostedModelCredits(deps.prisma, actor, provider),\napps/api/src/routes/threads.ts:88:    // Reuse the funding modelSetup resolved; a send never asks billing twice.\napps/api/src/routes/threads.ts:101:              hostedProvider: funding?.funding === \"credits\" ? deployment?.provider : undefined,\napps/api/src/routes/context.ts:185:            billing:\napps/api/src/routes/context.ts:188:                ? entry.billing\napps/api/src/routes/context.ts:189:                : \"Uses Alternative Bot credits\",\napps/worker/src/index.ts:26:  createModelCreditReconciler,\napps/worker/src/index.ts:27:  createPaymentWalletProvider,\napps/worker/src/index.ts:63:  reconcilePurchases,\napps/worker/src/index.ts:244:  const paymentWallet = await createPaymentWalletProvider();\napps/worker/src/index.ts:304:    paymentWallet,\napps/worker/src/index.ts:334:    paymentWallet,\napps/worker/src/index.ts:343:    reconcileModelCredits: createModelCreditReconciler({\napps/worker/src/index.ts:348:    reconcilePurchases: () => reconcilePurchases({ prisma, jobs, paymentWallet }),"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -rn --include=*.ts -iE 'billing|referral|paymentWallet|payment-wallet|credit|stripe|purchase|byok' apps/api/src apps/worker/src --exclude-dir=generated | grep -v '\\.test\\.'",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "fe5a0175-351f-458d-8421-29dba047f672",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

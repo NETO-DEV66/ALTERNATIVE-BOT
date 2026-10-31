@@ -1,4 +1,8 @@
-import type { AgentRunRequest, ComputerRef, SemanticMemoryProvider } from "@alternativebot/adapter-kit";
+import type {
+  AgentRunRequest,
+  ComputerRef,
+  SemanticMemoryProvider,
+} from "@alternativebot/adapter-kit";
 import {
   DEFAULT_CONTEXT_STRATEGY,
   isModelCredentialRejected,
@@ -20,7 +24,6 @@ import {
   isOwnerStartedRun,
   isTerminal,
   MISSING_MODEL_RUN_ERROR,
-  MODEL_ACCESS_REQUIRED_RUN_ERROR,
   messagingChannelId,
   messagingChannelPrivacyBlock,
   messagingDmSurfaceNote,

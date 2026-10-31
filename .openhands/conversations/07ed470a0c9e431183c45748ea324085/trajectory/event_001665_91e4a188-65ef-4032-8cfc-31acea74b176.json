@@ -1,0 +1,36 @@
+{
+  "id": "91e4a188-65ef-4032-8cfc-31acea74b176",
+  "timestamp": "2026-10-31T11:02:54.853129",
+  "source": "environment",
+  "parent_id": "f2163ce6-f06b-4e01-afc8-900a4a1a7478",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-81e79498e19f88d6",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "apps/api/src/thread-image-admission.ts:43:    hostedProvider?: string;\napps/api/src/thread-image-admission.ts:78:    hostedProvider: configuration?.hostedProvider,\napps/api/src/ai-consent.ts:136:          hostedProvider: undefined,\napps/api/src/routes/threads.ts:101:              hostedProvider: funding?.funding === \"credits\" ? deployment?.provider : undefined,\napps/api/src/routes/context.ts:117:    hostedProvider: undefined,\npackages/adapters/src/model-roles.ts:95:  hostedProvider?: string;\npackages/adapters/src/model-roles.ts:104:    Boolean(credential || (provider && provider === input.hostedProvider));\npackages/adapters/src/run-model.ts:87:          hostedProvider: undefined,\npackages/adapters/src/run-model.ts:375:  const hostedProvider = undefined;\npackages/adapters/src/run-model.ts:382:    { hostedProvider, credentialId },\npackages/adapters/src/run-model.ts:393:  if (!credential && provider !== hostedProvider) throw new Error(PINNED_PROVIDER_NOT_CONNECTED);\npackages/adapters/src/run-model.ts:502:    hostedProvider: undefined,\npackages/adapters/src/model-selection.ts:143:  hostedProvider?: string,\npackages/adapters/src/model-selection.ts:145:  const hosted = hostedProvider && (await hasHostedModelCredits(prisma, scope, hostedProvider));\npackages/adapters/src/model-selection.ts:199:    if (!connectedProviders.has(entry.provider) || (hosted && entry.provider === hostedProvider))\npackages/adapters/src/model-selection.ts:224:    managedProvider: hosted ? hostedProvider : undefined,\npackages/adapters/src/model-selection.ts:230:  if (hosted && hostedProvider) empty.byProvider[hostedProvider] = \"api_key\";\npackages/adapters/src/model-selection.ts:274:  if (hosted && hostedProvider && !auth.byProvider[hostedProvider])\npackages/adapters/src/model-selection.ts:275:    auth.byProvider[hostedProvider] = \"api_key\";\npackages/adapters/src/model-selection.ts:462:  hostedProvider?: string;\npackages/adapters/src/model-selection.ts:520:  hostedProvider?: string;\npackages/adapters/src/model-selection.ts:558:      deps.hostedProvider === provider &&\npackages/adapters/src/model-selection.ts:730:    resolution.hostedProvider === provider &&\npackages/adapters/src/executor.ts:740:          hostedProvider: undefined,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -rn 'hostedProvider' apps packages --include=*.ts --include=*.tsx --exclude-dir=node_modules | grep -v '\\.test\\.'",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "9fdcdeb9-8971-4dee-9d48-337319eda5df",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

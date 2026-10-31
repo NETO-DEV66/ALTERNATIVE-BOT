@@ -1,0 +1,36 @@
+{
+  "id": "b58b5ee0-68ce-443a-8c89-1da3e8795b30",
+  "timestamp": "2026-10-31T10:56:21.505725",
+  "source": "environment",
+  "parent_id": "a1bbcdf9-8d25-4c73-8ea5-9f97f828d6bc",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-96ed59a882fe1385",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": ""
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -i 's/^    callObserver: resolved\\.callObserver,$//' packages/adapters/src/run-model.ts && grep -n 'callObserver' packages/adapters/src/run-model.ts",
+    "exit_code": 1,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 1,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 1.]"
+    },
+    "full_output_save_dir": null,
+    "kind": "TerminalObservation"
+  },
+  "action_id": "603709db-30e8-4f04-b4dd-bf841631b85e",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "b62efc21-43f9-433b-935e-53236fa491cc",
+  "timestamp": "2026-10-31T11:00:16.239224",
+  "source": "environment",
+  "parent_id": "e35716a2-40b4-4cfa-bcf8-b5767b93048e",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-9c33b3d4f9d05a09",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "getLogger().info(\"email emulator captured message\", {\n            \"email.subject\": message.subject,\n          });\n        })\n      : undefined;\n  if (localEmailEmulator && !isLocalhostOrLoopbackIp(env.apiHost)) {\n    throw new Error(\"EMAIL_EMULATOR requires API_HOST to be a loopback host\");\n  }\n  const email: TransactionalEmailProvider | undefined = configuredEmail ?? localEmailEmulator;\n  const onEmailError = (error: unknown) =>\n    getLogger().error(\"transactional email delivery failed\", error);\n  const modelCreditsEnabled = false;\n  await prisma.deploymentSettings.upsert({\n    where: { id: \"default\" },\n    create: {\n      id: \"default\",\n      modelCreditsEnabled,\n    },\n    update: { modelCreditsEnabled },\n  });\n  const installed = new InstalledConnectorProvider(\n    prisma,\n    secrets,\n    remoteConnectors,\n    env.mcpAllowPrivateEndpoint,\n  );\n=== 1311 context ===\n\n  app.route(\n    \"/\",\n    healthRoutes(\n      () => ({\n        runtime: env.agentRuntime,\n        sandbox: env.sandboxProvider,\n        composio: Boolean(stack.composio),\n        pipedream: Boolean(pipedream),\n        messaging: Boolean(messaging),\n        email: email?.describe().id ?? null,\n        billing: null,\n        jobs: jobKind,\n        realtime: realtime.describe().id,\n        secrets: secrets.describe(),\n        degraded: secrets.describe().capabilities.degraded ?? false,\n=== AuthCapabilities type ===\npackages/contracts/src/account-export.ts:17: * billing and computers are not exported: they belong to the source install.\npackages/contracts/src/auth.ts:15:  billing: z.boolean().optional(),\npackages/contracts/src/domain.ts:1582:  billing: z.string(),\napps/api/src/routes/context.ts:185:            billing:\napps/api/src/routes/context.ts:188:                ? entry.billing\napps/api/src/routes/shared.ts:69:    billingEnabled: false,\napps/api/src/routes/shared.ts:92:      (deps.billing?.modelCreditsEnabled &&\napps/api/src/routes/threads.ts:88:    // Reuse the funding modelSetup resolved; a send never asks billing twice."
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '430,455p' apps/api/src/app.ts; echo \"=== 1311 context ===\"; sed -n '1300,1315p' apps/api/src/app.ts; echo \"=== AuthCapabilities type ===\"; grep -rn 'billing' packages/contracts/src/*.ts apps/api/src/routes/*.ts | grep -v test | head",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "547143cb-48c1-442a-ae49-c3f7492c74bd",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

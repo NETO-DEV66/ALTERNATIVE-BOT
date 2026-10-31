@@ -1,0 +1,36 @@
+{
+  "id": "e8ac5191-de75-49c7-9cfc-5519390268f3",
+  "timestamp": "2026-10-31T12:04:21.639886",
+  "source": "environment",
+  "parent_id": "781af782-6591-4272-bf5e-f2fed747b1d1",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b157d965932dcd8f",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "import type { ActionApprovalRule as StoredActionApprovalRule } from \"@alternativebot/contracts\";\n\nconst APPROVAL_EXEMPT_TOOLS = new Set([\n  \"computer_observe\",\n  \"computer_act\",\n  \"browser_navigate\",\n  \"browser_snapshot\",\n  \"browser_act\",\n  \"list_files\",\n  \"read_file\",\n  \"read_history\",\n  \"search_history\",\n  \"write_file\",\n  \"shell\",\n  \"open_path\",\n  \"launch_app\",\n  \"remember\",\n  \"request_takeover\",\n  \"request_secret\",\n  \"generate_secret\",\n  \"run_subagent\",\n  \"spawn_bot\",\n  \"schedule_create\",\n  \"schedule_list\",\n  \"schedule_update\",\n  \"schedule_cancel\",\n  \"list_fleet\",\n  \"organize_bot\",\n  // The wallet owner approves every purchase in the wallet itself; a card here would ask twice.\n  \"request_purchase\",\n]);\n\n=== 55,70 ===\n]);\n\nconst UNATTENDED_SAFE_BUILTIN_TOOLS = new Set([\n  \"browser_snapshot\",\n  \"cloud_agent_status\",\n  \"computer_observe\",\n  \"list_files\",\n  \"list_fleet\",\n  \"list_secrets\",\n  \"purchase_status\",\n  \"read_file\",\n  \"recall_memory\",\n  \"request_takeover\",\n  \"run_subagent\",\n  \"task_catalog\",\n  \"schedule_list\",\n  \"scratchpad_list\",\n  \"skill_read\","
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '1,32p' packages/core/src/action-approval.ts; echo \"=== 55,70 ===\"; sed -n '55,72p' packages/core/src/action-approval.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 25122,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "404791c0-e5bf-43eb-93ec-51e3c95154b6",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

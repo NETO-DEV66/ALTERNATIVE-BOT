@@ -1,0 +1,36 @@
+{
+  "id": "bbc13640-3cbd-4c1f-926e-2c9361d1eba8",
+  "timestamp": "2026-10-31T10:51:15.734442",
+  "source": "environment",
+  "parent_id": "7ebe8a59-275b-41c9-aec3-9078ea1a0c13",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-bef735f31dcad694",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": ") => Promise<boolean | undefined>;\n  /** The key is the user's own stored connection, not the deployment's. */\n  ownCredential?: true;\n  redact: string[];\n}> {\n  if (credential) {\n    return withModelCredentialLock(credential.secretId, async () => {\n      const row = await deps.prisma.secret.findFirst({\n        where: { id: credential.secretId, userId, spaceId: null },\n      });\n      if (!row) {\n        if (await modelCreditBillingEnabled(deps))\n          throw new Error(\"Connect that model provider again.\");\n        if (requireStoredSecret) throw new Error(\"Backup model credential is no longer available\");\n        if (credential.provider === OPENAI_COMPATIBLE_PROVIDER_ID) {\n          throw new UnavailableModelForAuthError(\"Unknown model for that provider\");\n        }\n        cloudflareProviderEnv({ provider });\n        return { apiKey: deploymentKeyFor(deps, provider), redact: [] };\n      }\n      const plaintext = await deps.secretStore.load(row.ciphertext, row.id);\nexport async function resolveConnectedModelKey(\n  deps: ExecutorDeps,\n  scope: { userId: string; spaceId: string },\n  provider: string,\n  modelId: string,\n  registerSecrets?: (values: string[]) => void,\n  requireStoredSecret = false,\n  credentialId?: string,\n) {\n  const hostedProvider = (await modelCreditBillingEnabled(deps))\n    ? resolveDeploymentModel().provider\n    : undefined;\n  const validationError = await validateConnectedModelChoice(\n    deps.prisma,\n    deps.secretStore,\n    scope,\n    deps.prisma.deploymentSettings.findUnique({\n      where: { id: \"default\" },\n    }),\n  ]);\n  const selected = selectConfiguredModel({\n    override,\n    overrideCredential,\n    main,\n    hostedProvider: (await modelCreditBillingEnabled(deps))\n      ? resolveDeploymentModel().provider\n      : undefined,\n    defaults: {\n      settings,\n      deployment: deps.deploymentModelConfigured ? resolveDeploymentModel() : null,\n    },\n  });"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '220,240p;395,410p;525,540p' packages/adapters/src/run-model.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "88d42154-3f51-4ca9-a58e-e956eb8d8867",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

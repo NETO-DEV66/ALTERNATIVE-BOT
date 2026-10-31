@@ -1,0 +1,27 @@
+{
+  "id": "fb5fdaf6-e301-424c-974e-ab6598563ef7",
+  "timestamp": "2026-10-31T11:36:21.106924",
+  "source": "environment",
+  "parent_id": "f629fd80-5169-465f-9da3-f665a812aeea",
+  "tool_name": "file_editor",
+  "tool_call_id": "chatcmpl-tool-b4ec4e37d9e12c6f",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "No replacement was performed, old_str `/**\n * Seat-based subscription billing. Product code owns access rules; adapters own the\n * vendor API. Sync is pull-based: webhooks only say which customer changed.\n */\nexport interface BillingProvider {\n  /** Optional prepaid model usage capabilities; product code owns the balance ledger. */\n  createCreditCheckout?(input: BillingCreditCheckoutRequest): Promise<{ url: string }>;\n  listCreditPurchases?(customerId: string): Promise<BillingCreditPurchase[]>;\n  setMonthlyCredits?(customerId: string, amountCents: number): Promise<void>;\n  /** Flat monthly own-key plan: access without credits. */\n  createByokCheckout?(input: BillingByokCheckoutRequest): Promise<{ url: string }>;\n  /** Ends every live own-key plan at its period end. */\n  endByokPlans?(customerId: string): Promise<void>;\n  /**\n   * Credits the customer's account; future invoices draw it down before charging. Idempotent per\n   * `referenceId`, so a retry after an unknown outcome never credits twice.\n   */\n  grantBalanceCredit?(customerId: string, amountCents: number, referenceId: string): Promise<void>;\n  describe(): AdapterDescriptor<{ trials: boolean; portal: boolean; modelCredits?: boolean }>;\n  getPrice(): Promise<BillingPrice>;\n  createCustomer(input: { email: string; organizationId: string }): Promise<{ customerId: string }>;\n  createCheckout(input: BillingCheckoutRequest): Promise<{ url: string }>;\n  createPortal(input: { customerId: string; returnUrl: string }): Promise<{ url: string }>;\n  /** Current subscription for the customer, preferring one that grants access. */\n  getCustomerSubscription(customerId: string): Promise<BillingSubscriptionSnapshot | null>;\n  /** Sets seats on the customer's subscription; a no-op when none can still take updates. */\n  updateSeats(customerId: string, seats: number): Promise<void>;\n  cancelCustomerSubscriptions(customerId: string): Promise<void>;\n  /** Verifies the signature. `null` means the request is not authentic. */\n  parseWebhook(rawBody: string, headers: Headers): { customerId: string } | \"ignored\" | null;\n}\n\n/**\n * Optional provider adapter for recovering authoritative cost after an interrupted call.\n */` did not appear verbatim in /workspace/project/packages/adapter-kit/src/interfaces.ts."
+      }
+    ],
+    "is_error": true,
+    "command": "str_replace",
+    "path": null,
+    "prev_exist": true,
+    "old_content": null,
+    "new_content": null,
+    "kind": "FileEditorObservation"
+  },
+  "action_id": "084c1073-a7dd-46e8-919b-a1ba23daf348",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

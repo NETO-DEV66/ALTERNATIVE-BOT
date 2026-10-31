@@ -1,0 +1,36 @@
+{
+  "id": "4eca299e-b3d3-4cfe-8889-a03230779b5f",
+  "timestamp": "2026-10-31T12:21:46.464672",
+  "source": "environment",
+  "parent_id": "6824e49c-8370-4251-b916-4dd6e5786572",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-9f00ddd13f674940",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "}\n    },\n  );\n\n  it.skipIf(process.platform !== \"linux\")(\n    \"spawns Chromium when the wrapper is invoked as ./alternativebot-browser\",\n    () => {\n      const root = path.resolve(import.meta.dirname, \"../../computer\");\n      const temp = mkdtempSync(path.join(tmpdir(), \"alternativebot-browser-rel-\"));\n      const bin = path.join(temp, \"bin\");\n      const capture = path.join(temp, \"args\");\n      const home = path.join(temp, \"home\");\n      const chromium = path.join(bin, \"chromium\");\n      mkdirSync(bin);\n      writeFileSync(chromium, '#!/bin/sh\\nprintf \"%s\\\\n\" \"$@\" > \"$ALTERNATIVEBOT_TEST_ARGS\"\\n');\n      chmodSync(chromium, 0o755);\n      const profile = path.join(home, \".browser-profiles\", \"chromium-bot-screen\");\n      mkdirSync(profile, { recursive: true });\n      // The kernel records the path passed to exec, so a relative invocation\n      // shows up as ./alternativebot-browser rather than an absolute script path.\n      symlinkSync(path.join(root, \"alternativebot-browser\"), path.join(temp, \"alternativebot-browser\"));\n\n      try {\n        const result = spawnSync(\n          \"./alternativebot-browser\",\n          [`--user-data-dir=${profile}`, \"--remote-debugging-port=9222\"],\n          {\n            cwd: temp,\n            env: {\n              ...process.env,\n              DISPLAY: \":1\",\n              HOME: home,\n              PATH: `${bin}${path.delimiter}${process.env.PATH ?? \"\"}`,\n              ALTERNATIVEBOT_TEST_ARGS: capture,\n            },\n            encoding: \"utf8\",\n          },\n        );\n        expect(result.status, result.error?.message ?? result.stderr).toBe(0);\n        const args = readFileSync(capture, \"utf8\");\n        expect(args).toContain(`--user-data-dir=${profile}`);\n        expect(args).toContain(\"--remote-debugging-port=9222\");\n      } finally {\n        rmSync(temp, { recursive: true, force: true });\n      }\n    },\n  );\n\n  it.skipIf(process.platform !== \"linux\")(\n    \"keeps a live browser when its profile directory is named alternativebot-browser\",\n    () => {"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '845,895p' infra/sandboxes/supervisor/src/computer-spec.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 65061,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "c8243ce4-c4bb-4ff4-8769-b223cea3880a",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

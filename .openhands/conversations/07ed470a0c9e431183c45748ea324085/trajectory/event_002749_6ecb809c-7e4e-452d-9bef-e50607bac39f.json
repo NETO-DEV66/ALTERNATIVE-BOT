@@ -1,0 +1,36 @@
+{
+  "id": "6ecb809c-7e4e-452d-9bef-e50607bac39f",
+  "timestamp": "2026-10-31T11:26:09.593172",
+  "source": "environment",
+  "parent_id": "eef16ffa-3e40-4d2a-bfb2-0c55733382dc",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-819bda5858f7a709",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": ""
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -rn 'billingEnabled\\|paymentWalletProvider\\|BillingStatus\\|PaymentWalletStatus\\|referral\\|DEFAULT_MONTHLY_CREDIT\\|MODEL_CREDIT_AMOUNTS\\|ModelCreditAmountSchema' packages/contracts/src packages/core/src | head -30",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": null,
+    "kind": "TerminalObservation"
+  },
+  "action_id": "0256686c-06fb-4f65-add4-353f3c645ef0",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

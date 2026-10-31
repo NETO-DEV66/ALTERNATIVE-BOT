@@ -1,0 +1,9 @@
+{
+  "id": "5900ae8a-c57d-4f08-8aae-340b43c2acf1",
+  "timestamp": "2026-10-31T13:29:22.656256",
+  "source": "environment",
+  "parent_id": "b148b25d-2f62-4d28-8048-829668cca308",
+  "key": "execution_status",
+  "value": "idle",
+  "kind": "ConversationStateUpdateEvent"
+}

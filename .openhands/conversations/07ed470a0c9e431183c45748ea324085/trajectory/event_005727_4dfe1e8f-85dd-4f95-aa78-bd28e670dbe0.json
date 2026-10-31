@@ -1,0 +1,40 @@
+{
+  "id": "4dfe1e8f-85dd-4f95-aa78-bd28e670dbe0",
+  "timestamp": "2026-10-31T13:56:54.639656",
+  "source": "agent",
+  "parent_id": "0fc38a52-f2a2-45c5-9f0f-13d37dee01a6",
+  "thought": [
+    {
+      "cache_prompt": false,
+      "type": "text",
+      "text": "The `.turbo` logs are cache. The real fixes: image repo must be lowercase, and the identity test must expect the lowercased form. Let me fix both:\n\n"
+    }
+  ],
+  "reasoning_content": "The .turbo logs are build caches (ignored, not source). The real source issue is only in `packages/core/src/compose-update.ts`: `PUBLISHED_IMAGE_REPO = \"NETO-DEV66/ALTERNATIVE-BOT\"`. I need to lowercase it for image usage. But that also affects the `isOfficialRepoUrl`/`repoIdentity`? No, that's self-update.ts, separate.\n\nWait, but compose-update.test.ts at line 640/643 expects `repoUrl: \"https://github.com/NETO-DEV66/ALTERNATIVE-BOT.git\"`. That's a repo URL, not image. And the test \"accepts registry paths with a host\" uses `OFFICIAL_SERVER_IMAGE` = `ghcr.io/${PUBLISHED_IMAGE_REPO}/app`. So making PUBLISHED_IMAGE_REPO lowercase fixes that test. Good.\n\nNow for self-update.test.ts: the identity test. `repoIdentity` lowercases the result. So `identity` variable in the test should be lowercase, OR the test should not expect the mixed case. Since repoIdentity's contract is \"for comparison only\" and lowercases, the test's expected identity must be lowercase. Originally the repo was `elie222/alternativebot` (already lowercase), so it worked. Now with uppercase repo name, the test must expect `github.com/neto-dev66/alternative-bot`.\n\nSo fix self-update.test.ts line 72: `const identity = \"github.com/neto-dev66/alternative-bot\";` and keep the input URLs as-is (mixed case is fine, they get lowercased). Actually the inputs should be varied spellings \u2014 the test intent is \"every spelling maps to one identity\". Keep inputs mixed-case (NETO-DEV66/ALTERNATIVE-BOT) to exercise case-insensitivity, and expect lowercase identity.\n\nLet me fix:\n1. `packages/core/src/compose-update.ts`: PUBLISHED_IMAGE_REPO \u2192 \"neto-dev66/alternative-bot\"\n2. `packages/core/src/self-update.test.ts` line 72: identity \u2192 \"github.com/neto-dev66/alternative-bot\"\n\nNow, what about the adapters failures? 3 failed tests. One was `mcp-package-installer` (npm install timeout \u2014 environmental). Let me identify the other adapter failures.\n\nActually the turbo output showed \"2 failed | 294 passed\" files and \"3 failed\" tests in adapters. Let me run adapters tests to see the 3 failures. One is mcp-package-installer (npm network). Let me check.\n\nBut first fix the two core issues.\n\nAlso I should check: does `PUBLISHED_IMAGE_REPO` get used anywhere expecting the GitHub-style mixed case? Let me check usages. In compose-update.ts it's only for images. Good.\n\nAlso `apps/www` and docs reference `ghcr.io/neto-dev66/alternative-bot` already (fixed). Good.\n\nLet me apply the two fixes.",
+  "thinking_blocks": [],
+  "responses_reasoning_item": null,
+  "action": {
+    "command": "str_replace",
+    "path": "/workspace/project/packages/core/src/compose-update.ts",
+    "file_text": null,
+    "old_str": "export const PUBLISHED_IMAGE_REPO = \"NETO-DEV66/ALTERNATIVE-BOT\";",
+    "new_str": "export const PUBLISHED_IMAGE_REPO = \"neto-dev66/alternative-bot\";",
+    "insert_line": null,
+    "view_range": null,
+    "kind": "FileEditorAction"
+  },
+  "tool_name": "file_editor",
+  "tool_call_id": "chatcmpl-tool-8058044571a5a714",
+  "tool_call": {
+    "id": "chatcmpl-tool-8058044571a5a714",
+    "responses_item_id": null,
+    "name": "file_editor",
+    "arguments": "{\"command\": \"str_replace\", \"new_str\": \"export const PUBLISHED_IMAGE_REPO = \\\"neto-dev66/alternative-bot\\\";\", \"old_str\": \"export const PUBLISHED_IMAGE_REPO = \\\"NETO-DEV66/ALTERNATIVE-BOT\\\";\", \"path\": \"/workspace/project/packages/core/src/compose-update.ts\", \"security_risk\": \"LOW\", \"summary\": \"Lowercase published image repo\"}",
+    "origin": "completion"
+  },
+  "llm_response_id": "gen-1793455009-xekXrwzEoXWizbOWNVyG",
+  "security_risk": "LOW",
+  "critic_result": null,
+  "summary": "Lowercase published image repo",
+  "kind": "ActionEvent"
+}

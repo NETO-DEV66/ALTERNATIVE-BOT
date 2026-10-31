@@ -1,0 +1,27 @@
+{
+  "id": "145c053f-0005-449f-a5b5-67556b6c9b8e",
+  "timestamp": "2026-10-31T11:21:08.604416",
+  "source": "environment",
+  "parent_id": "f268c22f-be36-4ffd-ad3b-c48dcbbb0469",
+  "tool_name": "file_editor",
+  "tool_call_id": "chatcmpl-tool-8101e304e19210dc",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "No replacement was performed, old_str `it(\"accepts old capabilities for the bundled desktop client\", async () => {\n    vi.stubGlobal(\n      \"fetch\",\n      vi.fn(async () => Response.json({ passwordReset: false, resetUrl: null, billing: false })),\n    );\n    await expect(fetchAuthCapabilities()).resolves.toEqual({\n      passwordAuth: true,\n      sso: null,\n      passwordReset: false,\n      resetUrl: null,\n      billing: false,\n    });\n  });` did not appear verbatim in /workspace/project/apps/web/src/lib/auth-capabilities.test.ts."
+      }
+    ],
+    "is_error": true,
+    "command": "str_replace",
+    "path": null,
+    "prev_exist": true,
+    "old_content": null,
+    "new_content": null,
+    "kind": "FileEditorObservation"
+  },
+  "action_id": "09ae9a1f-c736-4890-8849-fbe13bd7d32f",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

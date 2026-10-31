@@ -1,0 +1,36 @@
+{
+  "id": "d08c67ab-526d-4f93-a52a-84f7d1fa466a",
+  "timestamp": "2026-10-31T13:16:14.071164",
+  "source": "environment",
+  "parent_id": "1b05f9bd-d311-40a7-853f-e540b60ee84f",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-9f1801e9138d54dd",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "<h2 id=\"fair-use\">Fair use</h2>\n      <p>\n        Hosted plans include up to 100 computer-hours a month and up to 5 computers running at once\n        per account, which is more than enough for most people. A computer counts toward those hours\n        only while it is running. Computers sleep after a few minutes without activity and run for up\n        to about two hours each time they wake, so they are not meant to stay on continuously. Each\n        computer currently has 4 vCPUs, 8 GB of memory, and 50 GB of disk. Files are saved when a\n        computer sleeps, up to 5 GB per computer, and kept until you delete the bot or your account.\n        Rebuildable caches and dependencies are not kept.\n      </p>\n      <p>\n        If an account goes beyond these limits or places an unreasonable load on the Service, we may\n        slow or pause its computers and will contact you before taking further action. We do not\n        charge for computer use beyond your plan. These limits do not apply to self-hosted AlternativeBot.\n      </p>\n\n      <h2>Cancellation and refunds</h2>\n      <p>\n        You can cancel at any time from your account\u2019s billing settings or by emailing{\" \"}\n        <a href=\"mailto:hello@alternativebot.com\">hello@alternativebot.com</a>. Cancellation stops future renewals;\n        you keep access until the end of the period you paid for. Payments are non-refundable and\n        partial periods are not prorated, except where required by law. If you were charged in error,\n        email us within 30 days and we will refund the charge.\n      </p>\n      <p>\n        If you are a consumer in the European Union or the United Kingdom, you can withdraw from a new\n        subscription within 14 days of buying it by telling us, for example by email. Because you ask\n        the Service to start immediately, we will refund your payment less an amount proportionate to\n        the Service provided before you withdrew.\n      </p>\n\n      <h2>Changes to the Service</h2>\n      <p>\n        We may add, change, or remove features. Features marked as beta or preview may be incomplete\n        or change without notice, and we do not promise the Service will be uninterrupted or\n        error-free. If we materially reduce a paid feature during your billing period, we will tell\n        you in advance, and you can cancel and receive a refund for the unused period.\n      </p>\n\n      <h2>Termination</h2>\n      <p>\n        You can stop using the Service and delete your account at any time. We may suspend or\n        terminate your access if you violate these terms, do not pay, or put the Service or others at\n        risk, or if the law requires it. Where reasonable, we will tell you first. If we terminate\n        your account or stop offering the Service for reasons other than a violation of these terms,\n        we will give you reasonable notice and refund any prepaid fees for the unused period.\n      </p>\n      <p>\n        When an account is deleted, its bots and routines stop and we delete its content as described\n        in our privacy policy, so save anything you want to keep first. Terms that by their nature\n        should survive termination, such as fees owed, disclaimers, limits of liability, and"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '95,145p' apps/www/src/pages/terms.astro",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": -1,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-5ddfbc867f-s4kjx",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "1699aee2-d56e-4391-a7cb-be885e6a0154",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

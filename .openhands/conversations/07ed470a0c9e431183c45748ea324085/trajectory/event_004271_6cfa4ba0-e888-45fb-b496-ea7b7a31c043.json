@@ -1,0 +1,36 @@
+{
+  "id": "6cfa4ba0-e888-45fb-b496-ea7b7a31c043",
+  "timestamp": "2026-10-31T12:11:56.115322",
+  "source": "environment",
+  "parent_id": "022fdf2e-3578-4054-b4c8-fcd26cf9fe8e",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-bba4a7dde453120c",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "viaConnector,\n        declaredReadOnlyFor(toolName),\n      ),\n    );\n  const connectorProviders = ctx.tools.connectedPlugins.map((plugin) => plugin.provider);\n  const connectorKind = connectorKindFromToolName(name, connectorProviders);\n  // paid_request with only a purchase id sends the request its approval already named.\n  const sendsToSite =\n    SITE_SENDING_TOOLS.has(name) && (name === \"web_fetch\" || args.url !== undefined);\n  const fetchUrl = sendsToSite ? normalizedHttpUrl(String(args.url ?? \"\")) : undefined;\n  const fetchSite = fetchUrl ? urlSite(fetchUrl) : undefined;\n=== git diff run-tool-gate ===\ndiff --git a/packages/adapters/src/run-tool-gate.ts b/packages/adapters/src/run-tool-gate.ts\nindex 10057ba..5012fe6 100644\n--- a/packages/adapters/src/run-tool-gate.ts\n+++ b/packages/adapters/src/run-tool-gate.ts\n@@ -4,8 +4,8 @@ import type {\n   AutoReviewRequest,\n   ConnectorCall,\n   ToolBatch,\n-} from \"@rakazo/adapter-kit\";\n-import { runContinueJob } from \"@rakazo/adapter-kit\";\n+} from \"@alternativebot/adapter-kit\";\n+import { runContinueJob } from \"@alternativebot/adapter-kit\";\n import {\n   applyJudgeDecision,\n   approvalModeFromPreference,\n@@ -25,11 +25,11 @@ import {\n   toolRequiresApproval,\n   toolRequiresExplicitApproval,\n   unattendedTriggerToolRequiresApproval,\n-} from \"@rakazo/core\";\n-import { normalizedHttpUrl, urlSite } from \"@rakazo/core/egress\";\n-import { approvalEffectKey, toolEffectIdempotencyKey } from \"@rakazo/core/node/approval-effect-key\";\n-import { runSecretKind } from \"@rakazo/db\";\n-import { getLogger } from \"@rakazo/logging\";\n+} from \"@alternativebot/core\";\n+import { normalizedHttpUrl, urlSite } from \"@alternativebot/core/egress\";\n+import { approvalEffectKey, toolEffectIdempotencyKey } from \"@alternativebot/core/node/approval-effect-key\";\n+import { runSecretKind } from \"@alternativebot/db\";\n+import { getLogger } from \"@alternativebot/logging\";\n import type { FleetCardSummary } from \"./approval-ask.js\";\n import { buildApprovalAskBlock, MAX_FETCH_URL_LENGTH, SITE_SENDING_TOOLS } from \"./approval-ask.js\";\n import {\n@@ -48,7 +48,6 @@ import {\n import { reviewWithBackups } from \"./auto-review-backups.js\";\n import type { ExecutorDeps } from \"./executor-deps.js\";\n import { findConnectedModelCredential } from \"./model-selection.js\";\n-import { paidRequestEffect } from \"./paid-request.js\";\n import { autoReviewCheckerProvider } from \"./run-auto-review.js\";\n import type { RunContext, RunTrust } from \"./run-context.js\";\n import {"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '165,175p' packages/adapters/src/run-tool-gate.ts; echo \"=== git diff run-tool-gate ===\"; git --no-pager diff packages/adapters/src/run-tool-gate.ts | head -40",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 65061,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "16292dd3-b38f-416d-a5c5-d511e2d29e91",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

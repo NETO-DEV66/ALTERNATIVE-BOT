@@ -1,0 +1,37 @@
+{
+  "id": "a366af41-1c1c-450e-8067-3435c5e02e04",
+  "timestamp": "2026-10-31T12:20:02.353806",
+  "source": "agent",
+  "parent_id": "db2ed00b-a248-45ee-abb8-4b1c132e72c0",
+  "thought": [
+    {
+      "cache_prompt": false,
+      "type": "text",
+      "text": ""
+    }
+  ],
+  "reasoning_content": "`\"alternativebot-cprobe\"` = let me count: a-l-t-e-r-n-a-t-i-v-e-b-o-t = 14 chars, + \"-cprobe\" = 7 chars \u2192 21 chars. Exceeds 15. So the whole `alternativebot-` prefix (14) leaves only 1 byte for the suffix \u2014 impossible within IFNAMSIZ.\n\nThis is a real design conflict: the \"Rakazo\" prefix was 6 chars (\"rakazo-c\" = 8, +7 hex = 15 \u2713). \"alternativebot-c\" = 15 + 7 = 22 > 15. So we cannot keep the interface name pattern with the full brand.\n\nSo the failing tests reveal a genuine incompatibility. Options:\n1. Use a short bridge prefix derived from the brand, e.g. \"altbot-c\" (7 chars) + 7 hex = 14 \u2264 15. Then update the ruleset scripts and tests.\n2. Keep bridge prefix short and document it.\n\nThe tests currently expect `/^alternativebot-c[0-9a-f]{7}$/` and length \u2264 15 \u2014 which is impossible. So the previous session blindly renamed the bridge prefix without accounting for IFNAMSIZ. We need to pick a short token.\n\nWhat's the best token? Since the requirements say identifiers/compound = \"AlternativeBot\". But 14 chars + needs a suffix. Hmm. We could use `altbot-c` + 7 hex = 14. Or `abot-c` + 7 = 13. Or use a 6-char prefix so total 15.\n\nThe ruleset scripts use `alternativebot-c+` interface pattern; those are shell scripts with the literal name. If we shorten the bridge name, we must update:\n- `computer-spec.ts` computerBridgeNameFor\n- `egress-probe.ts` EGRESS_PROBE_BRIDGE\n- `infra/compose/restrict-computer-egress.sh` (the `-i alternativebot-c+` pattern)\n- `infra/compose/restrict-computer-egress.smoke.sh` (many)\n- docs\n- tests\n\nThat's a big consistent change. Alternatively, keep `alternativebot-c` but... no, IFNAMSIZ is a hard kernel limit.\n\nHmm, wait. Let me reconsider: maybe the intent is a shorter interface token. Let me check the git baseline: was it `rakazo-c`? Yes: 6+2 = \"rakazo-c\" (8) + 7 = 15 exactly. So the original design used the brand's short slug. The rebrand needs an equally short slug. \"altbot\" is a reasonable short form. Let me check if there's any existing short-form slug in the rebrand.\n\nLet me search for \"altbot\" or similar.",
+  "thinking_blocks": [],
+  "responses_reasoning_item": null,
+  "action": {
+    "command": "cd /workspace/project && grep -rn 'altbot\\|abot\\|alt-bot\\|alternativebot-c' --include=*.ts --include=*.sh --include=*.md --include=*.yml -r . 2>/dev/null | grep -v node_modules | grep -v '\\.git/' | head -30; echo \"=== baseline bridge ===\"; git --no-pager show HEAD:infra/sandboxes/supervisor/src/computer-spec.ts | grep -n 'rakazo-c\\|BridgeNameFor' ",
+    "is_input": false,
+    "timeout": null,
+    "reset": false,
+    "kind": "TerminalAction"
+  },
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8bc958f70aa2f802",
+  "tool_call": {
+    "id": "chatcmpl-tool-8bc958f70aa2f802",
+    "responses_item_id": null,
+    "name": "terminal",
+    "arguments": "{\"command\": \"cd /workspace/project && grep -rn 'altbot\\\\|abot\\\\|alt-bot\\\\|alternativebot-c' --include=*.ts --include=*.sh --include=*.md --include=*.yml -r . 2>/dev/null | grep -v node_modules | grep -v '\\\\.git/' | head -30; echo \\\"=== baseline bridge ===\\\"; git --no-pager show HEAD:infra/sandboxes/supervisor/src/computer-spec.ts | grep -n 'rakazo-c\\\\|BridgeNameFor' \", \"security_risk\": \"LOW\", \"summary\": \"Search short brand slug\"}",
+    "origin": "completion"
+  },
+  "llm_response_id": "gen-1793449196-SeL80EePEKYnIrR6XDMi",
+  "security_risk": "LOW",
+  "critic_result": null,
+  "summary": "Search short brand slug",
+  "kind": "ActionEvent"
+}

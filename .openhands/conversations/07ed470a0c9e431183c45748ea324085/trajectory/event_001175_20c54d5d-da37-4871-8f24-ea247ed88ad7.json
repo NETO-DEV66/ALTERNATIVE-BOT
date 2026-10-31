@@ -1,0 +1,36 @@
+{
+  "id": "20c54d5d-da37-4871-8f24-ea247ed88ad7",
+  "timestamp": "2026-10-31T10:55:09.901190",
+  "source": "environment",
+  "parent_id": "fd643a32-6a54-4ed6-86d4-7c014cd42650",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8c1aaaf663a4cdbc",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "billing-conformance.test.ts\nbilling-emulator.ts\nexecutor-model-credits.test.ts\nfake-purchases.ts\nlink-wallet.ts\nmodel-credit-audit.postgres.test.ts\nmodel-credit-observer.test.ts\nmodel-credit-observer.ts\nmodel-credit-pricing.test.ts\nmodel-credit-reconciler.test.ts\nmodel-credit-reconciler.ts\nmpp-stripe.ts\npaid-request.ts\npayment-wallet-conformance.test.ts\npayment-wallet-emulator.ts\npayment-wallet-factory.test.ts\npayment-wallet-factory.ts\npayment-wallets.postgres.test.ts\npayment-wallets.test.ts\npayment-wallets.ts\npurchase-poll.test.ts\npurchase-poll.ts\npurchase-service.test.ts\npurchase-service.ts\nrun-tools-purchases.ts\nstripe-billing.test.ts\nstripe-billing.ts\nstripe-credits.test.ts"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && ls packages/adapters/src/ | grep -iE 'billing|payment|purchase|paid|credit|wallet|stripe|fake-purchases|mpp'",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "7d787485-91ce-4015-a8b7-1991a2124524",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "816ed1a7-f7ef-4a78-9ff7-fd6bd42dec6c",
+  "timestamp": "2026-10-31T10:52:19.552744",
+  "source": "environment",
+  "parent_id": "4e45aad0-db2d-46ed-8fe3-ee5e41d02975",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b43eaef10e1ea67e",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "/**\n * A role row's model on its own connection, or on the deployment's for its funded provider.\n * The connection is returned with the key so a run can record which one served it.\n */\nexport async function resolveConnectedModelKey(\n  deps: ExecutorDeps,\n  scope: { userId: string; spaceId: string },\n  provider: string,\n  modelId: string,\n  registerSecrets?: (values: string[]) => void,\n  requireStoredSecret = false,\n  credentialId?: string,\n) {\n  const hostedProvider = (await modelCreditBillingEnabled(deps))\n    ? resolveDeploymentModel().provider\n    : undefined;\n  const validationError = await validateConnectedModelChoice(\n    deps.prisma,\n    deps.secretStore,\n    scope,\n    provider,\n    modelId,\n    { hostedProvider, credentialId },\n  );\n  if (validationError) throw new Error(validationError);\n  const credential = await findConnectedModelCredential(\n    deps.prisma,\n    deps.secretStore,\n    scope,\n    provider,\n    modelId,\n    { credentialId },\n  );\n  if (!credential && provider !== hostedProvider) throw new Error(PINNED_PROVIDER_NOT_CONNECTED);\n  const resolved = await resolveModelKey(\n    deps,\n    scope.userId,\n    scope.spaceId,\n    credential,\n    provider,\n    modelId,\n      })\n    : null;\n  const hasOverride = Boolean(override?.modelProvider && override.modelId);\n  const [overrideCredential, main, settings] = await Promise.all([\n    hasOverride\n      ? findConnectedModelCredential(\n          deps.prisma,\n          deps.secretStore,\n          scope,\n          override!.modelProvider!,\n          override!.modelId,\n        )\n      : Promise.resolve(null),\n    resolveMemberMainModel(deps, scope),\n    deps.prisma.deploymentSettings.findUnique({\n      where: { id: \"default\" },\n    }),\n  ]);\n  const selected = selectConfiguredModel({\n    override,\n    overrideCredential,\n    main,\n    hostedProvider: (await modelCreditBillingEnabled(deps))\n      ? resolveDeploymentModel().provider\n      : undefined,\n    defaults: {\n      settings,\n      deployment: deps.deploymentModelConfigured ? resolveDeploymentModel() : null,\n    },\n  });\n  const { credential, thinkingLevel } = selected;\n  let { provider, id } = selected;\n  if (!provider || !id) {\n    const runtimeFallback = runtimeFallbackModel(deps.runtime);\n    provider ??= runtimeFallback?.provider;\n    id ??= runtimeFallback?.id ?? null;\n  }\n  if (!provider || !id) throw new Error(MISSING_MODEL_RUN_ERROR);\n  // The key is resolved for the provider that won above, not before it is known.\n  const resolved = await resolveModelKey(\n    deps,\n    scope.userId,\n    scope.spaceId,\n    credential,\n    provider,\n    id,\n  );\n  return {\n    provider,\n    id,\n    apiKey: resolved.oauth ? undefined : resolved.apiKey,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '360,400p;480,530p' packages/adapters/src/run-model.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "a9dd3230-328d-4d6d-9208-5d7eb8573f5f",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "9a01bb0e-90f4-4e35-8987-aae641bb26be",
+  "timestamp": "2026-10-31T11:10:52.697829",
+  "source": "environment",
+  "parent_id": "8ef50cd3-a4c7-4ef8-9ee8-1ce775f80870",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-a19cd40f036248e7",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "4:  isModelCredentialRejected,\n101:  findConnectedModelCredential,\n103:  pinnedModelCredentialError,\n108:import { isRetiredModelCredentialError } from \"./pi-oauth.js\";\n525:            ? await findConnectedModelCredential(\n734:          ? pinnedModelCredentialError(modelChoice, overrideCredential)\n844:            if (!terminal && !isModelCredentialRejected(error)) throw error;\n847:              accountFailure: isRetiredModelCredentialError(error),"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -n 'start\\.credential\\|start\\.resolved\\|start\\.provider\\|start\\.id\\|start\\.thinkingLevel\\|ModelCredential' packages/adapters/src/executor.ts | head -30",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "2f710ed7-b200-4e99-b494-6923a55c89de",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

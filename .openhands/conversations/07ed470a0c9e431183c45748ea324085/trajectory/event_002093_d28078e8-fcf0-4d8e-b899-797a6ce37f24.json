@@ -1,0 +1,36 @@
+{
+  "id": "d28078e8-fcf0-4d8e-b899-797a6ce37f24",
+  "timestamp": "2026-10-31T11:10:04.203047",
+  "source": "environment",
+  "parent_id": "f0ed6a20-12ad-435b-921a-ac7918c3ab82",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b50a7f8bdbad809b",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "92:export function selectConfiguredModel(input: {\n93-  /** The bot's or the run's own model; null follows the main model. */\n94-  override: ModelChoice | null;\n95-  overrideCredential: ModelCredential;\n96-  main: MemberMainModel | null;\n97-  defaults: DeploymentModelDefaults;\n98-}) {\n99-  const { override: bot, overrideCredential, main } = input;\n100-  const hasOverride = Boolean(bot?.modelProvider && usableModelId(bot.modelId));\n101-  // A model runs on its own connection.\n102-  const runnable = (credential: ModelCredential) => Boolean(credential);\n103-  // The override provider, model and credential must win together.\n104-  const useOverride = hasOverride && runnable(overrideCredential);\n105-  const useMain = !useOverride && main !== null && runnable(main.credential);\n106-  const fallback = deploymentModelRole(\"main\", input.defaults).primary;\n107-  const selected = useOverride\n108-    ? {\n109-        provider: bot!.modelProvider!,\n110-        id: usableModelId(bot!.modelId),\n111-        credential: overrideCredential,\n112-      }\n113-    : useMain\n114-      ? { provider: main.provider, id: main.modelId, credential: main.credential }\n115-      : { provider: fallback?.provider, id: fallback?.modelId ?? null, credential: null };\n116-  // The main model's effort belongs to that model, so an override of the same model keeps it.\n117-  const mainThinking =\n118-    main &&\n119-    selected.id &&\n120-    backupChoiceKey(main) ===\n121-      backupChoiceKey({ provider: selected.provider ?? \"\", modelId: selected.id })\n122-      ? (main.thinkingLevel ?? null)\n123-      : null;\n124-  return {\n125-    ...selected,\n126-    // Preserve bot thinking for the main model; drop it for an unavailable override.\n127-    thinkingLevel:\n128-      hasOverride && !useOverride\n129-        ? null\n130-        : (((bot?.thinkingLevel ?? mainThinking) as AgentRunRequest[\"model\"][\"thinkingLevel\"]) ??\n131-          null),\n132-  };\n133-}"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -n 'export function selectConfiguredModel' -A 60 packages/adapters/src/model-roles.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "e3c36d52-9684-4882-832a-fcf6b694b15c",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

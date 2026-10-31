@@ -1,0 +1,36 @@
+{
+  "id": "e882356c-049e-45dd-b2ea-a6770c2e11ee",
+  "timestamp": "2026-10-31T12:11:06.792850",
+  "source": "environment",
+  "parent_id": "40f9517c-7407-46f7-b40d-438975a78b9e",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-930e3d9c0e3afecc",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "207:const availableModel = listPiCatalog().find(\n295:    const input = [{ provider: availableModel.provider, modelId: availableModel.id }];\n299:      expect.objectContaining({ spaceId: owner.spaceId, modelId: availableModel.id }),\n310:      expect.objectContaining({ spaceId: owner.spaceId, modelId: availableModel.id }),\n316:    const input = [{ provider: availableModel.provider, modelId: availableModel.id }];\n323:      expect.objectContaining({ role: \"main\", position: 1, modelId: availableModel.id }),\n328:        provider: availableModel.provider,\n329:        modelId: availableModel.id,\n354:    const repeated = { provider: availableModel.provider, modelId: availableModel.id };\n361:      provider: availableModel.provider,\n=== tail of test ===\n    };\n    expect(preferences.upsert).not.toHaveBeenCalled();\n    expect(preferences.updateMany).not.toHaveBeenCalled();\n    const approval = await call(\"models/setRole\", { role: \"approval\", primary });\n    expect(approval.response.status).toBe(200);\n  } finally {\n    vi.unstubAllEnvs();\n  }\n});"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -n 'availableModel' apps/api/src/models-backups.test.ts | head; echo \"=== tail of test ===\"; sed -n '735,760p' apps/api/src/models-backups.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 25122,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "a7afd96f-c5be-4594-8ec2-a18718640173",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

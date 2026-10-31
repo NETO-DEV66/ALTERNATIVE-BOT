@@ -1,0 +1,36 @@
+{
+  "id": "a2d261a3-ca6d-4a98-b283-92c78163d2f8",
+  "timestamp": "2026-10-31T11:02:31.619341",
+  "source": "environment",
+  "parent_id": "69cecb59-cfae-4db3-b28a-c55b2e11cc1e",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-953fffcd315eec66",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "import { getEnvApiKey } from \"@earendil-works/pi-ai/compat\";\nimport type { ModelUsageLookup } from \"@alternativebot/adapter-kit\";\nimport { OpenRouterUsageLookup } from \"./openrouter-usage.js\";\n\nexport const DEFAULT_OPENROUTER_MODEL_ID = \"openai/gpt-6-luna\";\n\n/**\n * What Pi reports for a provider that authenticates from the host instead of a key: an AWS\n * profile or task role for Amazon Bedrock, Application Default Credentials for Vertex.\n */\nconst HOST_CREDENTIALS = \"<authenticated>\";\n\n/** What a provider's host credentials are, for telling a user what a deployment runs on. */\nconst HOST_CREDENTIAL_SOURCES: Record<string, string> = {\n  \"amazon-bedrock\": \"AWS IAM\",\n  \"google-vertex\": \"Google Cloud\",\n};\n\n/** The kind of host credentials a provider authenticates with, e.g. \"AWS IAM\". */\nexport function hostCredentialSource(provider: string): string {\n  return HOST_CREDENTIAL_SOURCES[provider] ?? \"host\";\n}\n\n/**\n * The deployment-wide model default: which provider a run falls back to when no user\n * credential applies, and the key for that provider.\n *\n * Keyless host authentication requires explicit opt-in and a model id. Bedrock resolves\n * its credential chain (including instance roles) at request time; other providers must\n * report host credentials in the process environment. Host credentials never become `key`.\n *\n * Vendor env names and model ids live here, in the adapter layer, not in core.\n */\nexport function resolveDeploymentModel(env: NodeJS.ProcessEnv = process.env) {\n  const provider = env.PI_DEFAULT_PROVIDER?.trim() || \"openrouter\";\n  // An unknown provider gets no key rather than another vendor's.\n  const keys: Record<string, string | undefined> = {\n    openrouter: env.OPENROUTER_API_KEY,\n    anthropic: env.ANTHROPIC_API_KEY,\n  };\n  const models: Record<string, string> = {\n    openrouter: DEFAULT_OPENROUTER_MODEL_ID,\n    anthropic: \"claude-sonnet-5\",\n  };\n  const explicitModel = env.PI_DEFAULT_MODEL?.trim();\n  const key = keys[provider];\n  const hostCredentials =\n    !key &&\n    Boolean(explicitModel) &&\n    env.PI_DEFAULT_CREDENTIALS?.trim() === \"host\" &&\n    // Bedrock also resolves EC2 instance roles through IMDS at request time.\n    (provider === \"amazon-bedrock\" || getEnvApiKey(provider) === HOST_CREDENTIALS);\n  return {\n    provider,\n    model: explicitModel || models[provider] || models.openrouter!,\n    key,\n    configured: Boolean(key) || hostCredentials,\n    hostCredentials,\n  };\n}\n\nexport function deploymentModelUsageLookup(): ModelUsageLookup | undefined {\n  const model = resolveDeploymentModel();\n  return model.provider === \"openrouter\" && model.key\n    ? new OpenRouterUsageLookup(model.key)\n    : undefined;\n}"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && cat packages/adapters/src/deployment-model.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "c98fea41-5cdc-4bed-9858-e0731adec076",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

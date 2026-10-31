@@ -1,0 +1,36 @@
+{
+  "id": "adbea8c1-020c-463b-be4e-c36777fa8ed4",
+  "timestamp": "2026-10-31T11:14:18.448155",
+  "source": "environment",
+  "parent_id": "472b9c3f-952f-4d54-b02b-a37847fb9e72",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-9a714ad3c5d842e0",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": ""
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project/packages/adapters && timeout 600 node_modules/.bin/tsc --noEmit -p tsconfig.json 2>&1 | head -40",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project/packages/adapters",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": null,
+    "kind": "TerminalObservation"
+  },
+  "action_id": "a0898519-d3b5-4b75-a116-8a239a641d88",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

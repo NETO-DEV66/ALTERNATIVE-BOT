@@ -24,13 +24,6 @@ export const MODEL_REQUEST_LIMIT_ERROR =
 
 export const MISSING_MODEL_RUN_ERROR = "Connect a model in Settings before running bots.";
 
-/** A deployment model run while the organization has not chosen Alternative Bot credits. */
-export const HOSTED_MODEL_CREDITS_REQUIRED_ERROR =
-  "Connect your own API key in Models or choose Alternative Bot credits in Billing.";
-
-/** A run in a billing organization without a paid plan, credits, or free period. */
-export const MODEL_ACCESS_REQUIRED_RUN_ERROR = "Subscribe in Billing to keep running bots.";
-
 /** The API rejects a send with this message until the user can reach a model. */
 export const MODEL_REQUIRED_SEND_ERROR = "Connect a model to start a run.";
 
@@ -97,14 +90,10 @@ const MODEL_OUTPUT_RUN_ERRORS = new Set([
   APPROVED_ACTION_NOT_RUN_ERROR,
 ]);
 /** App advice whose fix is connecting a model. */
-const MODEL_CONNECTION_RUN_ERRORS = new Set([
-  MISSING_MODEL_RUN_ERROR,
-  HOSTED_MODEL_CREDITS_REQUIRED_ERROR,
-]);
+const MODEL_CONNECTION_RUN_ERRORS = new Set([MISSING_MODEL_RUN_ERROR]);
 const APP_RUN_ERRORS = new Set([
   ...MODEL_OUTPUT_RUN_ERRORS,
   ...MODEL_CONNECTION_RUN_ERRORS,
-  MODEL_ACCESS_REQUIRED_RUN_ERROR,
   COMPUTER_RATE_LIMIT_ERROR,
   ...stuckWorkStatusMessages(),
 ]);

@@ -1,0 +1,36 @@
+{
+  "id": "e6ef5243-a8cc-43dc-97dc-edb7f815e652",
+  "timestamp": "2026-10-31T12:20:04.666391",
+  "source": "environment",
+  "parent_id": "0c566f54-41e3-4331-8d5e-5a63c505ba4b",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8bc958f70aa2f802",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "./packages/adapters/src/boxd-sandbox.test.ts:122:      expect.stringContaining(\".alternativebot-command-env/\"),\n./packages/adapters/src/bot-secrets-command.test.ts:328:    const root = mkdtempSync(path.join(tmpdir(), \"alternativebot-command-env-\"));\n./packages/adapters/src/linux-desktop.ts:430:  \"  package=$(mktemp /tmp/alternativebot-chrome-XXXXXX.deb)\",\n./packages/adapters/src/kubernetes-sandbox.ts:609:          \"app.kubernetes.io/name\": \"alternativebot-computer\",\n./packages/adapters/src/sandbox-provider-env.test.ts:145:        KUBERNETES_SANDBOX_NAMESPACE: \" alternativebot-computers \",\n./packages/adapters/src/sandbox-provider-env.test.ts:155:      kubernetesNamespace: \"alternativebot-computers\",\n./packages/adapters/src/computer-idle.ts:217:  return [\"bash\", \"-c\", CANCEL_COMPUTER_RUN_WORK, \"alternativebot-cancel-run-work\", computerId, runId];\n./packages/adapters/src/desktop-workspace-cleanup.test.ts:21:    root = await mkdtemp(path.join(tmpdir(), \"alternativebot-cleanup-\"));\n./packages/adapters/src/computer-lifecycle.test.ts:522:    const dataDir = await mkdtemp(path.join(tmpdir(), \"alternativebot-claim-stamp-race-\"));\n./packages/adapters/src/computer-lifecycle.test.ts:580:    const dataDir = await mkdtemp(path.join(tmpdir(), \"alternativebot-claim-stamp-skew-\"));\n./packages/adapters/src/novita-template.ts:3:export const NOVITA_COMPUTER_TEMPLATE = \"alternativebot-computer\";\n./packages/adapters/src/createos-sandbox.ts:1187:        \">/tmp/alternativebot-chrome.log 2>&1 </dev/null &\",\n./packages/adapters/src/createos-sandbox.ts:1220:        \">/tmp/alternativebot-chrome.log 2>&1 </dev/null &\",\n./packages/adapters/src/computer-runs.postgres.test.ts:36:    dataDir = await mkdtemp(path.join(tmpdir(), \"alternativebot-computer-runs-\"));\n./packages/adapters/src/docker-sandbox.ts:139:      ...(context.cancelRunWork ? { \"x-alternativebot-cancel-run-work\": \"1\" } : {}),\n./packages/adapters/src/boat-sandbox.test.ts:263:    expect(envFile).toMatch(/^\\/home\\/user\\/\\.alternativebot-command-env\\/[0-9a-f-]{36}$/);\n./packages/adapters/src/boat-sandbox.test.ts:360:      /^rm -f -- '\\/home\\/user\\/\\.alternativebot-command-env\\/[0-9a-f-]{36}'$/,\n./packages/adapters/src/boat-sandbox.test.ts:363:      [...api.files(computer.id).keys()].some((file) => file.includes(\".alternativebot-command-env\")),\n./packages/adapters/src/boat-sandbox.test.ts:2067:    expect(BOAT_COMPUTER_SNAPSHOT).toMatch(/^alternativebot-computer-[0-9a-f]{12}$/);\n./packages/adapters/src/e2b-sandbox.test.ts:260:    const missing = Object.assign(new SandboxError(\"404: template 'alternativebot-computer' not found\"), {\n./packages/adapters/src/railway-sandbox.test.ts:857:          UV_CACHE_DIR: \"/tmp/alternativebot-cache/uv\",\n./packages/adapters/src/boxd-sandbox.ts:49:const COMMAND_ENV = `${HOME}/.alternativebot-command-env`;\n./packages/adapters/src/boxd-sandbox.ts:875:export const BOXD_COMPUTER_SNAPSHOT = `alternativebot-computer-${createHash(\"sha256\")\n./packages/adapters/src/docker-sandbox.test.ts:518:        headers: expect.objectContaining({ \"x-alternativebot-cancel-run-work\": \"1\" }),\n./packages/adapters/src/docker-sandbox.test.ts:545:      \"x-alternativebot-cancel-run-work\": \"1\",\n./packages/adapters/src/kubernetes-sandbox.test.ts:209:          \"app.kubernetes.io/name\": \"alternativebot-computer\",\n./packages/adapters/src/coding-agent-activity.ts:58:          \"alternativebot-coding-agent-probe\",\n./packages/adapters/src/computer-idle.test.ts:1455:        [\"-c\", CANCEL_COMPUTER_RUN_WORK, \"alternativebot-cancel-run-work\", computerId, runId],\n./packages/adapters/src/computer-idle.test.ts:1508:        [\"-c\", CANCEL_COMPUTER_RUN_WORK, \"alternativebot-cancel-run-work\", computerId, \"cancel\"],\n./packages/adapters/src/computer-idle.test.ts:1698:      if (request.argv[3] === \"alternativebot-coding-agent-probe\") {\n=== baseline bridge ===\n203: * interface (`-i rakazo-c+`) instead of ephemeral subnets. Enforcement lives on the\n416: * at 15 bytes (IFNAMSIZ), so \"rakazo-c\" gets a 7-hex-char suffix derived from the\n419:export function computerBridgeNameFor(botId: string) {\n421:  return `rakazo-c${hash}`;\n450:      ? { Options: { \"com.docker.network.bridge.name\": computerBridgeNameFor(botId) } }\n642:  return `rakazo-computer-${sanitizeIdentifier(botId).slice(0, 32)}-${hash}`;\n651:    `rakazo-computer-${safe}`,\n652:    `rakazo-computer-${safe.slice(0, 32)}-${digest.slice(0, 8)}`,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -rn 'altbot\\|abot\\|alt-bot\\|alternativebot-c' --include=*.ts --include=*.sh --include=*.md --include=*.yml -r . 2>/dev/null | grep -v node_modules | grep -v '\\.git/' | head -30; echo \"=== baseline bridge ===\"; git --no-pager show HEAD:infra/sandboxes/supervisor/src/computer-spec.ts | grep -n 'rakazo-c\\|BridgeNameFor'",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 65061,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "a366af41-1c1c-450e-8067-3435c5e02e04",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

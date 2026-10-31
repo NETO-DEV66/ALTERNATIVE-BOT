@@ -1,0 +1,37 @@
+{
+  "id": "5be645ca-da91-4272-bbf5-422627774163",
+  "timestamp": "2026-10-31T12:10:47.685755",
+  "source": "agent",
+  "parent_id": "c9d70dee-c108-4c39-87ea-84e63cc49740",
+  "thought": [
+    {
+      "cache_prompt": false,
+      "type": "text",
+      "text": ""
+    }
+  ],
+  "reasoning_content": "The test \"keeps a saved personal connection in the catalog\" creates a credential with provider \"openai-codex\" (from storedCredential). It expects `auth.byProvider.openrouter` to be \"api_key\" and `auth.byProvider[\"openai-codex\"]` to be \"oauth\". This relies on `hostedProvider` = \"openrouter\" (from env PI_DEFAULT_PROVIDER) being set as api_key even without a credential. Since hostedProvider logic was removed, byProvider.openrouter is undefined now.\n\nWait \u2014 the test stubs env PI_DEFAULT_PROVIDER=openrouter and OPENROUTER_API_KEY. Previously `hosted` was true when hostedProvider given and hasHostedModelCredits returned true (space org modelCredits mode credits). The test set `prisma.space.findFirst` mock to return credits mode. But the new code no longer calls space.findFirst. And the test now passes no hostedProvider argument.\n\nBut the test still expects byProvider.openrouter === \"api_key\"! That's a leftover expectation from the hosted behavior. Since we removed the hosted/deployment-key path, the test should be updated: byProvider.openrouter should be undefined, and only openai-codex oauth.\n\nHmm, but wait \u2014 was this test actually failing? Let me check. The diff renamed it \"keeps a saved personal connection in the catalog\" and removed the space mock and the `managedProvider` expectation but kept `expect(auth.byProvider.openrouter).toBe(\"api_key\")`. That's inconsistent.\n\nActually, let me think about what this test is really testing now. The credential stored is openai-codex provider with a secret. So byProvider[\"openai-codex\"] should be \"oauth\". The openrouter expectation only made sense with hosted provider.\n\nHold on. Let me reconsider. Maybe the intent: the deployment has a server key for openrouter (hostedProvider), and now with the removal of credits, should the deployment's env key (OPENROUTER_API_KEY) still be usable as a BYOK deployment key? The requirement says remove premium/subscription. A deployment server key is a \"self-host operator key\" \u2014 not necessarily payment. But the memory says the whole hostedProvider/managedProvider path was removed intentionally (\"Alternative Bot is free and BYOK-only\").\n\nActually wait. Let me re-read: the new test name is \"keeps a saved personal connection in the catalog\" and it removed the `managedProvider` expectation. But it kept `expect(auth.byProvider.openrouter).toBe(\"api_key\")`. Since the code no longer sets openrouter, this test would fail. Let me verify it actually failed. Yes it did: \"keeps a saved personal connection in the catalog \u2014 expected undefined to be 'api_key'\".\n\nSo I need to decide: is the correct behavior that a deployment key (OPENROUTER_API_KEY) still works? In BYOK-only free app, a self-hoster can configure a deployment default model with a server-side key \u2014 that's a legitimate self-host feature (env `PI_DEFAULT_PROVIDER` + key). Hmm.\n\nLet me look at what `listAvailablePiCatalog` does with byProvider, and whether the deployment env key is meant to provide catalog entries. Let me look at the baseline behavior more carefully, and also check the memory notes for what was decided.\n\nLet me look at the memory file 2026-10-31.md in full.",
+  "thinking_blocks": [],
+  "responses_reasoning_item": null,
+  "action": {
+    "command": "cd /workspace/project && cat .openhands/memory/2026-10-31.md",
+    "is_input": false,
+    "timeout": null,
+    "reset": false,
+    "kind": "TerminalAction"
+  },
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-ade4b6cdb91dcb25",
+  "tool_call": {
+    "id": "chatcmpl-tool-ade4b6cdb91dcb25",
+    "responses_item_id": null,
+    "name": "terminal",
+    "arguments": "{\"command\": \"cd /workspace/project && cat .openhands/memory/2026-10-31.md\", \"security_risk\": \"LOW\", \"summary\": \"Read full daily memory log\"}",
+    "origin": "completion"
+  },
+  "llm_response_id": "gen-1793448642-O9P1FXqsHX8FPH0qmvmp",
+  "security_risk": "LOW",
+  "critic_result": null,
+  "summary": "Read full daily memory log",
+  "kind": "ActionEvent"
+}

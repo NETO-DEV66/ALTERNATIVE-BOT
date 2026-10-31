@@ -1,0 +1,37 @@
+{
+  "id": "c98fea41-5cdc-4bed-9858-e0731adec076",
+  "timestamp": "2026-10-31T11:02:31.454211",
+  "source": "agent",
+  "parent_id": "ebdf8a7e-5a24-4149-82e4-d40ffa9cd5fe",
+  "thought": [
+    {
+      "cache_prompt": false,
+      "type": "text",
+      "text": ""
+    }
+  ],
+  "reasoning_content": "This is a big deal. `hasHostedModelCredits` is the \"hosted model credits\" gate for the deployment's own model key. Removing credits means: the deployment model is usable only by the deployment owner (there is no per-org funding).\n\nLet me look at how deployment model usage is authorized. `hostCredentialSource` and `deploymentModelRole`. The self-hosted model is served by the deployment key. Who may use it?\n\nGiven the de-monetization requirement, the cleanest semantic: the deployment model is available to everyone on this install (no per-org funding gate). But `hasHostedModelCredits` currently gates by org mode === \"credits\". Actually there might be another gate: `ownerUserId`/deployment owner.\n\nLet me check where `hasHostedModelCredits` is used and what the fallback path is. Lines 559-575: `validateBotModelChange` \u2014 if hosted provider, no credential needed. Line 731: `validateConnectedModelChoice` \u2014 if hosted provider, allow catalog model. Line 145: `modelCredentialAuthKindsForSpace`.\n\nAnd `spaceHasModelAccess` (db) \u2014 used where? Earlier grep said 6 occurrences but with exclusions. Let me re-grep.\n\nThis is getting deep. The user's scope is de-monetization: remove premium/subscription/payment. \"Hosted model credits\" is the mechanism by which the hosted install charges for the deployment's own model key. Removing it means either:\n(a) everyone gets the deployment key (fine for self-host where owner pays), or\n(b) only deployment owner.\n\nGiven the repo is meant to be self-hosted/BYOK, option (a) with a simplified gate is reasonable and matches \"remove credits\". But changing authorization semantics broadly is risky.\n\nHowever, the practical goal: the app must compile and work without the credits tables. The minimal correct change: make `hasHostedModelCredits` not depend on `modelCredits` (deleted table). Replace its body with a check that the deployment model is configured for that provider (i.e., the deployment key is available to the space). That keeps all call sites working and removes the credits dependency.\n\nActually wait \u2014 the deployment's model key being available to all spaces on the install is exactly what `deploymentModelRole` implies. Let me look at `resolveDeploymentModel` and `deployment-model.ts`.\n\nLet me read deployment-model.ts.",
+  "thinking_blocks": [],
+  "responses_reasoning_item": null,
+  "action": {
+    "command": "cd /workspace/project && cat packages/adapters/src/deployment-model.ts",
+    "is_input": false,
+    "timeout": null,
+    "reset": false,
+    "kind": "TerminalAction"
+  },
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-953fffcd315eec66",
+  "tool_call": {
+    "id": "chatcmpl-tool-953fffcd315eec66",
+    "responses_item_id": null,
+    "name": "terminal",
+    "arguments": "{\"command\": \"cd /workspace/project && cat packages/adapters/src/deployment-model.ts\", \"security_risk\": \"LOW\", \"summary\": \"Read deployment-model.ts\"}",
+    "origin": "completion"
+  },
+  "llm_response_id": "gen-1793444546-M9I6UM68PzGU0NFXdjFI",
+  "security_risk": "LOW",
+  "critic_result": null,
+  "summary": "Read deployment-model.ts",
+  "kind": "ActionEvent"
+}

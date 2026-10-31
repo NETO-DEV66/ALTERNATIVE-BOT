@@ -1,0 +1,36 @@
+{
+  "id": "1eef9358-8c97-4baf-a130-84a232d6a012",
+  "timestamp": "2026-10-31T10:30:34.948551",
+  "source": "environment",
+  "parent_id": "cbb44486-dbbe-4265-a87e-6be114938e1d",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-814f0de8010a78f5",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== createModelCreditReconciler ===\n./packages/adapters/src/model-credit-reconciler.ts\n./apps/worker/src/index.ts\n./apps/api/src/app.ts\n=== hostedModelCreditObserver ===\n./packages/adapters/src/index.ts\n./packages/adapters/src/model-credit-observer.ts\n./packages/adapters/src/run-model.ts\n./apps/api/src/team-chat-judge.ts\n=== hasHostedModelCredits ===\n./packages/adapters/src/run-auto-review.ts\n./packages/adapters/src/run-model.ts\n./packages/adapters/src/model-selection.ts\n./apps/api/src/team-chat-judge.ts\n./apps/api/src/routes/shared.ts\n./apps/api/src/routes/account.ts\n=== modelCreditsEnabled ===\n./packages/adapters/src/run-model.ts\n./packages/db/prisma/migrations/20261023000100_managed_model_settings/migration.sql\n./packages/db/prisma/schema.prisma\n./apps/api/src/billing.ts\n./apps/api/src/app.ts\n./apps/api/src/ai-consent.ts\n./apps/api/src/team-chat-judge.ts\n./apps/api/src/routes/shared.ts\n./apps/api/src/routes/context.ts\n=== BillingService ===\n./apps/api/src/billing-webhook.ts\n./apps/api/src/billing.ts\n=== BillingProvider ===\n./packages/adapters/src/stripe-billing.ts\n./packages/adapters/src/billing-emulator.ts\n./packages/adapter-kit/src/interfaces.ts\n./apps/api/src/referrals.ts\n./apps/api/src/billing-webhook.ts\n./apps/api/src/billing.ts\n=== PaymentWalletProvider ===\n./packages/adapters/src/payment-wallet-emulator.ts\n./packages/adapters/src/executor-deps.ts\n./packages/adapters/src/paid-request.ts\n./packages/adapters/src/background-job-handlers.ts\n./packages/adapters/src/payment-wallets.ts\n./packages/adapters/src/link-wallet.ts\n./packages/adapters/src/payment-wallet-factory.ts\n./packages/adapters/src/purchase-service.ts\n./packages/adapters/src/fake-purchases.ts\n./packages/adapter-kit/src/payments.ts\n=== createPaymentWalletProvider ===\n./packages/adapters/src/payment-wallet-factory.ts\n./apps/worker/src/index.ts\n./apps/api/src/env.ts\n=== stripeBillingConfigFromEnv ===\n./packages/adapters/src/stripe-billing.ts"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && for sym in createModelCreditReconciler hostedModelCreditObserver hasHostedModelCredits modelCreditsEnabled BillingService BillingProvider PaymentWalletProvider createPaymentWalletProvider stripeBillingConfigFromEnv; do echo \"=== $sym ===\"; grep -rln --exclude-dir=node_modules --exclude-dir=.git \"\\b$sym\\b\" . | grep -v '\\.test\\.' | head -15; done",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "5d8bb8f2-f023-4170-8497-451ce4111bb7",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

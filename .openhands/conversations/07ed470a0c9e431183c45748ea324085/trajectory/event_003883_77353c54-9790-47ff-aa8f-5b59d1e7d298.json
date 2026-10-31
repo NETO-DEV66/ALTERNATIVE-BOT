@@ -1,0 +1,36 @@
+{
+  "id": "77353c54-9790-47ff-aa8f-5b59d1e7d298",
+  "timestamp": "2026-10-31T12:04:16.279957",
+  "source": "environment",
+  "parent_id": "dedf7f23-fa67-4dea-a399-3e7b4d29ba0d",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-ba6a76bf297e60fd",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "\"open_path\",\n  \"launch_app\",\n  \"remember\",\n  \"request_takeover\",\n  \"request_secret\",\n  \"generate_secret\",\n  \"run_subagent\",\n  \"spawn_bot\",\n  \"schedule_create\",\n  \"schedule_list\",\n  \"schedule_update\",\n  \"schedule_cancel\",\n  \"list_fleet\",\n  \"organize_bot\",\n  // The wallet owner approves every purchase in the wallet itself; a card here would ask twice.\n  \"request_purchase\",\n]);\n\nconst APPROVAL_REQUIRED_BUILTIN_TOOLS = new Set([\n  \"generate_image\",\n  \"generate_video\",\n  \"delete_bot\",\n  \"archive_bot\",\n  \"secret_request\",\n  \"forget_secret\",\n  \"forget_memory\",\n  \"cloud_agent_launch\",\n  \"cloud_agent_reply\",\n  \"cloud_agent_cancel\",\n  \"user_computer_shell\",\n]);\nconst EXPLICIT_APPROVAL_BUILTIN_TOOLS = new Set([\n  \"respond_agent_connection\",\n  \"create_space\",\n  \"propose_instructions_update\",\n  \"create_group\",\n  \"update_group\",\n  \"set_child_instructions\",\n  \"set_child_bot_model\",\n  \"create_child_routine\",\n]);\n\nconst UNATTENDED_SAFE_BUILTIN_TOOLS = new Set([\n  \"browser_snapshot\",\n  \"cloud_agent_status\",\n  \"computer_observe\",\n  \"list_files\",\n  \"list_fleet\",\n  \"list_secrets\",\n  \"purchase_status\",\n  \"read_file\",\n  \"recall_memory\",\n  \"request_takeover\",\n  \"run_subagent\",\n  \"task_catalog\",\n  \"schedule_list\",\n  \"scratchpad_list\",\n  \"skill_read\",\n  \"web_fetch\",\n  \"web_search\",\n]);\n\nconst READ_ONLY_CONNECTOR_PATTERN = /(^|_)(get|list|search|find|read)(_|$)/i;\nconst MUTATING_CONNECTOR_PATTERN =\n  /(^|_)(accept|add|approve|archive|assign|buy|cancel|charge|checkout|close|commit|copy|create|delete|deploy|disable|enable|execute|forward|grant|invite|link|mark|merge|modify|move|patch|pay|post|publish|purchase|put|register|reject|remove|rename|replace|reply|reset|revoke|run|schedule|send|set|share|start|stop|submit|subscribe|trigger|unassign|unlink|unsubscribe|update|upload|upsert|write)(_|$)/i;\nconst COMPOUND_CONNECTOR_ACTION_PATTERN = /_(and|or|then)_/i;\n\nconst EMAIL_CONNECTOR_SLUGS = new Set([\"gmail\", \"outlook\", \"microsoft_outlook\"]);\nconst PURCHASE_CONNECTOR_SLUGS = new Set([\"stripe\", \"shopify\", \"paypal\", \"square\"]);\n\nexport type ActionApprovalRule = Pick<\n  StoredActionApprovalRule,\n  \"effect\" | \"matchKind\" | \"matchValue\"\n>;\n\nexport function connectorKindFromToolName(toolName: string, connectorKinds: string[] = []): string {\n=== 295,315 ===\n  toolName: string,\n  connectorKind: string,\n  readOnly: boolean | undefined,\n): boolean {\n  const normalized = category.toLowerCase();\n  const consequential = connectorToolRequiresApproval(toolName, readOnly);\n  if (normalized === \"email\") {\n    if (EMAIL_CONNECTOR_SLUGS.has(connectorKind.toLowerCase())) return consequential;\n    return consequential && /send.*mail|gmail_send|outlook_send/i.test(toolName);\n  }\n  if (normalized === \"purchase\") {\n    if (PURCHASE_CONNECTOR_SLUGS.has(connectorKind.toLowerCase())) return consequential;\n    return consequential && /purchase|pay_|charge|checkout|buy_/i.test(toolName);\n  }\n  return false;\n}\n\n/**\n * These run code inside Composio that can call any action, so a block scoped to one action could\n * be routed around through them. Any block that is not for a site matches them.\n */"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '15,90p' packages/core/src/action-approval.ts; echo \"=== 295,315 ===\"; sed -n '295,315p' packages/core/src/action-approval.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 25122,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "6b0afbec-96cb-49f0-8679-8cf664967eb2",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

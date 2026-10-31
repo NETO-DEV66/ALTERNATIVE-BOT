@@ -1,0 +1,36 @@
+{
+  "id": "01fb6d45-1c3b-44f0-bb0b-ab28b9b34876",
+  "timestamp": "2026-10-31T11:47:20.913754",
+  "source": "environment",
+  "parent_id": "d9a31503-e0e9-464d-bba3-2fb01d2d860d",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-9229a527ac0369d1",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "25:export const MISSING_MODEL_RUN_ERROR = \"Connect a model in Settings before running bots.\";\n29:  \"Connect your own API key in Models or choose Rakazo credits in Billing.\";\n31:/** A run in a billing organization without a paid plan, credits, or free period. */\n327:    /insufficient[_ ](?:quota|balance)|credits?|funds|spend|budget|billing|openrouter_key_limit/i.test(\n339:    // OpenAI's per-minute limits link to billing as a way to raise them.\n347:    /\\b(?:daily|weekly|monthly|usage)[\\s\\S]{0,30}limit|\\b(?:quota|insufficient[_ ](?:quota|credits?|funds|balance)|credit[_ ]balance|(?:no|out of|more) credits?)\\b|(?:key|credit|spend|spending|budget|billing)[\\s\\S]{0,40}(?:limit|exceed|exhaust|insufficient)|(?:limit|insufficient)[\\s\\S]{0,30}(?:credit|spend|budget)/i.test(\n=== current run-error.ts ===\n25:export const MISSING_MODEL_RUN_ERROR = \"Connect a model in Settings before running bots.\";\n=== git diff run-error ===\n packages/core/src/run-error.ts | 17 +++--------------\n 1 file changed, 3 insertions(+), 14 deletions(-)"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && git --no-pager show HEAD:packages/core/src/run-error.ts | grep -n 'Connect a model in Settings\\|Connect your own API key\\|credits in Billing\\|BILLING\\|billing' | head; echo \"=== current run-error.ts ===\"; grep -n 'Connect a model in Settings\\|Connect your own API key\\|credits in Billing' packages/core/src/run-error.ts; echo \"=== git diff run-error ===\"; git --no-pager diff --stat packages/core/src/run-error.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 23728,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "2658aa15-fa04-4d92-a7f6-aeb83b324c83",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

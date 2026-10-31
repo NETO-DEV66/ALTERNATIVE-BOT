@@ -1,0 +1,36 @@
+{
+  "id": "5b9118ab-2afa-4bd1-a833-26aa4f0447d5",
+  "timestamp": "2026-10-31T11:04:46.724656",
+  "source": "environment",
+  "parent_id": "6c9865f7-5c1d-4c17-94c3-50aba7580219",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-aeb975ca32c4004a",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "export const MeSchema = z.object({\n  maxUploadSizeBytes: z.number().int().positive().optional(),\n  maxAttachmentsPerMessage: z.number().int().positive().optional(),\n  ticketBoardEnabled: z.boolean(),\n  phoneCallsEnabled: z.boolean().default(false),\n  /** Operator-configured menu links. Absent from older servers. */\n  navLinks: z.array(NavLinkSchema).default([]),\n  userId: Id,\n  email: z.string().email(),\n  name: z.string(),\n  spaceId: Id,\n  /** Deprecated: app accounts never have server administrator privileges. Always false. */\n  isDeploymentOwner: z.boolean(),\n  /** Listed in ALTERNATIVEBOT_ADMIN_EMAILS with a verified email: reviews plugin submissions, adds stdio MCP servers. */\n  isAdmin: z.boolean().default(false),\n  needsModel: z.boolean(),\n  defaultProvider: z.string().nullable(),\n  defaultModel: z.string().nullable(),\n  /** Provider the active default runs on with the server's own credentials, without a key. */\n  hostCredentialProvider: z.string().nullable(),\n  /** Kind of those credentials, e.g. \"AWS IAM\"; set with hostCredentialProvider. */\n  hostCredentialSource: z.string().nullable(),\n  computerHost: z.enum([\"docker\", \"this-mac\"]).nullable(),\n  canChooseHostComputer: z.boolean(),\n  sandboxProvider: z.string(),\n  /** Whether this account can add stdio MCP servers here. Absent from older servers. */\n  mcpStdioEnabled: z.boolean().default(false),\n  avatarStyle: AvatarStyleSchema,\n  /**\n   * The user's IANA timezone, or null when unset (bots then see UTC only).\n   * Absent from servers that predate it.\n   */\n  timezone: z.string().nullable().optional(),\n  /** True until a user answers or skips the onboarding survey. Absent from older servers. */\n  needsSignupSurvey: z.boolean().optional(),\n});\nexport type Me = z.infer<typeof MeSchema>;\n\nexport const SIGNUP_SURVEY_USES = [\"personal\", \"work\", \"both\"] as const;\nexport const SIGNUP_SURVEY_TEAM_SIZES = [\"1\", \"2-10\", \"11-50\", \"51-200\", \"201+\"] as const;\n\n/** Team sizes as shown: en dashes for ranges, and the open-ended bucket as \"200+\". */\n=== auth.ts ===\nimport { z } from \"zod\";\n\nexport const authCapabilitiesSchema = z.object({\n  sso: z\n    .object({\n      name: z.string().min(1),\n      availability: z.enum([\"available\", \"unavailable\", \"checking\"]),\n    })\n    .nullable(),\n  passwordAuth: z.boolean(),\n  passwordReset: z.boolean(),\n  resetUrl: z.string().url().nullable(),\n  // Older servers omit this field; clients treat omission as unavailable.\n  emailCode: z.boolean().optional(),\n  billing: z.boolean().optional(),\n  /** WebAuthn relying party ID; null or omitted when this server does not offer passkeys. */\n  passkeyRpId: z.string().min(1).nullable().optional(),\n  /** Native apps this domain vouches for; omitted by older servers, which means none. */\n  nativePasskeys: z.object({ ios: z.boolean(), android: z.boolean() }).optional(),\n  /** Crisp chat on the paywall; null or omitted when the deployment offers none. */\n  crispWebsiteId: z.string().min(1).nullable().optional(),\n});\nexport type AuthCapabilities = z.infer<typeof authCapabilitiesSchema>;\n\nexport const accountSecuritySchema = z.object({"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '1754,1795p' packages/contracts/src/domain.ts; echo \"=== auth.ts ===\"; sed -n '1,25p' packages/contracts/src/auth.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "8733dcc1-d239-4b67-8ed9-ee698621447c",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

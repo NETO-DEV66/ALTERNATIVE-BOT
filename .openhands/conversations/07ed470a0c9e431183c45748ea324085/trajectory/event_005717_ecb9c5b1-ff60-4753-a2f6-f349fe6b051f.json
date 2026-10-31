@@ -1,0 +1,36 @@
+{
+  "id": "ecb9c5b1-ff60-4753-a2f6-f349fe6b051f",
+  "timestamp": "2026-10-31T13:56:23.710031",
+  "source": "environment",
+  "parent_id": "f90aa68c-76a9-47d1-be7f-b18fe821c44a",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b6a5e745513f70a2",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "\u276f packages/core/src/compose-update.test.ts (68 tests | 2 failed) 36ms\n     \u00d7 accepts registry paths with a host and rejects anything else 8ms\n     \u00d7 refuses to assemble a reference it could not validate 2ms\n \u276f packages/core/src/self-update.test.ts (20 tests | 1 failed) 19ms\n     \u00d7 treats every spelling of the same remote as one repository 7ms\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af Failed Tests 3 \u23af\u23af\u23af\u23af\u23af\u23af\u23af\n FAIL  packages/core/src/compose-update.test.ts > image references > accepts registry paths with a host and rejects anything else\nAssertionError: expected false to be true // Object.is equality\n- Expected\n+ Received\n FAIL  packages/core/src/compose-update.test.ts > image references > refuses to assemble a reference it could not validate\nError: Refusing an unusable image name: ghcr.io/NETO-DEV66/ALTERNATIVE-BOT/app\n FAIL  packages/core/src/self-update.test.ts > repoIdentity > treats every spelling of the same remote as one repository\nAssertionError: expected 'github.com/neto-dev66/alternative-bot' to be 'github.com/NETO-DEV66/ALTERNATIVE-BOT' // Object.is equality\nExpected: \"github.com/NETO-DEV66/ALTERNATIVE-BOT\"\nReceived: \"github.com/neto-dev66/alternative-bot\"\n Test Files  2 failed | 114 passed (116)\n      Tests  3 failed | 2237 passed | 1 skipped (2241)\n\u2009ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL\u2009 @alternativebot/core@0.1.0 test: `vitest run --root ../.. packages/core/src`"
+      }
+    ],
+    "is_error": false,
+    "command": "export PATH=\"/usr/local/lib/node_modules/corepack/shims:$PATH\"; cd /workspace/project && pnpm --filter @alternativebot/core test 2>&1 | grep -E 'FAIL|\u2717|\u00d7|failed|Error:|Expected|Received|toContain|test files|Tests ' | head -40",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": -1,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-5ddfbc867f-s4kjx",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "8e91fba0-e7c3-4c24-a059-dcab53661520",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

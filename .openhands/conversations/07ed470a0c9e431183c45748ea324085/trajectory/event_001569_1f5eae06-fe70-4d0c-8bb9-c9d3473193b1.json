@@ -1,0 +1,36 @@
+{
+  "id": "1f5eae06-fe70-4d0c-8bb9-c9d3473193b1",
+  "timestamp": "2026-10-31T11:01:00.086871",
+  "source": "environment",
+  "parent_id": "11bf83ba-1f3d-4ce6-9928-84b941b3fb82",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-af11d8b60feeb061",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "apps/api/src/spaces-rename.test.ts                 |   8 +-\n apps/api/src/speech-summary.ts                     |  10 +-\n apps/api/src/takeover-chat.postgres.test.ts        |  16 +-\n apps/api/src/taught-skills.ts                      |  20 +-\n apps/api/src/team-chat-bridge.test.ts              |   8 +-\n apps/api/src/team-chat-bridge.ts                   |  26 +-\n apps/api/src/team-chat-judge.test.ts               |   2 +-\n apps/api/src/team-chat-judge.ts                    |  12 +-\n apps/api/src/team-chat-startup.test.ts             |   4 +-\n apps/api/src/team-chat-startup.ts                  |   2 +-\n apps/api/src/thread-image-admission.test.ts        |   4 +-\n apps/api/src/thread-image-admission.ts             |  14 +-\n apps/api/src/thread-message-pages.test.ts          |   2 +-\n apps/api/src/thread-message-pages.ts               |  10 +-\n apps/api/src/thread-read.test.ts                   |   4 +-\n apps/api/src/thread-target.test.ts                 |  20 +-\n apps/api/src/thread-target.ts                      |  20 +-\n apps/api/src/trusted-link-sites.test.ts            |   8 +-\n apps/api/src/typed-reply.postgres.test.ts          |   6 +-\n apps/api/src/upload-limit.postgres.test.ts         |   2 +-\n apps/api/src/user-devices.test.ts                  |   8 +-\n apps/api/src/user-devices.ts                       |  12 +-\n apps/api/src/voice.test.ts                         |  18 +-\n apps/api/src/voice.ts                              |  18 +-\n apps/api/src/webhook-inbound.ts                    |  14 +-\n apps/api/src/webhook.test.ts                       |  10 +-\n apps/api/src/webhook.ts                            |   4 +-\n apps/api/src/welcome-email.postgres.test.ts        |   8 +-\n apps/api/src/working-bot.postgres.test.ts          |   8 +-\n 190 files changed, 898 insertions(+), 3369 deletions(-)\n=== router.ts diff ===\ndiff --git a/apps/api/src/router.ts b/apps/api/src/router.ts\nindex 5ca950a..1c800de 100644\n--- a/apps/api/src/router.ts\n+++ b/apps/api/src/router.ts\n@@ -3,12 +3,11 @@ import type {\n   ArtifactStore,\n   JobPublisher,\n   MemoryStore,\n-  PaymentWalletProvider,\n   ProductAnalytics,\n   SandboxProvider,\n   SecretStore,\n   TransactionalEmailProvider,\n-} from \"@rakazo/adapter-kit\";\n+} from \"@alternativebot/adapter-kit\";\n import type {\n   CloudAgentConnection,\n   CodexLiveCatalog,\n@@ -28,11 +27,10 @@ import type {\n   RemoteConnectorDependencies,\n   TicketChangeNotifier,\n   verifyModelServesAgents,\n-} from \"@rakazo/adapters\";\n-import type { Auth } from \"@rakazo/auth\";\n-import type { NavLink } from \"@rakazo/contracts\";\n-import type { BoardEvents, PrismaClient, ThreadEvents } from \"@rakazo/db\";\n-import type { BillingService } from \"./billing.js\";\n+} from \"@alternativebot/adapters\";\n+import type { Auth } from \"@alternativebot/auth\";\n+import type { NavLink } from \"@alternativebot/contracts\";\n+import type { BoardEvents, PrismaClient, ThreadEvents } from \"@alternativebot/db\";\n import { accountRoutes } from \"./routes/account.js\";\n import { availabilityRoutes } from \"./routes/availability.js\";\n import { boardsRoutes } from \"./routes/boards.js\";\n@@ -45,7 +43,6 @@ import { mcpRoutes } from \"./routes/mcp.js\";\n import { memoryRoutes } from \"./routes/memory.js\";\n import { messagingRoutes } from \"./routes/messaging.js\";\n import { modelsRoutes } from \"./routes/models.js\";\n-import { paymentWalletRoutes } from \"./routes/payment-wallet.js\";\n import { routinesRoutes } from \"./routes/routines.js\";\n import { spacesRoutes } from \"./routes/spaces.js\";\n import { threadsRoutes } from \"./routes/threads.js\";\n@@ -60,8 +57,6 @@ export interface RouterDeps {\n   pushTokens: PushTokenStore;\n   analytics?: ProductAnalytics;\n   cloudAgent?: CloudAgentConnection | null;\n-  /** The deployment's wallet provider; absent hides purchases. */\n-  paymentWallet?: PaymentWalletProvider | null;\n   prisma: PrismaClient;\n   events: ThreadEvents;\n   boardEvents: BoardEvents;\n@@ -107,8 +102,6 @@ export interface RouterDeps {\n     addresses: Record<string, string>;\n     openSignup: boolean;\n   };\n-  /** Present only when the deployment bills; self-hosted installs leave it unset. */\n-  billing?: BillingService;\n   email?: TransactionalEmailProvider;\n   onEmailError?: (error: unknown) => void;\n   speechSummary?: VoiceDeps[\"speechSummary\"];"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && git diff --stat HEAD -- apps/api/src | tail -30; echo \"=== router.ts diff ===\"; git diff HEAD -- apps/api/src/router.ts | head -60",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "efb17420-c656-4991-ac4d-cf35b6fdc75d",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

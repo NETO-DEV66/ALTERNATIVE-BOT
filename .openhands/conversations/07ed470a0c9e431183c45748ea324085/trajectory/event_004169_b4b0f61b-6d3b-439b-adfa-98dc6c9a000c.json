@@ -1,0 +1,36 @@
+{
+  "id": "b4b0f61b-6d3b-439b-adfa-98dc6c9a000c",
+  "timestamp": "2026-10-31T12:09:45.900285",
+  "source": "environment",
+  "parent_id": "e8788fa3-e3bd-4d68-9c3a-5d3649926803",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-95d805310de9172f",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "diff --git a/packages/adapters/src/model-selection.test.ts b/packages/adapters/src/model-selection.test.ts\nindex 9a009fa..f0b8fdf 100644\n--- a/packages/adapters/src/model-selection.test.ts\n+++ b/packages/adapters/src/model-selection.test.ts\n@@ -1,7 +1,7 @@\n-import { SecretStoreUnavailableError } from \"@rakazo/adapter-kit\";\n-import type { Actor } from \"@rakazo/contracts\";\n-import { credentialForModel } from \"@rakazo/core\";\n-import type { PrismaClient } from \"@rakazo/db\";\n+import { SecretStoreUnavailableError } from \"@alternativebot/adapter-kit\";\n+import type { Actor } from \"@alternativebot/contracts\";\n+import { credentialForModel } from \"@alternativebot/core\";\n+import type { PrismaClient } from \"@alternativebot/db\";\n import { describe, expect, it, vi } from \"vitest\";\n import { selectConfiguredModel } from \"./model-roles.js\";\n import {\n@@ -230,7 +230,7 @@ describe(\"space catalog auth\", () => {\n     );\n   }\n\n-  it.each([\"credits\", \"byok\"])(\"keeps saved keys while selecting %s funding\", async (mode) => {\n+  it(\"keeps saved keys when selecting a model\", async () => {\n     vi.stubEnv(\"PI_DEFAULT_PROVIDER\", \"openrouter\");\n     vi.stubEnv(\"OPENROUTER_API_KEY\", \"fixture-deployment-key\");\n     try {\n@@ -244,29 +244,17 @@ describe(\"space catalog auth\", () => {\n         preferences: [],\n         secrets: [{ id: \"personal-secret\", ciphertext: \"fixture-ciphertext\" }],\n       });\n-      Object.assign(prisma, {\n-        space: {\n-          findFirst: vi.fn().mockResolvedValue({ organization: { modelCredits: { mode } } }),\n-        },\n-      });\n       const load = vi.fn().mockResolvedValue(\"fixture-personal-key\");\n-      const auth = await modelCredentialAuthKindsForSpace(prisma, { load }, scope, \"openrouter\");\n+      const auth = await modelCredentialAuthKindsForSpace(prisma, { load }, scope);\n       expect(auth.byProvider.openrouter).toBe(\"api_key\");\n-      if (mode === \"credits\") {\n-        expect(auth.managedProvider).toBe(\"openrouter\");\n-        expect(auth.secretIdByProvider?.openrouter).toBeUndefined();\n-        expect(load).not.toHaveBeenCalled();\n-      } else {\n-        expect(auth.managedProvider).toBeUndefined();\n-        expect(auth.secretIdByProvider?.openrouter).toBe(\"personal-secret\");\n-        expect(load).toHaveBeenCalledOnce();\n-      }\n+      expect(auth.secretIdByProvider?.openrouter).toBe(\"personal-secret\");\n+      expect(load).toHaveBeenCalledOnce();\n     } finally {\n       vi.unstubAllEnvs();\n     }\n   });\n\n-  it(\"retains hosted catalog access alongside a saved personal connection\", async () => {\n+  it(\"keeps a saved personal connection in the catalog\", async () => {\n     vi.stubEnv(\"PI_DEFAULT_PROVIDER\", \"openrouter\");\n     vi.stubEnv(\"OPENROUTER_API_KEY\", \"fixture-deployment-key\");\n     try {\n@@ -275,20 +263,11 @@ describe(\"space catalog auth\", () => {\n         preferences: [],\n         secrets: [{ id: \"secret-oauth\", ciphertext: \"cipher-oauth\" }],\n       });\n-      Object.assign(prisma, {\n-        space: {\n-          findFirst: vi\n-            .fn()\n-            .mockResolvedValue({ organization: { modelCredits: { mode: \"credits\" } } }),\n-        },\n-      });\n       const auth = await modelCredentialAuthKindsForSpace(\n         prisma,\n         { load: vi.fn().mockResolvedValue(oauth) },\n         scope,\n-        \"openrouter\",\n       );\n-      expect(auth.managedProvider).toBe(\"openrouter\");\n       expect(auth.byProvider.openrouter).toBe(\"api_key\");\n       expect(auth.byProvider[\"openai-codex\"]).toBe(\"oauth\");\n     } finally {"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && git --no-pager diff packages/adapters/src/model-selection.test.ts | head -200",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 25122,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "712ea274-a0d5-463f-825f-152c8e43ca62",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

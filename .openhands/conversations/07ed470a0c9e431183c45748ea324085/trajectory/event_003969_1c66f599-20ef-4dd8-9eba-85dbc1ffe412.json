@@ -1,0 +1,36 @@
+{
+  "id": "1c66f599-20ef-4dd8-9eba-85dbc1ffe412",
+  "timestamp": "2026-10-31T12:06:49.735840",
+  "source": "environment",
+  "parent_id": "c88dfd87-75fd-4957-a518-067d97fdebd5",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-bc236c247f3ecc45",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "requestPasswordReset: vi.fn(),\n  rpc: vi.fn(),\n  sendSignInCode: vi.fn(),\n  signIn: vi.fn(),\n  signInWithCode: vi.fn(),\n  signUp: vi.fn(),\n}));\nvi.mock(\"./incoming-share\", () => ({ hasIncomingShare: () => route.waiting }));\nvi.mock(\"./sso\", () => ({ continueWithSso: vi.fn() }));\nvi.mock(\"./passkey\", () => ({ passkeysAvailable: vi.fn(), signInWithPasskey: vi.fn() }));\nvi.mock(\"./user-error\", () => ({ credentialIssueText: vi.fn(), errorText: vi.fn() }));\n\nconst capabilities = {\n  passwordAuth: true,\n  passwordReset: true,\n  resetUrl: \"https://example.invalid/reset-password\",\n  sso: { name: \"Example\", availability: \"available\" as const },\n};\nlet host: HTMLDivElement;\nlet root: Root;\n\nbeforeEach(() => {\n  route.mode = \"in\";\n  route.waiting = false;\n  server.base = \"https://example.invalid\";\n  vi.clearAllMocks();\n  vi.stubGlobal(\"IS_REACT_ACT_ENVIRONMENT\", true);\n  vi.mocked(passwordResetCapabilities).mockResolvedValue(capabilities);\n  vi.mocked(passkeysAvailable).mockReset().mockResolvedValue(false);\n  vi.mocked(signInWithPasskey).mockReset();\n  host = document.createElement(\"div\");\n  document.body.append(host);\n  root = createRoot(host);\n});\nafterEach(() => {\n  act(() => root.unmount());\n  host.remove();\n  vi.unstubAllGlobals();\n});\nasync function render() {\n  await act(async () => root.render(<SignIn />));\n}\nfunction ssoButtons() {\n  return [...host.querySelectorAll(\"button\")].filter(\n    (button) => button.textContent === \"Continue with Example\",\n  );\n}\nfunction button(label: string) {\n  return [...host.querySelectorAll(\"button\")].find((button) => button.textContent === label);\n}\nfunction input(label: string) {\n  return host.querySelector<HTMLInputElement>(`input[aria-label=\"${label}\"]`);\n}\nasync function type(field: HTMLInputElement, value: string) {\n  const setValue = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, \"value\")!.set!;\n  await act(async () => {\n    setValue.call(field, value);\n    field.dispatchEvent(new Event(\"input\", { bubbles: true }));\n  });\n}\nasync function press(label: string) {\n  await act(async () => button(label)!.click());\n}\nfunction expectBefore(first: Element, second: Element) {\n  expect(first.compareDocumentPosition(second) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();\n}\n\nit.each([\"in\", \"up\"])(\n  \"places a single quiet SSO action below the password form in %s mode\",\n  async (mode) => {\n    route.mode = mode;"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '130,200p' apps/mobile/lib/sign-in.test.tsx",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 25122,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "b6501a63-405a-4ff9-9b0b-b8d8d82eb7df",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

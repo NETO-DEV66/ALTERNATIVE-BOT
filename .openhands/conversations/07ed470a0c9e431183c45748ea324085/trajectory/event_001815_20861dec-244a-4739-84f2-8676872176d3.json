@@ -1,0 +1,36 @@
+{
+  "id": "20861dec-244a-4739-84f2-8676872176d3",
+  "timestamp": "2026-10-31T11:05:38.820442",
+  "source": "environment",
+  "parent_id": "d60bfef8-bbb0-468e-b6e0-851e754ef485",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-89b0d023d24efa24",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "---\nexport interface ExecutorDeps {\n  maxUploadSizeBytes?: number;\n  contextStrategy?: AgentContextStrategy;\n  prisma: PrismaClient;\n  events: ThreadEvents;\n  runtime: AgentRuntime;\n  sandbox: SandboxProvider;\n  memory: MemoryStore;\n  memoryProviders: MemoryProviderResolver;\n  home: AgentHomeStore;\n  artifacts?: ArtifactStore;\n  connector?: ConnectorProvider;\n  connectors?: {\n    managed(id: string): ManagedConnectorProvider | undefined;\n    managedProviders?(): ManagedConnectorProvider[];\n  };\n  secrets: string[];\n  secretStore: SecretStore;\n  deploymentModelKey?: string;\n  /** The deployment default model can run; see resolveDeploymentModel. */\n  deploymentModelConfigured?: boolean;\n  dataDir?: string;\n  notifications?: NotificationProvider;\n  jobs: JobPublisher;\n  /** Publishes board-change signals and wakes ticket owners; absent disables both. */\n  onTicketChange?: TicketChangeNotifier;\n  ticketBoardEnabled?: boolean;\n  phoneCallsEnabled?: boolean;\n  phoneCallCooldownMinutes?: number;\n  phoneCallRingSeconds?: number;\n  /** Messaging surface; absent means zero identity queries and no chat prompts. */\n  messaging?: { hasIdentity(botId: string): Promise<boolean> };\n  listConnectedPluginSlugs?: (userId: string) => Promise<string[]>;\n  /** Builtin web_search / web_fetch. Defaults to keyless HTTP when omitted. */\n  web?: WebProvider;\n  mediaGeneration?: MediaGenerationProvider;\n  /** Page browser (DOM refs) on the bot computer. Defaults to the sandbox live browser when supported. */\n  browser?: BrowserProvider;\n  secretHttp?: RemoteTransportDependencies;\n  /** Allow RFC1918 / Docker-network MCP URLs when the operator enabled the escape. */\n  mcpAllowPrivateEndpoint?: boolean;\n  /** Remote cloud coding agents. Null/omit means tools stay uninjected. */\n  cloudAgent?: CloudAgentConnection | null;\n  /** Optional Auto Review verifier. When omitted, the factory selects from env (llm | jev | scripted). */\n  autoReview?: AutoReviewProvider;"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -n 'billing' packages/adapters/src/executor-deps.ts; echo \"---\"; sed -n '26,70p' packages/adapters/src/executor-deps.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "53cd899d-731b-435d-b4b6-0fd56acd1097",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

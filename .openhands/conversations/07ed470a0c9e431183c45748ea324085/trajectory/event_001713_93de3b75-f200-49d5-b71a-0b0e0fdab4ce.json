@@ -1,0 +1,36 @@
+{
+  "id": "93de3b75-f200-49d5-b71a-0b0e0fdab4ce",
+  "timestamp": "2026-10-31T11:04:01.433841",
+  "source": "environment",
+  "parent_id": "a05ff08a-4cbb-4459-abef-ee020337ec7e",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-ab3d31323bf186d8",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "11:import { resolveDeploymentModel } from \"./deployment-model.js\";\n23:import { listPiCatalog, offeredCatalog, scriptedCatalogEntry } from \"./pi-models.js\";\n30:export function isCatalogModelChoice(provider: string, modelId: string) {\n31:  return [...listPiCatalog(), scriptedCatalogEntry].some(\n67:  if (isCatalogModelChoice(provider, modelId)) {\n184:    ...listPiCatalog(),\n280:  const catalogEntry = listPiCatalog().find(\n290:  const entry = listPiCatalog().find(\n558:      isCatalogModelChoice(provider, model) ||\n635:      allowed: listPiCatalog().find(\n=== run-auto-review ===\nimport type { AgentRuntimeEvent, AutoReviewProvider } from \"@alternativebot/adapter-kit\";\nimport { recordUsage } from \"@alternativebot/db\";\nimport type { AutoReviewChecker } from \"./auto-review.js\";\nimport { autoReviewTimeoutMs, resolveAutoReviewProviderKind } from \"./auto-review.js\";\nimport { createAutoReviewProvider } from \"./auto-review-factory.js\";\nimport { DecisionAutoReviewProvider } from \"./decision-auto-review.js\";\nimport { decisionModel } from \"./decision-models.js\";\nimport type { ExecutorDeps } from \"./executor-deps.js\";\nimport { HttpDecisionProvider } from \"./http-decisions.js\";\nimport { findConnectedModelCredential, hasHostedModelCredits } from \"./model-selection.js\";\nimport { resolveModelKey } from \"./run-model.js\";\n/** The Auto Review provider that judges a run's action with one checker choice. */\nexport async function autoReviewCheckerProvider(\n  deps: ExecutorDeps,\n  scope: { runId: string; spaceId: string; userId: string; botId: string; threadId: string },\n  options: {\n    injectedReview?: AutoReviewProvider;\n    memberChecker: boolean;\n    backups?: readonly { provider: string; modelId: string }[];\n    registerSecrets: (values: string[]) => void;\n  },\n  checker: AutoReviewChecker,\n): Promise<AutoReviewProvider> {\n  const { runId, spaceId, userId, botId, threadId } = scope;\n  const { injectedReview, memberChecker, backups, registerSecrets } = options;\n  if (injectedReview) return injectedReview;\n  const kind =\n    memberChecker || (checker.provider !== \"jev\" && checker.provider !== \"scripted\")\n      ? \"llm\"\n      : resolveAutoReviewProviderKind();\n  if (kind === \"jev\" || kind === \"scripted\") {\n    return createAutoReviewProvider(kind);\n  }\n  const reviewCredential = await findConnectedModelCredential(\n    deps.prisma,\n    deps.secretStore,\n    { userId, spaceId },\n    checker.provider,\n    checker.model,\n    { credentialId: checker.credentialId },\n  );\n  if (\n    (memberChecker ||\n      checker.credentialId ||\n      backups?.some(\n        (choice) => choice.provider === checker.provider && choice.modelId === checker.model,\n      )) &&\n    !reviewCredential &&\n    !(await hasHostedModelCredits(deps.prisma, { userId, spaceId }, checker.provider))\n  ) {\n    throw new Error(\"Selected checker connection is unavailable\");\n  }\n  const judgeKey = await resolveModelKey(\n    deps,\n    userId,\n    spaceId,\n    reviewCredential,\n    checker.provider,\n    checker.model,\n    registerSecrets,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -n 'resolveDeploymentModel\\|listPiCatalog\\|isCatalogModelChoice' packages/adapters/src/model-selection.ts | head; echo \"=== run-auto-review ===\"; sed -n '1,60p' packages/adapters/src/run-auto-review.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "bdb4a598-b4ce-4a8a-ab00-70d2e3711bb7",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

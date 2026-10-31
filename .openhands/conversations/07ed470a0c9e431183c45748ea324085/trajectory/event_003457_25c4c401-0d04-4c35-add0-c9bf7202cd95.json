@@ -1,0 +1,36 @@
+{
+  "id": "25c4c401-0d04-4c35-add0-c9bf7202cd95",
+  "timestamp": "2026-10-31T11:45:25.198371",
+  "source": "environment",
+  "parent_id": "0707da50-3737-4944-b397-1e303e609622",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-85cf1bbfc187439f",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== team-chat-judge.test.ts 220,300 ===\n    \"meters $provider host credentials with personal=$personal\",\n    async ({ provider, key, personal }) => {\n      vi.stubEnv(\"PI_DEFAULT_PROVIDER\", provider);\n      vi.stubEnv(\"PI_DEFAULT_MODEL\", \"fixture-model\");\n      vi.stubEnv(\"PI_DEFAULT_CREDENTIALS\", \"host\");\n      vi.stubEnv(\"OPENROUTER_API_KEY\", \"fixture-deployment-key\");\n      try {\n        const load = vi.fn();\n        const run = vi.fn(async function* (_request: unknown) {\n          yield { type: \"done\", text: '{\"act\":false}' };\n        });\n        const judge = new ModelTeamChatEngagementJudge({\n          prisma: {\n            deploymentSettings: { findUnique: async () => ({ modelCreditsEnabled: true }) },\n            userModelPreference: {\n              findFirst: async () =>\n                personal\n                  ? {\n                      credential: { id: \"personal\", provider, secretId: \"personal-secret\" },\n                      modelId: \"fixture-model\",\n                    }\n                  : null,\n            },\n            space: {\n              findFirst: async () => ({ organization: { modelCredits: { mode: \"credits\" } } }),\n              findUnique: async () => ({ organizationId: \"org\" }),\n            },\n            member: { findUnique: async () => ({ role: \"owner\" }) },\n            billingAccount: { findUnique: async () => null },\n            modelCreditAccount: { upsert: async () => ({ mode: \"credits\" }) },\n          } as never,\n          runtime: { run } as never,\n          secrets: { load } as never,\n          deploymentProvider: provider,\n          deploymentModel: \"fixture-model\",\n          deploymentModelKey: key,\n        });\n        await judge.decide({\n          bot: {\n            id: \"bot\",\n            spaceId: \"space\",\n            userId: \"user\",\n            name: \"Fixture\",\n            modelProvider: null,\n            modelId: null,\n          },\n          channelId: \"channel\",\n          rules: \"\",\n          messages: [],\n        });\n        expect(run).toHaveBeenCalledOnce();\n        expect(run.mock.calls[0]?.[0]).toMatchObject({\n          model: { callObserver: expect.any(Object) },\n        });\n        if (key) expect(run.mock.calls[0]?.[0]).toHaveProperty(\"model.apiKey\", key);\n        else expect(run.mock.calls[0]?.[0]).not.toHaveProperty(\"model.apiKey\");\n        expect(load).not.toHaveBeenCalled();\n      } finally {\n        vi.unstubAllEnvs();\n      }\n    },\n  );\n\n  it(\"blocks a hosted judge without credit access before running the model\", async () => {\n    const run = vi.fn(async function* () {\n      yield { type: \"done\", text: '{\"act\":true}' };\n    });\n    const judge = new ModelTeamChatEngagementJudge({\n      prisma: {\n        deploymentSettings: { findUnique: async () => ({ modelCreditsEnabled: true }) },\n        userModelPreference: { findFirst: async () => null },\n        space: { findUnique: async () => ({ organizationId: \"org\" }) },\n        member: { findUnique: async () => ({ role: \"owner\" }) },\n        billingAccount: { findUnique: async () => null },\n        modelCreditAccount: { upsert: async () => ({ mode: \"byok\" }) },\n      } as never,\n      runtime: { run } as never,\n      secrets: {} as never,\n      deploymentProvider: \"openrouter\",\n      deploymentModel: \"fixture\",\n      deploymentModelKey: \"fixture\","
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && echo \"=== team-chat-judge.test.ts 220,300 ===\"; sed -n '220,300p' apps/api/src/team-chat-judge.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 21955,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "20a62e34-5db6-4b07-bd3e-7e9997b4cff3",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

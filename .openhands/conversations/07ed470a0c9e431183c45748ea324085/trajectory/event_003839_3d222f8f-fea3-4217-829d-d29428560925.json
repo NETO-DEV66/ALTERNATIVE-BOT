@@ -1,0 +1,36 @@
+{
+  "id": "3d222f8f-fea3-4217-829d-d29428560925",
+  "timestamp": "2026-10-31T12:03:13.830378",
+  "source": "environment",
+  "parent_id": "8cd4648a-a191-45c8-be23-5e350bf2c65f",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-974c5c21e75518c7",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "162:    expect(networkMode).toMatch(/^alternativebot-computer-bot_isolation-[0-9a-f]{32}$/);\n381:  it(\"derives deterministic host bridge names within the 15-byte interface limit\", () => {\n384:      expect(name).toMatch(/^alternativebot-c[0-9a-f]{7}$/);\n385:      expect(Buffer.byteLength(name)).toBeLessThanOrEqual(15);\n391:  it(\"names the bridge only when egress is restricted\", () => {\n395:      Driver: \"bridge\",\n403:      \"com.docker.network.bridge.name\": computerBridgeNameFor(\"bot_1\"),\n406:    // The bridge name differs from the network name so `docker network` output\n407:    // still shows the readable alternativebot-computer-* name while iptables matches the interface.\n408:    expect(restricted.Options?.[\"com.docker.network.bridge.name\"]).not.toBe(restricted.Name);\n414:    expect(names).toContain(\"alternativebot-computer-bot_1\");\n476:    expect(start).toMatch(/alternativebot-computer-control/);\n1648:        networkMode: \"alternativebot-computer-bot-1\",\n1649:        networks: { \"alternativebot-computer-bot-1\": { IPAddress: \"172.20.0.4\" } },\n1781:          networkMode: \"bridge\",\n1782:          networks: { bridge: { IPAddress: \"192.0.2.1\" } },\n2146:      /while true; do\\s+\\/usr\\/local\\/bin\\/alternativebot-computer-control\\s+sleep 1\\s+done >\\/tmp\\/alternativebot\\/control\\.log 2>&1 &/,\n2172:              ?.replace(\"/usr/local/bin/alternativebot-computer-control\", \"control\")\n=== egress-probe.test ===\n    expect(script).not.toContain(\"/dev/udp\");\n    expect(script.trim().endsWith(\"exit 0\")).toBe(true);\n  });\n\n  it(\"probes from a named alternativebot-c bridge and cleans up\", async () => {\n    const { docker, raw, container, network } = fakeDocker();\n    await expect(verifyRestrictedEgress(docker, \"computer:test\")).resolves.toBeUndefined();\n    expect(EGRESS_PROBE_BRIDGE).toMatch(/^alternativebot-c/);\n    expect(EGRESS_PROBE_BRIDGE.length).toBeLessThanOrEqual(15);\n    expect(raw.createNetwork).toHaveBeenCalledWith(\n      expect.objectContaining({\n        Name: EGRESS_PROBE_NETWORK,\n        Options: { \"com.docker.network.bridge.name\": EGRESS_PROBE_BRIDGE },\n      }),\n    );\n    expect(raw.createContainer).toHaveBeenCalledWith(\n      expect.objectContaining({\n        Image: \"computer:test\",\n        Entrypoint: [\"bash\", \"-c\", egressProbeScript(\"172.30.0.1\")],\n        HostConfig: expect.objectContaining({\n          NetworkMode: EGRESS_PROBE_NETWORK,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -n 'alternativebot-c\\|15\\b\\|IFNAMSIZ\\|bridge' infra/sandboxes/supervisor/src/computer-spec.test.ts | head -30; echo \"=== egress-probe.test ===\"; sed -n '100,120p' infra/sandboxes/supervisor/src/egress-probe.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 25122,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "e78f8617-b6d7-47d5-bfb8-67a049d1c760",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

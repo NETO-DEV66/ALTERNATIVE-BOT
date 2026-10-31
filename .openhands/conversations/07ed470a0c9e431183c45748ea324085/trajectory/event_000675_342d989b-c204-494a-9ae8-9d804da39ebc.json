@@ -1,0 +1,36 @@
+{
+  "id": "342d989b-c204-494a-9ae8-9d804da39ebc",
+  "timestamp": "2026-10-31T10:35:06.168047",
+  "source": "environment",
+  "parent_id": "89b1f701-8c3f-4f3a-ac1d-30f88df64137",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-970211e49f78ff53",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "1395:   * The subscription sign-in was rejected. The stored tokens are gone and the\n1582:  billing: z.string(),\n1586:  subscription: z.boolean().optional(),\n1787:  billingEnabled: z.boolean(),\n1788:  /** True until a user of a billing deployment answers or skips the signup survey. Absent from older servers. */\n1790:  /** The wallet bots can spend from, when this deployment offers one. Absent from older servers. */\n1791:  paymentWalletProvider: z.object({ id: z.string(), name: z.string() }).nullable().optional(),\n1795:export const MODEL_CREDIT_AMOUNTS = [1000, 2000, 5000, 10000, 20000, 50000] as const;\n1798:export const DEFAULT_MONTHLY_CREDIT_AMOUNT = 2000;\n1799:export const ModelCreditAmountSchema = z.union(\n1800:  MODEL_CREDIT_AMOUNTS.map((amount) => z.literal(amount)),\n1826:export const BillingClientSchema = z.literal(\"mobile\").optional();\n1828:export const MOBILE_BILLING_CALLBACK_URL = \"alternativebot://billing\";\n1830:export const BillingStatusSchema = z.object({\n1831:  funding: z.enum([\"byok\", \"credits\"]).nullable().optional(),\n1834:  creditPurchasesEnabled: z.boolean().optional(),\n1840:  /** Only organization owners start checkout or open the billing portal. */\n1868:  referral: z\n1873:export type BillingStatus = z.infer<typeof BillingStatusSchema>;"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -n -iE 'billing|credit|payment|wallet|stripe|referral|purchase|paywall|subscription|premium|funding' packages/contracts/src/domain.ts | head -60",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "0447847d-edc0-4ffd-bf74-baadbceb4ba9",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "24f41fc0-f3a9-4ef7-a3c3-f9b82b1e6515",
+  "timestamp": "2026-10-31T12:21:26.072717",
+  "source": "agent",
+  "parent_id": "9f1d8a5f-0fcc-47fc-baad-d9046ee93787",
+  "thought": [
+    {
+      "cache_prompt": false,
+      "type": "text",
+      "text": "Now let me investigate each failure. First, the registry-qualified image check and the browser wrapper:\n\n"
+    }
+  ],
+  "reasoning_content": "Let me categorize the 14 failures:\n\n1. **`infra/sandboxes/supervisor/src/computer-spec.test.ts`** (4 failures):\n   - bridge name 23 > 15 bytes \u2192 the `alternativebot-c` + 7 hex problem. Needs a short slug.\n   - `isRegistryQualifiedImage(\"alternativebot/computer:edge\")` expected true but got false \u2192 because the function probably strips a registry based on the first path segment; `alternativebot/computer` \u2014 the first segment \"alternativebot\" is treated as registry? Actually expected true means it should be considered registry-qualified. Let me check the function. Actually the original was `rakazo/computer:edge` \u2192 expected true. Hmm wait, let me check: original test had `rakazo/computer:edge` expected true? Let me look at git baseline.\n   - `spawnSync ./alternativebot-browser EACCES` \u2192 the wrapper file `infra/sandboxes/computer/alternativebot-browser` is not executable. Because it was renamed from `rakazo-browser` but the executable bit may have been lost, or the file was created new. Actually EACCES = permission denied. Need chmod +x.\n   - `ENOENT /tmp/alternativebot-browser-live.../accepted` \u2192 depends on browser wrapper.\n\n2. **`infra/sandboxes/supervisor/src/egress-probe.test.ts`** (1): EGRESS_PROBE_BRIDGE 21 > 15. Same short-slug problem.\n\n3. **`packages/testkit/src/backup-scripts.test.ts`** (3): expected array order `[\"SHA256SUMS\",\"SOURCE_SIZE_KB\",\"appdata.tgz\",\"alternativebot.dump\"]` but received `[\"SHA256SUMS\",\"SOURCE_SIZE_KB\",\"alternativebot.dump\",\"appdata.tgz\"]`. Wait \u2014 the test expects `appdata.tgz` before `alternativebot.dump`. `readdirSync(snapshot).sort()` \u2014 the sort is lexicographic. \"alternativebot.dump\" < \"appdata.tgz\" alphabetically ('a'=='a', 'l' < 'p'). So the sorted output is `alternativebot.dump` then `appdata.tgz`. The test's expected array lists `appdata.tgz` before `alternativebot.dump` \u2014 that's the OLD expectation when the dump was named `rakazo.dump` ('r' > 'a', so `appdata.tgz` < `rakazo.dump`). So the test's expected order needs updating to reflect the new name. This is a test that was correctly rebranded in the source but the expected array order wasn't updated. Let me fix the expected arrays.\n\n4. **`packages/adapters/src/host-computer.test.ts`** (2): `processExists(pid)` expected false but got true. This may be flaky or environment-related (background children revoke/cancel). Hmm. Let me check if related to rebrand. It's about process cleanup. Could be environment (slow). Let me check.\n\n5. **`apps/desktop/src/browser-auth.test.ts`** (1): \"No loopback address is available.\" \u2014 environment (no loopback in container). Probably pre-existing/environment.\n\n6. **`infra/updater/src/compose-service.test.ts`** (1): pitr image hash mismatch. The hash is computed over files in composeDir; a file was modified (rebranded) so hash changed. The test computes the hash itself from files, so it should match... unless the test has a hardcoded expectation. Let me look \u2014 it computes `hash.update(readFileSync(...))` over a list of files then expects `alternativebot-pitr:${hash.digest(\"hex\").slice(0,16)}`. Received `aa7cf1bde2aa8051` vs expected `ddabd01c07dd1a73`. So the files hashed differ from what the source hashes. Possibly the source `pitr.image` is computed at build time / from a different file set, or the test list of files differs. Let me look.\n\n7. **`apps/api/src/models-backups.test.ts`** (1): \"lets a deployment-managed model lead the main model like any other purpose\" \u2014 this is the credits-related test at line 723 `setup({ credits: true })`. Need to examine.\n\n8. **`apps/mobile/lib/settings-sheet.test.ts`** (1): signup-survey \u2014 already fixed by adding to settingsScreens.\n\nLet me look at each. First let me check the baseline to see which of these failed before the rebrand (pre-existing/environmental). The memory says \"22/22 successful\" for turbo check (typecheck), not tests. So tests may not have been run.\n\nLet me determine which failures are rebrand-caused vs environmental:\n- bridge name length (2 tests) \u2192 rebrand-caused (real bug)\n- backup array order (3 tests) \u2192 rebrand-caused (test expectation order)\n- isRegistryQualifiedImage \u2192 need to check\n- alternativebot-browser EACCES \u2192 need to check (file perms after rename)\n- browser-auth loopback \u2192 likely environmental\n- host-computer processExists \u2192 likely flaky/environmental\n- pitr hash \u2192 need to check\n- models-backups credits \u2192 rebrand-caused (payment removal)\n- settings-sheet signup-survey \u2192 fixed\n\nLet me investigate them one by one. Start with the bridge name \u2014 this is the most important real bug.\n\nLet me check how `isRegistryQualifiedImage` works and the baseline expectation.",
+  "thinking_blocks": [],
+  "responses_reasoning_item": null,
+  "action": {
+    "command": "cd /workspace/project && grep -n 'isRegistryQualifiedImage' infra/sandboxes/supervisor/src/computer-spec.ts; echo \"=== baseline test ===\"; git --no-pager show HEAD:infra/sandboxes/supervisor/src/computer-spec.test.ts | sed -n '453,470p'",
+    "is_input": false,
+    "timeout": null,
+    "reset": false,
+    "kind": "TerminalAction"
+  },
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-a419d102bed19177",
+  "tool_call": {
+    "id": "chatcmpl-tool-a419d102bed19177",
+    "responses_item_id": null,
+    "name": "terminal",
+    "arguments": "{\"command\": \"cd /workspace/project && grep -n 'isRegistryQualifiedImage' infra/sandboxes/supervisor/src/computer-spec.ts; echo \\\"=== baseline test ===\\\"; git --no-pager show HEAD:infra/sandboxes/supervisor/src/computer-spec.test.ts | sed -n '453,470p'\", \"security_risk\": \"LOW\", \"summary\": \"Inspect isRegistryQualifiedImage\"}",
+    "origin": "completion"
+  },
+  "llm_response_id": "gen-1793449276-zYERCfwtfYm11vZEu7yv",
+  "security_risk": "LOW",
+  "critic_result": null,
+  "summary": "Inspect isRegistryQualifiedImage",
+  "kind": "ActionEvent"
+}

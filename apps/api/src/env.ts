@@ -151,7 +151,7 @@ export interface AppEnv {
   browserMonitoring:
     | { dsn: string; environment?: string; release?: string; pseudonymSecret?: string }
     | undefined;
-  /** Crisp chat on the paywall, for the hosted service; self-hosted installs leave it unset. */
+  /** Crisp support chat for the hosted service; self-hosted installs leave it unset. */
   crispWebsiteId?: string | null;
 }
 
@@ -296,7 +296,8 @@ export function loadEnv(source: NodeJS.ProcessEnv = process.env): AppEnv {
     larkEncryptKey: optional(source.LARK_ENCRYPT_KEY),
     larkDomain: optional(source.LARK_DOMAIN),
     messagingOpenSignup: source.MESSAGING_OPEN_SIGNUP === "true",
-    teamChatBotId: optional(source.TEAM_CHAT_BOT_ID) ?? optional(source.SLACK_ALTERNATIVEBOT_BOT_ID),
+    teamChatBotId:
+      optional(source.TEAM_CHAT_BOT_ID) ?? optional(source.SLACK_ALTERNATIVEBOT_BOT_ID),
     teamChatJudgeProvider: optional(source.TEAM_CHAT_JUDGE_PROVIDER),
     teamChatJudgeModel: optional(source.TEAM_CHAT_JUDGE_MODEL),
     defaultProvider: deploymentModel.provider,

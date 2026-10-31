@@ -1,0 +1,36 @@
+{
+  "id": "bf674304-ee29-44d9-9bf1-716717d337c6",
+  "timestamp": "2026-10-31T11:19:32.601367",
+  "source": "environment",
+  "parent_id": "47e6b8a6-ac32-4c77-828e-84f2d155f639",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-beca1abd03a4b1fb",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== auth-capabilities.ts ===\n     1  import type { AuthCapabilities } from \"@alternativebot/contracts\";\n     2  import { authCapabilitiesSchema, legacyAuthCapabilitiesSchema } from \"@alternativebot/contracts\";\n     3  import { ResponseBodyTooLargeError, readBoundedJsonResponse } from \"@alternativebot/core\";\n     4\n     5  export type { AuthCapabilities } from \"@alternativebot/contracts\";\n     6\n     7  const TIMEOUT_MS = 8_000;\n     8  const MAX_RESPONSE_BYTES = 64 * 1024;\n     9\n    10  let capabilitiesRequest: Promise<AuthCapabilities> | undefined;\n    11\n    12  export function fetchAuthCapabilities(): Promise<AuthCapabilities> {\n    13    // Auth can briefly remount during session refresh; the gate uses the same deployment lookup.\n    14    capabilitiesRequest ??= loadAuthCapabilities().then(\n    15      (capabilities) => {\n    16        if (capabilities.sso && capabilities.sso.availability !== \"available\") {\n    17          capabilitiesRequest = undefined;\n    18        }\n    19        return capabilities;\n    20      },\n    21      (error: unknown) => {\n    22        capabilitiesRequest = undefined;\n    23        throw error;\n    24      },\n    25    );\n    26    return capabilitiesRequest;\n    27  }\n    28\n    29  /** Public deployment capabilities, bounded in time and size so a stalled API cannot hang the UI. */\n    30  async function loadAuthCapabilities(): Promise<AuthCapabilities> {\n    31    const controller = new AbortController();\n    32    const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);\n    33    try {\n    34      const response = await fetch(\"/api/auth/capabilities\", { signal: controller.signal });\n    35      if (!response.ok) throw new Error(\"Could not load authentication capabilities\");\n    36      const length = Number(response.headers.get(\"content-length\") ?? Number.NaN);\n    37      let body: unknown;\n    38      if (\n    39        response.type === \"basic\" &&\n    40        !response.headers.has(\"content-encoding\") &&\n    41        Number.isSafeInteger(length) &&\n    42        length >= 0 &&\n    43        length <= MAX_RESPONSE_BYTES\n    44      ) {\n    45        // For an uncompressed same-origin fetch, HTTP framing bounds the body by Content-Length.\n    46        // Native consumption avoids Chromium cancelling a completed manually read response stream.\n    47        const bytes = await response.arrayBuffer();\n    48        if (bytes.byteLength > MAX_RESPONSE_BYTES) {\n    49          throw new ResponseBodyTooLargeError(MAX_RESPONSE_BYTES);\n    50        }\n    51        body = JSON.parse(new TextDecoder().decode(bytes));\n    52      } else {\n    53        body = await readBoundedJsonResponse<unknown>(\n    54          response,\n    55          MAX_RESPONSE_BYTES,\n    56          controller.signal,\n    57        );\n    58      }\n    59      return authCapabilitiesSchema.or(legacyAuthCapabilitiesSchema).parse(body);\n    60    } finally {\n    61      clearTimeout(timer);\n    62    }\n    63  }\n=== bootstrap.ts (30-60) ===\n  seed?: AppBootstrap;\n} | null = null;\n\nconst initialTarget = initialBootstrapTarget(\n  window.location.pathname,\n  Boolean(window.alternativebotDesktop),\n);\nif (initialTarget) {\n  const { botId } = initialTarget;\n  const promise = requestBootstrap(botId);\n  // Authentication can redirect before Shell consumes this speculative request.\n  // Register a rejection handler immediately while preserving rejection for a consumer.\n  void promise.catch(() => undefined);\n  primedBootstrap = { botId, promise };\n}\n\n/** The speculative first-load bootstrap, left in place for the shell to take. */\nexport function peekInitialBootstrap(): Promise<AppBootstrap> | undefined {\n  // Only the speculative first load may be shared with the subscription gate.\n  return primedBootstrap?.spaceId === undefined ? primedBootstrap?.promise : undefined;\n}\n\nfunction primedFor(botId: string | undefined) {\n  const primed = primedBootstrap;\n  return primed &&\n    primed.botId === botId &&\n    (primed.spaceId === undefined || primed.spaceId === selectedSpaceId())\n    ? primed\n    : null;\n}\n\n/** The cached bootstrap a revisited space opens with, if the switch had one. */\nexport function peekBootstrapSeed(botId?: string): AppBootstrap | undefined {\n  return primedFor(botId)?.seed;\n}\n\nexport function takeInitialBootstrap(botId?: string) {\n  const primed = primedFor(botId);\n  primedBootstrap = null;\n  if (primed) {\n    if (primed.seed) applyCapabilities(primed.seed);"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && echo \"=== auth-capabilities.ts ===\"; cat -n apps/web/src/lib/auth-capabilities.ts; echo \"=== bootstrap.ts (30-60) ===\"; sed -n '30,70p' apps/web/src/lib/bootstrap.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "c38b5ebd-516a-4703-acba-c73e13e08e89",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

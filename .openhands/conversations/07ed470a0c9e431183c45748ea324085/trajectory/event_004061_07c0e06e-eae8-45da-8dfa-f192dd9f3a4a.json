@@ -1,0 +1,36 @@
+{
+  "id": "07c0e06e-eae8-45da-8dfa-f192dd9f3a4a",
+  "timestamp": "2026-10-31T12:08:10.687950",
+  "source": "environment",
+  "parent_id": "51799cc1-4452-41ad-9266-e7a948bbfcd4",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8ac4e87904b4f2ad",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "export const COMPUTER_RATE_LIMIT_ERROR = \"Too many computer requests. Try again later.\";\n\nexport const RUN_TRIGGERS = [\n  \"user\",\n  \"routine\",\n  \"resume\",\n  \"follow_up\",\n  \"reaction\",\n  \"call_end\",\n  \"spawn\",\n  \"skill\",\n  \"bot_message\",\n  \"webhook\",\n  \"messaging\",\n  \"cloud_agent\",\n  \"purchase\",\n  \"created\",\n  \"tickets\",\n] as const;\nexport const RunTriggerSchema = z.enum(RUN_TRIGGERS);\nexport type RunTrigger = z.infer<typeof RunTriggerSchema>;\n\n/**\n * Whose problem a failed run is. Every kind except \"output\" is the user's provider account,\n * key, plan or model choice; \"output\" is a model that returned nothing usable.\n */\nexport const RUN_ERROR_KINDS = [\n  \"key\",\n  \"credit\",\n  \"spending\",\n  \"rate\",\n  \"auth\",\n  \"access\",\n  \"model\",\n  \"context\",\n  \"output\",\n=== git diff runs.ts ==="
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '5,40p' packages/contracts/src/runs.ts; echo \"=== git diff runs.ts ===\"; git --no-pager diff packages/contracts/src/runs.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 25122,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "2c33a6cf-99e7-4d57-b7c2-818aa393331c",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

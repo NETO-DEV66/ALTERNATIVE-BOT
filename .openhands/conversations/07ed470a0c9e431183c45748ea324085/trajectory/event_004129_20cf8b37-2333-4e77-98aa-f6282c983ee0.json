@@ -1,0 +1,36 @@
+{
+  "id": "20cf8b37-2333-4e77-98aa-f6282c983ee0",
+  "timestamp": "2026-10-31T12:09:09.381938",
+  "source": "environment",
+  "parent_id": "6f6cad35-927b-4cb9-9ae2-c71075bedf7e",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-afa17a4306037b8f",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "expect((await legacy.response.json()).json).toEqual(backups);\n  });\n});\n\nit(\"lets a deployment-managed model lead the main model like any other purpose\", async () => {\n  vi.stubEnv(\"PI_DEFAULT_PROVIDER\", \"openrouter\");\n  vi.stubEnv(\"OPENROUTER_API_KEY\", \"fake-hosted-key\");\n  try {\n    const { call, prisma, roles } = setup({ credits: true });\n    const primary = { provider: availableModel.provider, modelId: availableModel.id };\n    const catalog = await call(\"models/forRole\", { role: \"main\" });\n    expect((await catalog.response.json()).json).toContainEqual(\n      expect.objectContaining({ id: primary.modelId, managed: true }),\n    );\n    const main = await call(\"models/setRole\", { role: \"main\", primary });\n    expect(main.response.status).toBe(200);\n    expect(roles()).toEqual([expect.objectContaining({ role: \"main\", position: 0 })]);\n    const preferences = prisma.userModelPreference as unknown as {\n      upsert: ReturnType<typeof vi.fn>;\n      updateMany: ReturnType<typeof vi.fn>;\n    };\n    expect(preferences.upsert).not.toHaveBeenCalled();\n    expect(preferences.updateMany).not.toHaveBeenCalled();\n    const approval = await call(\"models/setRole\", { role: \"approval\", primary });\n    expect(approval.response.status).toBe(200);\n  } finally {\n    vi.unstubAllEnvs();\n  }\n});\n=== baseline test name ===\n719:it(\"lets a deployment-managed model lead the main model like any other purpose\", async () => {\n723:    const { call, prisma, roles } = setup({ credits: true });"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && git --no-pager show HEAD:apps/api/src/models-backups.test.ts | sed -n '715,745p'; echo \"=== baseline test name ===\"; git --no-pager show HEAD:apps/api/src/models-backups.test.ts | grep -n 'deployment-managed\\|managedProviders\\|credits: true' | head",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 25122,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "248a4840-4f23-4d58-87df-aa4f1c2b0b7f",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

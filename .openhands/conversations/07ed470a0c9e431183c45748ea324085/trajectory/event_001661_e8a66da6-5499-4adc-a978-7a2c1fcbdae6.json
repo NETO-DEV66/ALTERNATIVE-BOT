@@ -1,0 +1,36 @@
+{
+  "id": "e8a66da6-5499-4adc-a978-7a2c1fcbdae6",
+  "timestamp": "2026-10-31T11:02:51.657839",
+  "source": "environment",
+  "parent_id": "3bd1eaff-ca22-4204-ac42-3888733bb2ea",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-82932a6e17d672a8",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "apps/api/src/app.ts:441:  const modelCreditsEnabled = false;\napps/api/src/app.ts:446:      modelCreditsEnabled,\napps/api/src/app.ts:448:    update: { modelCreditsEnabled },\napps/api/src/team-chat-judge.ts:6:  hasHostedModelCredits,\napps/api/src/team-chat-judge.ts:7:  hostedModelCreditObserver,\napps/api/src/routes/shared.ts:3:  hasHostedModelCredits,\napps/api/src/routes/shared.ts:92:      (deps.billing?.modelCreditsEnabled &&\napps/api/src/routes/shared.ts:93:        (await hasHostedModelCredits(deps.prisma, actor, member.provider))))\napps/api/src/routes/account.ts:4:  hasHostedModelCredits,\napps/api/src/routes/account.ts:376:          hasHostedModelCredits(deps.prisma, actor, provider),\npackages/adapters/src/run-auto-review.ts:10:import { findConnectedModelCredential, hasHostedModelCredits } from \"./model-selection.js\";\npackages/adapters/src/run-auto-review.ts:49:    !(await hasHostedModelCredits(deps.prisma, { userId, spaceId }, checker.provider))\npackages/adapters/src/model-selection.ts:145:  const hosted = hostedProvider && (await hasHostedModelCredits(prisma, scope, hostedProvider));\npackages/adapters/src/model-selection.ts:559:      (await hasHostedModelCredits(deps.prisma, scope, provider));\npackages/adapters/src/model-selection.ts:731:    (await hasHostedModelCredits(prisma, actor, provider))\npackages/adapters/src/model-selection.ts:863:export async function hasHostedModelCredits(\npackages/adapters/src/model-selection.ts:872:    select: { organization: { select: { modelCredits: { select: { mode: true } } } } },\npackages/adapters/src/model-selection.ts:874:  return space?.organization.modelCredits?.mode === \"credits\";\npackages/adapter-kit/src/interfaces.ts:483:  describe(): AdapterDescriptor<{ trials: boolean; portal: boolean; modelCredits?: boolean }>;"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -rn 'hasHostedModelCredits\\|hostedModelCreditObserver\\|modelCreditsEnabled\\|modelCredits' apps packages --include=*.ts --include=*.tsx --exclude-dir=node_modules --exclude-dir=generated | grep -v '\\.test\\.'",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "32f9c266-9709-4b4b-a7cd-5207ae52e972",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

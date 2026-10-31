@@ -1,0 +1,36 @@
+{
+  "id": "4c849ba3-9b41-4bf9-8462-b6811b58e9ce",
+  "timestamp": "2026-10-31T10:32:08.215722",
+  "source": "environment",
+  "parent_id": "6946815c-84c5-43c3-b806-7336d2372238",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-a5e309841638b43d",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "> @alternativebot/adapter-kit@0.1.0 check /workspace/project/packages/adapter-kit\n> tsc --noEmit -p tsconfig.json\n\nsrc/analytics.ts(1,37): error TS2307: Cannot find module '@alternativebot/contracts' or its corresponding type declarations.\nsrc/connector-errors.ts(1,44): error TS2307: Cannot find module '@alternativebot/contracts' or its corresponding type declarations.\nsrc/model-errors.ts(1,38): error TS2307: Cannot find module '@alternativebot/contracts' or its corresponding type declarations.\nsrc/sandbox-errors.ts(1,43): error TS2307: Cannot find module '@alternativebot/contracts' or its corresponding type declarations.\nsrc/types.ts(7,8): error TS2307: Cannot find module '@alternativebot/contracts' or its corresponding type declarations.\nsrc/voice-errors.ts(1,44): error TS2307: Cannot find module '@alternativebot/contracts' or its corresponding type declarations.\n/workspace/project/packages/adapter-kit:\n\u2009ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL\u2009 @alternativebot/adapter-kit@0.1.0 check: `tsc --noEmit -p tsconfig.json`\nExit status 1"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && pnpm --filter @alternativebot/adapter-kit check 2>&1 | tail -40",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "0abf2d0a-a32f-4e2c-9add-82357317aee7",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

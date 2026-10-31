@@ -1,0 +1,36 @@
+{
+  "id": "f011b646-a464-428a-a6c0-934d091bdac4",
+  "timestamp": "2026-10-31T11:08:53.822140",
+  "source": "environment",
+  "parent_id": "1f6b9f92-a690-4c33-8828-56dd2d114f8d",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b36be6492583198d",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "// Never return a connection with an uncertain session lock to the pool.\n        destroy = true;\n      } finally {\n        client.release(destroy);\n      }\n    },\n  };\n}\n\nexport function createJobReconciler(\n  deps: {\n    prisma: PrismaClient;\n    jobs: JobPublisher;\n    events?: ThreadEvents;\n    notifications?: NotificationProvider;\n    leadership?: ReconciliationLeadership;\n    reconcileComputerUpdates?: () => Promise<void>;\n    reconcileCloudAgents?: () => Promise<void>;\n    reconcilePurchases?: () => Promise<void>;\n    reconcileModelCredits?: () => Promise<void>;\n    reconcileRoutineRetryNotices?: () => Promise<void>;\n    reconcileSecurityEventRetention?: () => Promise<void>;\n    reconcileHomeStorage?: () => Promise<void>;\n    reconcileIdleComputers?: () => Promise<void>;\n    reconcileDeadJobs?: () => Promise<void>;\n  },\n  options: { intervalMs?: number; batchSize?: number; maxPagesPerPass?: number } = {},\n) {\n  const intervalMs = options.intervalMs ?? DEFAULT_INTERVAL_MS;\n  const batchSize = options.batchSize ?? DEFAULT_BATCH_SIZE;\n  const maxPagesPerPass = options.maxPagesPerPass ?? 10;\n  if (!Number.isSafeInteger(batchSize) || batchSize < 1) throw new Error(\"Invalid batch size\");\n  if (!Number.isSafeInteger(maxPagesPerPass) || maxPagesPerPass < 1) {\n    throw new Error(\"Invalid page budget\");\n  }\n  let stopping = false;\n  let timer: ReturnType<typeof setInterval> | undefined;\n  let reconciling: Promise<void> | undefined;\n  let lastCompletedAt = Date.now();\n  let stuckCursor: Cursor | undefined;\n  let runCursor: Cursor | undefined;\n  let routineCursor: Cursor | undefined;\n  let controlCursor: ControlCursor | undefined;\n  let controlScanDeadline: Date | undefined;\n\n  const reconcileOnce = async () => {\n    if (reconciling) return reconciling;\n    if (stopping) return;\n    reconciling = (async () => {\n      if (deps.leadership && !(await deps.leadership.tryAcquire())) return;\n\n      const auxiliary = await Promise.allSettled(\n        [\n          () => reconcileCallRequests(deps),\n          () => reconcileComputerRuns(deps.prisma),\n          deps.reconcileCloudAgents,\n          deps.reconcilePurchases,\n          deps.reconcileModelCredits,\n          deps.reconcileComputerUpdates,\n          deps.reconcileRoutineRetryNotices,\n          deps.reconcileSecurityEventRetention,\n          deps.reconcileHomeStorage,\n          deps.reconcileIdleComputers,\n          deps.reconcileDeadJobs,\n        ].map(async (reconcile) => reconcile?.()),\n      );\n      for (const result of auxiliary) {\n        if (result.status === \"rejected\")\n          getLogger().error(\"auxiliary reconciliation\", result.reason);\n      }"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '100,170p' packages/adapters/src/job-reconciler.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "4dd7c540-b8a1-454a-aebe-08857de07e6c",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

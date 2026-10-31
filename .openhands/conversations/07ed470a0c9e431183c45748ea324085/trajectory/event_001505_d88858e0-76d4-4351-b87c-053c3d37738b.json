@@ -1,0 +1,65 @@
+{
+  "id": "d88858e0-76d4-4351-b87c-053c3d37738b",
+  "timestamp": "2026-10-31T11:00:03.633731",
+  "source": "environment",
+  "parent_id": "ec13eb3f-9d09-4a1a-986f-a3b70f6df15d",
+  "tool_name": "task_tracker",
+  "tool_call_id": "chatcmpl-tool-ba5e2ea0eb87b957",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "Task list has been updated with 8 item(s)."
+      }
+    ],
+    "is_error": false,
+    "command": "plan",
+    "task_list": [
+      {
+        "title": "T2: Remove payment/billing from adapters",
+        "notes": "Done: deleted billing/payment/credit modules + tests, cleaned executor/run-model/background-jobs/index/approval + card-fill test. Typecheck clean.",
+        "status": "done"
+      },
+      {
+        "title": "T2: Remove payment/billing from db (schema + src)",
+        "notes": "Done: schema models dropped, billing.ts/model-credits.ts/model-credit-lots.ts deleted, usage.ts simplified, migration created, prisma regenerated, typecheck clean.",
+        "status": "done"
+      },
+      {
+        "title": "T2: Remove payment/billing from api/worker/env/core",
+        "notes": "billing.ts, billing-webhook.ts, referrals.ts, referral-email.ts, routes/payment-wallet.ts, security-audit wallet events, worker paymentWallet, env vars, meDto, analytics, team-chat-judge.",
+        "status": "in_progress"
+      },
+      {
+        "title": "T2: Remove payment/billing from web + mobile",
+        "notes": "Paywall, SubscriptionGate, BillingSettingsPanel, PaymentWalletSettingsPanel, ModelCredits, billing.ts, referral.ts, SignupSurvey, Onboarding, Shell, SettingsOverlay, InviteDialog, locales, e2e, mobile screens.",
+        "status": "todo"
+      },
+      {
+        "title": "T2: Remove billing from contracts/adapter-kit/docs",
+        "notes": "BillingProvider interface, docs/self-host-billing.md, contracts billing schemas.",
+        "status": "todo"
+      },
+      {
+        "title": "T3: Remove previous developer's social links",
+        "notes": "README badges, Discord invite, elie222 GitHub refs, website footer, app About.",
+        "status": "todo"
+      },
+      {
+        "title": "T4: Verify Android package/bundle id",
+        "notes": "Keep com.alternativebot.app (already correct).",
+        "status": "todo"
+      },
+      {
+        "title": "T5: Build APK + docs + release",
+        "notes": "Install JDK+Android SDK, expo prebuild, gradle assembleRelease, commit/push, GitHub release.",
+        "status": "todo"
+      }
+    ],
+    "kind": "TaskTrackerObservation"
+  },
+  "action_id": "d41bfffd-2450-43ca-b58e-4a0730fcaa83",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

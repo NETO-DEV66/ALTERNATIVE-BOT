@@ -1,0 +1,36 @@
+{
+  "id": "87607e3d-e552-40c2-802c-98ab6093759a",
+  "timestamp": "2026-10-31T13:06:37.437596",
+  "source": "environment",
+  "parent_id": "8df51d94-1680-41ee-bd89-5f4a8f96942e",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-a06daa74425c0733",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== .coderabbit.yaml ===\n# yaml-language-server: $schema=https://storage.googleapis.com/coderabbit_public_assets/schema.v2.json\nreviews:\n  # No \"review skipped\" comment on the PRs CodeRabbit sits out.\n  review_status: false\n  # Greptile is the default reviewer; CodeRabbit only reviews PRs labeled\n  # review:coderabbit (see .github/workflows/review-bot.yml).\n  auto_review:\n    enabled: false\n    labels:\n      - \"review:coderabbit\"\n  tools:\n    # Biome owns this repo's CSS (see biome.json and `pnpm lint`); Stylelint is not\n    # installed or configured here, so its findings are about rules we do not run.\n    stylelint:\n      enabled: false\n=== greptile.json ===\n{\n  \"disabledLabels\": [\"review:coderabbit\"]\n}\n=== review-bot.yml ===\nname: Review bot\n\n# Greptile reviews PRs by default. A PR labeled review:coderabbit goes to\n# CodeRabbit instead (.coderabbit.yaml opts it in, greptile.json opts it out).\n# The label is added when Greptile replies that it can no longer review, or,\n# while the CODERABBIT_UNTIL repository variable holds a later date\n# (YYYY-MM-DD), to every new PR.\n#\n# pull_request_target so fork PRs can be labeled on open; this workflow never\n# checks out or runs PR code.\non:\n  pull_request_target:\n    types: [opened, reopened]\n  pull_request_review:\n    types: [submitted]\n\npermissions: {}\n\njobs:\n  label:\n    runs-on: ubuntu-latest\n    timeout-minutes: 5\n    if: >-\n      (github.event_name == 'pull_request_target' && vars.CODERABBIT_UNTIL != '') ||\n      (github.event.review.user.login == 'greptile-apps[bot]' &&\n        contains(github.event.review.body, 'Reactivate Greptile'))\n    permissions:\n      issues: write\n      pull-requests: write\n    steps:\n      - name: Hand the PR to CodeRabbit\n        env:\n          GH_TOKEN: ${{ github.token }}\n          REPO: ${{ github.repository }}\n          PR: ${{ github.event.pull_request.number }}\n          EVENT: ${{ github.event_name }}\n          UNTIL: ${{ vars.CODERABBIT_UNTIL }}\n        run: |\n          if [[ \"$EVENT\" == pull_request_review || \"$(date -u +%F)\" < \"$UNTIL\" ]]; then\n            gh api \"repos/$REPO/issues/$PR/labels\" -f \"labels[]=review:coderabbit\" --silent\n=== CLAUDE.md ===\n@AGENTS.md"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && echo \"=== .coderabbit.yaml ===\"; cat .coderabbit.yaml; echo \"=== greptile.json ===\"; cat greptile.json; echo \"=== review-bot.yml ===\"; head -40 .github/workflows/review-bot.yml; echo \"=== CLAUDE.md ===\"; cat CLAUDE.md",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 183146,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "307d4807-fc8b-456b-b3db-f871e556f57e",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

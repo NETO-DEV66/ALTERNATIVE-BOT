@@ -1,0 +1,36 @@
+{
+  "id": "724644ff-8117-4285-9c46-81a7dc1f7b44",
+  "timestamp": "2026-10-31T11:00:39.056831",
+  "source": "environment",
+  "parent_id": "ece3115b-d1c3-450b-9484-4c7c928abd39",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-9e93464d0abcd40f",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "credentialIds: z.array(z.string()).optional(),\n  /** Available through the deployment without a personal credential. */\n  managed: z.boolean().optional(),\n  provider: z.string(),\n  providerName: z.string().optional(),\n  id: z.string(),\n  label: z.string(),\n  billing: z.string(),\n  auth: z.enum([\"api-key\", \"oauth\", \"both\"]).optional(),\n  oauthLabel: z.string().optional(),\n  authHint: z.string().optional(),\n  subscription: z.boolean().optional(),\n  signIn: ModelOAuthSignInModeSchema.optional(),\n  reasoning: z.boolean().optional(),\n  thinkingLevels: z.array(ThinkingLevelSchema).optional(),\n  /** The model reads images. Left out where a connection setting decides it. */\n=== hasHostedModelCredits def ===\npackages/adapters/src/deployment-model.ts:20:export function hostCredentialSource(provider: string): string {\npackages/adapters/src/model-selection.ts:863:export async function hasHostedModelCredits("
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '1575,1590p' packages/contracts/src/domain.ts; echo \"=== hasHostedModelCredits def ===\"; grep -rn 'export.*hasHostedModelCredits\\|export.*hostCredentialSource' packages/adapters/src/*.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "42034a21-918e-41e4-ae1b-93c366731e16",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

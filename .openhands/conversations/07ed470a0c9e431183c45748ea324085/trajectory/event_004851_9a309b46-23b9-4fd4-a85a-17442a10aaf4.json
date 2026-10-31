@@ -1,0 +1,36 @@
+{
+  "id": "9a309b46-23b9-4fd4-a85a-17442a10aaf4",
+  "timestamp": "2026-10-31T12:36:31.040963",
+  "source": "environment",
+  "parent_id": "20ef4c7f-a01e-4a5f-b0df-5c866d6bde60",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-a5de628bee5fb870",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": ""
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -rn 'MUTATING_CONNECTOR_PATTERN\\|buy|charge|checkout|pay|purchase|subscribe' packages/adapters/src/run-tool-gate.ts | head",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 65061,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": null,
+    "kind": "TerminalObservation"
+  },
+  "action_id": "306a4340-d4c0-490c-99bb-239ae2c01b65",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

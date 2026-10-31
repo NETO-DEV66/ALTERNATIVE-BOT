@@ -5,8 +5,8 @@ import type { AddressInfo } from "node:net";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { parseArgs } from "node:util";
-import { serve } from "@hono/node-server";
 import { loadRootEnv } from "@alternativebot/core/node/load-root-env";
+import { serve } from "@hono/node-server";
 import { computerTestSandbox } from "../computer-test-config.js";
 import { FLOWS } from "../flows/index.js";
 import type { FlowResult } from "../flows/runner.js";
@@ -68,7 +68,8 @@ async function main() {
       SANDBOX_PROVIDER: sandbox.provider,
       ...(sandbox.provider === "docker"
         ? {
-            ALTERNATIVEBOT_COMPUTER_IMAGE: process.env.ALTERNATIVEBOT_COMPUTER_IMAGE || "alternativebot/computer:local",
+            ALTERNATIVEBOT_COMPUTER_IMAGE:
+              process.env.ALTERNATIVEBOT_COMPUTER_IMAGE || "alternativebot/computer:local",
             SANDBOX_CONTROL_VIA_LOOPBACK: "true",
             SANDBOX_SCREEN_NETWORK: "published",
             SANDBOX_SCREEN_HOST: "127.0.0.1",
@@ -92,10 +93,6 @@ async function main() {
       EMAIL_PROVIDER: "none",
       // Flow MCP servers, such as connect-mcp's task tracker, listen on loopback in this process.
       MCP_ALLOW_PRIVATE_ENDPOINT: "true",
-      // Billing would require a funded credits account; flows pay the model directly.
-      STRIPE_SECRET_KEY: "",
-      STRIPE_WEBHOOK_SECRET: "",
-      STRIPE_PRICE_ID: "",
     });
     // Parallel runs share one generated client: generate it once per schema, under a lock, since
     // generating it from several runs at once collides on its folder.
@@ -113,10 +110,14 @@ async function main() {
       });
       writeFileSync(stamp, schema);
     });
-    execFileSync("pnpm", ["--filter", "@alternativebot/db", "exec", "prisma", "migrate", "deploy"], {
-      stdio: "pipe",
-      timeout: 600_000,
-    });
+    execFileSync(
+      "pnpm",
+      ["--filter", "@alternativebot/db", "exec", "prisma", "migrate", "deploy"],
+      {
+        stdio: "pipe",
+        timeout: 600_000,
+      },
+    );
     if (sandbox.provider === "docker") {
       // An isolated supervisor, never a dev one another checkout may be running.
       const { supervisorApp } = await import("@alternativebot/sandbox-supervisor");

@@ -1,0 +1,36 @@
+{
+  "id": "66abf7f4-6b9d-4a62-8c86-e7719ece8498",
+  "timestamp": "2026-10-31T10:18:13.342843",
+  "source": "environment",
+  "parent_id": "280fbc1b-ec81-4c1b-87dc-becb6af374e1",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-be7881b92f14d148",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== prisma schema billing models ===\n10:model AiDataConsent {\n24:model User {\n44:  paymentWallet               PaymentWallet?\n75:model SignupSurvey {\n87:model Session {\n106:model PushToken {\n117:model EmailSend {\n127:model UserDevice {\n143:model UserDeviceConnection {\n155:model Account {\n175:model Verification {\n188:model Passkey {\n208:model RateLimit {\n217:model Organization {\n227:  billing      BillingAccount?\n228:  modelCredits ModelCreditAccount?\n237:model BillingAccount {\n241:  creditAmountCents   Int?\n242:  subscriptionId      String?\n243:  subscriptionItemId  String?\n259:  @@map(\"billing_accounts\")\n262:model ReferralCode {\n271:model Referral {\n284:model PluginSubmission {\n308:model ActionApprovalRule {\n324:model ActionAutoReviewPreference {\n339:model Member {\n355:model Space {\n423:model SpaceKey {\n436:model SpaceMember {\n457:model Invitation {\n474:model DeploymentSettings {\n475:  modelCreditsEnabled             Boolean  @default(false)\n495:model SecurityEvent {\n512:model UserModelCredential {\n534:model TrustedLinkSite {\n546:model UserVoiceCredential {\n562:model SpaceModelPreference {\n579:model SpaceVoicePreference {\n587:  // Fish speech-model override. Null keeps the deployment default.\n588:  speechModel  String?\n600:model Bot {\n671:model BotSection {\n689:model BotDeletion {\n702:model ChatGroup {\n723:model ChatGroupMember {\n736:model Thread {\n767:model Message {\n796:model Event {\n815:model Task {\n834:model Run {\n850:  // True when these columns are the model the run must keep. A later attempt\n851:  // may record the model it used in the same columns without setting this.\n899:model SteeringMessage {\n910:  /// Model agreed for an inbound delivery that had to wait. Empty follows the bot.\n923:model Attempt {\n939:model CloudAgent {\n974:model PaymentWallet {\n991:  @@map(\"payment_wallets\")\n994:model Purchase {\n1027:model ExternalEffect {\n1043:  reviewModel    String?\n1052:model Routine {\n1079:  /// Runs in a row the model provider refused for the account; each one spaces out the schedule.\n1090:model ScratchpadItem {\n1108:model TaughtSkill {\n1134:model AgentImport {\n1156:model AgentSkill {\n1183:model Connection {\n1202:model CapabilityInstall {\n1226:model MemoryDocument {\n1246:model MemoryRevision {\n1260:model AgentHome {\n1274:model BrowserProfile {\n1288:model ComputerUpdate {\n1304:model Computer {\n1359:model ComputerRun {\n1368:  /// The provider's id for the sandbox, to match runs with the provider's own usage and billing.\n1384:model ComputerExecutionLease {\n1402:model Artifact {\n=== schema wc ===\n2174 packages/db/prisma/schema.prisma\n=== migrations count ===\n186\n20261105140000_computer_restore_pending\n20261106120000_billing_checkout_lease\n20261107120000_mcp_server_has_args\n20261108120000_computer_run_last_seen\nmigration_lock.toml"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && echo \"=== prisma schema billing models ===\"; grep -niE 'model |billing|subscription|credit|stripe|wallet|plan|entitlement' packages/db/prisma/schema.prisma | head -80; echo \"=== schema wc ===\"; wc -l packages/db/prisma/schema.prisma; echo \"=== migrations count ===\"; ls packages/db/prisma/migrations 2>/dev/null | wc -l; ls packages/db/prisma/migrations 2>/dev/null | tail -5",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "96fa6109-b06a-4a1a-9d2a-250fa649c43c",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "bc6e0228-ddcd-4180-a14f-b07385f6baf2",
+  "timestamp": "2026-10-31T11:47:15.260257",
+  "source": "environment",
+  "parent_id": "37b49146-b8dd-487a-8163-581ebe38473b",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-9563bac231ee41e3",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "\"{provider} is rate limiting requests. Try again shortly.\",\n      \"{summary} Resets {date}.\",\n      \"{provider} rejected the API key. Check your connection settings.\",\n      \"{provider} can't run this model.\",\n      \"{provider} denied access to this model.\",\n      \"The model returned an unusable response. Try again.\",\n      \"The model hit its output limit before finishing its reply.\",\n      \"This model's context window is too small. Choose another model.\",\n      \"This connection's request limit is too small. Choose another model.\",\n      \"{provider} took too long to respond. Try again.\",\n      \"{provider} is overloaded right now. Try again in a moment.\",\n      \"{provider} couldn't be reached. Check that it's running.\",\n      \"This conversation is too long for the model. Retrying won't help. Start a new chat or shorten your message.\",\n\n      EMPTY_PLUGIN_CATALOG_MESSAGE,\n      OPENAI_COMPATIBLE_BASE_URL_HINT,\n      ...SLASH_ACTIONS.map((action) => action.label),\n      ...createMenuItems.map((item) => item.label),\n      \"Sign-in did not return a session\",\n      \"Sign-up did not return a session\",\n      \"{count} model\",\n      \"{count} models\",\n      // Labels the t() literal scan cannot see: built from maps or ternaries.\n      \"System\",\n      \"Light\",\n      \"Dark\",\n      \"Allow once\",\n      \"Always allow\",\n      \"Deny\",\n    ]);\n    for (const file of collectSourceFiles(mobileRoot)) {\n      const source = readFileSync(file, \"utf8\");\n      for (const id of translationIds(source)) ids.add(id);\n    }\n    for (const messages of [\n      ZH_MESSAGES,\n      ZH_TW_MESSAGES,\n      RU_MESSAGES,\n      DE_MESSAGES,\n      NL_MESSAGES,\n      JA_MESSAGES,\n      ES_MESSAGES,\n    ]) {\n      const missing = [...ids].filter((id) => !messages[id]?.trim()).sort();\n      expect(missing).toEqual([]);\n    }\n  });\n\n  it(\"decodes JavaScript string escapes in scanned translation ids\", () => {\n    expect(\n      translationIds(\n        String.raw`t('He said \\\"hi\\\"'); t('C:\\\\temp'); t('It\\'s ready'); t(\"Say \\\"hi\\\"\"); t('\\x41\\u0042\\n')`,\n      ),\n    ).toEqual(['He said \"hi\"', \"C:\\\\temp\", \"It's ready\", 'Say \"hi\"', \"AB\\n\"]);\n  });"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '175,230p' apps/mobile/lib/i18n.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 23728,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "ddaaf7eb-b014-4fe9-962b-67bc84c2ee9f",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

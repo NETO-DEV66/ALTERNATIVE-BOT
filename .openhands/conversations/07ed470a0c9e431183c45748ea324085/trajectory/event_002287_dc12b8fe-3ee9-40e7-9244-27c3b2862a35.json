@@ -1,0 +1,36 @@
+{
+  "id": "dc12b8fe-3ee9-40e7-9244-27c3b2862a35",
+  "timestamp": "2026-10-31T11:15:41.748887",
+  "source": "environment",
+  "parent_id": "1b3103a5-df89-41f0-a981-0c40fcb4db71",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-9a8bc88edb4fdc26",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "450:       userModelPreference: { findFirst: vi.fn().mockResolvedValue(null) },\n451:       deploymentSettings: { findUnique: vi.fn().mockResolvedValue(null) },\n452:     } as unknown as PrismaClient;\n453:     const deps = {\n454:       prisma,\n455:       billing,\n456:       analytics,\n457:       env: {\n458:         defaultProvider: \"fake\",\n459:         defaultModel: \"fake-model\",\n460:         webOrigin: \"http://127.0.0.1:5173\",\n461:         screenProxySecret: \"fake-test-secret\",\n462:         sandboxProvider: \"fake\",\n463:       },\n464:       dataDir: \"/tmp/alternativebot-router-test\",\n465:     } as unknown as RouterDeps;\n466:     const actor = {\n467:       spaceId: \"workspace-1\",\n468:       userId: \"user-1\",\n469:       email: \"user@alternativebot.test\",\n470:       isDeploymentOwner,\n471:     } satisfies Actor;\n472:     return createRouterClient(createRouter(deps), { context: { actor } });\n473:   }\n474:"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && awk 'NR>=450 && NR<=474 {printf \"%d: %s\\n\", NR, $0}' apps/api/src/router.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "4dac3ff9-687c-40df-a470-61154d7376b0",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

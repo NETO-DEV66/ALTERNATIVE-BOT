@@ -1,0 +1,27 @@
+{
+  "id": "315bdbf5-c127-4b1b-aa57-bf263ac65c08",
+  "timestamp": "2026-10-31T10:52:37.695956",
+  "source": "environment",
+  "parent_id": "c6220c80-2c3d-4300-9ee8-76cbc76dd914",
+  "tool_name": "file_editor",
+  "tool_call_id": "chatcmpl-tool-b39645e2c04cbe68",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "No replacement was performed, old_str `savedLoginPasswordRedactions,\n          purchaseRedactions,\n          runLoginRedactions,\n        ]);` did not appear verbatim in /workspace/project/packages/adapters/src/executor.ts."
+      }
+    ],
+    "is_error": true,
+    "command": "str_replace",
+    "path": null,
+    "prev_exist": true,
+    "old_content": null,
+    "new_content": null,
+    "kind": "FileEditorObservation"
+  },
+  "action_id": "27b68097-6ef7-4c69-9f6c-d6115c3cb7ce",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

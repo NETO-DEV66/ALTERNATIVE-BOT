@@ -1,0 +1,36 @@
+{
+  "id": "6c56397f-11b5-4978-a02d-8e952164ce54",
+  "timestamp": "2026-10-31T10:55:18.433925",
+  "source": "environment",
+  "parent_id": "a30ff254-2ce8-4941-b68c-b07c54312b38",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-9ccef47f965e5b24",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": ""
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -i '/^export \\* from \"\\.\\/billing-emulator\\.js\";$/d; /^export { hostedModelCreditObserver } from \"\\.\\/model-credit-observer\\.js\";$/d; /^export \\* from \"\\.\\/model-credit-reconciler\\.js\";$/d; /^export \\* from \"\\.\\/payment-wallet-factory\\.js\";$/d; /^export \\* from \"\\.\\/payment-wallets\\.js\";$/d; /^export \\* from \"\\.\\/purchase-poll\\.js\";$/d; /^export \\* from \"\\.\\/purchase-service\\.js\";$/d; /^export \\* from \"\\.\\/stripe-billing\\.js\";$/d' packages/adapters/src/index.ts && grep -nE 'billing|payment-wallet|purchase|credit' packages/adapters/src/index.ts",
+    "exit_code": 1,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 1,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 1.]"
+    },
+    "full_output_save_dir": null,
+    "kind": "TerminalObservation"
+  },
+  "action_id": "5e7d9054-f52c-486a-880d-52f231606337",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

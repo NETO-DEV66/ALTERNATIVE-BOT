@@ -1,0 +1,36 @@
+{
+  "id": "527bdf15-b801-4b8b-b493-9cb4e04b6cf3",
+  "timestamp": "2026-10-31T12:38:09.520205",
+  "source": "environment",
+  "parent_id": "3f119023-a02d-43c1-b0d8-2bf29e9cc16b",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8308e87e2d019d05",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "import { z } from \"zod\";\n\nexport const authCapabilitiesSchema = z.object({\n  sso: z\n    .object({\n      name: z.string().min(1),\n      availability: z.enum([\"available\", \"unavailable\", \"checking\"]),\n    })\n    .nullable(),\n  passwordAuth: z.boolean(),\n  passwordReset: z.boolean(),\n  resetUrl: z.string().url().nullable(),\n  // Older servers omit this field; clients treat omission as unavailable.\n  emailCode: z.boolean().optional(),\n  /** WebAuthn relying party ID; null or omitted when this server does not offer passkeys. */\n  passkeyRpId: z.string().min(1).nullable().optional(),\n  /** Native apps this domain vouches for; omitted by older servers, which means none. */\n  nativePasskeys: z.object({ ios: z.boolean(), android: z.boolean() }).optional(),\n});\nexport type AuthCapabilities = z.infer<typeof authCapabilitiesSchema>;\n\nexport const accountSecuritySchema = z.object({\n  hasPassword: z.boolean(),\n  // Older servers omit this field; clients treat omission as enabled.\n  passwordChangeEnabled: z.boolean().optional(),\n  freshOidcAuth: z.boolean(),\n  ssoLinked: z.boolean(),\n  emailDeletion: z.boolean(),\n  sso: z.object({ name: z.string().min(1) }).nullable(),\n});\nexport type AccountSecurity = z.infer<typeof accountSecuritySchema>;\n\n/** Only a complete pre-SSO shape may opt into password-only compatibility. */\nexport const legacyAuthCapabilitiesSchema = authCapabilitiesSchema\n  .omit({ sso: true, passwordAuth: true })\n  .strict()\n  .transform((value) => ({ ...value, passwordAuth: true, sso: null }));\n\n/** Pre-SSO servers only had credential accounts and password-protected deletion. */\nexport const legacyAccountSecurity: AccountSecurity = {\n  hasPassword: true,\n  passwordChangeEnabled: true,\n  freshOidcAuth: false,\n  ssoLinked: false,\n  emailDeletion: false,\n  sso: null,\n};\n\n/**\n * The RPC error code for a sensitive action the session must confirm its\n * identity for first. Clients confirm, then retry the action once.\n */\nexport const IDENTITY_CONFIRMATION_REQUIRED = \"IDENTITY_CONFIRMATION_REQUIRED\";\n\nexport function isIdentityConfirmationRequired(error: unknown): boolean {\n  return (\n    typeof error === \"object\" &&\n    error !== null &&\n    \"code\" in error &&\n    error.code === IDENTITY_CONFIRMATION_REQUIRED\n  );\n}\n\n/**\n * Runs an action that may need a recent identity confirmation. When the server asks for one,\n * `confirm` prompts; once confirmed, the action is retried a single time.\n * A dismissed prompt rethrows the server's error.\n */\nexport async function runWithIdentityConfirmation<T>(\n  action: () => Promise<T>,\n  confirm: () => Promise<boolean>,\n): Promise<T> {\n  try {\n    return await action();\n  } catch (error) {\n    if (!isIdentityConfirmationRequired(error) || !(await confirm())) throw error;\n  }\n  return action();\n}"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && cat packages/contracts/src/auth.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 133749,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "72c05a66-3c4a-4136-a064-b61c582dc8cb",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

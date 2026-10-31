@@ -1,0 +1,36 @@
+{
+  "id": "7462c63d-4ad7-44b5-b73c-65b24b355fcd",
+  "timestamp": "2026-10-31T12:07:57.384794",
+  "source": "environment",
+  "parent_id": "a6158ec4-df83-4090-97af-2b00c4131b93",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b55fec2b74d80c30",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "rule.matchKind === \"site\" &&\n      rule.matchValue.toLowerCase() === site,\n  );\n}\n\nfunction categoryMatches(\n  category: string,\n  toolName: string,\n  connectorKind: string,\n  readOnly: boolean | undefined,\n): boolean {\n  const normalized = category.toLowerCase();\n  const consequential = connectorToolRequiresApproval(toolName, readOnly);\n  if (normalized === \"email\") {\n    if (EMAIL_CONNECTOR_SLUGS.has(connectorKind.toLowerCase())) return consequential;\n    return consequential && /send.*mail|gmail_send|outlook_send/i.test(toolName);\n  }\n  if (normalized === \"purchase\") {\n    if (PURCHASE_CONNECTOR_SLUGS.has(connectorKind.toLowerCase())) return consequential;\n    return consequential && /purchase|pay_|charge|checkout|buy_/i.test(toolName);\n  }\n  return false;\n}\n\n/**\n * These run code inside Composio that can call any action, so a block scoped to one action could\n=== test 695,725 ===\n    ).toMatchObject({ decision: \"allow\", source: \"default\" });\n  });\n\n  it(\"attributes a batch ask only to the action whose rule required it\", () => {\n    const gmailAsk: ActionApprovalRule = {\n      effect: \"require_approval\",\n      matchKind: \"connector\",\n      matchValue: \"gmail\",\n    };\n    const gmailAllow: ActionApprovalRule = {\n      effect: \"always_allow\",\n      matchKind: \"tool\",\n      matchValue: \"GMAIL_SEND_EMAIL\",\n    };\n    const purchaseAsk: ActionApprovalRule = {\n      effect: \"require_approval\",\n      matchKind: \"category\",\n      matchValue: \"purchase\",\n    };\n\n    const resolved = resolveActionApprovalForTools({\n      tools: [\n        { name: \"GMAIL_SEND_EMAIL\", readOnly: false },\n        { name: \"STRIPE_CREATE_CHARGE\", connectorKind: \"stripe\", readOnly: false },\n      ],\n      rules: [gmailAsk, gmailAllow, purchaseAsk],\n    });\n\n    expect(resolved).toMatchObject({ decision: \"ask\", source: \"require_approval\" });\n    expect(resolved.matchingRules).toEqual(expect.arrayContaining([gmailAsk, purchaseAsk]));\n    expect(decisiveActionApprovalRules(resolved)).toEqual([purchaseAsk]);\n  });\n});\n\ndescribe(\"applyJudgeDecision\", () => {\n  it(\"maps pass and ask\", () => {\n    expect(applyJudgeDecision({ decision: \"pass\", consequential: true })).toBe(\"allow\");\n    expect(applyJudgeDecision({ decision: \"ask\", consequential: true })).toBe(\"ask\");\n  });\n\n  it(\"fails closed on consequential checker errors and open on exempt\", () => {"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '285,310p' packages/core/src/action-approval.ts; echo \"=== test 695,725 ===\"; sed -n '690,730p' packages/core/src/action-approval.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 25122,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "a685bbb1-6c27-4761-a435-1bb8fa855cbc",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

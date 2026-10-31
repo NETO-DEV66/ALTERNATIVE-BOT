@@ -1,0 +1,40 @@
+{
+  "id": "a19d5ade-6e02-403e-ab72-c70c4805cce6",
+  "timestamp": "2026-10-31T12:10:57.466289",
+  "source": "agent",
+  "parent_id": "8ade974f-b283-4f11-9e5a-e3bf8886b21e",
+  "thought": [
+    {
+      "cache_prompt": false,
+      "type": "text",
+      "text": ""
+    }
+  ],
+  "reasoning_content": "The `storedCredential` helper hardcodes provider `\"openai-codex\"` but the test expects `auth.byProvider.openrouter` to be `\"api_key\"`. Wait, in the baseline the test expected `byProvider.openrouter` to be \"api_key\". Let me look at the baseline test more carefully.\n\nBaseline: `storedCredential(\"cred-oauth\", \"secret-oauth\", ...)` sets provider \"openai-codex\". But the test expects `auth.byProvider.openrouter` = \"api_key\" AND `auth.byProvider[\"openai-codex\"]` = \"oauth\". Hmm, so the credential is openai-codex, giving byProvider[\"openai-codex\"]=\"oauth\". Where does openrouter \"api_key\" come from? From the `hosted` path: `empty.byProvider[hostedProvider] = \"api_key\"` where hostedProvider = \"openrouter\" and mode=credits. So the baseline test passed because of the hosted provider injection. Now that hosted is removed, `byProvider.openrouter` is undefined.\n\nSo this test's expectations need updating: the deployment-managed/hosted injection is gone. The credential is openai-codex, so only `byProvider[\"openai-codex\"]` should be \"oauth\". The renamed test \"keeps a saved personal connection in the catalog\" should now just expect openai-codex oauth.\n\nLet me fix that.\n\nBut wait \u2014 the test was edited by the previous session already (renamed). It still expects openrouter api_key. Let me update it.\n\nAlso the \"keeps saved keys when selecting a model\" test: credentials provider is overridden to \"openrouter\" (via `{...storedCredential(...), provider: \"openrouter\"}`). Good, that one passes.\n\nLet me fix the \"keeps a saved personal connection in the catalog\" test.",
+  "thinking_blocks": [],
+  "responses_reasoning_item": null,
+  "action": {
+    "command": "str_replace",
+    "path": "/workspace/project/packages/adapters/src/model-selection.test.ts",
+    "file_text": null,
+    "old_str": "      const auth = await modelCredentialAuthKindsForSpace(\n        prisma,\n        { load: vi.fn().mockResolvedValue(oauth) },\n        scope,\n      );\n      expect(auth.byProvider.openrouter).toBe(\"api_key\");\n      expect(auth.byProvider[\"openai-codex\"]).toBe(\"oauth\");",
+    "new_str": "      const auth = await modelCredentialAuthKindsForSpace(\n        prisma,\n        { load: vi.fn().mockResolvedValue(oauth) },\n        scope,\n      );\n      expect(auth.byProvider[\"openai-codex\"]).toBe(\"oauth\");",
+    "insert_line": null,
+    "view_range": null,
+    "kind": "FileEditorAction"
+  },
+  "tool_name": "file_editor",
+  "tool_call_id": "chatcmpl-tool-aa0449c01d4646a2",
+  "tool_call": {
+    "id": "chatcmpl-tool-aa0449c01d4646a2",
+    "responses_item_id": null,
+    "name": "file_editor",
+    "arguments": "{\"command\": \"str_replace\", \"new_str\": \"      const auth = await modelCredentialAuthKindsForSpace(\\n        prisma,\\n        { load: vi.fn().mockResolvedValue(oauth) },\\n        scope,\\n      );\\n      expect(auth.byProvider[\\\"openai-codex\\\"]).toBe(\\\"oauth\\\");\", \"old_str\": \"      const auth = await modelCredentialAuthKindsForSpace(\\n        prisma,\\n        { load: vi.fn().mockResolvedValue(oauth) },\\n        scope,\\n      );\\n      expect(auth.byProvider.openrouter).toBe(\\\"api_key\\\");\\n      expect(auth.byProvider[\\\"openai-codex\\\"]).toBe(\\\"oauth\\\");\", \"path\": \"/workspace/project/packages/adapters/src/model-selection.test.ts\"}",
+    "origin": "completion"
+  },
+  "llm_response_id": "gen-1793448653-N1tYGyniZc3kx3wSCaCk",
+  "security_risk": "UNKNOWN",
+  "critic_result": null,
+  "summary": "file_editor: {\"command\": \"str_replace\", \"new_str\": \"      const auth = await modelCredentialAuthKindsForSpace(\\n        prisma,\\n        { load: vi.fn().mockResolvedValue(oauth) },\\n        scope,\\n      );\\n      expect(auth.byProvider[\\\"openai-codex\\\"]).toBe(\\\"oauth\\\");\", \"old_str\": \"      const auth = await modelCredentialAuthKindsForSpace(\\n        prisma,\\n        { load: vi.fn().mockResolvedValue(oauth) },\\n        scope,\\n      );\\n      expect(auth.byProvider.openrouter).toBe(\\\"api_key\\\");\\n      expect(auth.byProvider[\\\"openai-codex\\\"]).toBe(\\\"oauth\\\");\", \"path\": \"/workspace/project/packages/adapters/src/model-selection.test.ts\"}",
+  "kind": "ActionEvent"
+}

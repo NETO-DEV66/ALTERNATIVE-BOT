@@ -1,0 +1,36 @@
+{
+  "id": "28d24f48-20fe-4fa9-bfec-0da5fefad7d7",
+  "timestamp": "2026-10-31T12:48:50.399990",
+  "source": "environment",
+  "parent_id": "a97dac4e-1685-428c-907f-1065cf0f1782",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b651c38225d81f9b",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "380|     },\n    381|   );\n\nCaused by: Error: Matcher did not succeed in time.\n \u276f packages/adapters/src/host-computer.test.ts:379:7\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af[2/3]\u23af\n\n\n Test Files  2 failed (2)\n      Tests  3 failed | 35 passed | 1 skipped (39)\n   Start at  12:48:45\n   Duration  3.96s (transform 768ms, setup 57ms, import 1.09s, tests 2.85s, environment 0ms)"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && timeout 300 npx vitest run apps/desktop/src/browser-auth.test.ts packages/adapters/src/host-computer.test.ts 2>&1 | tail -14",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 133749,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "83aeb064-a02f-4e2e-b18e-dcafb65ce4d5",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

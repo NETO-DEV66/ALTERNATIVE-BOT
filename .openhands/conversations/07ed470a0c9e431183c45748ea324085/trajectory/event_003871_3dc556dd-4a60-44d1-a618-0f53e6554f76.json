@@ -1,0 +1,36 @@
+{
+  "id": "3dc556dd-4a60-44d1-a618-0f53e6554f76",
+  "timestamp": "2026-10-31T12:04:04.414204",
+  "source": "environment",
+  "parent_id": "6228d5ca-f81b-4d76-b627-39741db60795",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b86ba667c2ebf93d",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== diff adapters/builtin-tools.ts ===\ndiff --git a/packages/adapters/src/builtin-tools.ts b/packages/adapters/src/builtin-tools.ts\nindex d7d4912..c7ce2f2 100644\n--- a/packages/adapters/src/builtin-tools.ts\n+++ b/packages/adapters/src/builtin-tools.ts\n@@ -1,4 +1,4 @@\n-import type { ConnectorTool } from \"@rakazo/adapter-kit\";\n+import type { ConnectorTool } from \"@alternativebot/adapter-kit\";\n import {\n   BOT_DESCRIPTION_MAX_LENGTH,\n   BOT_INSTRUCTIONS_MAX_LENGTH,\n@@ -8,8 +8,6 @@ import {\n   GenerateSecretInput,\n   HISTORY_QUERIES_MAX_BYTES,\n   LOGIN_FIELD_LIMIT,\n-  PAID_REQUEST_METHODS,\n-  PURCHASE_CARD_FIELDS,\n   SecretAskPurpose,\n   SecretHttpRequest,\n   TICKET_COMMENT_MAX_LENGTH,\n@@ -17,7 +15,7 @@ import {\n   TICKET_PRIORITIES,\n   TICKET_STATUSES,\n   TICKET_TITLE_MAX_LENGTH,\n-} from \"@rakazo/contracts\";\n+} from \"@alternativebot/contracts\";\n import { z } from \"zod\";\n import { allowPrivateHttpSecretOrigins } from \"./bot-secrets.js\";\n import { BROWSER_ACT_KINDS } from \"./browser-tools.js\";\n@@ -336,7 +334,7 @@ export const builtinAgentTools: ConnectorTool[] = [\n   },\n   {\n     name: \"browser_act\",\n-    description: `Click or fill page elements by ref from browser_snapshot (kinds: ${BROWSER_ACT_KINDS.join(\", \")}). click is a real mouse click, and fill on a dropdown takes one of its options' visible labels or values. The result shows the page after the action, and a snapshot covers the whole page, so scrolling is rarely needed. upload attaches your files to a \"file upload\" element; use it instead of clicking upload buttons. fill_secret types one field of a login saved with request_secret, by its label, only on the site it was saved for; you never see the value. fill_card types an approved purchase's card details, only on its merchant site; leave out ref to find the field, including in a payment frame. fill_pay_token hands an approved purchase's pay token to its checkout; no ref. type presses keys like a keyboard and replaces the field's text; use it for code boxes and fields that ignore fill. For a code split into one box per digit, type the whole code once into the first box, and to correct it type it again. Prefer this over computer_act for web pages. If the result includes fallback:\"computer_act\", use computer_act instead.`,\n+    description: `Click or fill page elements by ref from browser_snapshot (kinds: ${BROWSER_ACT_KINDS.join(\", \")}). click is a real mouse click, and fill on a dropdown takes one of its options' visible labels or values. The result shows the page after the action, and a snapshot covers the whole page, so scrolling is rarely needed. upload attaches your files to a \"file upload\" element; use it instead of clicking upload buttons. fill_secret types one field of a login saved with request_secret, by its label, only on the site it was saved for; you never see the value. type presses keys like a keyboard and replaces the field's text; use it for code boxes and fields that ignore fill. For a code split into one box per digit, type the whole code once into the first box, and to correct it type it again. Prefer this over computer_act for web pages. If the result includes fallback:\"computer_act\", use computer_act instead.`,\n     inputSchema: {\n       type: \"object\",\n       properties: {\n@@ -351,7 +349,7 @@ export const builtinAgentTools: ConnectorTool[] = [\n               },\n               ref: {\n                 type: \"string\",\n-                description: \"Element ref from browser_snapshot. Optional for fill_card.\",\n+                description: \"Element ref from browser_snapshot.\",\n               },\n               text: {\n                 type: \"string\",\n@@ -363,13 +361,10 @@ export const builtinAgentTools: ConnectorTool[] = [\n                 description: \"Files to attach, for upload.\",\n               },\n               secret: { type: \"string\", description: \"Saved login name for fill_secret.\" },\n-              purchase: {\n-                type: \"string\",\n-                description: \"Approved purchase id for fill_card or fill_pay_token.\",\n-              },\n               field: {\n                 type: \"string\",\n-                description: `The login field's label for fill_secret (username and password also name a login's first visible and first hidden field); ${PURCHASE_CARD_FIELDS.join(\", \")} for fill_card.`,\n+                description:\n+                  \"The login field's label for fill_secret (username and password also name a login's first visible and first hidden field).\",\n               },"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -n 'paid_request\\|purchase\\|request_purchase' packages/adapters/src/builtin-tools.ts | head; echo \"=== diff adapters/builtin-tools.ts ===\"; git --no-pager diff packages/adapters/src/builtin-tools.ts | head -60",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 25122,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "207a61c9-ccc4-4407-be6a-245cb192f791",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "98eee265-a34a-49cf-af06-53f8ac89b242",
+  "timestamp": "2026-10-31T10:51:24.295059",
+  "source": "environment",
+  "parent_id": "a1ea5e47-e617-491a-afb2-97314c23e85b",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-91b5395556dfb37f",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "packages/adapters/src/run-model.ts:132:export async function modelCreditBillingEnabled(deps: ExecutorDeps): Promise<boolean> {\npackages/adapters/src/run-model.ts:146:  const billingEnabled = await modelCreditBillingEnabled(deps);\npackages/adapters/src/run-model.ts:223:        if (await modelCreditBillingEnabled(deps))\npackages/adapters/src/run-model.ts:396:  const hostedProvider = (await modelCreditBillingEnabled(deps))\npackages/adapters/src/run-model.ts:525:    hostedProvider: (await modelCreditBillingEnabled(deps))\npackages/adapters/src/executor.ts:154:  modelCreditBillingEnabled,\npackages/adapters/src/executor.ts:748:            (await modelCreditBillingEnabled(deps)) &&\npackages/adapters/src/executor.ts:757:          hostedProvider: (await modelCreditBillingEnabled(deps))\npackages/adapters/src/executor.ts:789:          (await modelCreditBillingEnabled(deps)) &&"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -rn --exclude-dir=node_modules --exclude-dir=generated --include=*.ts 'modelCreditBillingEnabled' apps packages | grep -v '\\.test\\.'",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "694dd9f5-0218-496a-9bfb-84d331b4e0ec",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

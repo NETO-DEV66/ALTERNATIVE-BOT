@@ -1,0 +1,36 @@
+{
+  "id": "6b2f1991-c390-46af-ade2-34f944dd6685",
+  "timestamp": "2026-10-31T13:50:35.801243",
+  "source": "environment",
+  "parent_id": "67bae26a-e962-4d1a-b279-63415f288abd",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-a046c33a57f620e0",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== kubernetes-sandbox ===\n34:// Same default as the Compose stack. Pin a digest with KUBERNETES_SANDBOX_COMPUTER_IMAGE in\n36:const DEFAULT_COMPUTER_IMAGE = \"ghcr.io/neto-dev66/alternative-bot/computer:edge\";\n137:    this.computerImage = options.computerImage?.trim() || DEFAULT_COMPUTER_IMAGE;\n=== compose image refs ===\ninfra/compose/docker-compose.images.yml:285:    image: ${ALTERNATIVEBOT_COMPUTER_IMAGE:-ghcr.io/neto-dev66/alternative-bot/computer}:${ALTERNATIVEBOT_COMPUTER_IMAGE_TAG:-edge}\ninfra/compose/docker-compose.images.yml:302:    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-edge}\ninfra/compose/docker-compose.images.yml:318:      ALTERNATIVEBOT_COMPUTER_IMAGE: ${ALTERNATIVEBOT_COMPUTER_IMAGE:-ghcr.io/neto-dev66/alternative-bot/computer}:${ALTERNATIVEBOT_COMPUTER_IMAGE_TAG:-edge}\ninfra/compose/docker-compose.images.yml:361:    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-edge}\ninfra/compose/docker-compose.images.yml:381:    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-edge}\ninfra/compose/docker-compose.images.yml:468:    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-edge}\ninfra/compose/docker-compose.images.yml:507:    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-edge}\ninfra/compose/docker-compose.prod.docker.yml:42:    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-local}\ninfra/compose/docker-compose.prod.yml:363:    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-local}\ninfra/compose/docker-compose.prod.yml:395:    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-local}\ninfra/compose/docker-compose.prod.yml:486:    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-local}\ninfra/compose/docker-compose.prod.yml:527:    image: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}:${ALTERNATIVEBOT_IMAGE_TAG:-local}\ninfra/compose/docker-compose.prod.yml:588:    image: ${ALTERNATIVEBOT_UPDATER_IMAGE:-ghcr.io/neto-dev66/alternative-bot/updater}:${ALTERNATIVEBOT_UPDATER_IMAGE_TAG:-local}\ninfra/compose/docker-compose.prod.yml:609:      ALTERNATIVEBOT_IMAGE: ${ALTERNATIVEBOT_IMAGE:-ghcr.io/neto-dev66/alternative-bot/app}\ninfra/compose/.env.images.example:74:ALTERNATIVEBOT_IMAGE=ghcr.io/neto-dev66/alternative-bot/app\ninfra/compose/.env.images.example:76:ALTERNATIVEBOT_COMPUTER_IMAGE=ghcr.io/neto-dev66/alternative-bot/computer\n.env.example:419:ALTERNATIVEBOT_IMAGE=ghcr.io/neto-dev66/alternative-bot/app\n.env.example:422:ALTERNATIVEBOT_UPDATER_IMAGE=ghcr.io/neto-dev66/alternative-bot/updater\n=== any remaining uppercase NETO-DEV66 in ghcr or wrong forms ===\ninfra/compose/install-images.sh:5:DOWNLOAD_BASE=\"${ALTERNATIVEBOT_DOWNLOAD_BASE:-https://raw.githubusercontent.com/NETO-DEV66/ALTERNATIVE-BOT/main/infra/compose}\"\ninfra/compose/restrict-computer-egress.smoke.sh:312:grep -q 'https://raw.githubusercontent.com/NETO-DEV66/ALTERNATIVE-BOT/main/infra/compose/restrict-computer-egress.sh' \"$docs\" ||\ninfra/updater/src/command-output.test.ts:51:    body: JSON.stringify({ repoUrl: \"https://github.com/NETO-DEV66/ALTERNATIVE-BOT\", branch: \"main\" }),\ninfra/updater/src/index.test.ts:111:      body: JSON.stringify({ repoUrl: \"https://github.com/NETO-DEV66/ALTERNATIVE-BOT\", branch: \"--exec=id\" }),\ninfra/updater/src/index.test.ts:170:      const input = { repoUrl: \"https://github.com/NETO-DEV66/ALTERNATIVE-BOT\", branch: \"main\" };\ninfra/updater/src/index.test.ts:205:    const input = { repoUrl: \"https://github.com/NETO-DEV66/ALTERNATIVE-BOT\", branch: \"main\" };\ninfra/updater/src/index.test.ts:258:      repoUrl: \"https://github.com/NETO-DEV66/ALTERNATIVE-BOT\",\ninfra/updater/src/index.test.ts:381:      repoUrl: \"https://github.com/NETO-DEV66/ALTERNATIVE-BOT\",\ninfra/updater/src/index.test.ts:405:      repoUrl: \"https://github.com/NETO-DEV66/ALTERNATIVE-BOT\",\ninfra/updater/src/index.test.ts:423:      repoUrl: \"https://github.com/NETO-DEV66/ALTERNATIVE-BOT\","
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && echo \"=== kubernetes-sandbox ===\"; grep -n 'ghcr\\|IMAGE' packages/adapters/src/kubernetes-sandbox.ts | head -3; echo \"=== compose image refs ===\"; grep -rn 'ghcr.io/neto-dev66\\|ghcr.io/NETO' infra/compose/*.yml infra/compose/.env.images.example .env.example 2>/dev/null; echo \"=== any remaining uppercase NETO-DEV66 in ghcr or wrong forms ===\"; grep -rn 'NETO-DEV66/alternativebot\\|NETO-DEV66/ALTERNATIVE-BOT' infra/ .env.example 2>/dev/null | head",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": -1,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-5ddfbc867f-s4kjx",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "dea06c9e-584f-488e-b884-112cb38d0f2b",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

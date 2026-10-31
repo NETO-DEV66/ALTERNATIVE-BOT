@@ -1,0 +1,31 @@
+{
+  "id": "44a9b123-c238-4eac-82b0-370ca3403d04",
+  "timestamp": "2026-10-31T11:41:34.209422",
+  "source": "agent",
+  "parent_id": "10cff6fd-5c9a-4010-94ab-9ed9c3d3cf20",
+  "thought": [],
+  "reasoning_content": null,
+  "thinking_blocks": [],
+  "responses_reasoning_item": null,
+  "action": {
+    "command": "cd /workspace/project && sed -n '295,315p' packages/core/src/action-approval.ts",
+    "is_input": false,
+    "timeout": null,
+    "reset": false,
+    "kind": "TerminalAction"
+  },
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-991fdbafd1f57474",
+  "tool_call": {
+    "id": "chatcmpl-tool-991fdbafd1f57474",
+    "responses_item_id": null,
+    "name": "terminal",
+    "arguments": "{\"command\": \"cd /workspace/project && sed -n '295,315p' packages/core/src/action-approval.ts\", \"security_risk\": \"LOW\", \"summary\": \"Read purchase connector usage context\"}",
+    "origin": "completion"
+  },
+  "llm_response_id": "gen-1793446893-HIlTDSwWC6cpJNhWklJK",
+  "security_risk": "LOW",
+  "critic_result": null,
+  "summary": "Read purchase connector usage context",
+  "kind": "ActionEvent"
+}

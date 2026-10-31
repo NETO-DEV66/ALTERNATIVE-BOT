@@ -1,0 +1,36 @@
+{
+  "id": "62a2a672-a5e4-4de5-bcc5-d990f8f81c1e",
+  "timestamp": "2026-10-31T13:20:54.433193",
+  "source": "environment",
+  "parent_id": "450f04f3-6203-4671-9696-3b13506ea048",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-a4df4826747f64f0",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "ok: true,\n      completed: 1,\n      title: \"Signed in\",\n    });\n  } finally {\n    await context?.close();\n    await rm(profile, { recursive: true, force: true });\n  }\n});\n\ntest(\"live page helper types a purchase's card into a payment provider's frame only\", async () => {\n  const profile = await mkdtemp(path.join(os.tmpdir(), \"page-browser-card-\"));\n  const merchant = \"https://shop.example.test\";\n  const cardForm = `<!doctype html><title>Card</title>\n    <input id=\"number\" aria-label=\"Card number\" autocomplete=\"cc-number\" inputmode=\"numeric\">\n    <input id=\"expiry\" aria-label=\"Expiry\" autocomplete=\"cc-exp\">\n    <input id=\"cvc\" aria-label=\"CVC\" autocomplete=\"cc-csc\">\n    <input id=\"postal\" aria-label=\"ZIP\" autocomplete=\"billing postal-code\" maxlength=\"3\">\n    <script>\n      for (const field of document.querySelectorAll(\"input\")) field.addEventListener(\"input\", (event) => {\n        if (!event.isTrusted) document.body.dataset.untrusted = \"1\";\n      });\n      const number = document.getElementById(\"number\");\n      number.addEventListener(\"input\", () => {\n        number.value = number.value.replace(/\\\\D/g, \"\").replace(/(\\\\d{4})(?=\\\\d)/g, \"$1 \");\n      });\n      const expiry = document.getElementById(\"expiry\");\n      expiry.addEventListener(\"input\", () => {\n        const digits = expiry.value.replace(/\\\\D/g, \"\").slice(0, 4);\n        expiry.value = digits.length > 2 ? digits.slice(0, 2) + \" / \" + digits.slice(2) : digits;\n      });\n    </script>`;\n  const checkout = (frame: string) =>\n    `<!doctype html><title>Checkout</title><h1>Pay</h1>\n      <iframe src=\"${frame}\" style=\"width:420px;height:220px;border:0\"></iframe>`;\n  let context: Awaited<ReturnType<typeof chromium.launchPersistentContext>> | undefined;\n  try {\n    context = await chromium.launchPersistentContext(profile, {\n      headless: true,\n      // Payment frames run in their own renderer, as on any real checkout.\n      args: [\"--remote-debugging-port=0\", \"--site-per-process\"],\n    });\n    let port = \"\";\n    await expect(async () => {\n      port = (await readFile(path.join(profile, \"DevToolsActivePort\"), \"utf8\")).split(\"\\n\")[0];\n      expect(port).toMatch(/^\\d+$/);\n    }).toPass({ timeout: 5_000 });\n    async function command(name: string, args: Record<string, unknown> = {}) {\n      const { stdout } = await execute(\"python3\", [helper, name, JSON.stringify(args)], {\n        env: { ...process.env, ALTERNATIVEBOT_CDP_PORT: port },\n        timeout: 30_000,\n      });\n      return JSON.parse(stdout);\n    }\n    // Fulfilled here: nothing reaches the real payment provider.\n    await context.route(/^https:\\/\\/(js\\.stripe\\.com|[a-z]+\\.example\\.test)\\//, (route) => {\n      const url = new URL(route.request().url());\n      route.fulfill({\n        contentType: \"text/html\",\n        body: url.pathname.startsWith(\"/card\")\n          ? cardForm\n          : checkout(\n              url.pathname === \"/ads\"\n                ? \"https://ads.example.test/card\"\n                : \"https://js.stripe.com/card\",\n            ),\n      });\n    });\n    const fill = (cardField: string, text: string) =>\n      command(\"act\", {\n        actions: [{ kind: \"fill\", text, origin: merchant, field: \"card\", cardField }],\n      });\n    const page = context.pages()[0]!;\n    await page.goto(`${merchant}/checkout`);\n    const card = page.frameLocator(\"iframe\").locator(\"body\");\n    await expect(card.locator(\"#number\")).toBeVisible();\n    const snapshot = await command(\"snapshot\");\n    expect(snapshot.tree).toContain(\n      \"Card fields are in a payment frame: use fill_card without ref.\",\n    );\n    expect(snapshot.tree).not.toContain(\"Embedded frames require desktop tools.\");"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '620,700p' apps/web/e2e/page-browser.spec.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": -1,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-5ddfbc867f-s4kjx",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "155e6a4a-562f-4fc1-b342-931753843205",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "43f353ad-e8be-4577-9547-665a03cae0fb",
+  "timestamp": "2026-10-31T11:46:35.852453",
+  "source": "environment",
+  "parent_id": "97d62e2f-e1d8-434f-bcf1-c32140249139",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-ad63739ea4b9eec5",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "],\n    });\n  });\n\n  it.each([\n    { provider: \"openrouter\", key: \"fixture-deployment-key\", personal: true },\n    { provider: \"amazon-bedrock\", key: undefined, personal: true },\n    { provider: \"amazon-bedrock\", key: undefined, personal: false },\n  ])(\n    \"meters $provider host credentials with personal=$personal\",\n    async ({ provider, key, personal }) => {\n      vi.stubEnv(\"PI_DEFAULT_PROVIDER\", provider);\n      vi.stubEnv(\"PI_DEFAULT_MODEL\", \"fixture-model\");\n      vi.stubEnv(\"PI_DEFAULT_CREDENTIALS\", \"host\");\n      vi.stubEnv(\"OPENROUTER_API_KEY\", \"fixture-deployment-key\");\n      try {\n        const load = vi.fn();\n        const run = vi.fn(async function* (_request: unknown) {\n          yield { type: \"done\", text: '{\"act\":false}' };\n        });\n        const judge = new ModelTeamChatEngagementJudge({\n          prisma: {\n            deploymentSettings: { findUnique: async () => ({ modelCreditsEnabled: true }) },\n            userModelPreference: {\n              findFirst: async () =>\n                personal\n                  ? {\n                      credential: { id: \"personal\", provider, secretId: \"personal-secret\" },\n                      modelId: \"fixture-model\",\n                    }\n                  : null,\n            },\n            space: {\n              findFirst: async () => ({ organization: { modelCredits: { mode: \"credits\" } } }),\n              findUnique: async () => ({ organizationId: \"org\" }),\n            },\n            member: { findUnique: async () => ({ role: \"owner\" }) },\n            billingAccount: { findUnique: async () => null },\n            modelCreditAccount: { upsert: async () => ({ mode: \"credits\" }) },\n          } as never,\n          runtime: { run } as never,\n          secrets: { load } as never,\n          deploymentProvider: provider,\n          deploymentModel: \"fixture-model\",\n          deploymentModelKey: key,\n        });\n        await judge.decide({\n          bot: {\n            id: \"bot\",\n            spaceId: \"space\","
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '211,260p' apps/api/src/team-chat-judge.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 21955,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "d0970079-14c7-4f20-9137-01ff615bc6ac",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

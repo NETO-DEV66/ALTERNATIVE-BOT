@@ -1,0 +1,36 @@
+{
+  "id": "eb7cbe85-452c-4f35-bff3-77f9e732c3aa",
+  "timestamp": "2026-10-31T11:30:42.416821",
+  "source": "environment",
+  "parent_id": "5cbcfa35-4e8a-40ca-bbd3-3c4e09365f94",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b74f7f1b34598548",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "/** In-process Stripe REST substitute covering exactly the endpoints the billing adapter uses. */\nexport class StripeEmulator {\n  readonly secretKey = \"sk_test_fake\";\n  readonly priceId = \"price_fake\";\n  readonly requests: Array<{\n    method: string;\n    path: string;\n    headers: Headers;\n    form: Record<string, string>;\n  }> = [];\n  readonly customers = new Map<string, { id: string; email: string; deleted: boolean }>();\n  readonly sessions: StripeCheckoutSession[] = [];\n  readonly subscriptions: StripeSubscriptionRecord[] = [];\n  /** Customer balance in cents; negative is credit owed to the customer, as in Stripe. */\n  readonly balances = new Map<string, number>();\n  readonly balanceTransactions: Array<{\n    id: string;\n    customer: string;\n    amount: number;\n    metadata: Record<string, string>;\n  }> = [];\n  /** Largest page the list endpoint returns; lower it to exercise pagination. */\n  pageSize = 100;\n  /** Upcoming responses fail with these Stripe errors, in order. */\n  readonly failures: StripeFailure[] = [];\n  /** A key's first executed outcome, a 500 included, replayed to every later use of the key. */\n  private readonly idempotent = new Map<\n    string,\n    { fingerprint: string; status: number; body: string }\n  >();\n  private sequence = 0;\n  private readonly now: () => number;\n\n  constructor(options: { now?: () => number } = {}) {\n    this.now = options.now ?? Date.now;\n  }\n\n  readonly fetch: typeof fetch = async (input, init) => {\n    const url = new URL(String(input));\n    if (url.origin !== \"https://api.stripe.com\") throw new Error(\"Unexpected emulator origin\");\n    const headers = new Headers(init?.headers);\n    if (headers.get(\"authorization\") !== `Bearer ${this.secretKey}`)\n      return stripeError({ status: 401, message: \"Invalid API Key provided\" });\n    const method = init?.method ?? \"GET\";\n    const body = String(init?.body ?? \"\");\n    const form = Object.fromEntries(new URLSearchParams(method === \"GET\" ? url.search : body));\n    this.requests.push({ method, path: url.pathname, headers, form });\n    const failure = this.failures.shift();\n    // Rate limiting happens before the endpoint runs, so it saves no idempotent result.\n    if (failure?.status === 429) return stripeError(failure);\n    const key = headers.get(\"idempotency-key\");\n    const fingerprint = `${method} ${url.pathname} ${body}`;\n    const saved = key ? this.idempotent.get(key) : undefined;\n    if (saved) {\n      if (saved.fingerprint !== fingerprint) {\n        return stripeError({\n          status: 400,\n          type: \"idempotency_error\",\n          message: \"Keys for idempotent requests can only be used with the same parameters.\",\n        });\n      }\n      return new Response(saved.body, {\n        status: saved.status,\n        headers: { \"content-type\": \"application/json\", \"idempotent-replayed\": \"true\" },\n      });\n    }\n    const response = failure ? stripeError(failure) : this.route(method, url.pathname, form);\n    if (key && (response.ok || response.status >= 500)) {\n      this.idempotent.set(key, {\n        fingerprint,\n        status: response.status,\n        body: await response.clone().text(),\n      });\n    }\n    return response;\n  };\n\n  /** The customer finishes their open checkout. An expired session cannot be paid. */\n  completeCheckout(customerId: string, status?: string, cardFingerprint = \"fp_fake_card\") {\n    const checkout = this.sessions.findLast(\n      (session) => session.customer === customerId && session.status === \"open\",\n    );\n    if (!checkout) throw new Error(`No open checkout for ${customerId}`);\n    checkout.status = \"complete\";\n    const n = ++this.sequence;\n    const nowSeconds = Math.floor(this.now() / 1000);\n    const trialDays = checkout.form[\"subscription_data[trial_period_days]\"];\n    const trialEnd = trialDays ? nowSeconds + Number(trialDays) * 86_400 : null;\n    this.subscriptions.push({\n      id: `sub_fake_${n}`,\n=== who uses stripe-emulator ==="
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && cat packages/adapters/src/testing/stripe-emulator.ts | head -90; echo \"=== who uses stripe-emulator ===\"; grep -rn 'stripe-emulator' --include=*.ts . | grep -v node_modules",
+    "exit_code": 1,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 1,
+      "pid": 16017,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 1.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "3a60eb2a-59c4-4464-a49f-cdfb14d8a87d",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

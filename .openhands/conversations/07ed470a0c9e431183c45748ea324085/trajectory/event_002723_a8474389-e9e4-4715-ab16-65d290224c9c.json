@@ -1,0 +1,36 @@
+{
+  "id": "a8474389-e9e4-4715-ab16-65d290224c9c",
+  "timestamp": "2026-10-31T11:25:10.257169",
+  "source": "environment",
+  "parent_id": "1da7614b-ed48-4a79-9921-74f65b17fabe",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-93ed3bc912761fa6",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "/** Omitted by older servers and ordinary chat connections. */\n  protocol: z.enum([\"chat\", \"decisions\"]).optional(),\n  /** Preselected for a new connection when there is no saved model choice. */\n  recommended: z.boolean().optional(),\n  /** The provider's connections that can run it, when not all of them can. */\n  credentialIds: z.array(z.string()).optional(),\n  /** Available through the deployment without a personal credential. */\n  managed: z.boolean().optional(),\n  provider: z.string(),\n  providerName: z.string().optional(),\n  id: z.string(),\n  label: z.string(),\n  billing: z.string(),\n  auth: z.enum([\"api-key\", \"oauth\", \"both\"]).optional(),\n  oauthLabel: z.string().optional(),\n  authHint: z.string().optional(),\n  subscription: z.boolean().optional(),\n  signIn: ModelOAuthSignInModeSchema.optional(),\n  reasoning: z.boolean().optional(),\n  thinkingLevels: z.array(ThinkingLevelSchema).optional(),\n  /** The model reads images. Left out where a connection setting decides it. */\n=== i18n-catalog.test.ts 60-90 ===\n  });\n\n  it(\"localizes provider error guidance and retains its placeholders\", () => {\n    const messages = [\n      ...Object.values(RUN_ERROR_LIMIT_MESSAGES).flatMap(Object.values),\n      \"{summary} Your backup models also failed.\",\n      \"{summary} No backup model was usable for this request.\",\n      \"{summary} Backup models failed or were unavailable for this request.\",\n      \"Your OpenRouter\",\n      \"Your OpenAI\",\n      \"Your Anthropic\",\n      \"Your model provider\",\n      \"The model provider returned an error.\",\n      \"Connect a model in Settings before running bots.\",\n      \"Connect your own API key in Models or choose Alternative Bot credits in Billing.\",\n      \"{provider} is rate limiting requests. Try again shortly.\",\n      \"{summary} Resets {date}.\",\n      \"{provider} rejected the API key. Check your connection settings.\",\n      \"{provider} can't run this model.\",\n      \"{provider} took too long to respond. Try again.\",\n      \"{provider} is overloaded right now. Try again in a moment.\",\n      \"{provider} couldn't be reached. Check that it's running.\",\n      \"This conversation is too long for the model. Retrying won't help. Start a new chat or shorten your message.\",\n      \"Details\",\n    ];\n    for (const locale of [\n      \"de\",\n      \"es\",\n      \"fr\",\n      \"he\",\n      \"hi\","
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '1570,1590p' packages/contracts/src/domain.ts; echo \"=== i18n-catalog.test.ts 60-90 ===\"; sed -n '60,90p' apps/web/src/lib/i18n-catalog.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "5e1f44f4-58ad-443f-b6af-5b309ec6c369",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

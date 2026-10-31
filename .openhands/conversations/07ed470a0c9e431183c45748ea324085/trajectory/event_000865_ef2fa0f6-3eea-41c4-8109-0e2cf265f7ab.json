@@ -1,0 +1,36 @@
+{
+  "id": "ef2fa0f6-3eea-41c4-8109-0e2cf265f7ab",
+  "timestamp": "2026-10-31T10:50:58.683251",
+  "source": "environment",
+  "parent_id": "f00b3bc4-e348-4930-8eb9-a7c2d09007dc",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-91d68e1599b6c985",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== executor-deps.ts ===\n14:  PaymentWalletProvider,\n45:  billingEnabled?: boolean;\n71:  /** The deployment's payment wallet. Null/omit means purchase tools stay uninjected. */\n72:  paymentWallet?: PaymentWalletProvider | null;\n\n=== run-tools.ts purchases ===\n16:import { purchaseTools } from \"./run-tools-purchases.js\";\n32:  ...Object.entries(purchaseTools),\n\n=== run-tool-gate.ts / run-tool-request.ts ===\npackages/adapters/src/run-tool-gate.ts:51:import { paidRequestEffect } from \"./paid-request.js\";\npackages/adapters/src/run-tool-gate.ts:183:    effectRequest = name === \"paid_request\" ? paidRequestEffect(args) : args;\npackages/adapters/src/run-tool-request.ts:23:import { paidRequestEffect, restorePaidRequest } from \"./paid-request.js\";\npackages/adapters/src/run-tool-request.ts:93:  let effectRequest: unknown = name === \"paid_request\" ? paidRequestEffect(args) : args;\npackages/adapters/src/run-tool-request.ts:225:        const restored = restorePaidRequest(args, live);\n\n=== run-tools-computer.ts ===\n38:import { resolvePurchaseCardFill, resolvePurchasePayTokenFill } from \"./purchase-service.js\";\n190:            resolveCardFill: async (step) => {\n193:              const resolved = await resolvePurchaseCardFill(\n196:                step.purchase,\n203:            resolvePayTokenFill: async (step) => {\n206:              const resolved = await resolvePurchasePayTokenFill(\n209:                step.purchase,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && echo \"=== executor-deps.ts ===\"; grep -n -iE 'billing|payment|wallet|purchase|credit|stripe' packages/adapters/src/executor-deps.ts; echo; echo \"=== run-tools.ts purchases ===\"; grep -n -iE 'purchase|paid|billing|payment|wallet|credit' packages/adapters/src/run-tools.ts; echo; echo \"=== run-tool-gate.ts / run-tool-request.ts ===\"; grep -n -iE 'paid-request|paidRequest|executePaidRequest' packages/adapters/src/run-tool-gate.ts packages/adapters/src/run-tool-request.ts; echo; echo \"=== run-tools-computer.ts ===\"; grep -n -iE 'purchase|resolveCardFill|resolvePayTokenFill|loadPurchase' packages/adapters/src/run-tools-computer.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "a60bf197-1a32-497a-8f79-a55daaf40bf9",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

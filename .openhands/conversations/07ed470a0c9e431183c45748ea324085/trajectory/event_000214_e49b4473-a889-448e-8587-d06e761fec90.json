@@ -1,0 +1,36 @@
+{
+  "id": "e49b4473-a889-448e-8587-d06e761fec90",
+  "timestamp": "2026-10-31T10:21:01.067030",
+  "source": "environment",
+  "parent_id": "07874042-99f0-4cde-b45a-4bdb227bb90e",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-828a11e47182236b",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== RAKAZO_ in .github ===\n.github/ISSUE_TEMPLATE/self-host.yml:10:        For **security vulnerabilities**, email [security@rakazo.com](mailto:security@rakazo.com). See [SECURITY.md](https://github.com/elie222/rakazo/blob/main/SECURITY.md).\n.github/ISSUE_TEMPLATE/self-host.yml:12:        Setup steps are in [README.md](https://github.com/elie222/rakazo/blob/main/README.md). Do not paste `.env` contents or API keys.\n.github/ISSUE_TEMPLATE/bug.yml:10:        For **security vulnerabilities**, email [security@rakazo.com](mailto:security@rakazo.com) \u2014 do not use this form. See [SECURITY.md](https://github.com/elie222/rakazo/blob/main/SECURITY.md).\n.github/ISSUE_TEMPLATE/config.yml:4:    url: https://github.com/elie222/rakazo/blob/main/SECURITY.md\n.github/ISSUE_TEMPLATE/config.yml:5:    about: Report security issues to security@rakazo.com \u2014 do not open a public issue.\n.github/ISSUE_TEMPLATE/config.yml:7:    url: mailto:support@rakazo.com\n.github/ISSUE_TEMPLATE/config.yml:10:    url: mailto:elie@rakazo.com\n.github/workflows/computer-replay.yml:41:          DATABASE_URL: postgres://rakazo:rakazo@127.0.0.1:5433/rakazo\n.github/workflows/release-mobile.yml:61:        run: pnpm --filter @rakazo/mobile check\n.github/workflows/release-desktop.yml:127:          DATABASE_URL: postgres://rakazo:rakazo@127.0.0.1:5433/rakazo\n.github/workflows/release-desktop.yml:129:        run: pnpm --filter @rakazo/web build && pnpm --filter @rakazo/desktop build\n.github/workflows/release-desktop.yml:131:          RAKAZO_ALLOW_DEV_SECRETS: \"1\"\n.github/workflows/release-desktop.yml:132:          RAKAZO_DESKTOP_RELEASE: \"1\"\n.github/workflows/release-desktop.yml:161:          PROFILE_PATH: ${{ runner.temp }}/rakazo.provisionprofile\n.github/workflows/release-desktop.yml:207:          pnpm --filter @rakazo/desktop exec electron-builder \\\n.github/workflows/release-desktop.yml:253:          grep -Fqx \"repo: rakazo\" \"$app/Contents/Resources/app-update.yml\"\n.github/workflows/release-desktop.yml:266:          speech=\"$app/Contents/Resources/speech/rakazo-speech\"\n.github/workflows/release-desktop.yml:320:          pnpm --filter @rakazo/desktop exec electron-builder \\\n.github/workflows/release-desktop.yml:329:          pnpm --filter @rakazo/desktop exec electron-builder\n.github/workflows/release-desktop.yml:346:          foreach ($expected in @(\"provider: github\", \"owner: elie222\", \"repo: rakazo\")) {\n.github/workflows/release-desktop.yml:373:          pnpm --filter @rakazo/desktop exec electron-builder\n.github/workflows/release-desktop.yml:390:          grep -Fqx \"repo: rakazo\" \"$config\"\n.github/workflows/model-catalog-bump.yml:50:          pnpm --filter @rakazo/adapters update \"@earendil-works/pi-ai\" \"@earendil-works/pi-agent-core\" --latest\n.github/workflows/model-catalog-bump.yml:66:          pnpm --filter @rakazo/adapters check\n.github/workflows/model-catalog-bump.yml:67:          pnpm --filter @rakazo/adapters test\n.github/workflows/model-catalog-bump.yml:158:          \\`pnpm --filter @rakazo/adapters check\\` and \\`pnpm --filter @rakazo/adapters test\\`\n.github/workflows/mobile-android-screenshots.yml:22:          POSTGRES_USER: rakazo\n.github/workflows/mobile-android-screenshots.yml:23:          POSTGRES_PASSWORD: rakazo\n.github/workflows/mobile-android-screenshots.yml:24:          POSTGRES_DB: rakazo\n.github/workflows/mobile-android-screenshots.yml:28:          --health-cmd \"pg_isready -U rakazo\"\n=== ghcr image refs ===\n./.env.example:436:RAKAZO_IMAGE=ghcr.io/elie222/rakazo/app\n./.env.example:439:RAKAZO_UPDATER_IMAGE=ghcr.io/elie222/rakazo/updater\n./.github/workflows/publish-server-image.yml:85:          images: ghcr.io/${{ github.repository }}/${{ matrix.name }}\n./.github/workflows/publish-server-image.yml:146:          registry: ghcr.io\n./.github/workflows/publish-server-image.yml:153:          images: ghcr.io/${{ github.repository }}/${{ matrix.name }}\n./.github/workflows/publish-server-image.yml:165:            type=image,name=ghcr.io/${{ github.repository }}/${{ matrix.name }},push-by-digest=true,name-canonical=true,push=true\n./.github/workflows/publish-server-image.yml:234:          registry: ghcr.io\n./.github/workflows/publish-server-image.yml:241:          images: ghcr.io/${{ github.repository }}/${{ matrix.name }}\n./.github/workflows/publish-server-image.yml:253:          outputs: type=image,name=ghcr.io/${{ github.repository }}/${{ matrix.name }},push-by-digest=true,name-canonical=true,push=true\n./.github/workflows/publish-server-image.yml:267:          IMAGE: ghcr.io/${{ github.repository }}/app@${{ steps.build.outputs.digest }}\n./.github/workflows/publish-server-image.yml:289:          image: ghcr.io/${{ github.repository }}/${{ matrix.name }}\n./.github/workflows/publish-server-image.yml:327:          registry: ghcr.io\n./.github/workflows/publish-server-image.yml:332:          image: ghcr.io/${{ github.repository }}/${{ matrix.name }}\n./infra/compose/deploy-main.sh:40:    RAKAZO_DEPLOY_IMAGE=\"ghcr.io/${repository}/app\"\n./infra/compose/deploy-main.sh:60:# ghcr.io/<owner>/<repo>/app:local). A pulled image is tagged as it, so hand-run Compose commands\n./infra/compose/docker-compose.images.yml:287:    image: ${RAKAZO_COMPUTER_IMAGE:-ghcr.io/elie222/rakazo/computer}:${RAKAZO_COMPUTER_IMAGE_TAG:-edge}\n./infra/compose/docker-compose.images.yml:304:    image: ${RAKAZO_IMAGE:-ghcr.io/elie222/rakazo/app}:${RAKAZO_IMAGE_TAG:-edge}\n./infra/compose/docker-compose.images.yml:320:      RAKAZO_COMPUTER_IMAGE: ${RAKAZO_COMPUTER_IMAGE:-ghcr.io/elie222/rakazo/computer}:${RAKAZO_COMPUTER_IMAGE_TAG:-edge}\n./infra/compose/docker-compose.images.yml:363:    image: ${RAKAZO_IMAGE:-ghcr.io/elie222/rakazo/app}:${RAKAZO_IMAGE_TAG:-edge}\n./infra/compose/docker-compose.images.yml:383:    image: ${RAKAZO_IMAGE:-ghcr.io/elie222/rakazo/app}:${RAKAZO_IMAGE_TAG:-edge}"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && echo \"=== RAKAZO_ in .github ===\"; grep -rn 'RAKAZO_\\|rakazo' .github/ | head -30; echo \"=== ghcr image refs ===\"; grep -rn 'ghcr.io' --include=*.yml --include=*.yaml --include=*.json --include=*.sh --include=*.example . | head -20",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "27d217bf-b318-4739-bb2e-83b890c4b8d6",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

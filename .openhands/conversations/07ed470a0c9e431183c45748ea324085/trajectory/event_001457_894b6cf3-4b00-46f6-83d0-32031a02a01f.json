@@ -1,0 +1,36 @@
+{
+  "id": "894b6cf3-4b00-46f6-83d0-32031a02a01f",
+  "timestamp": "2026-10-31T10:59:14.159301",
+  "source": "environment",
+  "parent_id": "0d1dcf09-37d1-4f3a-a742-e1cf770f0060",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8ce742cec55ab0d4",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "{\n  \"name\": \"@alternativebot/db\",\n  \"version\": \"0.1.0\",\n  \"license\": \"Apache-2.0\",\n  \"type\": \"module\",\n  \"exports\": {\n    \".\": {\n      \"types\": \"./src/index.ts\",\n      \"development\": \"./src/index.ts\",\n      \"default\": \"./src/index.ts\"\n    }\n  },\n  \"scripts\": {\n    \"generate\": \"prisma generate\",\n    \"migrate\": \"prisma migrate deploy\",\n    \"migrate:dev\": \"prisma migrate dev\",\n    \"check\": \"tsc --noEmit -p tsconfig.json\",\n    \"test\": \"vitest run --root ../.. packages/db/src\"\n  },\n  \"dependencies\": {\n    \"@alternativebot/adapter-kit\": \"workspace:*\",\n    \"@prisma/adapter-pg\": \"7.10.1\",\n    \"@prisma/client\": \"7.10.1\",\n    \"@alternativebot/contracts\": \"workspace:*\",\n    \"@alternativebot/core\": \"workspace:*\",\n    \"@alternativebot/logging\": \"workspace:*\",\n    \"pg\": \"8.23.1\",\n    \"dotenv\": \"17.4.2\"\n  },\n  \"devDependencies\": {\n    \"@types/pg\": \"8.23.1\",\n    \"prisma\": \"7.10.1\",\n    \"typescript\": \"7.0.2\",\n    \"vitest\": \"4.1.12\"\n  }\n}\n=== migrations dir ===\n20261030120000_bot_avatar_set\n20261030130000_trusted_link_sites\n20261031120000_bot_avatar_set_original_default\n20261031120000_referrals\n20261031130000_effect_batch_actions\n20261101120000_referral_outcome\n20261102120000_drop_unused_referral_tables\n20261103120000_drop_dead_bot_and_referral_columns\n20261104120000_plugin_submissions\n20261104120000_runs_bot_outcome_pending_idx_concurrent\n20261104120001_runs_bot_outcome_returned_at_status_idx_drop_concurrent\n20261104120002_messages_thread_id_seq_idx_drop_concurrent\n20261104120003_events_thread_id_seq_idx_drop_concurrent\n20261105120000_threads_space_id_user_id_idx_concurrent\n20261105130000_runs_thread_id_created_at_id_idx_concurrent\n20261105140000_computer_restore_pending\n20261106120000_billing_checkout_lease\n20261107120000_mcp_server_has_args\n20261108120000_computer_run_last_seen\nmigration_lock.toml"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && cat packages/db/package.json | head -40; echo \"=== migrations dir ===\"; ls packages/db/prisma/migrations | tail -20",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "d809beb3-694a-4ca6-8c9e-ce2408abf08e",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

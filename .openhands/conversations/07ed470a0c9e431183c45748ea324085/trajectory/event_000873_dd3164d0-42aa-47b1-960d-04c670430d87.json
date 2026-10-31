@@ -1,0 +1,36 @@
+{
+  "id": "dd3164d0-42aa-47b1-960d-04c670430d87",
+  "timestamp": "2026-10-31T10:51:06.504334",
+  "source": "environment",
+  "parent_id": "53607418-2ba8-4f0f-86a4-8afe54a0e105",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-88c7b2fe96b15652",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "import type {\n  AgentContextStrategy,\n  AgentHomeStore,\n  AgentRuntime,\n  ArtifactStore,\n  AutoReviewProvider,\n  BrowserProvider,\n  ConnectorProvider,\n  JobPublisher,\n  ManagedConnectorProvider,\n  MediaGenerationProvider,\n  MemoryStore,\n  NotificationProvider,\n  PaymentWalletProvider,\n  SandboxProvider,\n  SecretStore,\n  WebProvider,\n} from \"@alternativebot/adapter-kit\";\nimport type { PrismaClient, RunLease, ThreadEvents } from \"@alternativebot/db\";\nimport type { CloudAgentConnection } from \"./cloud-agent-factory.js\";\nimport type { MemoryProviderResolver } from \"./memory-provider-factory.js\";\nimport type { CodexLiveCatalog } from \"./pi-codex-catalog.js\";\nimport type { RemoteTransportDependencies } from \"./remote-mcp.js\";\nimport type { TicketChangeNotifier } from \"./ticket-changes.js\";\nimport type { UserDeviceGateway } from \"./user-device-protocol.js\";\n\nexport interface ExecutorDeps {\n  maxUploadSizeBytes?: number;\n  contextStrategy?: AgentContextStrategy;\n  prisma: PrismaClient;\n    managed(id: string): ManagedConnectorProvider | undefined;\n    managedProviders?(): ManagedConnectorProvider[];\n  };\n  secrets: string[];\n  secretStore: SecretStore;\n  billingEnabled?: boolean;\n  deploymentModelKey?: string;\n  /** The deployment default model can run; see resolveDeploymentModel. */\n  deploymentModelConfigured?: boolean;\n  dataDir?: string;\n  notifications?: NotificationProvider;\n  jobs: JobPublisher;\n  /** Publishes board-change signals and wakes ticket owners; absent disables both. */\n  onTicketChange?: TicketChangeNotifier;\n  ticketBoardEnabled?: boolean;\n  phoneCallsEnabled?: boolean;\n  phoneCallCooldownMinutes?: number;\n  phoneCallRingSeconds?: number;\n  /** Messaging surface; absent means zero identity queries and no chat prompts. */\n  messaging?: { hasIdentity(botId: string): Promise<boolean> };\n  listConnectedPluginSlugs?: (userId: string) => Promise<string[]>;\n  /** Builtin web_search / web_fetch. Defaults to keyless HTTP when omitted. */\n  web?: WebProvider;\n  mediaGeneration?: MediaGenerationProvider;\n  /** Page browser (DOM refs) on the bot computer. Defaults to the sandbox live browser when supported. */\n  browser?: BrowserProvider;\n  secretHttp?: RemoteTransportDependencies;\n  /** Allow RFC1918 / Docker-network MCP URLs when the operator enabled the escape. */\n  mcpAllowPrivateEndpoint?: boolean;\n  /** Remote cloud coding agents. Null/omit means tools stay uninjected. */\n  cloudAgent?: CloudAgentConnection | null;\n  /** The deployment's payment wallet. Null/omit means purchase tools stay uninjected. */\n  paymentWallet?: PaymentWalletProvider | null;\n  /** Optional Auto Review verifier. When omitted, the factory selects from env (llm | jev | scripted). */\n  autoReview?: AutoReviewProvider;\n  /**\n   * Live Codex model catalog; when present, a statically excluded Codex model\n   * can still run for the OAuth account whose backend lists it.\n   */\n  codexCatalog?: CodexLiveCatalog;\n  /** The run starter's connected desktop; absent never offers user_computer_shell. */"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '1,30p;40,80p' packages/adapters/src/executor-deps.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "c9e54031-638c-4cc9-aab1-567c13dcfdc4",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "2dfa3a92-651c-4fc3-bac5-97eff4e5a5e0",
+  "timestamp": "2026-10-31T12:33:11.024116",
+  "source": "environment",
+  "parent_id": "00c376df-bdc4-4aef-ad37-5bd6f0cabe36",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8ae7446cd5aac81c",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "diff --git a/apps/api/src/router.ts b/apps/api/src/router.ts\nindex 5ca950a..1c800de 100644\n--- a/apps/api/src/router.ts\n+++ b/apps/api/src/router.ts\n@@ -3,12 +3,11 @@ import type {\n   ArtifactStore,\n   JobPublisher,\n   MemoryStore,\n-  PaymentWalletProvider,\n   ProductAnalytics,\n   SandboxProvider,\n   SecretStore,\n   TransactionalEmailProvider,\n-} from \"@rakazo/adapter-kit\";\n+} from \"@alternativebot/adapter-kit\";\n import type {\n   CloudAgentConnection,\n   CodexLiveCatalog,\n@@ -28,11 +27,10 @@ import type {\n   RemoteConnectorDependencies,\n   TicketChangeNotifier,\n   verifyModelServesAgents,\n-} from \"@rakazo/adapters\";\n-import type { Auth } from \"@rakazo/auth\";\n-import type { NavLink } from \"@rakazo/contracts\";\n-import type { BoardEvents, PrismaClient, ThreadEvents } from \"@rakazo/db\";\n-import type { BillingService } from \"./billing.js\";\n+} from \"@alternativebot/adapters\";\n+import type { Auth } from \"@alternativebot/auth\";\n+import type { NavLink } from \"@alternativebot/contracts\";\n+import type { BoardEvents, PrismaClient, ThreadEvents } from \"@alternativebot/db\";\n import { accountRoutes } from \"./routes/account.js\";\n import { availabilityRoutes } from \"./routes/availability.js\";\n import { boardsRoutes } from \"./routes/boards.js\";\n@@ -45,7 +43,6 @@ import { mcpRoutes } from \"./routes/mcp.js\";\n import { memoryRoutes } from \"./routes/memory.js\";\n import { messagingRoutes } from \"./routes/messaging.js\";\n import { modelsRoutes } from \"./routes/models.js\";\n-import { paymentWalletRoutes } from \"./routes/payment-wallet.js\";\n import { routinesRoutes } from \"./routes/routines.js\";\n import { spacesRoutes } from \"./routes/spaces.js\";\n import { threadsRoutes } from \"./routes/threads.js\";\n@@ -60,8 +57,6 @@ export interface RouterDeps {\n   pushTokens: PushTokenStore;\n   analytics?: ProductAnalytics;\n   cloudAgent?: CloudAgentConnection | null;\n-  /** The deployment's wallet provider; absent hides purchases. */\n-  paymentWallet?: PaymentWalletProvider | null;\n   prisma: PrismaClient;\n   events: ThreadEvents;\n   boardEvents: BoardEvents;\n@@ -107,8 +102,6 @@ export interface RouterDeps {\n     addresses: Record<string, string>;\n     openSignup: boolean;\n   };\n-  /** Present only when the deployment bills; self-hosted installs leave it unset. */\n-  billing?: BillingService;\n   email?: TransactionalEmailProvider;\n   onEmailError?: (error: unknown) => void;\n   speechSummary?: VoiceDeps[\"speechSummary\"];\n@@ -159,6 +152,5 @@ export function createRouter(deps: RouterDeps) {\n     ...connectionsRoutes(ctx),\n     ...messagingRoutes(ctx),\n     ...contentRoutes(ctx),\n-    ...paymentWalletRoutes(ctx),\n   });\n }"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && git --no-pager diff apps/api/src/router.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 65061,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "84909819-7135-41cd-9ac8-1005d54a71fe",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "652382ab-db11-4dd3-8311-674a486c24f1",
+  "timestamp": "2026-10-31T11:40:04.644172",
+  "source": "environment",
+  "parent_id": "5b1b5713-c700-4c3e-860b-dc99852a209d",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b766142c4a4ebbe3",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== link-sdk ===\n=== core run-error ===\n108:  credit: {\n109:    none: \"{provider} reached its credit limit.\",\n110:    daily: \"{provider} reached its daily credit limit.\",\n111:    weekly: \"{provider} reached its weekly credit limit.\",\n112:    monthly: \"{provider} reached its monthly credit limit.\",\n195: * of quota or credits, refusing the model to the account, or unable to serve it). Transient\n316:    /insufficient[_ ](?:quota|balance)|credits?|funds|spend|budget|billing|openrouter_key_limit/i.test(\n328:    // OpenAI's per-minute limits link to billing as a way to raise them.\n336:    /\\b(?:daily|weekly|monthly|usage)[\\s\\S]{0,30}limit|\\b(?:quota|insufficient[_ ](?:quota|credits?|funds|balance)|credit[_ ]balance|(?:no|out of|more) credits?)\\b|(?:key|credit|spend|spending|budget|billing)[\\s\\S]{0,40}(?:limit|exceed|exhaust|insufficient)|(?:limit|insufficient)[\\s\\S]{0,30}(?:credit|spend|budget)/i.test(\n340:    // \"Monthly included credits\" in an upsell names no limit period.\n352:    // in a credit error is not a key limit.\n360:      : /credit|insufficient_quota|free[_ -]tier/i.test(signals)\n361:        ? \"credit\"\n=== voice-errors ===\npackages/adapter-kit/src/model-errors.ts:73:/** An explicit statement that the account is out of credits, balance, quota or a usage window. */\npackages/adapter-kit/src/model-errors.test.ts:111:    [\"400 out of credits\", { status: 400, message: \"Your account is out of credits.\" }],\npackages/adapter-kit/src/model-errors.test.ts:318:    [\"400 out of credits\", { status: 400, message: \"Your account is out of credits.\" }, true],\npackages/adapter-kit/src/model-errors.test.ts:402:      { status: 400, message: \"Invalid API key; out of credits\" },\npackages/adapter-kit/src/model-errors.test.ts:455:      'API error (403): {\"error\":\"You have run out of credits or need a Grok subscription\"}',\npackages/adapter-kit/src/model-errors.test.ts:462:    \"API error (403): Permission denied: out of credits\",\npackages/adapter-kit/src/model-errors.test.ts:463:    \"API error (401): You have run out of credits\",\npackages/core/src/run-error.test.ts:251:      ['xai API error (402): 402 \"You have run out of credits or need a subscription.\"', \"credit\"],\npackages/core/src/run-error.test.ts:691:      'xai API error (402): 402 \"You have run out of credits or need a subscription. Add credits at https://example.test/usage.\"',\napps/api/src/log-unexpected-rpc-error.test.ts:217:          \"VOICE_OUT_OF_CREDIT\","
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && ls packages/adapters/src/testing/ 2>/dev/null | grep -i stripe; echo \"=== link-sdk ===\"; grep -rn 'link-sdk\\|stripe' packages/adapters/package.json; echo \"=== core run-error ===\"; grep -n 'BILLING\\|billing\\|CREDIT\\|credit\\|VOICE_OUT_OF_CREDIT' packages/core/src/run-error.ts | head -20; echo \"=== voice-errors ===\"; grep -rn 'VOICE_OUT_OF_CREDIT\\|out of credit' packages/adapter-kit/src packages/core/src apps/api/src | head",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 19912,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "50f14621-b7d9-4519-a47a-b33a54fa218e",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

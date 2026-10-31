@@ -1,0 +1,36 @@
+{
+  "id": "e866c7fe-e92c-428a-b9b1-0518aa983b4d",
+  "timestamp": "2026-10-31T11:12:34.085083",
+  "source": "environment",
+  "parent_id": "a0d327f5-3b78-462d-b2d1-d87346287eca",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b85c62ac4dfe16df",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "736:         const selected = selectConfiguredModel({\n737:           override: modelChoice,\n738:           overrideCredential,\n739:           main,\n740:           defaults: { settings, deployment: runDeployment },\n741:         });\n742:         const selectedProvider = selected.provider ?? runtimeFallback?.provider;\n743:         const selectedModelId = selected.id ?? runtimeFallback?.id;\n744:         // A missing or refused connection of the user's own fails every scheduled run alike.\n745:         const failRunBeforeModel = async (message: string, accountFailure = false) => {\n746:           const failed = await failRunBeforeTurn(\n747:             deps,\n748:             run,\n749:             bot.name,\n750:             { attemptId: attempt.id, workerId, fence },\n751:             message,\n752:           );\n753:           if (failed && accountFailure && run.trigger === \"routine\" && run.routineId) {\n754:             await backOffRoutineAfterAccountError(deps, run.routineId);\n755:           }\n756:         };\n757:         if (pinError) {\n758:           await failRunBeforeModel(pinError, pinError === PINNED_PROVIDER_NOT_CONNECTED);\n759:           return;\n760:         }\n=== original ===\n755:           overrideCredential,\n756:           main,\n757:           hostedProvider: (await modelCreditBillingEnabled(deps))\n758:             ? resolveDeploymentModel().provider\n759:             : undefined,\n760:           defaults: { settings, deployment: runDeployment },\n761:         });\n762:         const selectedProvider = selected.provider ?? runtimeFallback?.provider;\n763:         const selectedModelId = selected.id ?? runtimeFallback?.id;\n764:         // A missing or refused connection of the user's own fails every scheduled run alike.\n765:         const failRunBeforeModel = async (message: string, accountFailure = false) => {\n766:           const failed = await failRunBeforeTurn(\n767:             deps,\n768:             run,\n769:             bot.name,\n770:             { attemptId: attempt.id, workerId, fence },\n771:             message,\n772:           );\n773:           if (failed && accountFailure && run.trigger === \"routine\" && run.routineId) {\n774:             await backOffRoutineAfterAccountError(deps, run.routineId);\n775:           }\n776:         };\n777:         if (pinError) {\n778:           await failRunBeforeModel(pinError, pinError === PINNED_PROVIDER_NOT_CONNECTED);\n779:           return;\n780:         }\n781:         if (\n782:           run.modelPinned &&\n783:           (selected.provider !== modelChoice.modelProvider || selected.id !== modelChoice.modelId)\n784:         ) {\n785:           await failRunBeforeModel(PINNED_PROVIDER_NOT_CONNECTED, true);\n786:           return;\n787:         }\n788:         const modelAccessDenied = async () =>\n789:           (await modelCreditBillingEnabled(deps)) &&\n790:           !(await spaceHasModelAccess(deps.prisma, run.spaceId));"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && awk 'NR>=736 && NR<=760 {printf \"%d: %s\\n\", NR, $0}' packages/adapters/src/executor.ts; echo \"=== original ===\"; git --no-pager show HEAD:packages/adapters/src/executor.ts | awk 'NR>=755 && NR<=790 {printf \"%d: %s\\n\", NR, $0}'",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "887b0a88-1ab0-43ed-bb12-9166154267e6",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

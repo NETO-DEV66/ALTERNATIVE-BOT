@@ -1,0 +1,37 @@
+{
+  "id": "b1b98fb9-a015-436d-9a5f-57a3b067ad96",
+  "timestamp": "2026-10-31T12:09:35.384464",
+  "source": "agent",
+  "parent_id": "2d348201-0da1-4fea-af14-0d2fafdc6a81",
+  "thought": [
+    {
+      "cache_prompt": false,
+      "type": "text",
+      "text": ""
+    }
+  ],
+  "reasoning_content": "So the previous session removed the \"managed\" concept entirely from context.ts. The test `models-backups.test.ts` still expects `managed: true`. Since `managed` flag was tied to the billing/credits system (`hostedProvider` = `deps.billing?.modelCreditsEnabled ? defaultProvider : undefined`), removing it is consistent with de-monetization. But the test still uses `setup({ credits: true })` and expects managed:true.\n\nWait, but this test file was \"modified\" \u2014 the modifications were just import renames and email/dataDir. The test itself still tests the old behavior. So I need to update this test to reflect de-monetized behavior.\n\nHmm, but the test name is \"lets a deployment-managed model lead the main model like any other purpose\". Let me look at what `setup({ credits: true })` does now: `billing: options.credits ? { modelCreditsEnabled: true } : undefined`. But `RouterDeps` no longer has `billing`? Let me check. The previous session removed `deps.billing` usage. Let's check whether RouterDeps still has `billing`.\n\nActually the test casts `as unknown as RouterDeps`, so extra props are fine. But the behavior changed: `managed` is no longer set. So this test expectation `managed: true` fails.\n\nGiven de-monetization, the whole \"deployment-managed model via credits\" concept is gone. So the test should be updated/removed. Let me look at the whole test and the surrounding tests to decide the minimal correct change.\n\nActually wait \u2014 is `managed` tied solely to credits? The `hostedProvider` was set only when `modelCreditsEnabled`. And `managed: true` was set only for `entry.provider === auth.managedProvider`. `auth.managedProvider` came from `modelCredentialAuthKindsForSpace(..., hostedProvider)`. So yes, `managed` == \"served by the deployment's hosted provider (credits)\". With credits gone, there is no managed provider. So the test is obsolete.\n\nLet me check `model-selection.test.ts` failure too \u2014 \"keeps a saved personal connection in the catalog\" expects `auth.byProvider.openrouter` to be \"api_key\" but got undefined. That's likely because `modelCredentialAuthKindsForSpace` signature changed (removed the managedProvider param) and its behavior for a saved connection changed? Let me look.\n\nActually the failure says `auth.byProvider.openrouter` is undefined, expected \"api_key\". Let me look at model-selection.test.ts around line 271 and the source.",
+  "thinking_blocks": [],
+  "responses_reasoning_item": null,
+  "action": {
+    "command": "cd /workspace/project && sed -n '230,290p' packages/adapters/src/model-selection.test.ts; echo \"=== source ===\"; grep -rn 'modelCredentialAuthKindsForSpace' packages/adapters/src/*.ts | grep -v '\\.test\\.'",
+    "is_input": false,
+    "timeout": null,
+    "reset": false,
+    "kind": "TerminalAction"
+  },
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-823d017fe4d7d39b",
+  "tool_call": {
+    "id": "chatcmpl-tool-823d017fe4d7d39b",
+    "responses_item_id": null,
+    "name": "terminal",
+    "arguments": "{\"command\": \"cd /workspace/project && sed -n '230,290p' packages/adapters/src/model-selection.test.ts; echo \\\"=== source ===\\\"; grep -rn 'modelCredentialAuthKindsForSpace' packages/adapters/src/*.ts | grep -v '\\\\.test\\\\.'\", \"security_risk\": \"LOW\", \"summary\": \"Read model-selection test and source\"}",
+    "origin": "completion"
+  },
+  "llm_response_id": "gen-1793448570-nzXhsLhRTWoqsKsnJ7LW",
+  "security_risk": "LOW",
+  "critic_result": null,
+  "summary": "Read model-selection test and source",
+  "kind": "ActionEvent"
+}

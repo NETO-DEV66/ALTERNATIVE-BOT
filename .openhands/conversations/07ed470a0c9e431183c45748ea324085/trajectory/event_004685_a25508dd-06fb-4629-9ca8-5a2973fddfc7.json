@@ -1,0 +1,37 @@
+{
+  "id": "a25508dd-06fb-4629-9ca8-5a2973fddfc7",
+  "timestamp": "2026-10-31T12:32:11.992342",
+  "source": "agent",
+  "parent_id": "338baa5b-3cd2-494d-ba61-ac72a1433b15",
+  "thought": [
+    {
+      "cache_prompt": false,
+      "type": "text",
+      "text": "Now let me examine the models-backups regression in depth:\n\n"
+    }
+  ],
+  "reasoning_content": "No @rakazo references left anywhere. Good \u2014 the signup-survey leftovers were already fixed. Now let's check the models-backups \"managed\" regression.\n\nLet me now check the models-backups test failure. The test expects the catalog for role \"main\" to contain `{ id: primary.modelId, managed: true }` when credits is true. We removed the hosted provider logic. Let me look at what the test expects and what \"managed\" should mean now.\n\nActually let me re-read: the test is `it(\"lets a deployment-managed model lead the main model like any other purpose\", ...)`. It calls `setup({ credits: true })` and expects the catalog from `models/forRole` to contain the primary model with `managed: true`.\n\nSince we removed billing/credits, the \"managed\" concept... The test may need updating, OR the functionality should be preserved. Let me think about what \"managed\" means here without billing.\n\nLet me look at what determines \"managed\". In the baseline, `managed: true` was set when `entry.provider === auth.managedProvider`, and `managedProvider` was `hosted ? hostedProvider : undefined` where hosted = `hostedProvider && hasHostedModelCredits(...)`.\n\n`hasHostedModelCredits` returned true when the org's modelCredits.mode === \"credits\". We removed model credits entirely. So the \"managed\" (deployment-managed) concept is tied to the billing/credits system.\n\nBut wait \u2014 the task says remove the premium/subscription/payment system. Deployment-managed models (server-side API keys configured by the operator) might be a legitimate non-monetized feature: the operator configures `PI_DEFAULT_PROVIDER` and an API key, and users can use it without their own credentials. That's a \"deployment-managed\" model, not necessarily paid credits.\n\nHmm, but in the baseline it was gated behind `modelCreditsEnabled` (the billing flag). Let me check whether this test should still pass or whether the test itself needs to change.\n\nLet me look at the git diff of this test and see if the test was modified. The diff showed only import renames and email renames in models-backups.test.ts. The test body `managed: true` expectation is unchanged from baseline.\n\nSo in baseline this test passed. After our removal of billing, it fails. The question: is \"managed\" a monetization feature or a deployment feature?\n\nLet me look more carefully. The concept of `managedProvider`: a deployment configures a default provider (e.g., openrouter) and a server-side key. Then any org whose `modelCredits.mode === \"credits\"` gets to use that hosted provider for free (the deployment pays). This is the \"premium credits\" feature \u2014 orgs pay for credits and then models are managed.\n\nBut actually, re-reading `hasHostedModelCredits`: it checks the org has `modelCredits.mode === \"credits\"`. That's the monetization. Removing it is correct per the task.\n\nHowever, the test `lets a deployment-managed model lead the main model like any other purpose` may need to be updated/removed since the feature is gone. But the task says remove the monetization system \u2014 so removing this test or updating it is fine.\n\nHmm, but wait. Let me reconsider. Maybe \"managed\" should be preserved in a non-monetized form: if the deployment has `deploymentModelConfigured` (i.e., env has default provider+model+key), then models run on the deployment's key. That's a legitimate self-hosted feature, not monetization.\n\nLet me look at how `managed` is consumed. In `modelRoleCatalog`, `managedProviders` is used to propagate `managed` to decision models. In `validateRoleChoices`, `entry.managed` lets a choice skip the \"connect that provider first\" requirement. In `model-backups.ts` contracts, `entry.managed` models are added to options.\n\nSo \"managed\" = \"this model runs on the deployment's own configured key, no user connection needed\". That's a legit feature independent of monetization.\n\nLet me check: does the deployment have a concept of a configured model with a server key? `resolveDeploymentModel()` \u2014 let me check it. And `deps.env.defaultProvider`.\n\nActually the cleanest approach: the test is checking a real feature. Let me understand what the minimal non-monetized version is. Let me look at how `hostedProvider` was derived: `deps.billing?.modelCreditsEnabled ? deps.env.defaultProvider : undefined`. And `hasHostedModelCredits` checked org credits mode.\n\nSo in baseline, managed = billing enabled AND org has credits AND provider is the deployment default. All monetization.\n\nBut the test is named \"lets a deployment-managed model lead the main model like any other purpose\". Hmm. Given the task explicitly says remove credits, I think this test's premise (credits) is gone, so the test should be updated to reflect that models can no longer be \"managed\" via credits \u2014 OR the whole test removed.\n\nBut actually, let me reconsider the broader question. Let me check if there's a `modelCreditsEnabled` reference still, and what `deps.billing` is now.\n\nLet me grep.",
+  "thinking_blocks": [],
+  "responses_reasoning_item": null,
+  "action": {
+    "command": "cd /workspace/project && grep -rn 'billing\\|modelCredits\\|credits' apps/api/src/routes/context.ts apps/api/src/router.ts | head -30; echo \"=== deps.billing def ===\"; grep -rn 'billing' apps/api/src/router.ts | head",
+    "is_input": false,
+    "timeout": null,
+    "reset": false,
+    "kind": "TerminalAction"
+  },
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-938dc88fc42acaa1",
+  "tool_call": {
+    "id": "chatcmpl-tool-938dc88fc42acaa1",
+    "responses_item_id": null,
+    "name": "terminal",
+    "arguments": "{\"command\": \"cd /workspace/project && grep -rn 'billing\\\\|modelCredits\\\\|credits' apps/api/src/routes/context.ts apps/api/src/router.ts | head -30; echo \\\"=== deps.billing def ===\\\"; grep -rn 'billing' apps/api/src/router.ts | head\", \"security_risk\": \"LOW\", \"summary\": \"Find billing references in api\"}",
+    "origin": "completion"
+  },
+  "llm_response_id": "gen-1793449922-yfWgBeimGmN9rbtSma9K",
+  "security_risk": "LOW",
+  "critic_result": null,
+  "summary": "Find billing references in api",
+  "kind": "ActionEvent"
+}

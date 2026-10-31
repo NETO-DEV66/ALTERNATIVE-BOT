@@ -1,0 +1,36 @@
+{
+  "id": "a93cf84b-9c01-4338-a1a6-7d76a1077192",
+  "timestamp": "2026-10-31T11:34:58.723888",
+  "source": "environment",
+  "parent_id": "124ed6c0-60ac-4094-a302-fa7c21af10f7",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-89b756860d592868",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "import type { AgentRuntimeEvent, UsageOperationKind } from \"@alternativebot/adapter-kit\";\nimport type { PrismaClient } from \"./generated/prisma/client.js\";\n\ntype UsageEvent = Extract<AgentRuntimeEvent, { type: \"usage\" }>;\nexport interface UsageAttribution {\n  spaceId: string;\n  userId: string;\n  botId?: string;\n  runId?: string;\n  parentRunId?: string;\n  operationId?: string;\n  operationKind?: UsageOperationKind;\n}\n\n/** Usage is financial history, independent from message clearing or bot deletion. */\nexport async function recordUsage(\n  prisma: Pick<PrismaClient, \"$transaction\">,\n  event: UsageEvent,\n  attribution: UsageAttribution,\n  reconcile = false,\n) {\n  const observation = {\n    providerRequestId: event.providerRequestId ?? null,\n    inputTokens: event.inputTokens,\n    outputTokens: event.outputTokens,\n    cacheReadTokens: event.cacheReadTokens ?? null,\n    cacheWriteTokens: event.cacheWriteTokens ?? null,\n    cacheWrite1hTokens: event.cacheWrite1hTokens ?? null,\n    reasoningTokens: event.reasoningTokens ?? null,\n    totalTokens: event.totalTokens ?? null,\n    costUsd: event.costUsd ?? null,\n    costSource: event.costSource ?? null,\n    pricingVersion: event.pricingVersion ?? null,\n    pricingSnapshot: event.pricingSnapshot\n      ? JSON.parse(JSON.stringify(event.pricingSnapshot))\n      : undefined,\n    usageSource: event.usageSource ?? null,\n  };\n  const data = {\n    provider: event.provider,\n    model: event.model,\n    spaceId: attribution.spaceId,\n    userId: attribution.userId,\n    botId: attribution.botId,\n    runId: attribution.runId,\n    operationId: attribution.operationId,\n    parentRunId: attribution.parentRunId ?? attribution.runId,\n    ...observation,\n    callId: event.callId ?? null,\n    operationKind: attribution.operationKind ?? event.operationKind ?? \"answer\",\n    agentId: event.agentId ?? null,\n  };\n  return prisma.$transaction(async (tx) => {\n    await tx.usageRecord.createMany({ data: [data], skipDuplicates: true });\n  });\n}\n=== grep modelCredit in schema ==="
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && cat packages/db/src/usage.ts; echo \"=== grep modelCredit in schema ===\"; grep -n 'modelCredit\\|ModelCredit\\|BillingAudit\\|PaymentWallet\\|Purchase' packages/db/prisma/schema.prisma",
+    "exit_code": 1,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 1,
+      "pid": 17917,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 1.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "bd7e9c2d-8c5f-456e-96b9-6ab14b50874b",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

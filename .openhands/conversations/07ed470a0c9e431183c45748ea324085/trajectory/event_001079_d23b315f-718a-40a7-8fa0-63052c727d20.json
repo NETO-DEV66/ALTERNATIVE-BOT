@@ -1,0 +1,36 @@
+{
+  "id": "d23b315f-718a-40a7-8fa0-63052c727d20",
+  "timestamp": "2026-10-31T10:53:38.876368",
+  "source": "environment",
+  "parent_id": "26e34ade-ea15-45c8-a4b6-0d7838e11270",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b45512d62ac631ac",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": ");\n  }\n}\n\nexport async function browserActFromTool(\n  browser: BrowserProvider,\n  computer: ComputerRef,\n  context: AdapterContext,\n  args: Record<string, unknown>,\n  options: PageToolOptions & {\n    resolveSecretFill?: ResolveSecretFill;\n    resolveCardFill?: ResolveCardFill;\n    resolvePayTokenFill?: ResolvePayTokenFill;\n    redactions?: () => string[];\n    /** Maps a bot-facing workspace path to its path in the computer's home. */\n    resolveUploadPath?: (path: string) => string;\n    /** Trusted upload roots relative to the computer home, set by the executor. */\n    uploadRoots?: string[];\n  } = {},\n) {\n  try {\n    const actions: BrowserActStep[] = [];\n    // Resolve every saved login and card before acting, so a missing one cannot leave a\n    // half-filled form.\n    for (const step of parseBrowserActions(args.actions)) {\n      if (step.kind === \"upload\") {\n        const resolve = options.resolveUploadPath ?? ((path: string) => path);\n        let paths: string[];\n        try {\n          paths = step.paths.map(resolve);\n        } catch (error) {\n          // A path outside the bot's folder is the call's mistake, settled before anything runs.\n          throw new BrowserToolInputError(error instanceof Error ? error.message : String(error));\n        }\n        actions.push({\n          ...step,\n          paths,\n          ...(options.uploadRoots ? { roots: options.uploadRoots } : {}),\n        });\n        continue;\n      }\n      if (step.kind === \"fill_pay_token\") {\n        let resolved: Awaited<ReturnType<ResolvePayTokenFill>>;\n        try {\n          resolved = options.resolvePayTokenFill\n            ? await options.resolvePayTokenFill(step)\n            : { error: \"Pay tokens are unavailable here.\" };\n        } catch (error) {\n          context.signal.throwIfAborted();\n          getLogger().warn(\"purchase pay token could not be loaded for a fill\", {\n            errorName: error instanceof Error ? error.name : typeof error,\n          });\n          return { ...refusedInput(\"This pay token could not be loaded.\"), completed: 0 };\n        }\n        if (\"error\" in resolved) return { ...refusedInput(resolved.error), completed: 0 };\n        const { text, origin, merchantAccountId } = resolved;\n        actions.push({ kind: \"pay_token\", text, origin, merchantAccountId });\n        continue;\n      }\n      if (step.kind !== \"fill_secret\" && step.kind !== \"fill_card\") {\n        actions.push(step);\n        continue;\n      }\n      const card = step.kind === \"fill_card\";\n      let resolved: { text: string; origin: string; hidden?: boolean } | { error: string };\n      try {\n        resolved = card\n          ? options.resolveCardFill\n            ? await options.resolveCardFill(step)\n            : { error: \"Card fills are unavailable here.\" }\n          : options.resolveSecretFill\n            ? await options.resolveSecretFill(step)\n            : { error: \"Saved logins are unavailable here.\" };\n      } catch (error) {\n        context.signal.throwIfAborted();\n        // A stored login or card that can't be read may quote its own text in the error, so\n        // neither the bot nor the log gets the message: only that it failed, and how.\n        getLogger().warn(\n          card\n            ? \"purchase card could not be loaded for a fill\"\n            : \"saved login could not be loaded for a fill\",\n          { errorName: error instanceof Error ? error.name : typeof error },\n        );\n        return {\n          ...refusedInput(\n            card ? \"This card could not be loaded.\" : \"This saved login could not be loaded.\",\n          ),\n          completed: 0,\n        };\n      }\n      if (\"error\" in resolved) return { ...refusedInput(resolved.error), completed: 0 };\n      const { text, origin } = resolved;\n      if (step.ref === undefined) {\n        actions.push({ kind: \"fill\", text, origin, field: \"card\", cardField: step.field });\n      } else {\n        actions.push({\n          kind: \"fill\",\n          ref: step.ref,\n          text,\n          origin,\n          // Every page browser, older computer images included, types \"password\" only into a\n          // password field and \"username\" into a text, email or telephone field.\n          field: card ? \"card\" : resolved.hidden === false ? \"username\" : \"password\",\n        });\n      }\n    }"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '110,215p' packages/adapters/src/browser-tools.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "f1c55627-d76f-4317-a995-4cbce2a28eff",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

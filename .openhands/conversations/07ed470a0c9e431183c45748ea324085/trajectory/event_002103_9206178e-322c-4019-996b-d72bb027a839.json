@@ -1,0 +1,37 @@
+{
+  "id": "9206178e-322c-4019-996b-d72bb027a839",
+  "timestamp": "2026-10-31T11:10:21.147002",
+  "source": "agent",
+  "parent_id": "ab7a0601-03a1-45bf-ac85-416963431de8",
+  "thought": [
+    {
+      "cache_prompt": false,
+      "type": "text",
+      "text": ""
+    }
+  ],
+  "reasoning_content": "Now I see: original `runnable` allowed null credential when provider === hostedProvider. With hosted provider removed, `runnable` is now `Boolean(credential)`. So `selected.credential` may be null in the fallback branch (when no main/override). But the executor's `if (selectedProvider && selectedModelId)` branch uses selected.credential which is now typed `ModelCredential` (non-null) since runnable requires truthy... wait no. In the fallback branch, credential is `null` explicitly:\n\n```\n: { provider: fallback?.provider, id: fallback?.modelId ?? null, credential: null };\n```\n\nSo `selected.credential` is `ModelCredential | null`. Previously `runnable` could be true with null credential (hosted), so the executor needed to handle it. Now with hosted removed... hmm but the executor code at 828 assigns `credential: selected.credential` where `selected.credential` type is `ModelCredential | null`. The target type (from startOnBackup return) requires non-null credential. So error.\n\nWait, before my changes, was there a non-null assertion? Let me check the original executor at that area.\n\nActually the original executor had:\n```\nif (selectedProvider && selectedModelId) {\n  if (await modelAccessDenied()) {...}\n  try {\n    start = {\n      provider: selectedProvider,\n      id: selectedModelId,\n      credential: selected.credential,\n```\nLet me check original.",
+  "thinking_blocks": [],
+  "responses_reasoning_item": null,
+  "action": {
+    "command": "cd /workspace/project && git --no-pager show HEAD:packages/adapters/src/executor.ts | awk 'NR>=820 && NR<=860 {printf \"%d: %s\\n\", NR, $0}'",
+    "is_input": false,
+    "timeout": null,
+    "reset": false,
+    "kind": "TerminalAction"
+  },
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b99b6c2893e7e304",
+  "tool_call": {
+    "id": "chatcmpl-tool-b99b6c2893e7e304",
+    "responses_item_id": null,
+    "name": "terminal",
+    "arguments": "{\"command\": \"cd /workspace/project && git --no-pager show HEAD:packages/adapters/src/executor.ts | awk 'NR>=820 && NR<=860 {printf \\\"%d: %s\\\\n\\\", NR, $0}'\", \"security_risk\": \"LOW\", \"summary\": \"Original executor credential area\"}",
+    "origin": "completion"
+  },
+  "llm_response_id": "gen-1793445018-MERfVdOSh5W9STB5UKnr",
+  "security_risk": "LOW",
+  "critic_result": null,
+  "summary": "Original executor credential area",
+  "kind": "ActionEvent"
+}

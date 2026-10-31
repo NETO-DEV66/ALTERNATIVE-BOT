@@ -1,0 +1,36 @@
+{
+  "id": "bd629f3a-f4cd-4a46-9e28-4fc5a84dde89",
+  "timestamp": "2026-10-31T10:18:13.612454",
+  "source": "environment",
+  "parent_id": "66abf7f4-6b9d-4a62-8c86-e7719ece8498",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-a0fa2c9704576d3d",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== web billing lib ===\nimport { t } from \"@lingui/core/macro\";\nimport type { BillingStatus } from \"@rakazo/contracts\";\n\ntype Price = NonNullable<BillingStatus[\"price\"]>;\n\n/** \"$12 / month\" from a provider price in minor units. */\nexport function formatBillingPrice(price: Price, locale: string): string {\n  const amount = formatBillingAmount(price.amount, price.currency, locale);\n  const period = billingPeriod(price.interval, price.intervalCount);\n  return t`${amount} / ${period}`;\n}\n\n/** \"$12\" from an amount in minor units, without cents when it is whole. */\nexport function formatBillingAmount(minorUnits: number, code: string, locale: string): string {\n  const currency = code.toUpperCase();\n  const digits = new Intl.NumberFormat(locale, { style: \"currency\", currency }).resolvedOptions()\n    .maximumFractionDigits;\n  const value = minorUnits / 10 ** (digits ?? 2);\n  return new Intl.NumberFormat(locale, {\n    style: \"currency\",\n    currency,\n    minimumFractionDigits: Number.isInteger(value) ? 0 : digits,\n  }).format(value);\n}\n\nfunction billingPeriod(interval: Price[\"interval\"], count: number): string {\n  if (count === 1) {\n    if (interval === \"day\") return t`day`;\n    if (interval === \"week\") return t`week`;\n    if (interval === \"month\") return t`month`;\n    return t`year`;\n  }\n  if (interval === \"day\") return t`${count} days`;\n  if (interval === \"week\") return t`${count} weeks`;\n  if (interval === \"month\") return t`${count} months`;\n  return t`${count} years`;\n}\n\nexport function formatBillingDate(iso: string, locale: string): string {\n  return new Date(iso).toLocaleDateString(locale, {\n    year: \"numeric\",\n    month: \"short\",\n    day: \"numeric\",\n  });\n}\n=== web BillingSettingsPanel head ===\nimport { Plural, Trans, useLingui } from \"@lingui/react/macro\";\nimport type { BillingStatus } from \"@rakazo/contracts\";\nimport { Button, Skeleton } from \"@rakazo/ui-web\";\nimport { useEffect, useState } from \"react\";\nimport { ModelCreditsSettings } from \"../components/ModelCredits\";\nimport { formatBillingDate, formatBillingPrice } from \"../lib/billing\";\nimport { rpc } from \"../lib/rpc\";\n\nexport function BillingSettingsPanel() {\n  const { t, i18n } = useLingui();\n  const locale = i18n.locale || \"en\";\n  const [status, setStatus] = useState<BillingStatus | null>(null);\n  const [error, setError] = useState<string | null>(null);\n  const [pending, setPending] = useState(false);\n\n  useEffect(() => {\n    let active = true;\n    rpc.billing\n      .status()\n      .then((next) => {\n        if (active) setStatus(next);\n      })\n      .catch(() => {\n        if (active) setError(t`Could not load billing`);\n      });\n    return () => {\n      active = false;\n    };\n  }, [t]);\n\n  async function openPortal() {\n    if (pending) return;\n    setPending(true);\n    setError(null);\n    try {\n      const { url } = await rpc.billing.portal();\n      window.location.assign(url);\n    } catch {\n      setError(t`Could not open billing`);\n    } finally {\n=== web model credits head ===\nimport { Trans, useLingui } from \"@lingui/react/macro\";\nimport type { BillingStatus } from \"@rakazo/contracts\";\nimport {\n  DEFAULT_MONTHLY_CREDIT_AMOUNT,\n  MODEL_CREDIT_AMOUNTS,\n  ModelCreditAmountSchema,\n} from \"@rakazo/contracts\";\nimport {\n  Button,\n  Card,\n  CardContent,\n  CardFooter,\n  CardHeader,\n  Dialog,\n  DialogContent,\n  DialogDescription,\n  DialogHeader,\n  DialogTitle,\n  Select,\n  SelectContent,\n  SelectGroup,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from \"@rakazo/ui-web\";\nimport { Check } from \"lucide-react\";\nimport { useEffect, useRef, useState } from \"react\";\nimport { formatBillingAmount, formatBillingDate, formatBillingPrice } from \"../lib/billing\";\nimport { rpc } from \"../lib/rpc\";\nimport { useSignOut } from \"../lib/sign-out\";\n\ntype CreditAmount = (typeof MODEL_CREDIT_AMOUNTS)[number];\n\nfunction formatMonthlyUsd(cents: number, locale: string): string {\n  return formatBillingPrice(\n    { amount: cents, currency: \"usd\", interval: \"month\", intervalCount: 1 },\n    locale,\n  );\n}"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && echo \"=== web billing lib ===\"; cat apps/web/src/lib/billing.ts; echo \"=== web BillingSettingsPanel head ===\"; sed -n '1,40p' apps/web/src/pages/BillingSettingsPanel.tsx; echo \"=== web model credits head ===\"; sed -n '1,40p' apps/web/src/components/ModelCredits.tsx",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "772a00ba-8d01-4252-b6d0-1b70133cd4e5",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

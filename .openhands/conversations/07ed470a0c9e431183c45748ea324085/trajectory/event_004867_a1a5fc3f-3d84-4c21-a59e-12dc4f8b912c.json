@@ -1,0 +1,36 @@
+{
+  "id": "a1a5fc3f-3d84-4c21-a59e-12dc4f8b912c",
+  "timestamp": "2026-10-31T12:36:54.391053",
+  "source": "environment",
+  "parent_id": "f7766cf5-8e49-45f9-8bc7-97f2d216846a",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b7cdaca533c5d233",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": ");\n\n    await expect(passwordResetCapabilities()).rejects.toThrow();\n  });\n\n  it.each([\n    {},\n    { passwordReset: false, resetUrl: null, sso: null },\n    { passwordReset: \"false\", resetUrl: null },\n    { passwordReset: false, resetUrl: \"invalid\" },\n    { passwordReset: false, resetUrl: null, billing: \"false\" },\n    { passwordAuth: \"false\", sso: null, passwordReset: false, resetUrl: null },\n    { passwordAuth: true, passwordReset: false, resetUrl: null, sso: {} },\n  ])(\"rejects malformed successful capability shapes\", async (body) => {\n    vi.stubGlobal(\n      \"fetch\",\n      vi.fn(async () => jsonResponse(body)),\n    );\n    await expect(passwordResetCapabilities()).rejects.toThrow();\n  });\n\n=== 1180,1200 ===\n      expect(init?.body).not.toContain(\"private content\");\n    }\n  });\n\n  it.each([true, false])(\"explains the mobile upgrade requirement with JSON=%s\", async (json) => {\n    const fetchMock = vi.fn(async () =>\n      json\n        ? rpcErrorResponse(404, \"NOT_FOUND\", \"Not found\")\n        : new Response(\"404 Not Found\", { status: 404 }),\n    );\n    vi.stubGlobal(\"fetch\", fetchMock);\n    await expect(rpc(\"threads/send\", { botId: \"bot\" })).rejects.toThrow(\"Update your server\");\n    expect(fetchMock).toHaveBeenCalledOnce();\n  });\n\n  it.each([\"throws\", \"rejects\", \"stalls\"])(\n    \"reports the upgrade message when body cancellation %s\",\n    async (mode) => {\n      const cancel = vi.fn(() => {\n        if (mode === \"throws\") throw new Error(\"cancel failed\");\n        if (mode === \"rejects\") return Promise.reject(new Error(\"cancel failed\"));"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '475,495p' apps/mobile/lib/api.test.ts; echo \"=== 1180,1200 ===\"; sed -n '1180,1200p' apps/mobile/lib/api.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 133749,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "25cf5874-354f-463e-b69c-74d6b376be09",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

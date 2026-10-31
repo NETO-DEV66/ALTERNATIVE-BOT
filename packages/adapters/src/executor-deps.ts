@@ -66,7 +66,6 @@ export interface ExecutorDeps {
   mcpAllowPrivateEndpoint?: boolean;
   /** Remote cloud coding agents. Null/omit means tools stay uninjected. */
   cloudAgent?: CloudAgentConnection | null;
-  /** The deployment's payment wallet. Null/omit means purchase tools stay uninjected. */
   /** Optional Auto Review verifier. When omitted, the factory selects from env (llm | jev | scripted). */
   autoReview?: AutoReviewProvider;
   /**

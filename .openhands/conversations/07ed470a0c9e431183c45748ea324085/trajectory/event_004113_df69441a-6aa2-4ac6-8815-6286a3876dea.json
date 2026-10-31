@@ -1,0 +1,36 @@
+{
+  "id": "df69441a-6aa2-4ac6-8815-6286a3876dea",
+  "timestamp": "2026-10-31T12:08:59.658697",
+  "source": "environment",
+  "parent_id": "af4eeed8-b839-4a63-98d9-622d395f7be0",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-a64547726b87232d",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "packages/contracts/src/domain.ts:1577:  managed: z.boolean().optional(),\npackages/contracts/src/model-backups.test.ts:249:  it(\"offers deployment-managed models only while the provider has no connection\", () => {\npackages/contracts/src/model-backups.test.ts:250:    const managed: ModelCatalogEntry = { ...catalog[2]!, managed: true };\npackages/contracts/src/model-backups.test.ts:251:    expect(connectedBackupOptions([managed], [])).toEqual([\npackages/contracts/src/model-backups.ts:9:  /** The connection serving it; absent for a deployment-managed model. */\npackages/contracts/src/model-backups.ts:11:  /** The connection's name, or the provider's for a deployment-managed model. */\npackages/contracts/src/model-backups.ts:68: * provider offers that provider's models, and deployment-managed models need none.\npackages/contracts/src/model-backups.ts:100:      options.push(...models.filter((entry) => entry.managed).map((entry) => option(entry)));\n=== models/forRole handler ===\napps/api/src/models-backups.test.ts:506:    const main = await call(\"models/forRole\", { role: \"main\" });\napps/api/src/models-backups.test.ts:512:    const approval = await call(\"models/forRole\", { role: \"approval\" });\napps/api/src/models-backups.test.ts:609:      const catalog = (await (await call(\"models/forRole\", { role: \"main\" })).response.json())\napps/api/src/models-backups.test.ts:725:    const catalog = await call(\"models/forRole\", { role: \"main\" });"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -rn 'managed' packages/adapters/src/model-selection.ts packages/contracts/src/*.ts | head -20; echo \"=== models/forRole handler ===\"; grep -rn 'forRole' apps/api/src/*.ts | head",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 25122,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "55096a84-11c6-4395-9ff8-1cec1ca28ed6",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

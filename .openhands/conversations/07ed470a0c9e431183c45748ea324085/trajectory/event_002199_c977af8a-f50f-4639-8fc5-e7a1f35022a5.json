@@ -1,0 +1,36 @@
+{
+  "id": "c977af8a-f50f-4639-8fc5-e7a1f35022a5",
+  "timestamp": "2026-10-31T11:13:51.562250",
+  "source": "environment",
+  "parent_id": "6294433e-3389-4921-8e80-5d813fa9cd77",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-ac46b4218e955788",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "secretId,\n      updatedAt: stamp(iso),\n      createdAt: stamp(iso),\n    };\n  }\n\n  function storedPreference(input: {\n    id: string;\n    modelId: string | null;\n    credentialId: string;\n    secretId: string;\n    iso: string;\n  }) {\n    return {\n      id: input.id,\n      modelId: input.modelId,\n      updatedAt: stamp(input.iso),\n      credential: storedCredential(input.credentialId, input.secretId, input.iso),\n    };\n  }\n\n  function authPrisma(options: {\n    credentials: ReturnType<typeof storedCredential>[];\n    preferences: ReturnType<typeof storedPreference>[];\n    secrets: Array<{ id: string; ciphertext: string }>;\n  }) {\n    const credentialFindMany = vi.fn().mockResolvedValue(options.credentials);\n    const preferenceFindMany = vi.fn().mockResolvedValue(options.preferences);\n    const secretFindMany = vi.fn().mockResolvedValue(options.secrets);\n    const prisma = {\n      userModelCredential: { findMany: credentialFindMany },\n      userModelPreference: { findMany: preferenceFindMany },\n      secret: { findMany: secretFindMany },\n    } as unknown as PrismaClient;\n    return { prisma, credentialFindMany, preferenceFindMany, secretFindMany };\n  }\n\n  function listsSpark(auth: Awaited<ReturnType<typeof modelCredentialAuthKindsForSpace>>) {\n    return listAvailablePiCatalog(auth.byProvider, auth.byModel).some(\n      (entry) => entry.provider === \"openai-codex\" && entry.id === spark,\n    );\n  }\n\n  it.each([\"credits\", \"byok\"])(\"keeps saved keys while selecting %s funding\", async (mode) => {\n    vi.stubEnv(\"PI_DEFAULT_PROVIDER\", \"openrouter\");\n    vi.stubEnv(\"OPENROUTER_API_KEY\", \"fixture-deployment-key\");\n    try {\n      const { prisma } = authPrisma({\n        credentials: [\n          {\n            ...storedCredential(\"personal\", \"personal-secret\", \"2026-01-01T00:00:00.000Z\"),\n            provider: \"openrouter\",\n          },\n        ],\n        preferences: [],\n        secrets: [{ id: \"personal-secret\", ciphertext: \"fixture-ciphertext\" }],\n=== 295,310 ===\n      vi.unstubAllEnvs();\n    }\n  });\n\n  it(\"uses the saved preference instead of a newer account credential\", async () => {\n    const { prisma, preferenceFindMany } = authPrisma({\n      credentials: [\n        storedCredential(\"cred-api\", \"secret-api\", \"2026-03-01T00:00:00.000Z\"),\n        storedCredential(\"cred-oauth\", \"secret-oauth\", \"2026-01-01T00:00:00.000Z\"),\n      ],\n      preferences: [\n        storedPreference({\n          id: \"pref-oauth\",\n          modelId: luna,\n          credentialId: \"cred-oauth\",\n          secretId: \"secret-oauth\",\n          iso: \"2026-01-02T00:00:00.000Z\",\n        }),"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '190,245p' packages/adapters/src/model-selection.test.ts; echo \"=== 295,310 ===\"; sed -n '295,312p' packages/adapters/src/model-selection.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "d8913fab-6955-47b4-836e-a02e7c1d65cf",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

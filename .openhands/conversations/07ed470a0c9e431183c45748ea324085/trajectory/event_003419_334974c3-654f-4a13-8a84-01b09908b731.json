@@ -1,0 +1,36 @@
+{
+  "id": "334974c3-654f-4a13-8a84-01b09908b731",
+  "timestamp": "2026-10-31T11:44:36.665851",
+  "source": "environment",
+  "parent_id": "341dcb2a-5799-4f89-a770-11ae93e72861",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8ba5ce3dac22c34d",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "outcome: \"failed\",\n        error: \"Connect that model provider first\",\n      }),\n    );\n    expect(runtimeRun).not.toHaveBeenCalled();\n  });\n\n\n  it(\"resolves a per-bot model override with that provider\u2019s credential\", async () => {\n    const findFirst = vi.fn(async (args: { where: { credential?: { provider?: string } } }) => {\n      if (args.where.credential?.provider === \"xai\") {\n=== verify remaining tests intact ===\n3094:  it(\"resolves a per-bot model override with that provider\u2019s credential\", async () => {"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -i '3093,3210d' packages/adapters/src/executor.test.ts && sed -n '3086,3096p' packages/adapters/src/executor.test.ts && echo \"=== verify remaining tests intact ===\" && grep -n \"it(\\\"resolves a per-bot model override\" packages/adapters/src/executor.test.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 21955,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "d1381ac6-2ebd-4c98-abc4-5d17a5d5a2a8",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

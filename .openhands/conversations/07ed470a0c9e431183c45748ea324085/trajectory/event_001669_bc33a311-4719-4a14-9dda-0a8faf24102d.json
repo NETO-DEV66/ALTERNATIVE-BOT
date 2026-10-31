@@ -1,0 +1,36 @@
+{
+  "id": "bc33a311-4719-4a14-9dda-0a8faf24102d",
+  "timestamp": "2026-10-31T11:03:11.318112",
+  "source": "environment",
+  "parent_id": "319c8cd0-9270-4d61-a777-fb44e9411f1f",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8658708def9f378c",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "const credential = requiredUserProvider\n      ? await deps.prisma.userModelCredential.findFirst({\n          where: { userId: actor.userId, provider: requiredUserProvider },\n          select: { id: true },\n        })\n      : null;\n    return { ...settings, checkerAvailable: environmentAvailable || Boolean(credential) };\n  }\n  const connections = await Promise.all(\n    memberChoices.map((choice) =>\n      choice.credentialId\n        ? findModelCredentialById(deps.prisma, actor, choice.credentialId)\n        : findModelCredential(deps.prisma, actor, choice.provider, choice.modelId),\n    ),\n  );\n  const checkerAvailable =\n    connections.some(Boolean) ||\n    (deploymentChecker !== null && environmentAvailable) ||\n    (\n      await Promise.all(\n        [...new Set(memberChoices.map((choice) => choice.provider))].map((provider) =>\n          hasHostedModelCredits(deps.prisma, actor, provider),\n        ),\n      )\n    ).some(Boolean);\n  return { ...settings, checkerAvailable };\n}\n=== thread-image-admission ===\n  trigger?: string | null;\n};\n\n/** Never refresh credentials while admitting a send. A supplied Codex catalog may answer image input. */\nexport async function assertThreadImageInput(\n  prisma: PrismaClient,\n  actor: Actor,\n  botId: string,\n  blocks: MessageBlock[],\n  run?: ImageAdmissionRun,\n  configuration?: {\n    secrets: Pick<SecretStore, \"load\">;\n    deployment: { provider: string; model: string } | null;\n    hostedProvider?: string;\n    codexCatalog?: CodexLiveCatalog;\n  },\n) {\n  if (!blocks.some((block) => block.kind === \"image\")) return;\n  const bot = await prisma.bot.findFirst({\n    where: { id: botId, userId: actor.userId, spaceId: actor.spaceId },\n    select: { modelProvider: true, modelId: true, thinkingLevel: true },\n  });\n  if (!bot) return;\n  // A running turn has already selected its model, including any backup switch.\n  const running = run?.status === \"running\" && run.modelProvider && run.modelId;\n  const override = running ? run : run ? runModelChoice(run, bot) : bot;\n  const overrideCredential =\n    override.modelProvider && override.modelId\n      ? configuration\n        ? await findConnectedModelCredential(\n            prisma,\n            configuration.secrets,\n            actor,\n            override.modelProvider,\n            override.modelId,\n          )\n        : await findModelCredential(prisma, actor, override.modelProvider, override.modelId)\n      : null;\n  const selected = selectConfiguredModel({\n    override,\n    overrideCredential,\n    main: configuration\n      ? await resolveMemberMainModel({ prisma, secretStore: configuration.secrets }, actor)\n      : await mainModelWithoutSecrets(prisma, actor),\n    defaults: {\n      settings: await prisma.deploymentSettings.findUnique({ where: { id: \"default\" } }),\n      deployment: configuration?.deployment ?? null,\n    },\n    hostedProvider: configuration?.hostedProvider,\n  });\n  const provider = running ? run.modelProvider : selected.provider;\n  const id = running ? run.modelId : selected.id;\n  if (!provider || !id) return;\n  let supportsImages = knownModelImageInput(provider, id);\n  if (provider === \"openai-compatible\" && configuration) {\n    const credential = running ? overrideCredential : selected.credential;\n    if (credential) {\n      const row = await prisma.secret.findFirst({\n        where: { id: credential.secretId, userId: actor.userId, spaceId: null },\n      });\n      if (row) {\n=== ai-consent 125-145 ===\n            ? await findModelCredential(\n                deps.prisma,\n                actor,\n                override.modelProvider,\n                override.modelId,\n              )\n            : null;\n        return selectConfiguredModel({\n          override,\n          overrideCredential,\n          main,\n          hostedProvider: undefined,\n          defaults: { settings, deployment },\n        });\n      }),\n    );\n    // Connected models remain reachable by helpers during a targeted bot run.\n    for (const preference of preferences)\n      selected.push({\n        provider: preference.credential.provider,\n        id: preference.modelId ?? \"\","
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '355,395p' apps/api/src/routes/account.ts; echo \"=== thread-image-admission ===\"; sed -n '30,90p' apps/api/src/thread-image-admission.ts; echo \"=== ai-consent 125-145 ===\"; sed -n '125,145p' apps/api/src/ai-consent.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "a7b72d7f-b196-46d3-9dd9-79491614bdfb",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "85473d29-2939-456d-ba31-e645a4adb9df",
+  "timestamp": "2026-10-31T12:34:28.978324",
+  "source": "environment",
+  "parent_id": "08e48490-32c2-40bf-bf5b-ef02c0a67ede",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-8b37029997c5ac3c",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "./packages/adapters/src/wakeup-graphile-host.test.ts:53:    \"purchase.poll\": vi.fn(async () => undefined),\n./packages/adapters/src/background-job-handlers.ts:178:    \"purchase.poll\": async () => {\n./packages/adapters/src/wakeup.test.ts:20:    \"purchase.poll\": vi.fn(async () => undefined),\n./packages/adapters/src/wakeup.postgres.test.ts:42:    \"purchase.poll\": vi.fn(async () => undefined),\n./packages/adapter-kit/src/background-jobs.ts:32:  \"purchase.poll\": z.object({ purchaseId: z.string().min(1) }),\n./packages/adapter-kit/src/background-jobs.ts:205:export function purchasePollJob(purchaseId: string, availableAt?: Date): BackgroundJob {\n./packages/adapter-kit/src/background-jobs.ts:207:    name: \"purchase.poll\",\n./packages/adapter-kit/src/background-jobs.ts:208:    payload: { purchaseId },\n./packages/adapter-kit/src/background-jobs.ts:209:    replaceKey: `purchase.poll:${purchaseId}`,\n./packages/adapter-kit/src/background-jobs.test.ts:27:    \"purchase.poll\": vi.fn(async () => undefined),\n./packages/adapter-kit/src/types.ts:750:  \"purchase.poll\": { purchaseId: string };"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -rn 'purchasePollJob\\|purchase\\.poll\\|purchaseId' --include=*.ts --include=*.tsx . 2>/dev/null | grep -v node_modules",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 65061,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "af780c9f-7496-47ee-8190-d3ef05e8bfc5",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

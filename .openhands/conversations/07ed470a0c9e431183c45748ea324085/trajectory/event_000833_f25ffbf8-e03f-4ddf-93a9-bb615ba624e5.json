@@ -1,0 +1,36 @@
+{
+  "id": "f25ffbf8-e03f-4ddf-93a9-bb615ba624e5",
+  "timestamp": "2026-10-31T10:39:20.163479",
+  "source": "environment",
+  "parent_id": "be7809e6-a930-45f6-bc7b-f7edd1951c64",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-889c73734f59f278",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "import type {\n  AgentModelOAuthCredential,\n  AgentRunRequest,\n  AgentRuntime,\n  ModelCredentialFailedState,\n  ModelCredentialRetireReason,\n} from \"@alternativebot/adapter-kit\";\nimport {\n  CLOUDFLARE_AI_GATEWAY_CONFIG_MESSAGE,\n  CLOUDFLARE_WORKERS_AI_PROVIDER_ID,\n  cloudflareModelConfigMessage,\n  OPENAI_COMPATIBLE_PROVIDER_ID,\n} from \"@alternativebot/contracts\";\nimport { MISSING_MODEL_RUN_ERROR } from \"@alternativebot/core\";\nimport { cloudflareProviderEnv } from \"./cloudflare-ai-gateway.js\";\nimport { resolveDeploymentModel } from \"./deployment-model.js\";\nimport type { ExecutorDeps } from \"./executor-deps.js\";\nimport type { FleetPrepareDeps } from \"./fleet-tools.js\";\nimport {\n  HostedModelCreditsRequiredError,\n  hostedModelCreditObserver,\n} from \"./model-credit-observer.js\";\nimport { resolveMemberMainModel, selectConfiguredModel } from \"./model-roles.js\";\nimport {\n  enabledOpenAiCompatibleModelIds,\n  findConnectedModelCredential,\n  hasHostedModelCredits,\n  PINNED_PROVIDER_NOT_CONNECTED,\n  UnavailableModelForAuthError,\n  validateConnectedModelChoice,\n  validateModelAuthAvailability,\n} from \"./model-selection.js\";\nimport { modelIdSupportsImages } from \"./model-vision.js\";\nimport { assertAllowedOpenAiCompatibleUrl } from \"./openai-compatible-url.js\";\nimport { codexLiveModel } from \"./pi-codex-catalog.js\";\nimport { toOAuthCredential } from \"./pi-credentials.js\";\nimport { LOCAL_PROVIDER_ID } from \"./pi-local-provider.js\";\nimport type { StoredModelSecret } from \"./pi-oauth.js\";\nimport {\n  CHATGPT_OAUTH_PROVIDER,"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '1,40p' packages/adapters/src/run-model.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "56cde58d-41ef-407e-b14a-410ae2e4e6c9",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

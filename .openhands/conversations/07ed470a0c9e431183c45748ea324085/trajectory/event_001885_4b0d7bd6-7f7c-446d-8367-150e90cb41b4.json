@@ -1,0 +1,36 @@
+{
+  "id": "4b0d7bd6-7f7c-446d-8367-150e90cb41b4",
+  "timestamp": "2026-10-31T11:06:44.874582",
+  "source": "environment",
+  "parent_id": "c390a1ed-8e09-4622-b69d-49febd2872af",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-b7201f3b3bc9e590",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "import { hostname } from \"node:os\";\nimport { setTimeout as sleep } from \"node:timers/promises\";\nimport type { JobPublisher, JobWorkerHost } from \"@alternativebot/adapter-kit\";\nimport { ComposioConnector, IntegrationProviderSettings } from \"@alternativebot/adapters\";\nimport { phoneCallSettings } from \"@alternativebot/core\";\nimport { loadRootEnv } from \"@alternativebot/core/node/load-root-env\";\nimport { stopOnShutdownSignals } from \"@alternativebot/core/node/shutdown-signals\";\nimport { startWorkerHealth, watchEventLoopStalls } from \"./health.js\";\nimport { createWorkerSecretStore } from \"./secret-store.js\";\n\nloadRootEnv();\n\nimport {\n  ChatSdkMessagingSurface,\n  CodexCatalogCache,\n  contentKeyProviderFromEnv,\n  createAgentHomeStore,\n  createArtifactStore,\n  createBackgroundJobHandlers,\n  createCloudAgentConnection,\n  createConnectorStack,\n  createDeadJobPruner,\n  createIdleComputerSweeper,\n  createJobReconciler,\n  createMessagingContextLoader,\n  createModelCreditReconciler,\n  createPaymentWalletProvider,\n  createPostgresReconciliationLeadership,\n  createProductAnalytics,\n  createReservedGraphileJobWorkerHost,\n  createRoutineRetryNoticeReconciler,\n  createRunExecutor,\n  createRunSandbox,\n  createRunSecretWriter,\n  createTicketChangeNotifier,\n  createWebProvider,\n  databaseCapacityBackoffMs,\n  deploymentModelUsageLookup,\n  ExpoPushProvider,\n  GraphileJobPublisher,\n  homeStorageSweeper,\n  InMemoryJobQueue,\n  InstalledConnectorProvider,\n  installedMessaging,\n  isComposioEnabled,\n  isMessagingSurfaceEnabled,\n  isPipedreamEnabled,\n  McpConnector,\n  McpOAuthBroker,\n  mcpStdioOptionsFromEnv,\n  messagingEnvFromProcess,\n  messagingPlatformsFromEnv,\n  PiAgentRuntime,\n  PipedreamConnector,\n  PostgresRealtimeFanout,\n  PrismaPushTokenStore,\n  pipedreamConfigFromEnv,\n  RunJobPublisher,\n  RunStarter,\n  RunWorkerHost,\n  reconcileCloudAgents,\n  reconcileComputerUpdates,\n  reconcilePurchases,\n  resolveDeploymentModel,\n  resolvePiSessionRoot,\n  resolveSandboxProvider,\n  ScriptedAgentRuntime,\n  SpaceMemoryProviderResolver,\n  sandboxProviderOptionsFromEnv,\n  shutdownPiTelemetry,\n  UserDevices,\n  userDeviceForwardSecret,\n  withRunWorker,\n  withSecretPersistence,\n} from \"@alternativebot/adapters\";"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && sed -n '1,75p' apps/worker/src/index.ts",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 1514,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "bc8e88fb-3d3b-4368-b37b-5a159e18af63",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

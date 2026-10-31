@@ -1,0 +1,36 @@
+{
+  "id": "b0a5818a-9112-4a13-88af-8dcbada03fb5",
+  "timestamp": "2026-10-31T13:06:14.660638",
+  "source": "environment",
+  "parent_id": "217e690e-886f-473c-be22-c9ebae9dd5b6",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-815376a939726573",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "=== baseline site.ts (brand) ===\nexport const SITE_NAME = \"Rakazo\";\nexport const SITE_URL = \"https://rakazo.com\";\nexport const SITE_DESCRIPTION =\n  \"Rakazo is an open source Grok Bot alternative for persistent AI teammates that do real work. Your keys, your model, your machine.\";\n\nexport const APP_URL = \"https://app.rakazo.com\";\nexport const PLUGIN_SUBMISSIONS_URL = `${APP_URL}/api/v1/plugin-submissions`;\nexport const CATALOG_URL =\n  \"https://rakazo-public.fsn1.your-objectstorage.com/integrations/catalog.json\";\nexport const GITHUB_URL = \"https://github.com/elie222/rakazo\";\nexport const IOS_APP_URL = \"https://apps.apple.com/app/rakazo/id6801531099\";\nexport const ANDROID_APK_URL = \"https://github.com/elie222/rakazo/releases/download/android/rakazo.apk\";\nexport const GITHUB_API_REPO = \"https://api.github.com/repos/elie222/rakazo\";\nexport const DOCS_URL = \"https://github.com/elie222/rakazo/blob/main/docs/self-host.md\";\nexport const SELF_HOST_SECRETS_URL =\n  \"https://github.com/elie222/rakazo/blob/main/docs/self-host-secrets.md\";\nexport const SELF_HOST_RESTRICTED_URL =\n  \"https://github.com/elie222/rakazo/blob/main/docs/self-host-restricted-network.md\";\nexport const SETUP_PROMPT_URL = \"https://github.com/elie222/rakazo/blob/main/SETUP_PROMPT.md\";\nexport const SELF_HOST_GUIDE_PATH = \"/self-hosted-ai-agent/\";\n=== baseline app.json name ===\n    \"name\": \"Rakazo\",\n    \"slug\": \"rakazo\",\n    \"owner\": \"inbox-zero\",\n      \"bundleIdentifier\": \"com.rakazo.app\",\n      \"package\": \"com.rakazo.app\",\n=== baseline README title ===\n# Rakazo\n\n[English](./README.md) | [\u7b80\u4f53\u4e2d\u6587](./README.zh-CN.md) | [\u65e5\u672c\u8a9e](./README.ja.md)\n\n[![GitHub stars](https://img.shields.io/github/stars/elie222/rakazo?labelColor=black&style=for-the-badge&color=2563EB)](https://github.com/elie222/rakazo/stargazers)"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /tmp/baseline && echo \"=== baseline site.ts (brand) ===\"; head -20 apps/www/src/site.ts; echo \"=== baseline app.json name ===\"; grep -E '\"name\"|\"slug\"|\"owner\"|bundleIdentifier|\"package\"' apps/mobile/app.json | head; echo \"=== baseline README title ===\"; head -5 README.md",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 183146,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/tmp/baseline",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "14abdc7c-769c-42fe-86d1-9261a7cd60b2",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "80cd857c-a237-402a-9f8e-0c9cc5b2e36b",
+  "timestamp": "2026-10-31T11:36:01.398087",
+  "source": "environment",
+  "parent_id": "2011b52b-cadc-4c03-b0d5-64901921914c",
+  "tool_name": "terminal",
+  "tool_call_id": "chatcmpl-tool-884ba39250acdbaa",
+  "observation": {
+    "content": [
+      {
+        "cache_prompt": false,
+        "type": "text",
+        "text": "packages/core/src/action-approval.ts:83:const PURCHASE_CONNECTOR_SLUGS = new Set([\"stripe\", \"shopify\", \"paypal\", \"square\"]);\npackages/core/src/run-error.ts:328:    // OpenAI's per-minute limits link to billing as a way to raise them.\npackages/core/src/agent-import/credentials.ts:25:  // Stripe live secret and restricted keys.\npackages/core/src/plugin-catalog.ts:122:    \"stripe\",\npackages/core/src/plugin-catalog.ts:156:  \"stripe\",\npackages/contracts/src/account-export.ts:17: * billing and computers are not exported: they belong to the source install.\npackages/contracts/src/domain.ts:1582:  billing: z.string(),\npackages/adapter-kit/src/interfaces.ts:13:  BillingByokCheckoutRequest,\npackages/adapter-kit/src/interfaces.ts:14:  BillingCheckoutRequest,\npackages/adapter-kit/src/interfaces.ts:15:  BillingCreditCheckoutRequest,\npackages/adapter-kit/src/interfaces.ts:16:  BillingCreditPurchase,\npackages/adapter-kit/src/interfaces.ts:17:  BillingPrice,\npackages/adapter-kit/src/interfaces.ts:18:  BillingSubscriptionSnapshot,\npackages/adapter-kit/src/interfaces.ts:342:  listModels(): Promise<Array<{ provider: string; id: string; label: string; billing: string }>>;\npackages/adapter-kit/src/interfaces.ts:466: * Seat-based subscription billing. Product code owns access rules; adapters own the\npackages/adapter-kit/src/interfaces.ts:469:export interface BillingProvider {\npackages/adapter-kit/src/interfaces.ts:471:  createCreditCheckout?(input: BillingCreditCheckoutRequest): Promise<{ url: string }>;\npackages/adapter-kit/src/interfaces.ts:472:  listCreditPurchases?(customerId: string): Promise<BillingCreditPurchase[]>;\npackages/adapter-kit/src/interfaces.ts:473:  setMonthlyCredits?(customerId: string, amountCents: number): Promise<void>;\npackages/adapter-kit/src/interfaces.ts:475:  createByokCheckout?(input: BillingByokCheckoutRequest): Promise<{ url: string }>;\npackages/adapter-kit/src/interfaces.ts:483:  describe(): AdapterDescriptor<{ trials: boolean; portal: boolean; modelCredits?: boolean }>;\npackages/adapter-kit/src/interfaces.ts:484:  getPrice(): Promise<BillingPrice>;\npackages/adapter-kit/src/interfaces.ts:486:  createCheckout(input: BillingCheckoutRequest): Promise<{ url: string }>;\npackages/adapter-kit/src/interfaces.ts:489:  getCustomerSubscription(customerId: string): Promise<BillingSubscriptionSnapshot | null>;\npackages/adapter-kit/src/model-errors.ts:164: * Overload, rate limit, 5xx, timeout or dropped connection. Quota, billing, auth and input\npackages/adapter-kit/src/model-errors.ts:176:  // Short rate windows can reset during a retry; subscription and billing limits cannot.\npackages/adapter-kit/src/model-errors.ts:186:    // OpenAI's per-minute limits link to billing as a way to raise them.\npackages/adapter-kit/src/types.ts:627:    /** Explicit adapter-known write bucket required by this request, not a billing prediction. */\npackages/adapter-kit/src/types.ts:1196:export type BillingSubscriptionStatus =\npackages/adapter-kit/src/types.ts:1201:  /** No access; the subscription resumes from the billing portal, so a new checkout would double-bill. */\npackages/adapter-kit/src/types.ts:1206:export interface BillingPrice {\npackages/adapter-kit/src/types.ts:1214:export interface BillingCreditPurchase {\npackages/adapter-kit/src/types.ts:1222:export interface BillingCreditCheckoutRequest {\npackages/adapter-kit/src/types.ts:1230:export interface BillingByokCheckoutRequest extends Omit<BillingCreditCheckoutRequest, \"monthly\"> {\npackages/adapter-kit/src/types.ts:1235:/** Full subscription state for one billing customer, re-fetched from the provider on every sync. */\npackages/adapter-kit/src/types.ts:1236:export interface BillingSubscriptionSnapshot {\npackages/adapter-kit/src/types.ts:1241:  status: BillingSubscriptionStatus;\npackages/adapter-kit/src/types.ts:1253:export interface BillingCheckoutRequest {\npackages/adapters/src/pi-image-context.ts:12: * Conservative standard-resolution planning policy (not exact provider billing).\npackages/adapters/src/pi-image-context.ts:216:/** Bounded-resolution context planning estimate, independent of provider billing. */"
+      }
+    ],
+    "is_error": false,
+    "command": "cd /workspace/project && grep -rniE 'billing|paywall|paymentWallet|referral|modelCredit|purchaseCredits|selectFunding|claimReferral|monthlyCredits|stripe' apps/api/src apps/worker/src apps/desktop/src apps/mobile/app apps/mobile/lib packages/core/src packages/auth/src packages/chat-ui/src packages/ui-web/src packages/contracts/src packages/adapter-kit/src packages/logging/src packages/adapters/src apps/web/src 2>/dev/null | grep -v '.test.' | grep -v '/locales/' | grep -v 'generated' | head -40",
+    "exit_code": 0,
+    "timeout": false,
+    "metadata": {
+      "exit_code": 0,
+      "pid": 17917,
+      "username": "openhands",
+      "hostname": "runtime-lephjvugzobcvhpq-d95cd4f98-vvb28",
+      "working_dir": "/workspace/project",
+      "py_interpreter_path": "/usr/local/bin/python",
+      "prefix": "",
+      "suffix": "\n[The command completed with exit code 0.]"
+    },
+    "full_output_save_dir": "/workspace/conversations/07ed470a0c9e431183c45748ea324085/observations",
+    "kind": "TerminalObservation"
+  },
+  "action_id": "d57ab922-1a6c-45ca-ab69-29b23637a2f1",
+  "extended_content": [],
+  "kind": "ObservationEvent"
+}

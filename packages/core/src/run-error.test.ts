@@ -2,7 +2,6 @@ import { COMPUTER_RATE_LIMIT_ERROR } from "@alternativebot/contracts";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   APPROVED_ACTION_NOT_RUN_ERROR,
-  HOSTED_MODEL_CREDITS_REQUIRED_ERROR,
   isImageInputConfirmation,
   isModelRequiredSendError,
   MISSING_MODEL_RUN_ERROR,
@@ -838,14 +837,12 @@ describe("the one action that fixes a failed run", () => {
     expect(error.recovery).toBeUndefined();
   });
 
-  it.each([MISSING_MODEL_RUN_ERROR, HOSTED_MODEL_CREDITS_REQUIRED_ERROR])(
-    "keeps the app's own advice and opens the connections: %s",
-    (details) => {
-      expect(normalizeRunError(details)).toEqual({
-        summary: details,
-        details,
-        recovery: "connection",
-      });
-    },
-  );
+  it("keeps the app's own advice and opens the connections", () => {
+    const details = MISSING_MODEL_RUN_ERROR;
+    expect(normalizeRunError(details)).toEqual({
+      summary: details,
+      details,
+      recovery: "connection",
+    });
+  });
 });

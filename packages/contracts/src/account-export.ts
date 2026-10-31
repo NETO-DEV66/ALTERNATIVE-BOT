@@ -13,8 +13,8 @@ import { Id, IsoDate } from "./ids.js";
  *   (a streamed zip cannot carry file modes back out). Left out when none are.
  *
  * Content is decrypted. Ids are the source install's; an import gives every row a new id and
- * rewrites references, including ids inside message blocks. Credentials, integrations, runs,
- * billing and computers are not exported: they belong to the source install.
+ * rewrites references, including ids inside message blocks. Credentials, integrations, runs
+ * and computers are not exported: they belong to the source install.
  */
 export const ACCOUNT_EXPORT_FORMAT = "alternativebot-account-export";
 export const ACCOUNT_EXPORT_VERSION = 1;
