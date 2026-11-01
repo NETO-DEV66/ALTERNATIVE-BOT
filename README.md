@@ -27,11 +27,11 @@ the first time.
 
 | | |
 |---|---|
-| Version | 1.0.11 (build 10) |
+| Version | 1.0.12 (build 11) |
 | Size | 123 MB |
 | Android | 7.0 and newer (minSdk 24, targetSdk 36) |
 | Architectures | arm64-v8a, armeabi-v7a, x86, x86_64 |
-| SHA-256 | `381fb5b1e07c9a42b16ae91a681807b5e813522a83f7b7ed17b662e4444979da` |
+| SHA-256 | `b3cdbece1dd27e74107dc1ce87fc474b1d5b7d15e773f6ceda53b8152b5e79ff` |
 
 The link always serves the newest APK. Check a download before installing it:
 
@@ -46,14 +46,17 @@ Firebase configuration, so push notifications stay off until you add your own
 ## Connect the app to your server
 
 Alternative Bot has no hosted service. The app talks to a server you run, so start the backend
-first and then sign in.
+first and point the app at it.
 
 1. Set up a server. [Published images](#quick-start-published-images) is the fastest path, or
    [run on a server](#run-on-a-server) so the bots stay on when your computer sleeps.
-2. Open the app and tap **Use a custom server** on the sign-in screen.
+2. Open the app. The server signs its one account in, so the app opens on the inbox by itself.
+   A phone cannot reach the server's `127.0.0.1`, so a fresh install lands on a screen that names
+   the address it tried and offers **Choose a server**.
 3. Enter your address, for example `https://bot.example.com`. Public addresses need HTTPS; plain
-   HTTP works only for loopback and private LAN addresses.
-4. The app checks the health endpoint, saves the address, and signs you in.
+   HTTP works only for loopback and private LAN addresses. A tunnel that puts the server on a
+   real domain, or a reverse proxy with a certificate, is the usual way to reach it from a phone.
+4. The app checks the health endpoint, saves the address, and gets its session.
 
 The app remembers the address. Change it later from **Settings → Server**.
 
