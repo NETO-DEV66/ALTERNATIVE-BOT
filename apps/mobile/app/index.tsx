@@ -31,6 +31,7 @@ import { readableGutters } from "../lib/adaptive-layout";
 import type { MobileBot, MobileBotSection, MobileGroup, MobileMe, MobileSpace } from "../lib/api";
 import {
   currentApiBase,
+  isServerReachable,
   loadSessionToken,
   requestLocalSession,
   rpc,
@@ -38,6 +39,7 @@ import {
   selectInitialSpace,
   selectSpace,
   signOut,
+  subscribeApiBase,
 } from "../lib/api";
 import {
   appBadgeGeneration,
@@ -270,18 +272,33 @@ function Home({ embedded, onSelectSpace, onShareSelect }: InboxPaneProps & { emb
     }
   }, [loadBots]);
 
+  // Re-attempts whenever the address changes, so picking a server on the recovery screen
+  // is enough to get in without restarting the app.
+  const endpoint = useSyncExternalStore(subscribeApiBase, currentApiBase, currentApiBase);
   useEffect(() => {
-    void loadSessionToken().then(async (token) => {
+    let cancelled = false;
+    void (async () => {
+      let token = await loadSessionToken();
       if (!token) {
         // The server signs this client in itself, so the app opens on the inbox. A
-        // server that refuses leaves the app on the expired-session retry below.
-        await requestLocalSession().catch(() => false);
+        // server that refuses leaves the recovery screen below to name the reason.
+        await requestLocalSession();
         token = await loadSessionToken();
       }
+      if (cancelled) return;
       setHasSession(Boolean(token));
+      if (token) setLoadFailure(null);
+      // A saved token with nothing to load it against is a dead end, so it fails here
+      // rather than on the first inbox request that cannot answer.
+      else if (!isServerReachable()) {
+        setLoadFailure({ kind: "offline", message: t("Could not reach the server") });
+      }
       setSessionLoaded(true);
-    });
-  }, []);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [endpoint]);
 
   useEffect(() => {
     if (!hasSession || onShareSelect) return;
@@ -519,14 +536,18 @@ function Home({ embedded, onSelectSpace, onShareSelect }: InboxPaneProps & { emb
   const renewSession = useCallback(async () => {
     // A rejected session cannot sign out on the server; clearing it here is what matters.
     await signOut().catch(() => undefined);
-    // The server hands out a fresh session on request. A multi-user server refuses,
-    // and the retry screen keeps offering to try again.
-    if (await requestLocalSession().catch(() => false)) {
+    // The server hands out a fresh session on request. A multi-user server refuses.
+    if (await requestLocalSession()) {
       setHasSession(true);
       setSessionLoaded(true);
       return;
     }
-    setLoadFailure({ kind: "session", message: t("Your session expired") });
+    // An unreachable server is the other way this fails, and it needs its own wording.
+    setLoadFailure(
+      isServerReachable()
+        ? { kind: "session", message: t("Could not sign in") }
+        : { kind: "offline", message: t("Could not reach the server") },
+    );
   }, []);
 
   const chooseInboxSpace = useCallback(
@@ -752,15 +773,17 @@ function Home({ embedded, onSelectSpace, onShareSelect }: InboxPaneProps & { emb
     );
   }
   if (!hasSession) {
-    // Single-user servers answer the request above, so this is the multi-user case:
-    // the server wants a credential this build does not collect.
+    // The app asks the server for its session on launch. A refusal means the address is
+    // wrong or the server keeps its own sign-in, so offer the address and a fresh attempt
+    // rather than a retry that can only fail again.
     return (
       <View style={[styles.screen, styles.centered]}>
         <HomeErrorState
           kind="session"
-          message={t("Your session expired")}
+          message={t("Could not sign in")}
           loading={false}
           onRetry={() => void renewSession()}
+          onChooseServer={() => router.push("/server")}
         />
       </View>
     );
@@ -844,6 +867,7 @@ function Home({ embedded, onSelectSpace, onShareSelect }: InboxPaneProps & { emb
                       onRetry={() =>
                         loadFailure.kind === "session" ? void renewSession() : void refreshBots()
                       }
+                      onChooseServer={() => router.push("/server")}
                     />
                   ) : (
                     <Text style={styles.empty}>

@@ -1202,6 +1202,11 @@ export const ZH_MESSAGES: Record<string, string> = {
   "1 free month earned": "已获得 1 个月免费",
   "{count} free months earned": "已获得 {count} 个月免费",
   "Submit a plugin": "提交插件",
+  "Choose a server": "选择服务器",
+  "This server did not accept the app at {server}. Check the address, or choose another server.":
+    "此服务器未接受位于 {server} 的应用。请检查地址，或选择其他服务器。",
+  "No answer from {server}. Check the address, or choose another server.":
+    "没有收到来自 {server} 的回应。请检查地址，或选择其他服务器。",
 };
 
 export const PEER_MESSAGE_FORMS: Partial<Record<Intl.LDMLPluralRule, string>> = {

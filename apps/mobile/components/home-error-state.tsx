@@ -1,4 +1,5 @@
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { currentApiBase } from "../lib/api";
 import { useI18n } from "../lib/i18n";
 import { native, useResolvedAppearance, useThemedStyles } from "../lib/native";
 import type { LoadFailureKind } from "../lib/user-error";
@@ -18,6 +19,7 @@ export function HomeErrorState({
   message,
   loading,
   onRetry,
+  onChooseServer,
 }: {
   kind: LoadFailureKind;
   /** Shown under the title only when the cause is unknown. */
@@ -25,6 +27,8 @@ export function HomeErrorState({
   /** A retry is in flight: the failure stays, with a spinner in place of the action. */
   loading: boolean;
   onRetry: () => void;
+  /** Present when the user can point the app at another server; a rejected session needs it. */
+  onChooseServer?: () => void;
 }) {
   const { t } = useI18n();
   const styles = useThemedStyles(createStyles);
@@ -34,11 +38,24 @@ export function HomeErrorState({
     kind === "offline"
       ? t("Could not reach the server")
       : kind === "session"
-        ? t("Your session expired")
+        ? t("Could not sign in")
         : kind === "server"
           ? t("The server had a problem")
           : t("Could not load chats");
-  const detail = kind === "other" && message !== title ? message : null;
+  // The address is what both failures are usually about, so name it.
+  const detail =
+    kind === "session"
+      ? t(
+          "This server did not accept the app at {server}. Check the address, or choose another server.",
+          { server: currentApiBase() },
+        )
+      : kind === "offline"
+        ? t("No answer from {server}. Check the address, or choose another server.", {
+            server: currentApiBase(),
+          })
+        : kind === "other" && message !== title
+          ? message
+          : null;
   return (
     <View accessibilityRole="alert" style={styles.container}>
       <View style={styles.icon}>
@@ -50,22 +67,20 @@ export function HomeErrorState({
         <View style={styles.action}>
           <ActivityIndicator color={native.secondaryLabel} />
         </View>
-      ) : kind === "session" ? (
-        // No sign-in screen to send anyone to; the action asks the server for a fresh session.
-        <View style={styles.action}>
-          <NativeActionButton label={t("Try again")} fill={false} onPress={onRetry} />
-        </View>
-      ) : kind !== "server" ? (
+      ) : kind === "server" ? null : (
         // A server fault is not fixed by retrying right away; pull to refresh still reloads.
-        <View style={styles.action}>
+        <View style={styles.actions}>
+          {onChooseServer ? (
+            <NativeActionButton label={t("Choose a server")} onPress={onChooseServer} />
+          ) : null}
           <NativeActionButton
             label={t("Try again")}
-            prominence="secondary"
-            size="compact"
+            prominence={onChooseServer ? "plain" : "secondary"}
+            size={onChooseServer ? "compact" : "default"}
             onPress={onRetry}
           />
         </View>
-      ) : null}
+      )}
     </View>
   );
 }
@@ -97,5 +112,7 @@ function createStyles() {
     icon: { opacity: 0.75 },
     // Fixed height so swapping the button for the spinner does not move the text.
     action: { marginTop: 8, minHeight: 34, justifyContent: "center" },
+    // Recovery can need two ways out, so they stack instead of sharing one row.
+    actions: { marginTop: 8, alignItems: "center", gap: 4 },
   });
 }

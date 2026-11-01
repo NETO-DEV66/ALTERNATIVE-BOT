@@ -3,7 +3,7 @@
     "name": "Alternative Bot",
     "slug": "alternativebot",
     "scheme": "alternativebot",
-    "version": "1.0.11",
+    "version": "1.0.12",
     "orientation": "default",
     "userInterfaceStyle": "automatic",
     "icon": "./assets/icon.png",
@@ -100,7 +100,7 @@
     },
     "android": {
       "package": "com.alternativebot.app",
-      "versionCode": 10,
+      "versionCode": 11,
       "softwareKeyboardLayoutMode": "resize",
       "icon": "./assets/icon.png",
       "adaptiveIcon": {

@@ -1218,6 +1218,11 @@ export const JA_MESSAGES: Record<string, string> = {
   "1 free month earned": "1か月分の無料期間を獲得",
   "{count} free months earned": "{count}か月分の無料期間を獲得",
   "Submit a plugin": "プラグインを申請",
+  "Choose a server": "サーバーを選択",
+  "This server did not accept the app at {server}. Check the address, or choose another server.":
+    "このサーバーは {server} のアプリを受け付けませんでした。アドレスを確認するか、別のサーバーを選択してください。",
+  "No answer from {server}. Check the address, or choose another server.":
+    "{server} から応答がありません。アドレスを確認するか、別のサーバーを選択してください。",
 };
 
 export const PEER_MESSAGE_FORMS = { other: "{peer}とのメッセージ{count}件" };

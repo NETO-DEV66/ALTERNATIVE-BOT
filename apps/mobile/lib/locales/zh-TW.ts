@@ -1199,6 +1199,11 @@ export const ZH_TW_MESSAGES: Record<string, string> = {
   "1 free month earned": "已獲得 1 個月免費",
   "{count} free months earned": "已獲得 {count} 個月免費",
   "Submit a plugin": "提交外掛程式",
+  "Choose a server": "選擇伺服器",
+  "This server did not accept the app at {server}. Check the address, or choose another server.":
+    "此伺服器未接受位於 {server} 的應用程式。請檢查位址，或選擇其他伺服器。",
+  "No answer from {server}. Check the address, or choose another server.":
+    "沒有收到來自 {server} 的回應。請檢查位址，或選擇其他伺服器。",
 };
 
 export const PEER_MESSAGE_FORMS = { other: "與{peer}的 {count} 則訊息" };

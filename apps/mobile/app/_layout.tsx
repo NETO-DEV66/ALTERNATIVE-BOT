@@ -316,13 +316,11 @@ function LayoutContent() {
     if (!ready) return;
     // A session revoked or expired on the server ends here, from whichever screen noticed it.
     // Ask the server for a fresh one first: a single-user server issues it on request, and
-    // only a multi-user server leaves the app on the inbox's expired-session retry.
+    // only a server that refuses leaves the app on the inbox's recovery screen.
     return subscribeSessionRejected(() => {
-      void requestLocalSession()
-        .catch(() => false)
-        .then((restored) => {
-          if (!restored) router.dismissTo("/");
-        });
+      void requestLocalSession().then((restored) => {
+        if (!restored) router.dismissTo("/");
+      });
     });
   }, [ready, router]);
 

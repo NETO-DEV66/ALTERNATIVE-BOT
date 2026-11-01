@@ -627,24 +627,26 @@ export async function passwordResetCapabilities(): Promise<PasswordResetCapabili
  * already sends keeps working.
  */
 export async function requestLocalSession(): Promise<boolean> {
-  const { response, body, invalidJson } = await fetchMobileJson<unknown>(
-    `${currentApiBase()}/api/auth/local-session`,
-    {
-      method: "POST",
-      headers: { "content-type": "application/json", origin: "alternativebot://" },
-      body: "{}",
-    },
-  );
-  if (!response.ok || invalidJson) return false;
-  const token = tokenFromAuthResponse(response, body);
-  if (!token) return false;
   try {
+    const { response, body, invalidJson } = await fetchMobileJson<unknown>(
+      `${currentApiBase()}/api/auth/local-session`,
+      {
+        method: "POST",
+        headers: { "content-type": "application/json", origin: "alternativebot://" },
+        body: "{}",
+      },
+    );
+    if (!response.ok || invalidJson) return false;
+    const token = tokenFromAuthResponse(response, body);
+    if (!token) return false;
     if (!(await clearSpace())) return false;
     await saveSessionToken(token);
+    return true;
   } catch {
+    // A refusal and an unreachable server both return false; `isServerReachable`
+    // tells them apart for the caller that has to word the failure.
     return false;
   }
-  return true;
 }
 
 export async function requestPasswordReset(email: string, redirectTo: string): Promise<void> {

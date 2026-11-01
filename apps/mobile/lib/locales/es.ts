@@ -1137,6 +1137,11 @@ export const ES_MESSAGES: Record<string, string> = {
   "Use email code": "Usar código por correo",
   "Use password": "Usar contraseña",
   "{count} messages with {peer}": "{count} mensajes con {peer}",
+  "Choose a server": "Elegir un servidor",
+  "This server did not accept the app at {server}. Check the address, or choose another server.":
+    "Este servidor no aceptó la aplicación en {server}. Comprueba la dirección o elige otro servidor.",
+  "No answer from {server}. Check the address, or choose another server.":
+    "No hay respuesta de {server}. Comprueba la dirección o elige otro servidor.",
 };
 
 export const PEER_MESSAGE_FORMS: Partial<Record<Intl.LDMLPluralRule, string>> = {

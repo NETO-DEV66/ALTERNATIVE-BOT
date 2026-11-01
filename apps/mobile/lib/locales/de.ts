@@ -1194,6 +1194,11 @@ export const DE_MESSAGES: Record<string, string> = {
   "1 free month earned": "1 Gratismonat verdient",
   "{count} free months earned": "{count} Gratismonate verdient",
   "Submit a plugin": "Plugin einreichen",
+  "Choose a server": "Server auswählen",
+  "This server did not accept the app at {server}. Check the address, or choose another server.":
+    "Dieser Server hat die App unter {server} nicht akzeptiert. Prüfe die Adresse oder wähle einen anderen Server.",
+  "No answer from {server}. Check the address, or choose another server.":
+    "Keine Antwort von {server}. Prüfe die Adresse oder wähle einen anderen Server.",
 };
 
 export const PEER_MESSAGE_FORMS: Partial<Record<Intl.LDMLPluralRule, string>> = {
