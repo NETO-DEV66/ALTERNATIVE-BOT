@@ -1,8 +1,8 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import type { LinkFavicons } from "@alternativebot/chat-ui/web";
 import { LinkFaviconsContext, RemoteImagesContext } from "@alternativebot/chat-ui/web";
 import { analyticsScreen } from "@alternativebot/core";
 import { Button } from "@alternativebot/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import {
   Suspense,
   useEffect,
@@ -20,6 +20,7 @@ import { authClient } from "./lib/auth";
 import { getTicketBoardEnabled, subscribeTicketBoardEnabled } from "./lib/bootstrap";
 import { syncCallIdentity } from "./lib/call-session";
 import { desktopBridge } from "./lib/desktop";
+import { bootstrapLocalSession } from "./lib/local-session";
 import { syncWebLogoAvatarIdentity } from "./lib/logo-avatar-activity";
 import { identifyMonitoringUser } from "./lib/monitoring";
 import { markAfterPaint, markOnce } from "./lib/performance";
@@ -144,6 +145,19 @@ function SessionApp() {
       .catch(() => undefined);
   }, [analyticsUserId, screen]);
   const gate = sessionGate(session);
+  const [localSessionChecked, setLocalSessionChecked] = useState(false);
+  const localSessionStarted = useRef(false);
+  useEffect(() => {
+    // A single-user server has no sign-in page to show: claim its session before the
+    // gate settles, then let the refetch below pick it up. `session` is a new object on
+    // every render, so the ref is what keeps this to one attempt.
+    if (gate !== "anonymous" || localSessionStarted.current) return;
+    localSessionStarted.current = true;
+    void bootstrapLocalSession()
+      .then(() => session.refetch())
+      .catch(() => undefined)
+      .finally(() => setLocalSessionChecked(true));
+  }, [gate, session]);
   useLayoutEffect(() => {
     if (gate !== "authenticated" && gate !== "anonymous") return;
     syncWebLogoAvatarIdentity(analyticsUserId ?? null);
@@ -170,6 +184,11 @@ function SessionApp() {
     return <SessionUnavailable refetch={session.refetch} />;
   }
   if (gate === "loading" && !nextHoldingAnonymous) {
+    return <PageLoading data-alternativebot-app-state="session-pending" />;
+  }
+  // Single-user servers answer the request above; hold the loading state until it does
+  // so the sign-in page never flashes before the session arrives.
+  if (gate === "anonymous" && !localSessionChecked) {
     return <PageLoading data-alternativebot-app-state="session-pending" />;
   }
 
@@ -250,15 +269,7 @@ function SessionApp() {
                   )
                 }
               />
-              <Route
-                element={
-                  user ? (
-                    <Outlet />
-                  ) : (
-                    <Navigate to="/sign-in" replace />
-                  )
-                }
-              >
+              <Route element={user ? <Outlet /> : <Navigate to="/sign-in" replace />}>
                 <Route path="/onboarding/:step?" element={<OnboardingPage />} />
                 <Route path="/app" element={<ShellPage />} />
                 <Route path="/app/g/:groupId" element={<ShellPage />} />

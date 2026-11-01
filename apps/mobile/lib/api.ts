@@ -525,7 +525,9 @@ export type ApiRequestContext = {
 
 /** Keeps consent prompts separate across servers and the selected Space. */
 export function aiConsentCoalesceKey(requestContext: ApiRequestContext): string {
-  return [requestContext.apiBase, requestContext.headers["x-alternativebot-space-id"] ?? ""].join("\u0000");
+  return [requestContext.apiBase, requestContext.headers["x-alternativebot-space-id"] ?? ""].join(
+    "\u0000",
+  );
 }
 
 /** Pins a request to the current server and session, and to a Space (the selected one by default). */
@@ -617,6 +619,32 @@ export async function passwordResetCapabilities(): Promise<PasswordResetCapabili
   );
   if (!response.ok) throw new Error(t("Could not load sign-in options"));
   return authCapabilitiesSchema.or(legacyAuthCapabilitiesSchema).parse(body);
+}
+
+/**
+ * Asks a single-user server for the session it owns and stores the bearer it returns.
+ * The token is the signed cookie value, so the same `Authorization` header the app
+ * already sends keeps working.
+ */
+export async function requestLocalSession(): Promise<boolean> {
+  const { response, body, invalidJson } = await fetchMobileJson<unknown>(
+    `${currentApiBase()}/api/auth/local-session`,
+    {
+      method: "POST",
+      headers: { "content-type": "application/json", origin: "alternativebot://" },
+      body: "{}",
+    },
+  );
+  if (!response.ok || invalidJson) return false;
+  const token = tokenFromAuthResponse(response, body);
+  if (!token) return false;
+  try {
+    if (!(await clearSpace())) return false;
+    await saveSessionToken(token);
+  } catch {
+    return false;
+  }
+  return true;
 }
 
 export async function requestPasswordReset(email: string, redirectTo: string): Promise<void> {

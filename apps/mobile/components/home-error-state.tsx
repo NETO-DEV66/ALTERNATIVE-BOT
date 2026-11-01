@@ -18,7 +18,6 @@ export function HomeErrorState({
   message,
   loading,
   onRetry,
-  onSignIn,
 }: {
   kind: LoadFailureKind;
   /** Shown under the title only when the cause is unknown. */
@@ -26,7 +25,6 @@ export function HomeErrorState({
   /** A retry is in flight: the failure stays, with a spinner in place of the action. */
   loading: boolean;
   onRetry: () => void;
-  onSignIn: () => void;
 }) {
   const { t } = useI18n();
   const styles = useThemedStyles(createStyles);
@@ -53,8 +51,9 @@ export function HomeErrorState({
           <ActivityIndicator color={native.secondaryLabel} />
         </View>
       ) : kind === "session" ? (
+        // No sign-in screen to send anyone to; the action asks the server for a fresh session.
         <View style={styles.action}>
-          <NativeActionButton label={t("Sign in")} fill={false} onPress={onSignIn} />
+          <NativeActionButton label={t("Try again")} fill={false} onPress={onRetry} />
         </View>
       ) : kind !== "server" ? (
         // A server fault is not fixed by retrying right away; pull to refresh still reloads.

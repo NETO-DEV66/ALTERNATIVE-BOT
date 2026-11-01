@@ -1,14 +1,7 @@
 import type { RunActivityRow, SpaceBot, SpaceGroup } from "@alternativebot/contracts";
 import { accountDisplay, isRetryableError } from "@alternativebot/core";
 import type { Href } from "expo-router";
-import {
-  Redirect,
-  useFocusEffect,
-  useGlobalSearchParams,
-  useIsFocused,
-  usePathname,
-  useRouter,
-} from "expo-router";
+import { useGlobalSearchParams, useIsFocused, usePathname, useRouter } from "expo-router";
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import type { ViewToken } from "react-native";
 import {
@@ -39,6 +32,7 @@ import type { MobileBot, MobileBotSection, MobileGroup, MobileMe, MobileSpace } 
 import {
   currentApiBase,
   loadSessionToken,
+  requestLocalSession,
   rpc,
   selectedSpaceId,
   selectInitialSpace,
@@ -78,7 +72,6 @@ import { native, useThemedStyles } from "../lib/native";
 import { iosAtLeast } from "../lib/native-controls";
 import type { OrganizeTarget } from "../lib/organize-target";
 import { findOrganizeTarget } from "../lib/organize-target";
-import { offerPasskeyOnce } from "../lib/passkey";
 import { ACTIVITY_POLL_INTERVAL_MS, INBOX_POLL_INTERVAL_MS } from "../lib/poll-cadence";
 import { registerPushToken } from "../lib/push";
 import { loadSavedInbox, saveInbox } from "../lib/saved-chats";
@@ -189,18 +182,6 @@ function Home({ embedded, onSelectSpace, onShareSelect }: InboxPaneProps & { emb
     void loadActivityMode().then(setActivityMode);
   }, []);
 
-  // Only while the inbox is in front, so the offer waits until signup setup is done.
-  useFocusEffect(
-    useCallback(() => {
-      if (!userId) return;
-      let active = true;
-      void offerPasskeyOnce(userId, () => active);
-      return () => {
-        active = false;
-      };
-    }, [userId]),
-  );
-
   const toggleActivityMode = useCallback(() => {
     setActivityMode((on) => {
       const next = !on;
@@ -290,7 +271,13 @@ function Home({ embedded, onSelectSpace, onShareSelect }: InboxPaneProps & { emb
   }, [loadBots]);
 
   useEffect(() => {
-    void loadSessionToken().then((token) => {
+    void loadSessionToken().then(async (token) => {
+      if (!token) {
+        // The server signs this client in itself, so the app opens on the inbox. A
+        // server that refuses leaves the app on the expired-session retry below.
+        await requestLocalSession().catch(() => false);
+        token = await loadSessionToken();
+      }
       setHasSession(Boolean(token));
       setSessionLoaded(true);
     });
@@ -529,11 +516,18 @@ function Home({ embedded, onSelectSpace, onShareSelect }: InboxPaneProps & { emb
     },
     [embedded, pathname, router],
   );
-  const signInAgain = useCallback(async () => {
+  const renewSession = useCallback(async () => {
     // A rejected session cannot sign out on the server; clearing it here is what matters.
     await signOut().catch(() => undefined);
-    router.replace("/sign-in");
-  }, [router]);
+    // The server hands out a fresh session on request. A multi-user server refuses,
+    // and the retry screen keeps offering to try again.
+    if (await requestLocalSession().catch(() => false)) {
+      setHasSession(true);
+      setSessionLoaded(true);
+      return;
+    }
+    setLoadFailure({ kind: "session", message: t("Your session expired") });
+  }, []);
 
   const chooseInboxSpace = useCallback(
     async (spaceId: string) => {
@@ -757,7 +751,20 @@ function Home({ embedded, onSelectSpace, onShareSelect }: InboxPaneProps & { emb
       </View>
     );
   }
-  if (!hasSession) return <Redirect href="/sign-in" />;
+  if (!hasSession) {
+    // Single-user servers answer the request above, so this is the multi-user case:
+    // the server wants a credential this build does not collect.
+    return (
+      <View style={[styles.screen, styles.centered]}>
+        <HomeErrorState
+          kind="session"
+          message={t("Your session expired")}
+          loading={false}
+          onRetry={() => void renewSession()}
+        />
+      </View>
+    );
+  }
   // With nothing to show, the failure takes the screen; over saved chats it stays one line.
   // Headings of empty saved Spaces are not chats, so they do not hide the failure.
   const showLoadFailure = Boolean(loadFailure) && inboxHasNoChats(listData);
@@ -834,8 +841,9 @@ function Home({ embedded, onSelectSpace, onShareSelect }: InboxPaneProps & { emb
                       kind={loadFailure.kind}
                       message={loadFailure.message}
                       loading={inboxLoading && !refreshing}
-                      onRetry={() => void refreshBots()}
-                      onSignIn={() => void signInAgain()}
+                      onRetry={() =>
+                        loadFailure.kind === "session" ? void renewSession() : void refreshBots()
+                      }
                     />
                   ) : (
                     <Text style={styles.empty}>

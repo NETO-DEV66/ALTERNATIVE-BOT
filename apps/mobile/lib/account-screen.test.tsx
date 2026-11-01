@@ -1,15 +1,11 @@
 // @vitest-environment jsdom
 
-import type { AccountSecurity } from "@alternativebot/contracts";
 import type { ReactNode } from "react";
 import { act, createElement, useEffect } from "react";
 import type { Root } from "react-dom/client";
 import { createRoot } from "react-dom/client";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import Account from "../app/(settings)/account";
-import { deleteAccount, fetchAccountSecurity, requestAccountDeletionCode } from "./api";
-import { replaceWithSignIn } from "./auth-routing";
-import { promptAccountDeletion } from "./delete-account-prompt";
 import { registerSettingsSheet } from "./settings-sheet";
 
 type Pressed = {
@@ -168,11 +164,8 @@ vi.mock("../components/settings-group", () => ({
 }));
 vi.mock("./api", () => ({
   currentApiBase: () => "http://127.0.0.1:3100",
-  deleteAccount: vi.fn(),
-  fetchAccountSecurity: vi.fn(async () => ({ hasPassword: true })),
   loadSessionToken: vi.fn(async () => "token"),
   passwordResetCapabilities: vi.fn(async () => ({})),
-  requestAccountDeletionCode: vi.fn(),
   rpc: vi.fn(async (method: string) =>
     method === "me"
       ? account.me
@@ -183,7 +176,6 @@ vi.mock("./api", () => ({
           : {},
   ),
   selectedSpaceId: () => "space-1",
-  signOut: vi.fn(),
   updateAccountName: vi.fn(),
 }));
 vi.mock("./app-version", () => ({
@@ -199,8 +191,6 @@ vi.mock("./archived-chats", () => ({
   archivedChatCounts: () => ({ bots: 0, groups: 0 }),
   loadArchivedChats: vi.fn(async () => ({ bots: [], groups: [] })),
 }));
-vi.mock("./auth-routing", () => ({ replaceWithSignIn: vi.fn() }));
-vi.mock("./delete-account-prompt", () => ({ promptAccountDeletion: vi.fn() }));
 vi.mock("./i18n", () => {
   // Stable across renders, as the real hook's is.
   const i18n = { t: (text: string) => text, locale: "en" };
@@ -221,13 +211,6 @@ vi.mock("./native", () => ({
   useResolvedAppearance: () => "light",
   useThemedStyles: () => styles,
 }));
-vi.mock("./passkey", () => ({
-  addPasskey: vi.fn(),
-  deletePasskey: vi.fn(),
-  listPasskeys: vi.fn(async () => []),
-  passkeysAvailable: vi.fn(async () => false),
-  renamePasskey: vi.fn(),
-}));
 vi.mock("./push", () => ({ registerPushToken: vi.fn() }));
 vi.mock("./queued-save", () => ({ createQueuedSave: () => ({ save: vi.fn() }) }));
 vi.mock("./remote-images-preference", () => ({
@@ -241,7 +224,6 @@ vi.mock("./response-streaming", () => ({
   subscribeResponseStreaming: () => () => undefined,
 }));
 vi.mock("./section-name-prompt", () => ({ promptSectionName: vi.fn() }));
-vi.mock("./sso", () => ({ continueWithSso: vi.fn() }));
 const trusted = vi.hoisted(() => ({
   sites: [] as string[],
   remove: vi.fn(async (_site: string) => undefined),
@@ -254,17 +236,6 @@ vi.mock("./trusted-link-sites", () => ({
 vi.mock("./ui-locale", () => ({ UI_LOCALE_LABELS: { en: "English" } }));
 vi.mock("./user-error", () => ({ errorText: (_: unknown, fallback: string) => fallback }));
 
-function security(overrides: Partial<AccountSecurity> = {}): AccountSecurity {
-  return {
-    hasPassword: true,
-    freshOidcAuth: false,
-    ssoLinked: false,
-    emailDeletion: false,
-    sso: null,
-    ...overrides,
-  };
-}
-
 let root: Root | undefined;
 let container: HTMLDivElement | undefined;
 
@@ -272,7 +243,6 @@ beforeEach(() => {
   vi.clearAllMocks();
   account.me = { userId: "user-1", name: "Tester", email: "tester@example.test" };
   account.rules = [];
-  vi.mocked(fetchAccountSecurity).mockResolvedValue(security());
 });
 
 afterEach(() => {
@@ -327,111 +297,6 @@ async function renderAccount() {
   };
 }
 
-it("asks for the current password, shows a failed delete, and signs out after a successful one", async () => {
-  const view = await renderAccount();
-  await view.press("Delete account");
-  const input = view.screen.querySelector<HTMLInputElement>('input[aria-label="Current password"]');
-  expect(input?.type).toBe("password");
-  expect(view.button("Delete")?.disabled).toBe(true);
-
-  vi.mocked(deleteAccount).mockRejectedValueOnce(new Error("wrong password"));
-  await view.type("Current password", "hunter2");
-  await view.press("Delete");
-  expect(deleteAccount).toHaveBeenCalledWith("hunter2");
-  expect(view.alert()).toBe("Could not delete account");
-  expect(replaceWithSignIn).not.toHaveBeenCalled();
-
-  await view.type("Current password", "correct horse");
-  expect(view.alert()).toBeNull();
-  await view.press("Delete");
-  expect(deleteAccount).toHaveBeenLastCalledWith("correct horse");
-  expect(replaceWithSignIn).toHaveBeenCalledWith("/sign-in");
-  expect(view.screen.querySelector("section")).toBeNull();
-});
-
-it("deletes with the password from the native prompt when one is shown", async () => {
-  vi.mocked(promptAccountDeletion).mockReturnValueOnce(true);
-  const view = await renderAccount();
-  await view.press("Delete account");
-  expect(view.screen.querySelector("section")).toBeNull();
-  const [{ onSubmit }] = vi.mocked(promptAccountDeletion).mock.calls[0]!;
-  await act(async () => onSubmit("hunter2"));
-  expect(deleteAccount).toHaveBeenCalledWith("hunter2");
-  expect(replaceWithSignIn).toHaveBeenCalledWith("/sign-in");
-});
-
-it("refreshes an expired sign-in proof and keeps the deletion dialog open", async () => {
-  vi.mocked(fetchAccountSecurity).mockResolvedValue(
-    security({ hasPassword: false, freshOidcAuth: true, sso: { name: "Example SSO" } }),
-  );
-  const view = await renderAccount();
-  await view.press("Delete account");
-  // The proof expires while the dialog is open.
-  vi.mocked(fetchAccountSecurity).mockResolvedValue(
-    security({ hasPassword: false, freshOidcAuth: false, sso: { name: "Example SSO" } }),
-  );
-  await view.press("Delete");
-  expect(deleteAccount).not.toHaveBeenCalled();
-  expect(replaceWithSignIn).not.toHaveBeenCalled();
-  expect(view.screen.querySelector("section")).not.toBeNull();
-  expect(view.button("Sign in again")?.disabled).toBe(false);
-  expect(view.button("Delete")?.disabled).toBe(true);
-});
-
-it("deletes with a still-fresh sign-in proof", async () => {
-  vi.mocked(fetchAccountSecurity).mockResolvedValue(
-    security({ hasPassword: false, freshOidcAuth: true }),
-  );
-  const view = await renderAccount();
-  await view.press("Delete account");
-  await view.press("Delete");
-  expect(deleteAccount).toHaveBeenCalledWith(undefined, undefined);
-  expect(replaceWithSignIn).toHaveBeenCalledWith("/sign-in");
-});
-
-it("submits only a trimmed deletion code, never whitespace", async () => {
-  vi.mocked(fetchAccountSecurity).mockResolvedValue(
-    security({ hasPassword: false, emailDeletion: true }),
-  );
-  const view = await renderAccount();
-  await view.press("Delete account");
-  await view.press("Send deletion code");
-  expect(requestAccountDeletionCode).toHaveBeenCalledOnce();
-  const input = view.screen.querySelector<HTMLInputElement>('input[aria-label="Deletion code"]');
-  expect(input?.type).toBe("text");
-
-  await view.type("Deletion code", "   ");
-  expect(view.button("Delete")?.disabled).toBe(true);
-  await view.press("Delete");
-  expect(deleteAccount).not.toHaveBeenCalled();
-
-  await view.type("Deletion code", " 123456 ");
-  await view.press("Delete");
-  expect(deleteAccount).toHaveBeenCalledWith(undefined, "123456");
-  expect(replaceWithSignIn).toHaveBeenCalledWith("/sign-in");
-});
-
-it.each([undefined, true, false])(
-  "respects the password-change policy (%s) while keeping password deletion",
-  async (passwordChangeEnabled) => {
-    vi.mocked(fetchAccountSecurity).mockResolvedValue(security({ passwordChangeEnabled }));
-    const view = await renderAccount();
-    expect(Boolean(view.button("Change password"))).toBe(passwordChangeEnabled !== false);
-    await view.press("Delete account");
-    await view.type("Current password", "hunter2");
-    await view.press("Delete");
-    expect(deleteAccount).toHaveBeenCalledWith("hunter2");
-  },
-);
-
-it("hides password change from an account without a password", async () => {
-  vi.mocked(fetchAccountSecurity).mockResolvedValue(
-    security({ hasPassword: false, passwordChangeEnabled: true }),
-  );
-  const view = await renderAccount();
-  expect(view.button("Change password")).toBeUndefined();
-});
-
 it.each([false, true])(
   "keeps account navigation free of server controls (stored owner: %s)",
   async (isDeploymentOwner) => {
@@ -475,13 +340,6 @@ it.each([false, true])(
         await view.press(title!);
         expect(events).toEqual([href]);
       }
-
-      // The links wait while a deletion is in flight.
-      vi.mocked(deleteAccount).mockReturnValueOnce(new Promise(() => undefined));
-      await view.press("Delete account");
-      await view.type("Current password", "hunter2");
-      await view.press("Delete");
-      expect(view.button("Artifacts")!.disabled).toBe(true);
     } finally {
       unregister();
     }

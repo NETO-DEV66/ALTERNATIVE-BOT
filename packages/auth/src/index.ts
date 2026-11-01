@@ -1,5 +1,3 @@
-import { expo } from "@better-auth/expo";
-import { passkey } from "@better-auth/passkey";
 import type { ProductAnalytics, TransactionalEmailProvider } from "@alternativebot/adapter-kit";
 import {
   displayName,
@@ -10,7 +8,13 @@ import {
   signupPolicyFromEnv,
 } from "@alternativebot/core";
 import type { PrismaClient, SecurityEventType } from "@alternativebot/db";
-import { bootstrapUserSpace, personalOrganizationIds, recordSecurityEvent } from "@alternativebot/db";
+import {
+  bootstrapUserSpace,
+  personalOrganizationIds,
+  recordSecurityEvent,
+} from "@alternativebot/db";
+import { expo } from "@better-auth/expo";
+import { passkey } from "@better-auth/passkey";
 import type { BetterAuthOptions, BetterAuthPlugin } from "better-auth";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
@@ -36,6 +40,8 @@ import {
 import { breachedPasswordCheck } from "./breached-password.js";
 import { passwordResetEmail, signInCodeEmail, verificationEmail } from "./email.js";
 import { hasRecentIdentityConfirmation, identityConfirmation } from "./identity-confirmation.js";
+import type { LocalSessionEnv } from "./local-session.js";
+import { localSession } from "./local-session.js";
 import type { OidcConfig } from "./oidc.js";
 import { isCurrentOidcAccount, oidcDiscovery } from "./oidc.js";
 import { passkeyRelyingParty } from "./passkey.js";
@@ -64,6 +70,11 @@ export interface AuthEnv {
   signupsEnabled: string | undefined;
   signupAllowlist: string | undefined;
   extraOrigins?: string[];
+  /**
+   * Single-user mode: the client asks for the session instead of presenting a
+   * credential. Sign-in, sign-up, passkey, OIDC, and password routes stay closed.
+   */
+  localSession?: LocalSessionEnv;
   /** SHA-256 signing certificate fingerprints of Android apps allowed to use this server's passkeys. */
   androidAppCertFingerprints?: string[];
   email?: TransactionalEmailProvider;
@@ -140,16 +151,18 @@ export function authRateLimitOptions(nodeEnv = process.env.NODE_ENV) {
 }
 
 export function createAuth(prisma: PrismaClient, env: AuthEnv) {
-  if (env.passwordAuth === false && !env.oidc)
+  if (env.passwordAuth === false && !env.oidc && !env.localSession)
     throw new Error("Password auth requires OIDC when disabled");
   const discovery = env.oidc ? oidcDiscovery(env.oidc) : undefined;
+  // Single-user mode has no credential to collect, so every credential surface stays off.
+  const credentialAuth = env.localSession ? false : env.passwordAuth !== false;
   // SSO-only deployments keep every email credential closed, codes included.
-  const emailCodeSignIn = Boolean(env.email) && env.passwordAuth !== false;
+  const emailCodeSignIn = Boolean(env.email) && credentialAuth && !env.localSession;
   // SSO-only deployments keep the identity provider as the only way in.
   const relyingParty =
-    env.passwordAuth === false
-      ? null
-      : passkeyRelyingParty(env.webOrigin, env.androidAppCertFingerprints);
+    credentialAuth && !env.localSession
+      ? passkeyRelyingParty(env.webOrigin, env.androidAppCertFingerprints)
+      : null;
   // Better Auth's own token key, so every stored token shares one cipher and key.
   let authContext: Promise<{ secretConfig: TokenKey }> | undefined;
   const tokenKey = async () => (await authContext!).secretConfig;
@@ -179,7 +192,7 @@ export function createAuth(prisma: PrismaClient, env: AuthEnv) {
     advanced: { ipAddress: { ipAddressHeaders: [CLIENT_IP_HEADER] } },
     database: prismaAdapter(prisma, { provider: "postgresql" }),
     emailAndPassword: {
-      enabled: env.passwordAuth !== false,
+      enabled: credentialAuth,
       // Signup policy is mutable deployment state, so the request hook below
       // enforces it instead of freezing an environment value at process start.
       disableSignUp: false,
@@ -279,7 +292,8 @@ export function createAuth(prisma: PrismaClient, env: AuthEnv) {
     plugins: [
       signedBearer,
       expo(),
-      accountSecurity(env.email, env.oidc?.name, env.oidc?.issuer, env.passwordAuth !== false),
+      ...(env.localSession ? [localSession(prisma, env.localSession)] : []),
+      accountSecurity(env.email, env.oidc?.name, env.oidc?.issuer, credentialAuth),
       identityConfirmation(env.email),
       ...(discovery ? [discovery.plugin] : []),
       ...(emailCodeSignIn
@@ -319,6 +333,10 @@ export function createAuth(prisma: PrismaClient, env: AuthEnv) {
     ],
     hooks: {
       before: createAuthMiddleware(async (ctx) => {
+        // Single-user deployments expose no credential surface: the client asks
+        // `/local-session` for the session and every other way in stays closed.
+        if (env.localSession && isLocalSessionBlockedPath(ctx.path ?? ""))
+          throw new APIError("NOT_FOUND");
         if (
           ctx.path === "/sign-in/social" &&
           ctx.body?.provider === "oidc" &&
@@ -355,7 +373,7 @@ export function createAuth(prisma: PrismaClient, env: AuthEnv) {
           }
         }
         if (
-          env.passwordAuth === false &&
+          !credentialAuth &&
           [...CREDENTIAL_PATHS, "/reset-password", "/change-password", "/set-password"].includes(
             ctx.path,
           )
@@ -639,7 +657,11 @@ export function createAuth(prisma: PrismaClient, env: AuthEnv) {
     ssoAvailability: () => discovery?.availability(),
     passkeyRpId: relyingParty?.rpID ?? null,
     hasRecentIdentityConfirmation: async (session: { sessionId: string; userId: string }) =>
-      hasRecentIdentityConfirmation((await auth.$context).internalAdapter, session),
+      // A single-user server has exactly one account and no credential to re-enter, so the
+      // session it issued is its own proof and sensitive reads never prompt.
+      env.localSession
+        ? true
+        : hasRecentIdentityConfirmation((await auth.$context).internalAdapter, session),
     issueAccountExportToken: async (userId: string) =>
       issueAccountExportToken((await auth.$context).internalAdapter, userId),
     consumeAccountExportToken: async (token: string) =>
@@ -768,6 +790,35 @@ export function loopbackTwinOrigins(origin: string): string[] {
  */
 export function isBlockedAuthPath(path: string): boolean {
   return path.startsWith("/organization");
+}
+
+/**
+ * Routes that collect a credential or an identity-provider redirect. A single-user
+ * deployment mints its session through `/local-session`, so every way in through a
+ * credential stays closed and no request can create a second account. Account
+ * management the apps still call (`/get-session`, `/sign-out`, `/delete-user`) is
+ * deliberately left open.
+ */
+const LOCAL_SESSION_BLOCKED_PATHS = [
+  "/sign-in",
+  "/sign-up",
+  "/passkey",
+  "/email-otp",
+  "/callback",
+  "/expo-authorization-proxy",
+  "/link-social",
+  "/request-password-reset",
+  "/reset-password",
+  "/change-password",
+  "/set-password",
+  "/send-verification-email",
+  "/verify-email",
+] as const;
+
+export function isLocalSessionBlockedPath(path: string): boolean {
+  return LOCAL_SESSION_BLOCKED_PATHS.some(
+    (blocked) => path === blocked || path.startsWith(`${blocked}/`),
+  );
 }
 
 function isOidcCallback(

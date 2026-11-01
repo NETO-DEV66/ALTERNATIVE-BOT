@@ -84,14 +84,6 @@ describe("share route", () => {
     expect(state.cancel).toHaveBeenCalledOnce();
     expect(state.dismissTo).toHaveBeenCalledWith("/");
   });
-  it("preserves the pending share while redirecting to sign-in", async () => {
-    await render();
-    const preventDefault = vi.fn();
-    state.beforeRemove?.({ preventDefault, data: { action: { payload: { name: "sign-in" } } } });
-    expect(state.cancel).not.toHaveBeenCalled();
-    expect(preventDefault).not.toHaveBeenCalled();
-    expect(state.dismissTo).not.toHaveBeenCalled();
-  });
   it("cancels on native back or dismissal", async () => {
     await render();
     const preventDefault = vi.fn();

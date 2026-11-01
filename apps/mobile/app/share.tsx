@@ -33,9 +33,6 @@ export default function ShareRoute() {
   useEffect(
     () =>
       navigation.addListener("beforeRemove", (event) => {
-        const payload = event.data.action.payload;
-        // Authentication temporarily replaces the picker; sign-in returns here with the share.
-        if (payload && "name" in payload && payload.name === "sign-in") return;
         if (selected.current || closing.current) return;
         event.preventDefault();
         close();

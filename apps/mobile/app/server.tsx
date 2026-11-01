@@ -48,7 +48,7 @@ export default function ServerScreen() {
     if (!active.current) return;
     active.current = false;
     if (router.canGoBack()) router.back();
-    else router.replace("/sign-in");
+    else router.replace("/");
   }
 
   const parsedDraft = normalizeApiBase(draft);

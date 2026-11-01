@@ -1,7 +1,6 @@
 import type { ComputerUpdate } from "@alternativebot/contracts";
 import { COMPUTER_UPDATE_STAGES } from "@alternativebot/contracts";
 import { computerUpdateNeedsAttention, computerUpdateStages } from "@alternativebot/core";
-import { usePathname } from "expo-router";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { ActivityIndicator, Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -16,15 +15,13 @@ export function ComputerUpdateProgress() {
   const { t } = useI18n();
   const tokens = useMobileTokens();
   const insets = useSafeAreaInsets();
-  const pathname = usePathname();
   const { updates, openId } = useSyncExternalStore(
     computerUpdates.subscribe,
     computerUpdates.getSnapshot,
   );
   const [error, setError] = useState(false);
   const [busy, setBusy] = useState(false);
-  const authenticated = !["/sign-in"].includes(pathname);
-  useEffect(() => (authenticated ? computerUpdates.watch() : undefined), [authenticated]);
+  useEffect(() => computerUpdates.watch(), []);
   const labels = [
     t("Getting ready"),
     t("Saving your workspace"),
@@ -45,7 +42,6 @@ export function ComputerUpdateProgress() {
           ? t("Updating Team Computer")
           : t("Updating {name}’s Computer", { name: update.name });
   const selected = updates.find((item) => item.id === openId);
-  if (!authenticated) return null;
   return (
     <>
       <View pointerEvents="box-none" style={[styles.pills, { top: insets.top + 8 }]}>

@@ -29,6 +29,12 @@ export { resolveCloudAgentProvider, resolveSandboxProvider } from "@alternativeb
 
 export interface AppEnv {
   passwordAuth?: boolean;
+  /**
+   * Single-user mode. When set, the server skips the sign-in form and mints a
+   * session for this one account; every credential route stays closed. Empty
+   * (the default) keeps the normal multi-user sign-in.
+   */
+  localAccountEmail?: string;
   /** Opt-in Have I Been Pwned check for new passwords. Default off: it calls an outside service. */
   breachedPasswordCheck?: boolean;
   oidc?: OidcConfig;
@@ -201,11 +207,19 @@ export function loadEnv(source: NodeJS.ProcessEnv = process.env): AppEnv {
         }
       : undefined;
   const authSecret = resolveAuthSecret(source);
+  // A self-hosted Alternative Bot belongs to the operator who runs it, so the server
+  // signs the apps in as one account and every credential route stays closed. Set
+  // ALTERNATIVEBOT_LOCAL_SESSION=false to run the multi-user sign-in instead.
+  const localSession = source.ALTERNATIVEBOT_LOCAL_SESSION !== "false";
+  const localAccountEmail = localSession
+    ? (optional(source.ALTERNATIVEBOT_LOCAL_ACCOUNT_EMAIL) ?? "local@alternativebot.app")
+    : undefined;
   const sandboxProvider = resolveSandboxProvider(source);
   const cloudAgentProvider = resolveCloudAgentProvider(source);
   const deploymentModel = resolveDeploymentModel(source);
   return {
     passwordAuth,
+    localAccountEmail,
     breachedPasswordCheck: source.AUTH_BREACHED_PASSWORD_CHECK_ENABLED === "true",
     oidc,
     nodeEnv: source.NODE_ENV ?? "",

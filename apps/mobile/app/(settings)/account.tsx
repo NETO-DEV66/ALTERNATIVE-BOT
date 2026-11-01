@@ -1,29 +1,15 @@
-import { MenuView } from "@expo/ui/community/menu";
-import type { AccountSecurity, UsageSummary } from "@alternativebot/contracts";
+import type { UsageSummary } from "@alternativebot/contracts";
 import { accountDisplay, displayName } from "@alternativebot/core";
+import { MenuView } from "@expo/ui/community/menu";
 import * as Notifications from "expo-notifications";
 import type { Href } from "expo-router";
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
-import {
-  ActivityIndicator,
-  Alert,
-  AppState,
-  KeyboardAvoidingView,
-  Modal,
-  Platform,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { Alert, AppState, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AppMark } from "../../components/app-mark";
 import { ApprovalModeRow, ApprovalRulesRow } from "../../components/approval-settings-rows";
 import { NameDialog } from "../../components/name-dialog";
-import { NativeActionButton } from "../../components/native-action-button";
 import { NativeSegmentedControl } from "../../components/native-segmented-control";
 import {
   SettingsGroup,
@@ -36,14 +22,9 @@ import { createAccountNameEditor } from "../../lib/account-name-editor";
 import type { MobileMe } from "../../lib/api";
 import {
   currentApiBase,
-  deleteAccount,
-  fetchAccountSecurity,
   loadSessionToken,
-  passwordResetCapabilities,
-  requestAccountDeletionCode,
   rpc,
   selectedSpaceId,
-  signOut,
   updateAccountName,
 } from "../../lib/api";
 import { formatUpdateLabel, getAppVersionInfo } from "../../lib/app-version";
@@ -54,8 +35,6 @@ import {
 } from "../../lib/appearance";
 import { useApprovalSettings } from "../../lib/approval-settings";
 import { archivedChatCounts, loadArchivedChats } from "../../lib/archived-chats";
-import { replaceWithSignIn } from "../../lib/auth-routing";
-import { promptAccountDeletion } from "../../lib/delete-account-prompt";
 import { dateLocaleForUi, useI18n } from "../../lib/i18n";
 import type { LiveNotificationSettings } from "../../lib/live-notifications";
 import {
@@ -68,14 +47,6 @@ import {
   setLiveNotificationSettings,
 } from "../../lib/live-notifications";
 import { native, useResolvedAppearance, useThemedStyles } from "../../lib/native";
-import type { MobilePasskey } from "../../lib/passkey";
-import {
-  addPasskey,
-  deletePasskey,
-  listPasskeys,
-  passkeysAvailable,
-  renamePasskey,
-} from "../../lib/passkey";
 import { registerPushToken } from "../../lib/push";
 import { createQueuedSave } from "../../lib/queued-save";
 import {
@@ -88,11 +59,9 @@ import {
   setResponseStreamingPreference,
   subscribeResponseStreaming,
 } from "../../lib/response-streaming";
-import { promptSectionName } from "../../lib/section-name-prompt";
 import { isSettingsLink, openFromSettingsSheet } from "../../lib/settings-sheet";
 import { ACCOUNT_SETTINGS } from "../../lib/settings-target";
 import { useSideInsets } from "../../lib/side-insets";
-import { continueWithSso } from "../../lib/sso";
 import {
   loadTrustedLinkSites,
   removeTrustedLinkSite,
@@ -134,18 +103,6 @@ export default function Account() {
     setNameDialogOpen,
   });
 
-  const [deleteOpen, setDeleteOpen] = useState(false);
-  const [security, setSecurity] = useState<AccountSecurity | null>(null);
-  const canChangePassword = security?.hasPassword && security.passwordChangeEnabled !== false;
-  const [deletionCodeSent, setDeletionCodeSent] = useState(false);
-  const [ssoReauthenticated, setSsoReauthenticated] = useState(false);
-  const [deletePassword, setDeletePassword] = useState("");
-  const [pending, setPending] = useState(false);
-  const deletionDisabled =
-    pending ||
-    (security?.hasPassword
-      ? !deletePassword
-      : !ssoReauthenticated && (!deletionCodeSent || !deletePassword.trim()));
   const [notifications, setNotifications] = useState<LiveNotificationSettings>(
     DEFAULT_LIVE_NOTIFICATION_SETTINGS,
   );
@@ -155,22 +112,6 @@ export default function Account() {
   > | null>(null);
   const [notificationPermission, setNotificationPermission] = useState<string | null>(null);
   const [notificationError, setNotificationError] = useState<string | null>(null);
-  const [signOutError, setSignOutError] = useState<string | null>(null);
-  const [deleteError, setDeleteError] = useState<string | null>(null);
-  const [passkeys, setPasskeys] = useState<MobilePasskey[] | null>(null);
-  const [passkeyPending, setPasskeyPending] = useState(false);
-  const [passkeyError, setPasskeyError] = useState<string | null>(null);
-  const [passkeyLoadError, setPasskeyLoadError] = useState<string | null>(null);
-  // A failed load keeps the section, with Add and a retry, instead of hiding it.
-  const loadPasskeys = useCallback(async () => {
-    setPasskeyLoadError(null);
-    try {
-      setPasskeys(await listPasskeys());
-    } catch (err) {
-      setPasskeys((current) => current ?? []);
-      setPasskeyLoadError(errorText(err, t("Could not continue")));
-    }
-  }, [t]);
   const colorScheme = useResolvedAppearance();
   const trustedSites = useTrustedLinkSites();
   const [archivedCount, setArchivedCount] = useState(0);
@@ -201,7 +142,6 @@ export default function Account() {
       key={href}
       accessibilityRole="button"
       chevron="right"
-      disabled={pending}
       // Artifacts lives on the root stack, so it closes the sheet before opening.
       onPress={() =>
         isSettingsLink(href) ? router.push(href) : openFromSettingsSheet(router, href)
@@ -313,18 +253,6 @@ export default function Account() {
     }, []),
   );
 
-  async function handleSignOut() {
-    setPending(true);
-    setSignOutError(null);
-    try {
-      await signOut();
-      replaceWithSignIn();
-    } catch (err) {
-      setSignOutError(errorText(err, t("Could not sign out")));
-      setPending(false);
-    }
-  }
-
   function updateNotifications(next: LiveNotificationSettings) {
     notificationQueue.current ??= createQueuedSave(notifications, {
       onChange: setNotifications,
@@ -354,128 +282,10 @@ export default function Account() {
     notificationQueue.current.update(next);
   }
 
-  async function securityAction(run: () => Promise<void>) {
-    setPending(true);
-    setDeleteError(null);
-    try {
-      await run();
-    } catch (err) {
-      setDeleteError(errorText(err, t("Could not continue")));
-    } finally {
-      setPending(false);
-    }
-  }
-  useEffect(() => {
-    void fetchAccountSecurity()
-      .then(setSecurity)
-      .catch(() => undefined);
-    void passwordResetCapabilities()
-      .then(async (capabilities) => {
-        if (await passkeysAvailable(capabilities)) await loadPasskeys();
-      })
-      .catch(() => undefined);
-  }, [loadPasskeys]);
-
-  async function passkeyAction(run: () => Promise<unknown>) {
-    setPasskeyPending(true);
-    setPasskeyError(null);
-    try {
-      await run();
-      await loadPasskeys();
-    } catch (err) {
-      setPasskeyError(errorText(err, t("Could not continue")));
-    } finally {
-      setPasskeyPending(false);
-    }
-  }
-
-  function passkeyMenuAction(passkey: MobilePasskey, name: string, action: string) {
-    if (action === "rename") {
-      promptSectionName({
-        title: t("Rename"),
-        cancelLabel: t("Cancel"),
-        submitLabel: t("Save"),
-        defaultValue: passkey.name ?? undefined,
-        onSubmit: (next) => void passkeyAction(() => renamePasskey(passkey.id, next)),
-      });
-    } else if (action === "delete") {
-      Alert.alert(t("Delete {name}?", { name }), undefined, [
-        { text: t("Cancel"), style: "cancel" },
-        {
-          text: t("Delete"),
-          style: "destructive",
-          onPress: () => void passkeyAction(() => deletePasskey(passkey.id)),
-        },
-      ]);
-    }
-  }
-
   function removeTrustedSite(site: string) {
     void removeTrustedLinkSite(site).catch((cause: unknown) =>
       Alert.alert(t("Could not continue"), errorText(cause, t("Try again."))),
     );
-  }
-
-  function closeDeletePrompt() {
-    if (pending) return;
-    setDeleteOpen(false);
-    setDeletePassword("");
-  }
-
-  async function requestDeletion() {
-    if (pending) return;
-    setDeleteError(null);
-    try {
-      const value = await fetchAccountSecurity();
-      setSecurity(value);
-      if (!value.hasPassword) {
-        setDeletePassword("");
-        setDeletionCodeSent(false);
-        setSsoReauthenticated(value.freshOidcAuth);
-        setDeleteOpen(true);
-        return;
-      }
-    } catch (err) {
-      setDeleteError(errorText(err, t("Could not continue")));
-      return;
-    }
-
-    const prompted = promptAccountDeletion({
-      title: t("Delete your account?"),
-      message: t(
-        "This permanently deletes your account, bots, conversations, memories, files, and saved connections. This cannot be undone.",
-      ),
-      cancelLabel: t("Cancel"),
-      deleteLabel: t("Delete"),
-      onSubmit: (password) => void handleDeletion(password, true),
-    });
-    if (!prompted) {
-      setDeletePassword("");
-      setDeleteOpen(true);
-    }
-  }
-
-  async function handleDeletion(password: string, hasPassword = security?.hasPassword === true) {
-    if ((!password && !ssoReauthenticated) || pending) return;
-    setPending(true);
-    setDeleteError(null);
-    try {
-      if (hasPassword) await deleteAccount(password);
-      else {
-        const current = await fetchAccountSecurity();
-        setSecurity(current);
-        setSsoReauthenticated(current.freshOidcAuth);
-        const token = deletionCodeSent ? password.trim() : undefined;
-        if (current.hasPassword || (!current.freshOidcAuth && !token)) return;
-        await deleteAccount(undefined, token);
-      }
-      setDeleteOpen(false);
-      replaceWithSignIn("/sign-in");
-    } catch (err) {
-      setDeleteError(errorText(err, t("Could not delete account")));
-    } finally {
-      setPending(false);
-    }
   }
 
   return (
@@ -512,95 +322,6 @@ export default function Account() {
           />
           {focus !== "usage" ? usageBlock : null}
         </SettingsGroup>
-
-        {(security?.sso && !security.ssoLinked) || canChangePassword ? (
-          <SettingsGroup>
-            {security?.sso && !security.ssoLinked ? (
-              <SettingsRow
-                accessibilityRole="button"
-                chevron="right"
-                disabled={pending}
-                dimmed={pending}
-                title={t("Link SSO")}
-                onPress={() =>
-                  void securityAction(async () => {
-                    if (await continueWithSso("link")) setSecurity(await fetchAccountSecurity());
-                  })
-                }
-              />
-            ) : null}
-            {canChangePassword ? (
-              <SettingsRow
-                accessibilityRole="button"
-                chevron="right"
-                onPress={() => router.push("/change-password")}
-                title={t("Change password")}
-              />
-            ) : null}
-          </SettingsGroup>
-        ) : null}
-
-        {passkeys ? (
-          <SettingsGroup accessibilityLabel={t("Passkeys")} label={t("Passkeys")}>
-            {passkeys.map((passkey) => {
-              const name = passkey.name ?? t("Passkey");
-              const created = passkey.createdAt ? new Date(passkey.createdAt) : null;
-              return (
-                <MenuView
-                  key={passkey.id}
-                  actions={[
-                    // Alert.prompt, which renames, exists only on iOS.
-                    ...(Platform.OS === "ios" ? [{ id: "rename", title: t("Rename") }] : []),
-                    { id: "delete", title: t("Delete"), attributes: { destructive: true } },
-                  ]}
-                  colorScheme={colorScheme}
-                  onPressAction={(event) =>
-                    passkeyMenuAction(passkey, name, event.nativeEvent.event)
-                  }
-                  title={name}
-                >
-                  <SettingsRow
-                    accessible
-                    accessibilityRole="button"
-                    detail={
-                      created && !Number.isNaN(created.getTime())
-                        ? created.toLocaleDateString(dateLocaleForUi(locale), {
-                            dateStyle: "medium",
-                          })
-                        : undefined
-                    }
-                    dimmed={passkeyPending}
-                    title={name}
-                  />
-                </MenuView>
-              );
-            })}
-            <SettingsRow
-              accessibilityRole="button"
-              disabled={passkeyPending}
-              dimmed={passkeyPending}
-              onPress={() => void passkeyAction(addPasskey)}
-              title={t("Add passkey")}
-            />
-            {passkeyLoadError ? (
-              <>
-                <Text accessibilityRole="alert" style={styles.error}>
-                  {passkeyLoadError}
-                </Text>
-                <SettingsRow
-                  accessibilityRole="button"
-                  onPress={() => void loadPasskeys()}
-                  title={t("Retry")}
-                />
-              </>
-            ) : null}
-            {passkeyError ? (
-              <Text accessibilityRole="alert" style={styles.error}>
-                {passkeyError}
-              </Text>
-            ) : null}
-          </SettingsGroup>
-        ) : null}
 
         {trustedSites.length > 0 ? (
           <SettingsGroup accessibilityLabel={t("Trusted sites")} label={t("Trusted sites")}>
@@ -710,12 +431,11 @@ export default function Account() {
               { title: t("Voice"), href: "/voice" },
             ] as const
           ).map(settingsLink)}
-          <ApprovalModeRow key="approvals" approvals={approvals} disabled={pending} />
+          <ApprovalModeRow key="approvals" approvals={approvals} />
           {approvals.ruleCount ? (
             <ApprovalRulesRow
               key="approval-rules"
               count={approvals.ruleCount}
-              disabled={pending}
               onPress={() => router.push("/approvals")}
             />
           ) : null}
@@ -756,19 +476,14 @@ export default function Account() {
         </SettingsGroup>
 
         <View style={styles.section}>
-          <NativeActionButton
-            disabled={pending}
-            fill
-            label={t("Sign out")}
-            onPress={() => void handleSignOut()}
-            prominence="secondary"
-          />
           <SettingsGroup>
-            {signOutError ? (
-              <Text accessibilityRole="alert" style={styles.error}>
-                {signOutError}
-              </Text>
-            ) : null}
+            <SettingsRow
+              accessibilityRole="button"
+              chevron="right"
+              onPress={() => router.push("/server")}
+              title={t("Server")}
+              value={currentApiBase()}
+            />
           </SettingsGroup>
         </View>
 
@@ -799,25 +514,6 @@ export default function Account() {
             </View>
           ) : null}
         </View>
-
-        <SettingsGroup>
-          <SettingsRow
-            accessibilityRole="button"
-            destructive
-            dimmed={pending}
-            disabled={pending}
-            onPress={requestDeletion}
-            title={t("Delete account")}
-            trailing={
-              pending ? <ActivityIndicator color={mobileTokens().destructive} /> : undefined
-            }
-          />
-          {!deleteOpen && deleteError ? (
-            <Text accessibilityRole="alert" style={styles.error}>
-              {deleteError}
-            </Text>
-          ) : null}
-        </SettingsGroup>
       </ScrollView>
       {nameDialogOpen ? (
         <NameDialog
@@ -831,105 +527,6 @@ export default function Account() {
           onSave={(value) => void saveName(value)}
           onClose={closeNameDialog}
         />
-      ) : null}
-      {deleteOpen ? (
-        <Modal transparent animationType="fade" onRequestClose={closeDeletePrompt}>
-          <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : undefined}
-            style={styles.dialogOverlay}
-          >
-            <Pressable
-              accessibilityLabel={t("Cancel")}
-              style={StyleSheet.absoluteFill}
-              onPress={closeDeletePrompt}
-            />
-            <ScrollView
-              bounces={false}
-              contentContainerStyle={styles.dialog}
-              keyboardShouldPersistTaps="handled"
-              style={styles.dialogScroll}
-            >
-              <Text style={styles.dialogTitle}>{t("Delete your account?")}</Text>
-              <Text style={styles.dialogBody}>
-                {t(
-                  "This permanently deletes your account, bots, conversations, memories, files, and saved connections. This cannot be undone.",
-                )}
-              </Text>
-              {!security?.hasPassword ? (
-                <>
-                  {security?.sso ? (
-                    <NativeActionButton
-                      label={t("Sign in again")}
-                      disabled={pending}
-                      onPress={() =>
-                        void securityAction(async () => {
-                          setSsoReauthenticated(await continueWithSso("reauthenticate"));
-                        })
-                      }
-                    />
-                  ) : null}
-                  {security?.emailDeletion ? (
-                    <NativeActionButton
-                      label={t("Send deletion code")}
-                      disabled={pending}
-                      onPress={() =>
-                        void securityAction(async () => {
-                          await requestAccountDeletionCode();
-                          setDeletionCodeSent(true);
-                        })
-                      }
-                    />
-                  ) : null}
-                </>
-              ) : null}
-              {security?.hasPassword || deletionCodeSent ? (
-                <TextInput
-                  accessibilityLabel={
-                    security?.hasPassword ? t("Current password") : t("Deletion code")
-                  }
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  autoFocus
-                  editable={!pending}
-                  onChangeText={(value) => {
-                    setDeletePassword(value);
-                    setDeleteError(null);
-                  }}
-                  placeholder={security?.hasPassword ? t("Current password") : t("Deletion code")}
-                  placeholderTextColor={native.tertiaryLabel}
-                  secureTextEntry={security?.hasPassword}
-                  style={styles.dialogInput}
-                  textContentType={security?.hasPassword ? "password" : "oneTimeCode"}
-                  value={deletePassword}
-                />
-              ) : null}
-              {deleteError ? (
-                <Text accessibilityRole="alert" style={styles.dialogError}>
-                  {deleteError}
-                </Text>
-              ) : null}
-              <View style={styles.dialogActions}>
-                <Pressable
-                  accessibilityRole="button"
-                  onPress={closeDeletePrompt}
-                  style={styles.dialogAction}
-                >
-                  <Text style={styles.dialogCancel}>{t("Cancel")}</Text>
-                </Pressable>
-                <Pressable
-                  accessibilityRole="button"
-                  disabled={deletionDisabled}
-                  onPress={() => void handleDeletion(deletePassword)}
-                  style={styles.dialogAction}
-                >
-                  <Text style={[styles.dialogDelete, deletionDisabled && styles.disabled]}>
-                    {t("Delete")}
-                  </Text>
-                </Pressable>
-              </View>
-            </ScrollView>
-          </KeyboardAvoidingView>
-        </Modal>
       ) : null}
     </SafeAreaView>
   );

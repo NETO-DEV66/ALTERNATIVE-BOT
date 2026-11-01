@@ -39,6 +39,7 @@ import {
   currentApiBase,
   loadApiBase,
   loadSessionToken,
+  requestLocalSession,
   rpc,
   selectedSpaceId,
   subscribeApiBase,
@@ -46,7 +47,6 @@ import {
 } from "../lib/api";
 import { clearAppBadge } from "../lib/app-badge";
 import { loadAppearancePreference, mobileTokens } from "../lib/appearance";
-import { replaceWithSignIn } from "../lib/auth-routing";
 import { AvatarScreenFocus } from "../lib/avatar-life";
 import { installClientUpdates, watchForegroundUpdates } from "../lib/client-update";
 import { bootstrapI18n, useI18n } from "../lib/i18n";
@@ -106,7 +106,7 @@ void SplashScreen.preventAutoHideAsync().catch(() => undefined);
 
 const DIVIDER_GRAB_WIDTH = 24;
 // Screens that take the whole window even when it is wide enough for the chat list beside them.
-const FULL_WINDOW_ROUTES = new Set(["/sign-in", "/server", "/image", "/computer", "/share"]);
+const FULL_WINDOW_ROUTES = new Set(["/server", "/image", "/computer", "/share"]);
 
 /** On a wide window the chat list stays on the left and the stack shows the open chat beside it. */
 function SplitFrame({ children }: { children: ReactNode }) {
@@ -258,6 +258,7 @@ export const unstable_settings = { anchor: "index" };
 
 function LayoutContent() {
   const { t } = useI18n();
+  const router = useRouter();
   const insets = useSafeAreaInsets();
   // Beside the list a chat swaps in place, the way it does when picked from a sidebar.
   const { split, inboxHidden, foldActive } = useSplitView();
@@ -314,8 +315,16 @@ function LayoutContent() {
   useEffect(() => {
     if (!ready) return;
     // A session revoked or expired on the server ends here, from whichever screen noticed it.
-    return subscribeSessionRejected(() => replaceWithSignIn());
-  }, [ready]);
+    // Ask the server for a fresh one first: a single-user server issues it on request, and
+    // only a multi-user server leaves the app on the inbox's expired-session retry.
+    return subscribeSessionRejected(() => {
+      void requestLocalSession()
+        .catch(() => false)
+        .then((restored) => {
+          if (!restored) router.dismissTo("/");
+        });
+    });
+  }, [ready, router]);
 
   useEffect(() => {
     if (!ready) return;
@@ -382,7 +391,10 @@ function LayoutContent() {
                       contentStyle: { backgroundColor: String(native.page) },
                     }}
                   >
-                    <Stack.Screen name="index" options={{ headerShown: false, title: "Alternative Bot" }} />
+                    <Stack.Screen
+                      name="index"
+                      options={{ headerShown: false, title: "Alternative Bot" }}
+                    />
                     <Stack.Screen
                       name="search"
                       options={{
@@ -394,7 +406,6 @@ function LayoutContent() {
                       }}
                     />
                     <Stack.Screen name="share" options={{ headerShown: false }} />
-                    <Stack.Screen name="sign-in" options={{ headerShown: false }} />
                     <Stack.Screen
                       name="(settings)"
                       options={{

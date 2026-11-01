@@ -1,6 +1,4 @@
 import { hostname } from "node:os";
-import { ORPCError, onError } from "@orpc/server";
-import { RPCHandler } from "@orpc/server/fetch";
 import type {
   AgentContextStrategy,
   AgentRuntime,
@@ -91,7 +89,12 @@ import {
   verifyModelServesAgents,
   withSecretPersistence,
 } from "@alternativebot/adapters";
-import { createAuth, isBlockedAuthPath, loopbackTwinOrigins } from "@alternativebot/auth";
+import {
+  createAuth,
+  isBlockedAuthPath,
+  isLocalSessionBlockedPath,
+  loopbackTwinOrigins,
+} from "@alternativebot/auth";
 import type { Actor, AuthCapabilities } from "@alternativebot/contracts";
 import {
   isLocalhostOrLoopbackIp,
@@ -129,6 +132,8 @@ import {
 } from "@alternativebot/logging";
 import { requestLogging } from "@alternativebot/logging/hono";
 import { MarkdownMemoryStore } from "@alternativebot/memory";
+import { ORPCError, onError } from "@orpc/server";
+import { RPCHandler } from "@orpc/server/fetch";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { deleteAccountContent } from "./account-deletion.js";
@@ -478,6 +483,15 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
   const auth = createAuth(prisma, {
     analytics,
     passwordAuth: env.passwordAuth,
+    ...(env.localAccountEmail
+      ? {
+          localSession: {
+            email: env.localAccountEmail,
+            signupsEnabled: env.signupsEnabled,
+            signupAllowlist: env.signupAllowlist,
+          },
+        }
+      : {}),
     breachedPasswordCheck: env.breachedPasswordCheck,
     oidc: env.oidc,
     secret: env.authSecret,
@@ -766,6 +780,18 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
     });
   }
   app.get("/api/auth/capabilities", (c) => {
+    // A single-user server signs the client in itself, so the app skips its sign-in screen.
+    if (env.localAccountEmail) {
+      return c.json({
+        sso: null,
+        passwordAuth: false,
+        passwordReset: false,
+        resetUrl: null,
+        emailCode: false,
+        passkeyRpId: null,
+        localSession: true,
+      } satisfies AuthCapabilities);
+    }
     return c.json({
       sso: env.oidc
         ? { name: env.oidc.name, availability: auth.ssoAvailability() ?? "checking" }
@@ -828,6 +854,11 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
     const path = new URL(c.req.url).pathname.replace("/api/auth", "");
     if (isBlockedAuthPath(path)) {
       return c.json({ error: "Not available in version 1" }, 404);
+    }
+    // Single-user deployments answer only the routes the app calls; the rest of the
+    // credential surface answers as if it were never mounted.
+    if (env.localAccountEmail && isLocalSessionBlockedPath(path)) {
+      return c.json({ error: "Not found" }, 404);
     }
     const ip = requestClientIp(c);
     const response = await auth.handler(withClientIp(emptyAuthBodyAsJson(c.req.raw), ip));
