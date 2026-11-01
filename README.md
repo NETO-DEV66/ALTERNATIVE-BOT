@@ -4,6 +4,7 @@
 
 [![GitHub stars](https://img.shields.io/github/stars/NETO-DEV66/ALTERNATIVE-BOT?labelColor=black&style=for-the-badge&color=2563EB)](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/stargazers)
 [![Download the Android APK](https://img.shields.io/badge/Android-Download%20APK-black?labelColor=black&style=for-the-badge&logo=android&logoColor=white)](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/releases/download/android/alternativebot.apk)
+[![License](https://img.shields.io/badge/License-Apache%202.0-black?labelColor=black&style=for-the-badge)](./LICENSE)
 
 ![Alternative Bot — AI teammates you actually own](./docs/readme-hero.png)
 
@@ -16,6 +17,49 @@ It is an open source, self-hosted alternative to Grok Bot, Meta Muse, OpenAI Dot
 OpenClaw, Hermes Agent, and Claude Duet.
 
 Alternative Bot is in beta. Learn more at [alternativebot.com](https://alternativebot.com).
+
+## Install the Android app
+
+Download the APK and open it on your phone. Android asks you to allow installs from this source
+the first time.
+
+**[Download alternativebot.apk](https://github.com/NETO-DEV66/ALTERNATIVE-BOT/releases/download/android/alternativebot.apk)**
+
+| | |
+|---|---|
+| Version | 1.0.11 (build 10) |
+| Size | 123 MB |
+| Android | 7.0 and newer (minSdk 24, targetSdk 36) |
+| Architectures | arm64-v8a, armeabi-v7a, x86, x86_64 |
+| SHA-256 | `381fb5b1e07c9a42b16ae91a681807b5e813522a83f7b7ed17b662e4444979da` |
+
+The link always serves the newest APK. Check a download before installing it:
+
+```bash
+sha256sum alternativebot.apk
+```
+
+The APK is signed with a project release key rather than a debug key. This build carries no
+Firebase configuration, so push notifications stay off until you add your own
+`google-services.json` and rebuild ([mobile release guide](./docs/mobile-release.md)).
+
+## Connect the app to your server
+
+Alternative Bot has no hosted service. The app talks to a server you run, so start the backend
+first and then sign in.
+
+1. Set up a server. [Published images](#quick-start-published-images) is the fastest path, or
+   [run on a server](#run-on-a-server) so the bots stay on when your computer sleeps.
+2. Open the app and tap **Use a custom server** on the sign-in screen.
+3. Enter your address, for example `https://bot.example.com`. Public addresses need HTTPS; plain
+   HTTP works only for loopback and private LAN addresses.
+4. The app checks the health endpoint, saves the address, and signs you in.
+
+The app remembers the address. Change it later from **Settings → Server**.
+
+A build carries one default address, and this one ships a placeholder. To pre-fill your own so
+nobody has to type it, build the APK with `EXPO_PUBLIC_API_URL` set to your URL. That also turns
+on native passkeys for that domain.
 
 ## Features
 
