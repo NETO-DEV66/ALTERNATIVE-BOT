@@ -34,15 +34,19 @@ rebranded to **Alternative Bot**, mobile-only, Android package
 
 ## Current state (2026-11-01)
 
-- `origin/main` = **`83c3e07`** "feat: remove the sign-in system" — **pushed**.
+- `origin/main` = **`30e8fe1`** "fix(mobile): recover when the server refuses the app"
+  — **pushed**. Includes the 1.0.12 recovery fix and the first end-to-end test for
+  `POST /api/auth/local-session`.
 - **Sign-in removed for the app** (see `2026-11-01.md`): the mobile sign-in screen,
   auth routing, passkey offer, and deletion prompt are deleted; the server mints the
   session for its one account through `POST /local-session` and closes every
   credential route. Multi-user credential auth still exists behind
   `ALTERNATIVEBOT_LOCAL_SESSION=false`, and the web sign-in pages remain for it.
-- **APK released.** Built locally with Gradle (no EAS/`EXPO_TOKEN`); asset
-  `alternativebot.apk` (128,220,890 bytes) on release `android` (id 430456219).
-  Rebuild recipe and SDK paths are in `2026-11-01.md`.
+- **APK released.** Built locally with Gradle (no EAS/`EXPO_TOKEN`). Release
+  `android` (id 430456219) currently serves `alternativebot.apk` **1.0.12
+  (versionCode 11)**, 128,222,814 bytes, sha256 `b3cdbece…b5e79ff`, which fixes
+  the "session expired" dead end. Rebuild recipe and SDK paths are in
+  `2026-11-01.md`.
 
 ## Earlier state (2026-10-31)
 
