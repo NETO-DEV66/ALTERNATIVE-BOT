@@ -32,7 +32,19 @@ rebranded to **Alternative Bot**, mobile-only, Android package
   **429s around page 129** (~12,900 events). Prefer the download zip.
 - The `/canvas/shared/...` web page requires login; the API does not.
 
-## Current state (2026-10-31)
+## Current state (2026-11-01)
+
+- `origin/main` = **`83c3e07`** "feat: remove the sign-in system" — **pushed**.
+- **Sign-in removed for the app** (see `2026-11-01.md`): the mobile sign-in screen,
+  auth routing, passkey offer, and deletion prompt are deleted; the server mints the
+  session for its one account through `POST /local-session` and closes every
+  credential route. Multi-user credential auth still exists behind
+  `ALTERNATIVEBOT_LOCAL_SESSION=false`, and the web sign-in pages remain for it.
+- **APK released.** Built locally with Gradle (no EAS/`EXPO_TOKEN`); asset
+  `alternativebot.apk` (128,220,890 bytes) on release `android` (id 430456219).
+  Rebuild recipe and SDK paths are in `2026-11-01.md`.
+
+## Earlier state (2026-10-31)
 
 - `origin/main` and local `main` are both at **`d464e4a`** — "chore: drop billing
   leftovers and the 24 MB source zip". **Pushed** successfully.
