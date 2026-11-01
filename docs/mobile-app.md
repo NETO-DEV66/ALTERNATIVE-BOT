@@ -8,10 +8,14 @@ Chat with your bots, answer their questions, watch their computers and take call
 
 You can also choose **Get the mobile app** from the account menu in the web or desktop app.
 
-## Sign in
+## Connect to your server
 
-Sign in with your alternativebot.com account. To use your own server instead, tap **Use a custom server** on
-the sign-in screen and enter its address. Servers on your local network work too.
+The server signs its one account in, so the app opens on your chats with nothing to type. It first
+tries the address the build carries, which is a placeholder in a public APK, so a fresh install
+lands on a screen that names that address and offers **Choose a server**. Enter your own address
+there, for example `https://bot.example.com`. Public addresses need HTTPS; plain HTTP works only
+for loopback and private LAN addresses. The app checks the server, saves the address, and gets its
+session. Change the address later from **Settings → Server**.
 
 ## What you can do
 
