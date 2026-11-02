@@ -1,5 +1,3 @@
-import type { MenuAction } from "@expo/ui/community/menu";
-import { MenuView } from "@expo/ui/community/menu";
 import type { AgentSkillCatalogEntry } from "@alternativebot/contracts";
 import type {
   buildComposerMentionOptions,
@@ -23,6 +21,8 @@ import {
   truncateSlashDescription,
 } from "@alternativebot/core";
 import { MAX_FONT_SCALE } from "@alternativebot/ui-tokens";
+import type { MenuAction } from "@expo/ui/community/menu";
+import { MenuView } from "@expo/ui/community/menu";
 import type { Ref } from "react";
 import { useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 import type { ViewStyle } from "react-native";

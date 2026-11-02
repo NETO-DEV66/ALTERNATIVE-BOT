@@ -1,9 +1,9 @@
 // @vitest-environment jsdom
 
-import { i18n } from "@lingui/core";
 import type { AgentSkillCatalogEntry, ThreadMessage } from "@alternativebot/contracts";
 import type { ComposerMention } from "@alternativebot/core";
 import { MODEL_REQUIRED_SEND_ERROR, resolveComposerSendPlan } from "@alternativebot/core";
+import { i18n } from "@lingui/core";
 import type { ComponentProps, ReactNode } from "react";
 import { act, createRef } from "react";
 import type { Root } from "react-dom/client";
@@ -895,7 +895,9 @@ describe("Composer", () => {
     const draftKey = "bot:draft-restore-test";
     const first = renderComposer(onSend, { draftKey });
     type(first, "unsent thought");
-    expect(window.localStorage.getItem(`alternativebot.composerDraft.${draftKey}`)).toBe("unsent thought");
+    expect(window.localStorage.getItem(`alternativebot.composerDraft.${draftKey}`)).toBe(
+      "unsent thought",
+    );
     act(() => root?.unmount());
     container?.remove();
     const second = renderComposer(onSend, { draftKey });
@@ -1108,7 +1110,9 @@ it.each([
       expect(localStorage.getItem(`alternativebot.composerDraft.${draftKey}`)).toBe(saved);
       expect(localStorage.getItem(`alternativebot.composerBindings.${draftKey}`)).toBe(bindings);
       if (differentChat)
-        expect(localStorage.getItem("alternativebot.composerDraft.bot:bot-1")).toBe("original draft");
+        expect(localStorage.getItem("alternativebot.composerDraft.bot:bot-1")).toBe(
+          "original draft",
+        );
       act(() => root?.unmount());
       container?.remove();
       const reloaded = renderComposer(vi.fn(), { draftKey });

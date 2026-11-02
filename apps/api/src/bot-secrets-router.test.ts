@@ -1,7 +1,7 @@
-import { RPCHandler } from "@orpc/server/fetch";
 import type { Actor } from "@alternativebot/contracts";
 import { encodeLoginSecret } from "@alternativebot/contracts";
 import type { PrismaClient } from "@alternativebot/db";
+import { RPCHandler } from "@orpc/server/fetch";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { RouterDeps } from "./router.js";
 import { createRouter } from "./router.js";

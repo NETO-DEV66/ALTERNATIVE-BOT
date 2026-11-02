@@ -126,7 +126,9 @@ describe("shared Linux desktop lifecycle", () => {
       const environment = { ...env, bindHost };
       const host = bindHost ?? "127.0.0.1";
       const command = terminalCommand("control", "terminal", "/work", environment);
-      expect(command).toContain(`--token-source=/tmp/alternativebot/desktop-targets ${host}:6100 8>&-`);
+      expect(command).toContain(
+        `--token-source=/tmp/alternativebot/desktop-targets ${host}:6100 8>&-`,
+      );
       const pattern = command.match(/if ! pgrep -f '([^']+)'/)?.[1];
       expect(pattern).toBeDefined();
       const process = (address: string, source = "desktop-targets") =>
@@ -324,7 +326,9 @@ describe("shared Linux desktop lifecycle", () => {
     // biome-ignore lint/suspicious/noTemplateCurlyInString: generated shell parameter expansion
     expect(command).toContain("${_rest%%[: ]*}");
     expect(command).toContain("unset LD_PRELOAD");
-    expect(command).toContain('[ "$(cat /tmp/alternativebot/desktop-targets/view-1)" != "$desired" ]');
+    expect(command).toContain(
+      '[ "$(cat /tmp/alternativebot/desktop-targets/view-1)" != "$desired" ]',
+    );
     expect(command).toContain(
       "browser=$(command -v alternativebot-browser || command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)",
     );

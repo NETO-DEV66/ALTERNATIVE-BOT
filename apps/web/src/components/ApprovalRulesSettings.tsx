@@ -1,4 +1,3 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import type {
   ActionApprovalRule,
   ActionAutoReviewSettings,
@@ -8,6 +7,7 @@ import type {
 import { humanizeToolName } from "@alternativebot/core";
 import { writeSaved } from "@alternativebot/core/query";
 import { Button, ToggleGroup, ToggleGroupItem } from "@alternativebot/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useSpaceQueries } from "../lib/query";

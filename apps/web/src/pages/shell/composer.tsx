@@ -1,4 +1,3 @@
-import { useLingui } from "@lingui/react/macro";
 import type { AgentSkillCatalogEntry, ThreadMessage } from "@alternativebot/contracts";
 import type { ComposerMention, ComposerMentionRange, SlashActionId } from "@alternativebot/core";
 import {
@@ -18,6 +17,7 @@ import {
   updateComposerMentionBindings,
 } from "@alternativebot/core";
 import { Button } from "@alternativebot/ui-web";
+import { useLingui } from "@lingui/react/macro";
 import { ArrowUp, Box, Paperclip, Plus, Settings, Square, X } from "lucide-react";
 import type { ClipboardEvent, DragEvent, RefObject } from "react";
 import { memo, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";

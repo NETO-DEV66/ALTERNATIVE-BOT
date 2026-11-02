@@ -103,7 +103,11 @@ describe("computer loopback provision lifecycle", () => {
     const container = {
       inspect: vi.fn().mockResolvedValue({
         Config: {
-          Labels: { "alternativebot.managed": "true", "alternativebot.botId": "other", "alternativebot.spaceId": "other" },
+          Labels: {
+            "alternativebot.managed": "true",
+            "alternativebot.botId": "other",
+            "alternativebot.spaceId": "other",
+          },
         },
       }),
       stop: vi.fn(),
@@ -137,7 +141,11 @@ describe("computer loopback provision lifecycle", () => {
     const container = {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "alternativebot.managed": "true", "alternativebot.botId": "bot", "alternativebot.spaceId": "space" },
+          Labels: {
+            "alternativebot.managed": "true",
+            "alternativebot.botId": "bot",
+            "alternativebot.spaceId": "space",
+          },
         },
         State: { Running: running },
       })),
@@ -177,7 +185,11 @@ describe("computer loopback provision lifecycle", () => {
     const container = {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "alternativebot.managed": "true", "alternativebot.botId": "bot", "alternativebot.spaceId": "space" },
+          Labels: {
+            "alternativebot.managed": "true",
+            "alternativebot.botId": "bot",
+            "alternativebot.spaceId": "space",
+          },
         },
         State: { Running: true },
       })),
@@ -205,7 +217,11 @@ describe("computer loopback provision lifecycle", () => {
     const container = {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "alternativebot.managed": "true", "alternativebot.botId": "bot", "alternativebot.spaceId": "space" },
+          Labels: {
+            "alternativebot.managed": "true",
+            "alternativebot.botId": "bot",
+            "alternativebot.spaceId": "space",
+          },
         },
         State: { Running: true },
       })),
@@ -251,7 +267,11 @@ describe("computer loopback provision lifecycle", () => {
       Image: "test-image-id",
       Config: {
         User: hostComputerUser(),
-        Labels: { "alternativebot.managed": "true", "alternativebot.botId": "bot", "alternativebot.spaceId": "space" },
+        Labels: {
+          "alternativebot.managed": "true",
+          "alternativebot.botId": "bot",
+          "alternativebot.spaceId": "space",
+        },
       },
       HostConfig: {
         NetworkMode: computerNetworkNameFor("bot"),
@@ -445,7 +465,11 @@ describe("provisioning network rollback", () => {
       inspect: vi.fn().mockResolvedValue({
         Image: "old-image",
         Config: {
-          Labels: { "alternativebot.managed": "true", "alternativebot.botId": "bot", "alternativebot.spaceId": "space" },
+          Labels: {
+            "alternativebot.managed": "true",
+            "alternativebot.botId": "bot",
+            "alternativebot.spaceId": "space",
+          },
         },
         HostConfig: { PortBindings: {} },
         State: { Running: true },
@@ -507,7 +531,11 @@ describe("restricted egress rekeying", () => {
       Image: "test-image-id",
       Config: {
         User: hostComputerUser(),
-        Labels: { "alternativebot.managed": "true", "alternativebot.botId": "bot", "alternativebot.spaceId": "space" },
+        Labels: {
+          "alternativebot.managed": "true",
+          "alternativebot.botId": "bot",
+          "alternativebot.spaceId": "space",
+        },
       },
       HostConfig: { NetworkMode: botNet, PortBindings: {} },
       State: { Running: false },
@@ -657,7 +685,9 @@ describe("restricted egress rekeying", () => {
     const kill = vi.fn().mockResolvedValue(undefined);
     Object.assign(existing, { stop, kill });
     const peer = {
-      inspect: vi.fn().mockResolvedValue({ Config: { Labels: { "alternativebot.botId": "other" } } }),
+      inspect: vi
+        .fn()
+        .mockResolvedValue({ Config: { Labels: { "alternativebot.botId": "other" } } }),
       stop: vi.fn().mockResolvedValue(undefined),
       kill: vi.fn().mockResolvedValue(undefined),
     };
@@ -705,7 +735,9 @@ describe("restricted egress rekeying", () => {
     const kill = vi.fn().mockResolvedValue(undefined);
     Object.assign(existing, { stop, kill });
     const peer = {
-      inspect: vi.fn().mockResolvedValue({ Config: { Labels: { "alternativebot.botId": "other" } } }),
+      inspect: vi
+        .fn()
+        .mockResolvedValue({ Config: { Labels: { "alternativebot.botId": "other" } } }),
       stop: vi.fn().mockResolvedValue(undefined),
       kill: vi.fn().mockResolvedValue(undefined),
     };
@@ -781,8 +813,14 @@ describe("space computer limit enforcement", () => {
         }
         // For countSpaceContainers
         return [
-          { Id: "c1", Labels: { "alternativebot.managed": "true", "alternativebot.spaceId": "space-1" } },
-          { Id: "c2", Labels: { "alternativebot.managed": "true", "alternativebot.spaceId": "space-1" } },
+          {
+            Id: "c1",
+            Labels: { "alternativebot.managed": "true", "alternativebot.spaceId": "space-1" },
+          },
+          {
+            Id: "c2",
+            Labels: { "alternativebot.managed": "true", "alternativebot.spaceId": "space-1" },
+          },
         ];
       },
     );
@@ -805,7 +843,12 @@ describe("space computer limit enforcement", () => {
         if (labels.some((l: string) => l.startsWith("alternativebot.botId="))) {
           return [];
         }
-        return [{ Id: "c1", Labels: { "alternativebot.managed": "true", "alternativebot.spaceId": "space-1" } }];
+        return [
+          {
+            Id: "c1",
+            Labels: { "alternativebot.managed": "true", "alternativebot.spaceId": "space-1" },
+          },
+        ];
       },
     );
 
@@ -861,7 +904,10 @@ describe("space computer limit enforcement", () => {
           ];
         }
         return [
-          { Id: existing.id, Labels: { "alternativebot.managed": "true", "alternativebot.spaceId": "space-1" } },
+          {
+            Id: existing.id,
+            Labels: { "alternativebot.managed": "true", "alternativebot.spaceId": "space-1" },
+          },
         ];
       },
     );
@@ -951,7 +997,10 @@ describe("space computer limit enforcement", () => {
           {
             Id: "legacy",
             Image: COMPUTER_IMAGE,
-            Labels: { "alternativebot.workspaceId": "space-1", "alternativebot.botId": "legacy-bot" },
+            Labels: {
+              "alternativebot.workspaceId": "space-1",
+              "alternativebot.botId": "legacy-bot",
+            },
           },
         ];
       },
@@ -1100,7 +1149,11 @@ describe("screen release status", () => {
     return {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "alternativebot.managed": "true", "alternativebot.botId": "bot", "alternativebot.spaceId": "space" },
+          Labels: {
+            "alternativebot.managed": "true",
+            "alternativebot.botId": "bot",
+            "alternativebot.spaceId": "space",
+          },
         },
         HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
         State: { Running: true },
@@ -1138,7 +1191,11 @@ describe("screen release status", () => {
     const container = {
       inspect: vi.fn().mockResolvedValue({
         Config: {
-          Labels: { "alternativebot.managed": "true", "alternativebot.botId": "other", "alternativebot.spaceId": "other" },
+          Labels: {
+            "alternativebot.managed": "true",
+            "alternativebot.botId": "other",
+            "alternativebot.spaceId": "other",
+          },
         },
       }),
       exec: vi.fn(),
@@ -1380,7 +1437,11 @@ describe("computer deletion", () => {
     const container = {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "alternativebot.managed": "true", "alternativebot.botId": botId, "alternativebot.spaceId": "space" },
+          Labels: {
+            "alternativebot.managed": "true",
+            "alternativebot.botId": botId,
+            "alternativebot.spaceId": "space",
+          },
         },
         HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
         State: { Running: true },
@@ -1399,8 +1460,9 @@ describe("computer deletion", () => {
       inspect: vi.fn().mockRejectedValue(dockerError(404)),
     });
     const resets = () =>
-      commands.filter((command) => command.includes("for marker in /tmp/alternativebot/browser-profile-*"))
-        .length;
+      commands.filter((command) =>
+        command.includes("for marker in /tmp/alternativebot/browser-profile-*"),
+      ).length;
     return { container, resets };
   }
 
@@ -1472,7 +1534,11 @@ describe("screen registry across run boundaries", () => {
     const container = {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "alternativebot.managed": "true", "alternativebot.botId": "bot", "alternativebot.spaceId": "space" },
+          Labels: {
+            "alternativebot.managed": "true",
+            "alternativebot.botId": "bot",
+            "alternativebot.spaceId": "space",
+          },
         },
         State: { Running: running, StartedAt: boot },
         HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
@@ -1520,11 +1586,15 @@ describe("screen registry across run boundaries", () => {
     expect(registry.get("failed-first-setup")?.get("writer")).toMatchObject({ index: 0 });
     expect(boots.get("failed-first-setup")).toBe("boot-2");
     expect(
-      commands.filter((command) => command.includes("for marker in /tmp/alternativebot/browser-profile-*")),
+      commands.filter((command) =>
+        command.includes("for marker in /tmp/alternativebot/browser-profile-*"),
+      ),
     ).toHaveLength(2);
     expect((await view()).status).toBe(200);
     expect(
-      commands.filter((command) => command.includes("for marker in /tmp/alternativebot/browser-profile-*")),
+      commands.filter((command) =>
+        command.includes("for marker in /tmp/alternativebot/browser-profile-*"),
+      ),
     ).toHaveLength(2);
   });
 
@@ -1546,7 +1616,11 @@ describe("screen registry across run boundaries", () => {
       const container = {
         inspect: vi.fn(async () => ({
           Config: {
-            Labels: { "alternativebot.managed": "true", "alternativebot.botId": "bot", "alternativebot.spaceId": "space" },
+            Labels: {
+              "alternativebot.managed": "true",
+              "alternativebot.botId": "bot",
+              "alternativebot.spaceId": "space",
+            },
           },
           HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
           State: { Running: true, StartedAt: `boot-${boot}` },
@@ -1633,7 +1707,11 @@ describe("screen registry across run boundaries", () => {
       Image: "old-image",
       Config: {
         User: hostComputerUser(),
-        Labels: { "alternativebot.managed": "true", "alternativebot.botId": "bot", "alternativebot.spaceId": "space" },
+        Labels: {
+          "alternativebot.managed": "true",
+          "alternativebot.botId": "bot",
+          "alternativebot.spaceId": "space",
+        },
       },
       HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
       State: { Running: true, StartedAt: "boot-1" },
@@ -1702,8 +1780,9 @@ describe("screen registry across run boundaries", () => {
     ).length;
     expect((await view()).status).toBe(200);
     expect(
-      commands.filter((command) => command.includes("for marker in /tmp/alternativebot/browser-profile-*"))
-        .length,
+      commands.filter((command) =>
+        command.includes("for marker in /tmp/alternativebot/browser-profile-*"),
+      ).length,
     ).toBe(resets + 1);
   });
 
@@ -1819,7 +1898,11 @@ describe("screen registry across run boundaries", () => {
     const container = {
       inspect: vi.fn().mockResolvedValue({
         Config: {
-          Labels: { "alternativebot.managed": "true", "alternativebot.botId": "bot", "alternativebot.spaceId": "space" },
+          Labels: {
+            "alternativebot.managed": "true",
+            "alternativebot.botId": "bot",
+            "alternativebot.spaceId": "space",
+          },
         },
         HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
         State: { Running: true },
@@ -1847,8 +1930,9 @@ describe("screen registry across run boundaries", () => {
         body: JSON.stringify({ interactive: false, revokeControl: false }),
       });
     const resets = () =>
-      commands.filter((command) => command.includes("for marker in /tmp/alternativebot/browser-profile-*"))
-        .length;
+      commands.filter((command) =>
+        command.includes("for marker in /tmp/alternativebot/browser-profile-*"),
+      ).length;
 
     expect((await view()).status).toBe(200);
     expect(resets()).toBe(1);
@@ -1868,7 +1952,11 @@ describe("screen registry across run boundaries", () => {
     const container = {
       inspect: vi.fn().mockResolvedValue({
         Config: {
-          Labels: { "alternativebot.managed": "true", "alternativebot.botId": "bot", "alternativebot.spaceId": "space" },
+          Labels: {
+            "alternativebot.managed": "true",
+            "alternativebot.botId": "bot",
+            "alternativebot.spaceId": "space",
+          },
         },
         HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
         State: { Running: true },
@@ -1965,7 +2053,11 @@ describe("screen registry across run boundaries", () => {
     const container = {
       inspect: vi.fn().mockResolvedValue({
         Config: {
-          Labels: { "alternativebot.managed": "true", "alternativebot.botId": "bot", "alternativebot.spaceId": "space" },
+          Labels: {
+            "alternativebot.managed": "true",
+            "alternativebot.botId": "bot",
+            "alternativebot.spaceId": "space",
+          },
         },
         HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
         State: { Running: true },
@@ -2052,7 +2144,11 @@ describe("computer network reclaim", () => {
       inspect: vi.fn(async () => ({
         Id: "computer-full-id",
         Config: {
-          Labels: { "alternativebot.managed": "true", "alternativebot.botId": "bot", "alternativebot.spaceId": "space" },
+          Labels: {
+            "alternativebot.managed": "true",
+            "alternativebot.botId": "bot",
+            "alternativebot.spaceId": "space",
+          },
         },
         State: { Running: running },
         // Docker keeps a stopped container's endpoint on its network.
@@ -2395,7 +2491,11 @@ describe("computer network reclaim", () => {
         Image: "image",
         Config: {
           User: hostComputerUser(),
-          Labels: { "alternativebot.managed": "true", "alternativebot.botId": "bot", "alternativebot.spaceId": "space" },
+          Labels: {
+            "alternativebot.managed": "true",
+            "alternativebot.botId": "bot",
+            "alternativebot.spaceId": "space",
+          },
         },
         HostConfig: { NetworkMode: botNet, PortBindings: {} },
         State: { Running: false },
@@ -2457,7 +2557,10 @@ describe("computer network reclaim", () => {
           expect.objectContaining({
             Name: botNet,
             Labels: {
-              "alternativebot.computerOwner": computerNetworkOwnerFor(process.env.DATA_DIR!, undefined),
+              "alternativebot.computerOwner": computerNetworkOwnerFor(
+                process.env.DATA_DIR!,
+                undefined,
+              ),
               "alternativebot.botId": "bot",
             },
             ...(egress === "restricted"
@@ -2501,7 +2604,10 @@ describe("computer network reclaim", () => {
     });
 
     it.each([
-      ["a leftover endpoint", new Error("endpoint with name alternativebot-bot-bot already exists")],
+      [
+        "a leftover endpoint",
+        new Error("endpoint with name alternativebot-bot-bot already exists"),
+      ],
       ["a missing container", Object.assign(new Error("no such container"), { statusCode: 404 })],
     ])(
       "replaces it, never starting it unattached, when Docker refuses to attach it: %s",

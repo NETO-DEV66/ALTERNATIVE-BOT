@@ -1,4 +1,8 @@
-import { canonicalPiProviderId, storedPiProviderIds, usableModelId } from "@alternativebot/contracts";
+import {
+  canonicalPiProviderId,
+  storedPiProviderIds,
+  usableModelId,
+} from "@alternativebot/contracts";
 import type { PrismaClient } from "./client.js";
 
 export const newestCredentialOrder = [

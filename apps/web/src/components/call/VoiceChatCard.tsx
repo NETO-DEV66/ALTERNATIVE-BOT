@@ -1,4 +1,3 @@
-import { useLingui } from "@lingui/react/macro";
 import type { VoiceChatGroup } from "@alternativebot/core";
 import {
   callRequestBlock,
@@ -6,7 +5,14 @@ import {
   voiceChatDuration,
   voiceChatSummary,
 } from "@alternativebot/core";
-import { Button, buttonVariants, Collapsible, CollapsibleContent, cn } from "@alternativebot/ui-web";
+import {
+  Button,
+  buttonVariants,
+  Collapsible,
+  CollapsibleContent,
+  cn,
+} from "@alternativebot/ui-web";
+import { useLingui } from "@lingui/react/macro";
 import { ChevronDown, Phone, PhoneIncoming, PhoneMissed } from "lucide-react";
 import { useState } from "react";
 import { BuiCard } from "../ai/primitives";

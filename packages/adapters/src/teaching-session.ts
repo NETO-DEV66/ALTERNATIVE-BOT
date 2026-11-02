@@ -5,7 +5,10 @@ import type {
   JobPublisher,
   SandboxProvider,
 } from "@alternativebot/adapter-kit";
-import { computerControlExpireJobKey, skillTeachingExpireJobKey } from "@alternativebot/adapter-kit";
+import {
+  computerControlExpireJobKey,
+  skillTeachingExpireJobKey,
+} from "@alternativebot/adapter-kit";
 import type { Actor, MessageBlock, TaughtSkill } from "@alternativebot/contracts";
 import type { SkillPlaybook, TeachRecordingEvent, TeachSnapshot } from "@alternativebot/core";
 import {

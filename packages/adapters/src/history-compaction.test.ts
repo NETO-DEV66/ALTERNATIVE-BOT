@@ -7,7 +7,12 @@ import type {
 import { historyCompactJob } from "@alternativebot/adapter-kit";
 import type { MessageBlock } from "@alternativebot/contracts";
 import type { PrismaClient } from "@alternativebot/db";
-import { createLogger, createTestSink, installLogger, wrapJobPayload } from "@alternativebot/logging";
+import {
+  createLogger,
+  createTestSink,
+  installLogger,
+  wrapJobPayload,
+} from "@alternativebot/logging";
 import { describe, expect, it, vi } from "vitest";
 import {
   compactHistory,

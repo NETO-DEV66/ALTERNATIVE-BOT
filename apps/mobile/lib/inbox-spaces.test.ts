@@ -499,7 +499,12 @@ describe("inbox attention pills", () => {
   });
 
   it("follows background suppression and live waits without changing unread counts", () => {
-    const waiting = { ...bot, avatarSet: "alternativebot" as const, status: "waiting_input", unread: true };
+    const waiting = {
+      ...bot,
+      avatarSet: "alternativebot" as const,
+      status: "waiting_input",
+      unread: true,
+    };
     const snapshot = {
       threadId: bot.threadId,
       botId: bot.id,
@@ -526,7 +531,12 @@ describe("inbox attention pills", () => {
   });
 
   it("does not count rows removed by a collapsed section or an archived avatar", () => {
-    const waiting = { ...bot, avatarSet: "alternativebot" as const, pinned: true, status: "waiting_input" };
+    const waiting = {
+      ...bot,
+      avatarSet: "alternativebot" as const,
+      pinned: true,
+      status: "waiting_input",
+    };
     const items = spaceInboxItems([space({ bots: [waiting] })], new Set(["space-work:pinned"]));
     expect(items.map(inboxSignal).every((signal) => signal.attention === 0)).toBe(true);
     expect(

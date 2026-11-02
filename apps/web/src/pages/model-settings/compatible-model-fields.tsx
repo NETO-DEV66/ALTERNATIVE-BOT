@@ -1,4 +1,3 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import type { ThinkingLevel } from "@alternativebot/contracts";
 import { isOllamaCloudBaseUrl } from "@alternativebot/contracts";
 import { toggleEnabledModelId } from "@alternativebot/core";
@@ -12,6 +11,7 @@ import {
   NativeSelect,
   NativeSelectOption,
 } from "@alternativebot/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { ModelPreflightFeedback } from "../../components/ModelConnectionPreflightNotice";
 import { ModelHeadersEditor } from "../../components/ModelHeadersEditor";
 

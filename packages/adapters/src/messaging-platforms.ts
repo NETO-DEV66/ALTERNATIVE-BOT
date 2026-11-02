@@ -1,3 +1,5 @@
+import type { MessagingInboundMessage, MessagingOutboundStatus } from "@alternativebot/adapter-kit";
+import { getLogger } from "@alternativebot/logging";
 import { createSlackAdapter } from "@chat-adapter/slack";
 import {
   createTelegramAdapter,
@@ -11,8 +13,6 @@ import {
   WhatsAppApiError,
 } from "@chat-adapter/whatsapp";
 import type { HttpInstance } from "@larksuiteoapi/node-sdk";
-import type { MessagingInboundMessage, MessagingOutboundStatus } from "@alternativebot/adapter-kit";
-import { getLogger } from "@alternativebot/logging";
 import type { Adapter } from "chat";
 import { ConsoleLogger, convertEmojiPlaceholders, markdownToPlainText } from "chat";
 import { createSendblueAdapter } from "chat-adapter-sendblue";

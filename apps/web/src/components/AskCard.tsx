@@ -1,5 +1,3 @@
-import { t } from "@lingui/core/macro";
-import { Trans, useLingui } from "@lingui/react/macro";
 import { ChatMarkdown } from "@alternativebot/chat-ui/web";
 import type { LoginFieldInput, ThreadMessage } from "@alternativebot/contracts";
 import {
@@ -15,6 +13,8 @@ import {
   selectedAskActionLabel,
 } from "@alternativebot/core";
 import { Button, Input, Label, Switch, Textarea } from "@alternativebot/ui-web";
+import { t } from "@lingui/core/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { Check } from "lucide-react";
 import { useEffect, useId, useState } from "react";
 import { rpc } from "../lib/rpc";

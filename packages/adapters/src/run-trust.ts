@@ -1,8 +1,16 @@
 import type { MessageBlock } from "@alternativebot/contracts";
 import type { ActionApprovalRule } from "@alternativebot/core";
-import { connectorKindFromToolName, inboundRoutinePrompts, siteAlwaysAllowed } from "@alternativebot/core";
+import {
+  connectorKindFromToolName,
+  inboundRoutinePrompts,
+  siteAlwaysAllowed,
+} from "@alternativebot/core";
 import { sitesInText, urlSite } from "@alternativebot/core/egress";
-import { findAutoReviewPreference, listApprovalRules, storedBatchActions } from "@alternativebot/db";
+import {
+  findAutoReviewPreference,
+  listApprovalRules,
+  storedBatchActions,
+} from "@alternativebot/db";
 import { SITE_SENDING_TOOLS } from "./approval-ask.js";
 import { boundDirectApprovalDetails, catalogApprovalDetails } from "./approval-effect.js";
 import type { ExecutorDeps } from "./executor-deps.js";

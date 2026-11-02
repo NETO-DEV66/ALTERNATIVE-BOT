@@ -1,5 +1,9 @@
-import { t } from "@lingui/core/macro";
-import type { BotAvatarSet, ProductEvent, ThreadMessage, ThreadSnapshot } from "@alternativebot/contracts";
+import type {
+  BotAvatarSet,
+  ProductEvent,
+  ThreadMessage,
+  ThreadSnapshot,
+} from "@alternativebot/contracts";
 import type { CallExchange } from "@alternativebot/core";
 import {
   CALL_FAREWELL_TIMEOUT_MS,
@@ -16,6 +20,7 @@ import {
   spokenDecision,
   spokenMemory,
 } from "@alternativebot/core";
+import { t } from "@lingui/core/macro";
 import { getGlobalBroadcastChannel } from "better-auth/client";
 import { useSyncExternalStore } from "react";
 import { pickUp } from "./call-pickup.js";

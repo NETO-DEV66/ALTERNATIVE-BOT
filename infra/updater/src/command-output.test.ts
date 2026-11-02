@@ -41,14 +41,20 @@ async function plan(route = "/plan", currentTag = "v1.0.0") {
   directories.push(dir);
   await writeFile(path.join(dir, ".env"), `ALTERNATIVEBOT_IMAGE_TAG=${currentTag}\n`);
   const app = createUpdaterApp({
-    ...resolveUpdaterConfig({ ALTERNATIVEBOT_DEPLOY_DIR: "/fixture", ALTERNATIVEBOT_UPDATER_TOKEN: token }),
+    ...resolveUpdaterConfig({
+      ALTERNATIVEBOT_DEPLOY_DIR: "/fixture",
+      ALTERNATIVEBOT_UPDATER_TOKEN: token,
+    }),
     deployDir: dir,
     envFile: path.join(dir, ".env"),
   });
   return app.request(route, {
     method: "POST",
     headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
-    body: JSON.stringify({ repoUrl: "https://github.com/NETO-DEV66/ALTERNATIVE-BOT", branch: "main" }),
+    body: JSON.stringify({
+      repoUrl: "https://github.com/NETO-DEV66/ALTERNATIVE-BOT",
+      branch: "main",
+    }),
   });
 }
 

@@ -1,5 +1,3 @@
-import { t } from "@lingui/core/macro";
-import { Trans } from "@lingui/react/macro";
 import type { BotAvatarSet } from "@alternativebot/contracts";
 import { resolveBotAvatarSet } from "@alternativebot/contracts";
 import { SHIPPED_BOT_AVATAR_SHAPE_KEYS } from "@alternativebot/core";
@@ -22,6 +20,8 @@ import {
   TabsTrigger,
 } from "@alternativebot/ui-web";
 import { Button } from "@alternativebot/ui-web/components/ui/button";
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 import { Check, Pencil, Upload, X } from "lucide-react";
 import type { ClipboardEvent, DragEvent } from "react";
 import { useRef, useState } from "react";

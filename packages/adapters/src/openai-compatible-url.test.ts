@@ -16,7 +16,8 @@ const savedPrivateHosts = process.env.ALTERNATIVEBOT_OPENAI_COMPAT_PRIVATE_HOSTS
 afterEach(() => {
   if (savedAllowPublic === undefined) delete process.env.ALTERNATIVEBOT_OPENAI_COMPAT_ALLOW_PUBLIC;
   else process.env.ALTERNATIVEBOT_OPENAI_COMPAT_ALLOW_PUBLIC = savedAllowPublic;
-  if (savedPrivateHosts === undefined) delete process.env.ALTERNATIVEBOT_OPENAI_COMPAT_PRIVATE_HOSTS;
+  if (savedPrivateHosts === undefined)
+    delete process.env.ALTERNATIVEBOT_OPENAI_COMPAT_PRIVATE_HOSTS;
   else process.env.ALTERNATIVEBOT_OPENAI_COMPAT_PRIVATE_HOSTS = savedPrivateHosts;
 });
 

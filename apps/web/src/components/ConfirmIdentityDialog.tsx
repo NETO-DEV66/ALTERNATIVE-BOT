@@ -1,4 +1,3 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import type { AccountSecurity } from "@alternativebot/contracts";
 import { runWithIdentityConfirmation } from "@alternativebot/contracts";
 import {
@@ -10,6 +9,7 @@ import {
   Input,
   Label,
 } from "@alternativebot/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   confirmIdentity,

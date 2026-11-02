@@ -1,4 +1,3 @@
-import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { useLinkFavicon } from "@alternativebot/chat-ui/web";
 import type {
   CapabilityInstall,
@@ -10,6 +9,7 @@ import type {
 import { PluginPreviewSchema } from "@alternativebot/contracts";
 import { installedPluginParts } from "@alternativebot/core";
 import { Button, Spinner } from "@alternativebot/ui-web";
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { ArrowUpRight, Check, ChevronLeft, FileText, Plug } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { connectMcpOauth } from "../../lib/mcp-connect";

@@ -138,9 +138,11 @@ describe("spawned bot creation", () => {
       name: "Painter",
       threadId: "thread-2",
     });
-    const createReposSpy = vi.spyOn(await import("@alternativebot/db"), "createRepos").mockReturnValue({
-      createBot,
-    } as unknown as ReturnType<typeof createRepos>);
+    const createReposSpy = vi
+      .spyOn(await import("@alternativebot/db"), "createRepos")
+      .mockReturnValue({
+        createBot,
+      } as unknown as ReturnType<typeof createRepos>);
 
     const result = await spawnBot(
       {
@@ -999,7 +1001,9 @@ describe("destroyBot", () => {
 
   it("leaves a remote profile in place when its parent directory is a symlink", async () => {
     const root = await mkdtemp(path.join(tmpdir(), "alternativebot-team-remote-symlink-"));
-    const remote = await mkdtemp(path.join(tmpdir(), "alternativebot-team-remote-symlink-workspace-"));
+    const remote = await mkdtemp(
+      path.join(tmpdir(), "alternativebot-team-remote-symlink-workspace-"),
+    );
     try {
       const home = new LocalAgentHomeStore(root);
       const teamHome = home.pathFor("team-workspace-1");
@@ -1057,7 +1061,9 @@ describe("destroyBot", () => {
 
   it("does not remove a profile when stopping the browser fails", async () => {
     const root = await mkdtemp(path.join(tmpdir(), "alternativebot-team-release-failed-"));
-    const remote = await mkdtemp(path.join(tmpdir(), "alternativebot-team-release-failed-workspace-"));
+    const remote = await mkdtemp(
+      path.join(tmpdir(), "alternativebot-team-release-failed-workspace-"),
+    );
     try {
       const home = new LocalAgentHomeStore(root);
       const teamHome = home.pathFor("team-workspace-1");
@@ -1109,7 +1115,9 @@ describe("destroyBot", () => {
 
   it("removes local and remote profiles when the browser stopped but slot cleanup failed", async () => {
     const root = await mkdtemp(path.join(tmpdir(), "alternativebot-team-slot-cleanup-"));
-    const remote = await mkdtemp(path.join(tmpdir(), "alternativebot-team-slot-cleanup-workspace-"));
+    const remote = await mkdtemp(
+      path.join(tmpdir(), "alternativebot-team-slot-cleanup-workspace-"),
+    );
     try {
       const home = new LocalAgentHomeStore(root);
       const teamHome = home.pathFor("team-workspace-1");
@@ -1540,7 +1548,9 @@ describe("destroyBot", () => {
 
   it("removes the deleted bot's folder from a running remote Team Computer", async () => {
     const root = await mkdtemp(path.join(tmpdir(), "alternativebot-team-folder-remote-"));
-    const remote = await mkdtemp(path.join(tmpdir(), "alternativebot-team-folder-remote-workspace-"));
+    const remote = await mkdtemp(
+      path.join(tmpdir(), "alternativebot-team-folder-remote-workspace-"),
+    );
     try {
       const home = new LocalAgentHomeStore(root);
       const teamHome = home.pathFor("team-workspace-1");
@@ -1712,7 +1722,9 @@ describe("destroyBot", () => {
 
   it("unlinks a symlinked bot folder instead of following it into another bot's folder", async () => {
     const root = await mkdtemp(path.join(tmpdir(), "alternativebot-team-folder-symlink-"));
-    const remote = await mkdtemp(path.join(tmpdir(), "alternativebot-team-folder-symlink-workspace-"));
+    const remote = await mkdtemp(
+      path.join(tmpdir(), "alternativebot-team-folder-symlink-workspace-"),
+    );
     try {
       const home = new LocalAgentHomeStore(root);
       const teamHome = home.pathFor("team-workspace-1");

@@ -1,6 +1,9 @@
 import type { MessageBlock } from "@alternativebot/contracts";
 import { isToolActivityBlock } from "@alternativebot/core";
-import { MAX_QUOTABLE_SOURCE_LENGTH, visibleTextFromMarkdown } from "@alternativebot/core/message-quote";
+import {
+  MAX_QUOTABLE_SOURCE_LENGTH,
+  visibleTextFromMarkdown,
+} from "@alternativebot/core/message-quote";
 
 export function isCenteredAgentEvent(blocks: readonly MessageBlock[]): boolean {
   return blocks.some(

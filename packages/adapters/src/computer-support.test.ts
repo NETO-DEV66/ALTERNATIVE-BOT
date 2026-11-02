@@ -55,10 +55,12 @@ describe("Team Computer bot folders", () => {
 
   it("treats a leading /home/alternativebot as the workspace root", () => {
     expect(resolveBotWorkspacePath("team", "bot-1", "/home/alternativebot")).toBe("");
-    expect(resolveBotWorkspacePath("team", "bot-1", "/home/alternativebot/notes/x.md")).toBe("notes/x.md");
-    expect(resolveBotWorkspacePath("team", "bot-1", String.raw`\home\alternativebot\notes\x.md`)).toBe(
+    expect(resolveBotWorkspacePath("team", "bot-1", "/home/alternativebot/notes/x.md")).toBe(
       "notes/x.md",
     );
+    expect(
+      resolveBotWorkspacePath("team", "bot-1", String.raw`\home\alternativebot\notes\x.md`),
+    ).toBe("notes/x.md");
     expect(resolveBotWorkspacePath("team", "bot-1", "/home/alternativebot/shared/brief.md")).toBe(
       "shared/brief.md",
     );
@@ -66,9 +68,9 @@ describe("Team Computer bot folders", () => {
       "/notes/x.md",
     );
     expect(resolveBotWorkspacePath("dedicated", "bot-1", "/home/alternativebot")).toBe("/");
-    expect(resolveBotWorkspacePath("dedicated", "bot-1", String.raw`\home\alternativebot\notes\x.md`)).toBe(
-      String.raw`\notes\x.md`,
-    );
+    expect(
+      resolveBotWorkspacePath("dedicated", "bot-1", String.raw`\home\alternativebot\notes\x.md`),
+    ).toBe(String.raw`\notes\x.md`);
     expect(resolveBotWorkspacePath("team", "bot-1", "/home/alternativebottest/file.txt")).toBe(
       "home/alternativebottest/file.txt",
     );
@@ -78,9 +80,9 @@ describe("Team Computer bot folders", () => {
   });
 
   it("keeps root paths for a listing requested under /home/alternativebot", () => {
-    expect(displayBotWorkspacePath("team", "bot-1", "/home/alternativebot/bots", "bots/bot-1")).toBe(
-      "bots/bot-1",
-    );
+    expect(
+      displayBotWorkspacePath("team", "bot-1", "/home/alternativebot/bots", "bots/bot-1"),
+    ).toBe("bots/bot-1");
   });
 
   it("presents the current bot folder as its home without hiding Team paths", () => {

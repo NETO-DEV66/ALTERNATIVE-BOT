@@ -76,7 +76,10 @@ describe("computer keyboard edits", () => {
     });
     expect(script.startsWith("window.alternativebotComputerKeyboard?.run(")).toBe(true);
     expect(script.endsWith(");true;")).toBe(true);
-    const json = script.slice("window.alternativebotComputerKeyboard?.run(".length, -");true;".length);
+    const json = script.slice(
+      "window.alternativebotComputerKeyboard?.run(".length,
+      -");true;".length,
+    );
     expect(json).not.toContain("<");
     expect(JSON.parse(json)).toEqual({ type: "text", text: '</script>\u2028");alert(1)' });
   });

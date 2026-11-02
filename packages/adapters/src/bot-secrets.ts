@@ -25,7 +25,12 @@ import {
   sameLoginFieldLabel,
 } from "@alternativebot/contracts";
 import type { Prisma, PrismaClient } from "@alternativebot/db";
-import { lockSpaceSettings, runLoginKind, settingsTarget, withTransactionRetry } from "@alternativebot/db";
+import {
+  lockSpaceSettings,
+  runLoginKind,
+  settingsTarget,
+  withTransactionRetry,
+} from "@alternativebot/db";
 import { getLogger } from "@alternativebot/logging";
 import { z } from "zod";
 import { combineSignals, redactConnectorPayload } from "./connector-safety.js";

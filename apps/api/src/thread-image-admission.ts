@@ -1,4 +1,3 @@
-import { ORPCError } from "@orpc/server";
 import type { SecretStore } from "@alternativebot/adapter-kit";
 import type { CodexLiveCatalog } from "@alternativebot/adapters";
 import {
@@ -18,6 +17,7 @@ import type { Actor, MessageBlock } from "@alternativebot/contracts";
 import { MODEL_IMAGE_INPUT_ERROR, MODEL_IMAGE_INPUT_UNKNOWN } from "@alternativebot/core";
 import type { PrismaClient } from "@alternativebot/db";
 import { appliedModelRole, findModelCredential, findModelCredentialById } from "@alternativebot/db";
+import { ORPCError } from "@orpc/server";
 
 type ModelChoice = {
   modelProvider: string | null;

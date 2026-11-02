@@ -93,17 +93,21 @@ describe("settings links", () => {
     const close = vi.fn();
     const unregister = registerSettingsSheet(close);
 
-    expect(redirectSystemPath({ path: "alternativebot:///voice", initial: false })).toBe("alternativebot:///voice");
-    expect(redirectSystemPath({ path: "alternativebot:///account?focus=usage", initial: false })).toBe(
-      "alternativebot:///account?focus=usage",
+    expect(redirectSystemPath({ path: "alternativebot:///voice", initial: false })).toBe(
+      "alternativebot:///voice",
     );
+    expect(
+      redirectSystemPath({ path: "alternativebot:///account?focus=usage", initial: false }),
+    ).toBe("alternativebot:///account?focus=usage");
     expect(close).not.toHaveBeenCalled();
 
-    expect(redirectSystemPath({ path: "alternativebot:///thread?botId=bot-1", initial: false })).toBe(
-      "alternativebot:///thread?botId=bot-1",
-    );
+    expect(
+      redirectSystemPath({ path: "alternativebot:///thread?botId=bot-1", initial: false }),
+    ).toBe("alternativebot:///thread?botId=bot-1");
     expect(close).toHaveBeenCalledTimes(1);
-    expect(redirectSystemPath({ path: "alternativebot://expo-sharing", initial: true })).toBe("/share");
+    expect(redirectSystemPath({ path: "alternativebot://expo-sharing", initial: true })).toBe(
+      "/share",
+    );
     expect(close).toHaveBeenCalledTimes(2);
     expect(redirectSystemPath({ path: "alternativebot:///artifacts", initial: false })).toBe(
       "alternativebot:///artifacts",

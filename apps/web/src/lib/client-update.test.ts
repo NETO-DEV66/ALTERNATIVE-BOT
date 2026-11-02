@@ -76,7 +76,9 @@ function setup(overrides: Partial<ClientUpdateDeps> = {}) {
     fire: (type: string) => listeners.get(type)?.(),
     idleTick: () => tick(),
     reply: (status: number, build?: string) =>
-      onResponse(new Response(null, { status, headers: build ? { "x-alternativebot-build": build } : {} })),
+      onResponse(
+        new Response(null, { status, headers: build ? { "x-alternativebot-build": build } : {} }),
+      ),
   };
 }
 const flush = () => new Promise((resolve) => setTimeout(resolve, 0));

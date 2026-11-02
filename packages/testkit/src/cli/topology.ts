@@ -18,7 +18,8 @@ async function main() {
     ...process.env,
     TOPOLOGY_API_PORT: String(port),
     TOPOLOGY_APP_IMAGE: process.env.TOPOLOGY_APP_IMAGE ?? "alternativebot/app:topology",
-    TOPOLOGY_COMPUTER_IMAGE: process.env.TOPOLOGY_COMPUTER_IMAGE ?? "alternativebot/computer:topology",
+    TOPOLOGY_COMPUTER_IMAGE:
+      process.env.TOPOLOGY_COMPUTER_IMAGE ?? "alternativebot/computer:topology",
   };
   const compose = (args: string[], capture = false) =>
     command(

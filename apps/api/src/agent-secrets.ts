@@ -1,4 +1,3 @@
-import { ORPCError } from "@orpc/server";
 import type { SecretStore } from "@alternativebot/adapter-kit";
 import {
   forgetBotSecret,
@@ -15,6 +14,7 @@ import {
   commandVariableProblem,
 } from "@alternativebot/contracts";
 import type { PrismaClient } from "@alternativebot/db";
+import { ORPCError } from "@orpc/server";
 import { mapBotSecretInputError } from "./routes/bots.js";
 
 type AgentSecretDeps = {

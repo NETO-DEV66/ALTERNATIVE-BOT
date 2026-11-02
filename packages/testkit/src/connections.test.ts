@@ -99,8 +99,16 @@ describeWithDatabase("Composio catalog reconciliation", () => {
   });
 
   it("reconciles one scoped row per provider under concurrent catalog fetches", async () => {
-    const ownerCookie = await signup(app, `owner-connections-${stamp}@alternativebot.test`, "Owner");
-    const otherCookie = await signup(app, `other-connections-${stamp}@alternativebot.test`, "Other");
+    const ownerCookie = await signup(
+      app,
+      `owner-connections-${stamp}@alternativebot.test`,
+      "Owner",
+    );
+    const otherCookie = await signup(
+      app,
+      `other-connections-${stamp}@alternativebot.test`,
+      "Other",
+    );
     const owner = await rpc<Actor>(app, ownerCookie, "me");
     const other = await rpc<Actor>(app, otherCookie, "me");
     await connectRemote(composio, owner, "GMAIL");
@@ -234,7 +242,11 @@ describeWithDatabase("Composio catalog reconciliation", () => {
   });
 
   it("returns the remote catalog when local reconciliation fails", async () => {
-    const cookie = await signup(app, `db-failure-connections-${stamp}@alternativebot.test`, "DB Failure");
+    const cookie = await signup(
+      app,
+      `db-failure-connections-${stamp}@alternativebot.test`,
+      "DB Failure",
+    );
     const actor = await rpc<Actor>(app, cookie, "me");
     await connectRemote(composio, actor, "SLACK");
     const pending = await createConnection(actor, "SLACK");
@@ -352,7 +364,11 @@ describeWithDatabase("Composio catalog reconciliation", () => {
   });
 
   it("runs Pipedream connection and MCP tool execution through the product registry", async () => {
-    const cookie = await signup(app, `pipedream-${stamp}@alternativebot.test`, "Pipedream Connector");
+    const cookie = await signup(
+      app,
+      `pipedream-${stamp}@alternativebot.test`,
+      "Pipedream Connector",
+    );
     const actor = await rpc<Actor>(app, cookie, "me");
     const catalog = await rpc<Array<{ connectorId: string; slug: string; connected: boolean }>>(
       app,
@@ -424,7 +440,11 @@ describeWithDatabase("Composio catalog reconciliation", () => {
   });
 
   it("installs Treg, Executor, and custom MCP sources and routes their calls", async () => {
-    const cookie = await signup(app, `mcp-connectors-${stamp}@alternativebot.test`, "MCP Connectors");
+    const cookie = await signup(
+      app,
+      `mcp-connectors-${stamp}@alternativebot.test`,
+      "MCP Connectors",
+    );
     const actor = await rpc<Actor>(app, cookie, "me");
     const tregCredential = "fake-treg-credential-value";
     const treg = await rpc<{ id: string; secretConfigured: boolean }>(
@@ -602,7 +622,11 @@ describeWithDatabase("Composio catalog reconciliation", () => {
   });
 
   it("imports a GraphQL connector, introspects operations, and routes calls", async () => {
-    const cookie = await signup(app, `graphql-connector-${stamp}@alternativebot.test`, "GraphQL Connector");
+    const cookie = await signup(
+      app,
+      `graphql-connector-${stamp}@alternativebot.test`,
+      "GraphQL Connector",
+    );
     const actor = await rpc<Actor>(app, cookie, "me");
     const install = await rpc<{
       id: string;

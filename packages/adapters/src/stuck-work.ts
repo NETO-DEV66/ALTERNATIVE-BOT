@@ -1,4 +1,8 @@
-import type { JobPublisher, NotificationMessage, NotificationProvider } from "@alternativebot/adapter-kit";
+import type {
+  JobPublisher,
+  NotificationMessage,
+  NotificationProvider,
+} from "@alternativebot/adapter-kit";
 import { runContinueJob } from "@alternativebot/adapter-kit";
 import type { StuckWorkStatus } from "@alternativebot/core";
 import {

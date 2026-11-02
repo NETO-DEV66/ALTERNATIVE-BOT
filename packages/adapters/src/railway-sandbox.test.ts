@@ -924,7 +924,10 @@ describe("Railway computers", () => {
       ...sandbox,
       domains: [{ port: 6080, domain }],
     } as unknown as Sandbox);
-    sandbox.exec.mockResolvedValue({ stdout: "ALTERNATIVEBOT_DESKTOP=0:screen-token", exitCode: 0 });
+    sandbox.exec.mockResolvedValue({
+      stdout: "ALTERNATIVEBOT_DESKTOP=0:screen-token",
+      exitCode: 0,
+    });
     await expect(
       provider.connectScreen(computer, { view: "stream", interactive: false }, ctx),
     ).rejects.toThrow("Invalid Railway screen domain");

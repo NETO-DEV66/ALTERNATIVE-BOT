@@ -4,7 +4,6 @@ import { randomUUID } from "node:crypto";
 import { access, lstat, open, readFile, rename, unlink } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { serve } from "@hono/node-server";
 import type { ServerUpdateRun } from "@alternativebot/contracts";
 import type { ComposeUpdateStep } from "@alternativebot/core";
 import {
@@ -38,6 +37,7 @@ import type { Logger } from "@alternativebot/logging";
 import { SERVICE_NAMES } from "@alternativebot/logging";
 import { createRootLogger } from "@alternativebot/logging/axiom";
 import { requestLogging } from "@alternativebot/logging/hono";
+import { serve } from "@hono/node-server";
 import type { Context } from "hono";
 import { Hono } from "hono";
 import type { UpdaterConfig } from "./updater-logic.js";

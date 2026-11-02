@@ -22,7 +22,10 @@ test("sidebar list fades above the transparent footer and keeps the last row rea
   const lastRow = list.getByRole("button", { name: /^Demo chat 19/ }).first();
   await expect(lastRow).toHaveCount(1);
   for (const theme of ["light", "dark"]) {
-    await page.evaluate((theme) => localStorage.setItem("alternativebot.uiAppearance", theme), theme);
+    await page.evaluate(
+      (theme) => localStorage.setItem("alternativebot.uiAppearance", theme),
+      theme,
+    );
     await page.reload();
     await expect(lastRow).toHaveCount(1);
     await expect(footer).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");

@@ -1,8 +1,14 @@
 import { randomUUID } from "node:crypto";
-import { createRouterClient } from "@orpc/server";
 import type { Actor } from "@alternativebot/contracts";
 import type { PrismaClient } from "@alternativebot/db";
-import { allocateTicketNumber, createDb, ensureBoard, runAsSystem, runAsTenant } from "@alternativebot/db";
+import {
+  allocateTicketNumber,
+  createDb,
+  ensureBoard,
+  runAsSystem,
+  runAsTenant,
+} from "@alternativebot/db";
+import { createRouterClient } from "@orpc/server";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import type { RouterDeps } from "./router.js";
 import { createRouter } from "./router.js";

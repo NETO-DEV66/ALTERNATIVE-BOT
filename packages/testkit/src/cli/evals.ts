@@ -466,10 +466,14 @@ async function main() {
       stdio: "pipe",
       timeout: 120_000,
     });
-    execFileSync("pnpm", ["--filter", "@alternativebot/db", "exec", "prisma", "migrate", "deploy"], {
-      stdio: "pipe",
-      timeout: 120_000,
-    });
+    execFileSync(
+      "pnpm",
+      ["--filter", "@alternativebot/db", "exec", "prisma", "migrate", "deploy"],
+      {
+        stdio: "pipe",
+        timeout: 120_000,
+      },
+    );
     // Import runtime modules only after generation; their barrel exports load Prisma.
     const { createApp } = await import("@alternativebot/api/app");
     const { runTrial } = await import("../evals/runner.js");

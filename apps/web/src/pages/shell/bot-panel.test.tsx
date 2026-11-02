@@ -1,8 +1,8 @@
 // @vitest-environment jsdom
 
+import type { Bot, BotAvatarSet } from "@alternativebot/contracts";
 import { i18n } from "@lingui/core";
 import { ORPCError } from "@orpc/client";
-import type { Bot, BotAvatarSet } from "@alternativebot/contracts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ComponentProps, ReactNode } from "react";
 import { act } from "react";
@@ -113,7 +113,9 @@ vi.mock("./avatar-studio-popover", () => ({
         aria-label="Avatar set"
         data-avatar-set={avatarSet}
         data-color={value}
-        onClick={() => onChange("#F97316", avatarSet === "alternativebot" ? "organic" : "alternativebot")}
+        onClick={() =>
+          onChange("#F97316", avatarSet === "alternativebot" ? "organic" : "alternativebot")
+        }
       />
     </>
   ),
@@ -699,7 +701,10 @@ describe("BotSettings avatar set persistence", () => {
     await render("Billing", { color: "#10B981" });
     const control = () => container.querySelector<HTMLButtonElement>('[aria-label="Avatar set"]')!;
     await act(async () => control().click());
-    expect(onSave.mock.lastCall?.[0]).toMatchObject({ avatarSet: "alternativebot", color: "#F97316" });
+    expect(onSave.mock.lastCall?.[0]).toMatchObject({
+      avatarSet: "alternativebot",
+      color: "#F97316",
+    });
     expect(control().getAttribute("data-avatar-set")).toBe("alternativebot");
     await act(async () => root.unmount());
     root = createRoot(container);

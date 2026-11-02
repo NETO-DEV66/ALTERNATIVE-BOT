@@ -1,4 +1,3 @@
-import { ORPCError } from "@orpc/server";
 import { BUILTIN_AGENT_SKILLS } from "@alternativebot/adapters";
 import type { Actor, AgentSkill, AgentSkillSource } from "@alternativebot/contracts";
 import type { SkillSource } from "@alternativebot/core";
@@ -16,6 +15,7 @@ import {
   IsolationError,
   spaceAvailability,
 } from "@alternativebot/db";
+import { ORPCError } from "@orpc/server";
 import { assertNameFreeWhereAvailable, userAddedAvailability } from "./availability.js";
 
 type AgentSkillRow = {

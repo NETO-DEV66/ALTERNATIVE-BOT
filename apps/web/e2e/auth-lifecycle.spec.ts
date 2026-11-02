@@ -308,7 +308,8 @@ test("changes and recovers an email password", async ({ page }, testInfo) => {
       html: string;
     }>;
     return messages.filter(
-      (message) => message.to === email && message.subject === "Reset your Alternative Bot password",
+      (message) =>
+        message.to === email && message.subject === "Reset your Alternative Bot password",
     );
   };
   await expect.poll(async () => (await sentToUser()).length).toBeGreaterThan(0);

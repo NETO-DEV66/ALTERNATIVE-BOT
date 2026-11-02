@@ -1,8 +1,8 @@
-import { RPCHandler } from "@orpc/server/fetch";
 import * as adapters from "@alternativebot/adapters";
 import { listPiCatalog, serializeModelSecret } from "@alternativebot/adapters";
 import type { Actor } from "@alternativebot/contracts";
 import type { PrismaClient } from "@alternativebot/db";
+import { RPCHandler } from "@orpc/server/fetch";
 import { describe, expect, it, vi } from "vitest";
 import type { RouterDeps } from "./router.js";
 import { createRouter } from "./router.js";
@@ -106,8 +106,7 @@ function setup(
     spaceSettingOverride,
     userModelCredential: {
       findMany: vi.fn(async ({ where }: { where: { userId: string; provider?: string } }) =>
-        where.userId === owner.userId &&
-        (!where.provider || where.provider === credential.provider)
+        where.userId === owner.userId && (!where.provider || where.provider === credential.provider)
           ? [credential]
           : [],
       ),

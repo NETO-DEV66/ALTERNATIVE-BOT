@@ -47,7 +47,10 @@ function fixture() {
     if (script.endsWith("backup-prod.sh")) {
       // Relocate only the fixed output directory: never write to real host backups.
       expect(source).toContain('BACKUP_ROOT="/var/backups/alternativebot"');
-      source = source.replace('BACKUP_ROOT="/var/backups/alternativebot"', `BACKUP_ROOT="${snapshots}"`);
+      source = source.replace(
+        'BACKUP_ROOT="/var/backups/alternativebot"',
+        `BACKUP_ROOT="${snapshots}"`,
+      );
     }
     write(path.join(checkout, script), source);
   }
@@ -317,9 +320,9 @@ describe("development backup failures", () => {
     const result = f.run("scripts/backup.sh", [stamp]);
 
     expect(result.status, result.stderr).toBe(0);
-    expect(readFileSync(path.join(f.checkout, "backups", stamp, "alternativebot.sql"), "utf8")).toContain(
-      "CREATE TABLE",
-    );
+    expect(
+      readFileSync(path.join(f.checkout, "backups", stamp, "alternativebot.sql"), "utf8"),
+    ).toContain("CREATE TABLE");
     expect(contents(path.join(f.checkout, "backups", stamp, "homes.tgz"))).toContain(
       "data/home.txt",
     );
@@ -768,7 +771,9 @@ describe("production backup deployment and archive behavior", () => {
 
   it("rejects relative deployment paths before any backup commands", () => {
     const f = fixture();
-    const result = f.run("infra/compose/backup-prod.sh", [], { ALTERNATIVEBOT_DEPLOY_DIR: "relative" });
+    const result = f.run("infra/compose/backup-prod.sh", [], {
+      ALTERNATIVEBOT_DEPLOY_DIR: "relative",
+    });
     expect(result.status).not.toBe(0);
     expect(result.stderr).toContain("absolute path");
     expect(f.commands()).toEqual([]);
@@ -849,7 +854,9 @@ describe("production backup deployment and archive behavior", () => {
     const mountpoint = path.join(f.root, "bin/mountpoint");
     write(mountpoint, "#!/bin/bash\nexit 1\n");
     chmodSync(mountpoint, 0o755);
-    const result = f.run("infra/compose/backup-prod.sh", [], { ALTERNATIVEBOT_BACKUP_REQUIRE_VOLUME: "1" });
+    const result = f.run("infra/compose/backup-prod.sh", [], {
+      ALTERNATIVEBOT_BACKUP_REQUIRE_VOLUME: "1",
+    });
     expect(result.status).toBe(1);
     expect(result.stderr).toContain("backup volume");
     expect(f.commands()).toEqual([]);
@@ -1065,7 +1072,9 @@ describe("encrypted production backups", { timeout: 20_000 }, () => {
       expect(readFileSync(path.join(snapshot, "alternativebot.dump.age"), "utf8")).not.toContain(
         "custom-format dump",
       );
-      expect(readFileSync(path.join(snapshot, "SHA256SUMS"), "utf8")).toContain("alternativebot.dump.age");
+      expect(readFileSync(path.join(snapshot, "SHA256SUMS"), "utf8")).toContain(
+        "alternativebot.dump.age",
+      );
       expect(existsSync(path.join(f.snapshots, ".encrypted"))).toBe(true);
 
       // The drill runs where the private key lives and rejects any other identity.
@@ -1161,7 +1170,8 @@ describe("encrypted production backups", { timeout: 20_000 }, () => {
 
 describe("off-site copies", { timeout: 20_000 }, () => {
   const remote = "offsite:alternativebot/";
-  const remoteDir = (f: ReturnType<typeof fixture>) => path.join(f.env.FAKE_REMOTE, "alternativebot");
+  const remoteDir = (f: ReturnType<typeof fixture>) =>
+    path.join(f.env.FAKE_REMOTE, "alternativebot");
   const rcloneCalls = (f: ReturnType<typeof fixture>) =>
     existsSync(f.env.RCLONE_LOG) ? readFileSync(f.env.RCLONE_LOG, "utf8").trim().split("\n") : [];
 
@@ -1204,7 +1214,10 @@ describe("off-site copies", { timeout: 20_000 }, () => {
   it.each([
     [{ FAIL_RCLONE: "copy" }, "upload"],
     [{ FAIL_RCLONE: "check" }, "verification"],
-    [{ ALTERNATIVEBOT_BACKUP_AGE_RECIPIENTS: "" }, "off-site copies require ALTERNATIVEBOT_BACKUP_AGE_RECIPIENTS"],
+    [
+      { ALTERNATIVEBOT_BACKUP_AGE_RECIPIENTS: "" },
+      "off-site copies require ALTERNATIVEBOT_BACKUP_AGE_RECIPIENTS",
+    ],
   ])("keeps the verified local snapshot but fails the run: %j", (settings, message) => {
     const f = fixture();
     const result = f.run("infra/compose/backup-prod.sh", [], {
@@ -1224,7 +1237,9 @@ describe("off-site copies", { timeout: 20_000 }, () => {
 
   it.each(["-1", "08"])("rejects an invalid off-site retention: %s", (keep) => {
     const f = fixture();
-    const result = f.run("infra/compose/backup-prod.sh", [], { ALTERNATIVEBOT_BACKUP_OFFSITE_KEEP: keep });
+    const result = f.run("infra/compose/backup-prod.sh", [], {
+      ALTERNATIVEBOT_BACKUP_OFFSITE_KEEP: keep,
+    });
     expect(result.status).toBe(1);
     expect(result.stderr).toContain("ALTERNATIVEBOT_BACKUP_OFFSITE_KEEP");
   });

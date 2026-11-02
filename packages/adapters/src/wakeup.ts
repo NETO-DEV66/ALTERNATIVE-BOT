@@ -9,7 +9,12 @@ import type {
 import { dispatchBackgroundJob } from "@alternativebot/adapter-kit";
 import type { PrismaClient } from "@alternativebot/db";
 import { isTooManyDatabaseConnections, runAsSystem } from "@alternativebot/db";
-import { getLogger, runCorrelatedJob, unwrapJobPayload, wrapJobPayload } from "@alternativebot/logging";
+import {
+  getLogger,
+  runCorrelatedJob,
+  unwrapJobPayload,
+  wrapJobPayload,
+} from "@alternativebot/logging";
 import type { Runner, WorkerUtils } from "graphile-worker";
 import { makeWorkerUtils, run } from "graphile-worker";
 import type { Pool } from "pg";

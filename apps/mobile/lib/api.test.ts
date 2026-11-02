@@ -177,7 +177,8 @@ describe("mobile API authentication", () => {
   describe.each([
     {
       name: "password reset",
-      request: () => requestPasswordReset("ada@example.test", "https://alternativebot.test/reset-password"),
+      request: () =>
+        requestPasswordReset("ada@example.test", "https://alternativebot.test/reset-password"),
       fallback: "Could not send reset email",
     },
     {
@@ -244,7 +245,10 @@ describe("mobile API authentication", () => {
         body: JSON.stringify({ email: "ada@example.com", password: "correct horse" }),
       }),
     );
-    expect(SecureStore.setItemAsync).toHaveBeenCalledWith("alternativebot.session_token", "session-token");
+    expect(SecureStore.setItemAsync).toHaveBeenCalledWith(
+      "alternativebot.session_token",
+      "session-token",
+    );
     expect(resumeLiveNotifications).not.toHaveBeenCalled();
   });
 
@@ -284,7 +288,10 @@ describe("mobile API authentication", () => {
         }),
       }),
     );
-    expect(SecureStore.setItemAsync).toHaveBeenCalledWith("alternativebot.session_token", "signup-token");
+    expect(SecureStore.setItemAsync).toHaveBeenCalledWith(
+      "alternativebot.session_token",
+      "signup-token",
+    );
   });
 
   it("emails a sign-in code and persists the session the code returns", async () => {
@@ -315,7 +322,10 @@ describe("mobile API authentication", () => {
         body: JSON.stringify({ email: "ada@example.test", otp: "123456", name: "Ada" }),
       }),
     );
-    expect(SecureStore.setItemAsync).toHaveBeenCalledWith("alternativebot.session_token", "code-token");
+    expect(SecureStore.setItemAsync).toHaveBeenCalledWith(
+      "alternativebot.session_token",
+      "code-token",
+    );
   });
 
   it.each([
@@ -525,7 +535,10 @@ describe("mobile API authentication", () => {
 
     await changePassword("old-password", "new-password");
 
-    expect(SecureStore.setItemAsync).toHaveBeenCalledWith("alternativebot.session_token", "rotated-token");
+    expect(SecureStore.setItemAsync).toHaveBeenCalledWith(
+      "alternativebot.session_token",
+      "rotated-token",
+    );
     expect(resumeLiveNotifications).toHaveBeenCalledWith(
       "http://127.0.0.1:3100",
       "rotated-token",
@@ -566,7 +579,10 @@ describe("mobile API authentication", () => {
     resolveFetch(jsonResponse({ token: "rotated-token", user: { id: "user-1" } }));
     await pending;
 
-    expect(SecureStore.setItemAsync).toHaveBeenCalledWith("alternativebot.session_token", "rotated-token");
+    expect(SecureStore.setItemAsync).toHaveBeenCalledWith(
+      "alternativebot.session_token",
+      "rotated-token",
+    );
   });
 
   it("keeps the rotated token in memory and reports a failed keychain write", async () => {
@@ -1366,7 +1382,10 @@ describe("mobile API authentication", () => {
     });
 
     await expect(selectSpace("space-social")).resolves.toBe(false);
-    expect(SecureStore.setItemAsync).not.toHaveBeenCalledWith("alternativebot.space_id", "space-social");
+    expect(SecureStore.setItemAsync).not.toHaveBeenCalledWith(
+      "alternativebot.space_id",
+      "space-social",
+    );
     expect(selectedSpaceId()).toBe("space-support");
 
     vi.mocked(SecureStore.setItemAsync).mockReset();
@@ -1440,7 +1459,10 @@ describe("mobile API authentication", () => {
       if (key === "alternativebot.space_id") throw new Error("device locked");
     });
     vi.mocked(SecureStore.setItemAsync).mockImplementation(async (key, value) => {
-      if (key === "alternativebot.session_token" || (key === "alternativebot.space_id" && value === "")) {
+      if (
+        key === "alternativebot.session_token" ||
+        (key === "alternativebot.space_id" && value === "")
+      ) {
         throw new Error("device locked");
       }
     });
@@ -1510,7 +1532,10 @@ describe("mobile API authentication", () => {
     await expect(authHeaders()).resolves.toEqual({
       "x-alternativebot-space-id": "space-support",
     });
-    expect(SecureStore.setItemAsync).toHaveBeenCalledWith("alternativebot.space_id", "space-support");
+    expect(SecureStore.setItemAsync).toHaveBeenCalledWith(
+      "alternativebot.space_id",
+      "space-support",
+    );
   });
 
   it("refuses an endpoint switch when the active space cannot be snapshotted", async () => {
@@ -1594,7 +1619,10 @@ describe("mobile API authentication", () => {
       if (key === "alternativebot.space_id") throw new Error("device locked");
     });
     vi.mocked(SecureStore.setItemAsync).mockImplementation(async (key, value) => {
-      if (key === "alternativebot.session_token" || (key === "alternativebot.space_id" && value === "")) {
+      if (
+        key === "alternativebot.session_token" ||
+        (key === "alternativebot.space_id" && value === "")
+      ) {
         throw new Error("device locked");
       }
     });
@@ -2361,7 +2389,8 @@ describe("mobile API authentication", () => {
           releaseA = resolve;
         });
       }
-      if (key === "alternativebot.space_id" && value === "space-b") throw new Error("device locked");
+      if (key === "alternativebot.space_id" && value === "space-b")
+        throw new Error("device locked");
       storage.set(key, value);
     });
     await loadApiBase();
@@ -2369,7 +2398,8 @@ describe("mobile API authentication", () => {
     await vi.waitFor(() => expect(selectedSpaceId()).toBe("space-a"));
     // Let rollback's recovery write complete without waiting on the older write.
     vi.mocked(SecureStore.setItemAsync).mockImplementation(async (key, value) => {
-      if (key === "alternativebot.space_id" && value === "space-b") throw new Error("device locked");
+      if (key === "alternativebot.space_id" && value === "space-b")
+        throw new Error("device locked");
       storage.set(key, value);
     });
     await expect(selectSpace("space-b")).resolves.toBe(false);
@@ -2555,7 +2585,10 @@ describe("mobile API authentication", () => {
       storage.delete(key);
     });
     vi.mocked(SecureStore.setItemAsync).mockImplementation(async (key, value) => {
-      if (key === "alternativebot.api_base" || (key === "alternativebot.space_id" && value === "space-support")) {
+      if (
+        key === "alternativebot.api_base" ||
+        (key === "alternativebot.space_id" && value === "space-support")
+      ) {
         throw new Error("device locked");
       }
       storage.set(key, value);

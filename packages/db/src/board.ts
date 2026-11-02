@@ -1,4 +1,10 @@
-import type { Board, Ticket, TicketComment, TicketPriority, TicketStatus } from "@alternativebot/contracts";
+import type {
+  Board,
+  Ticket,
+  TicketComment,
+  TicketPriority,
+  TicketStatus,
+} from "@alternativebot/contracts";
 import {
   parseTicketRef,
   TicketPrioritySchema,

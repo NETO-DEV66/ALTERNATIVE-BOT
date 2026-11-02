@@ -431,7 +431,8 @@ describe("withMentions", () => {
     expect(withMentions(["[Planner](alternativebot-mention:bot-1) is ready."], [planner])).toEqual([
       `${link} is ready.`,
     ]);
-    const code = "`[Planner](alternativebot-mention:bot-1)`\n\n```\n[Planner](alternativebot-mention:bot-1)\n```";
+    const code =
+      "`[Planner](alternativebot-mention:bot-1)`\n\n```\n[Planner](alternativebot-mention:bot-1)\n```";
     expect(withMentions([code], [planner])).toEqual([`${link} ${code}`]);
   });
 

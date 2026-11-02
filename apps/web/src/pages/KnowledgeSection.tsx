@@ -1,10 +1,14 @@
-import { Trans, useLingui } from "@lingui/react/macro";
-import { ORPCError } from "@orpc/client";
 import type { AgentSkill, AgentSkillCatalogEntry, MemoryDocument } from "@alternativebot/contracts";
 import { isDeletableMemoryDocument, isEmptyBotMemory } from "@alternativebot/contracts";
 import { fetchFresh, writeSaved } from "@alternativebot/core/query";
 import { Badge, Button, Skeleton, Textarea } from "@alternativebot/ui-web";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@alternativebot/ui-web/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@alternativebot/ui-web/components/ui/tooltip";
+import { Trans, useLingui } from "@lingui/react/macro";
+import { ORPCError } from "@orpc/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Download, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";

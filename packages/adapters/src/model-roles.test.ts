@@ -220,7 +220,10 @@ describe("model roles", () => {
     });
     expect(
       deploymentModelRole("approval", {
-        env: { ALTERNATIVEBOT_AUTO_REVIEW_PROVIDER: "local-provider", ALTERNATIVEBOT_AUTO_REVIEW_MODEL: "judge" },
+        env: {
+          ALTERNATIVEBOT_AUTO_REVIEW_PROVIDER: "local-provider",
+          ALTERNATIVEBOT_AUTO_REVIEW_MODEL: "judge",
+        },
       }),
     ).toEqual({ primary: { provider: "local-provider", modelId: "judge" }, backups: [] });
   });

@@ -1,5 +1,3 @@
-import type { MenuAction } from "@expo/ui/community/menu";
-import { MenuView } from "@expo/ui/community/menu";
 import type {
   ModelCatalogEntry,
   ModelCredential,
@@ -22,6 +20,8 @@ import {
   withConnectionName,
 } from "@alternativebot/contracts";
 import { createModelRoleSettings, modelRoleListPatch } from "@alternativebot/core";
+import type { MenuAction } from "@expo/ui/community/menu";
+import { MenuView } from "@expo/ui/community/menu";
 import type { Href } from "expo-router";
 import type { ReactNode } from "react";
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";

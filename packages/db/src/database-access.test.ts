@@ -89,7 +89,9 @@ describe("provisionRuntimeRole", () => {
     sent.length = 0;
     await provisionRuntimeRole(owner, runtime);
     const setPassword = sent.find((sql) => sql.includes("PASSWORD"));
-    expect(setPassword).toMatch(/^CREATE ROLE "alternativebot_app" LOGIN PASSWORD 'SCRAM-SHA-256\$4096:/);
+    expect(setPassword).toMatch(
+      /^CREATE ROLE "alternativebot_app" LOGIN PASSWORD 'SCRAM-SHA-256\$4096:/,
+    );
     expect(sent.join("\n")).not.toContain("app-password");
   });
 });

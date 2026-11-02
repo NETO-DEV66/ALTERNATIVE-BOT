@@ -1,5 +1,9 @@
 import type { AttachmentMimeType } from "@alternativebot/contracts";
-import { ATTACHMENT_MAX_BYTES, ATTACHMENT_MAX_COUNT, attachmentSizeLabel } from "@alternativebot/contracts";
+import {
+  ATTACHMENT_MAX_BYTES,
+  ATTACHMENT_MAX_COUNT,
+  attachmentSizeLabel,
+} from "@alternativebot/contracts";
 import { newClientId } from "@alternativebot/core";
 
 export type PickedAttachment = {

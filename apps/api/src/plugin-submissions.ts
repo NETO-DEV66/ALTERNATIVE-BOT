@@ -1,4 +1,3 @@
-import { ORPCError } from "@orpc/server";
 import type { TransactionalEmail } from "@alternativebot/adapter-kit";
 import { parsePluginSource, previewPluginInstall } from "@alternativebot/adapters";
 import {
@@ -15,6 +14,7 @@ import type {
 import { PLUGIN_SUBMISSIONS_PATH, PluginSubmissionInputSchema } from "@alternativebot/contracts";
 import { pluginCategory } from "@alternativebot/core";
 import type { PluginSubmission as PluginSubmissionRow, PrismaClient } from "@alternativebot/db";
+import { ORPCError } from "@orpc/server";
 import type { Context } from "hono";
 import { Hono } from "hono";
 import { readBoundedBody } from "./http-body.js";

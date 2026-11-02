@@ -107,7 +107,8 @@ export function hasComputerIdentity(
   botId: string,
   spaceId: string,
 ) {
-  const labeledSpaceId = labels?.["alternativebot.spaceId"] ?? labels?.["alternativebot.workspaceId"];
+  const labeledSpaceId =
+    labels?.["alternativebot.spaceId"] ?? labels?.["alternativebot.workspaceId"];
   return labels?.["alternativebot.botId"] === botId && labeledSpaceId === spaceId;
 }
 

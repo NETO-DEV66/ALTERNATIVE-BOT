@@ -1,6 +1,6 @@
 import path from "node:path";
-import { _electron as electron, expect, test } from "@playwright/test";
 import type { AlternativeBotDesktop } from "@alternativebot/contracts";
+import { _electron as electron, expect, test } from "@playwright/test";
 
 const fixture = `<!doctype html>
 <html lang="en">
@@ -24,7 +24,8 @@ test("launches with a narrow preload bridge and an isolated renderer", async () 
     await expect(page).toHaveTitle("Alternative Bot desktop smoke");
 
     const renderer = await page.evaluate(async () => {
-      const desktop = (window as typeof window & { alternativebotDesktop?: AlternativeBotDesktop }).alternativebotDesktop;
+      const desktop = (window as typeof window & { alternativebotDesktop?: AlternativeBotDesktop })
+        .alternativebotDesktop;
 
       return {
         computerKeys: desktop?.computer ? Object.keys(desktop.computer).sort() : [],

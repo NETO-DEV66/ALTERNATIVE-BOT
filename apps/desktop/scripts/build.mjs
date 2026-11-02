@@ -14,6 +14,8 @@ await build({
   external: ["electron", "electron-updater", "koffi", "@sentry/electron"],
   // Only the release workflow's builds report errors; local and agent builds never do.
   define: {
-    "process.env.ALTERNATIVEBOT_DESKTOP_RELEASE": JSON.stringify(process.env.ALTERNATIVEBOT_DESKTOP_RELEASE ?? ""),
+    "process.env.ALTERNATIVEBOT_DESKTOP_RELEASE": JSON.stringify(
+      process.env.ALTERNATIVEBOT_DESKTOP_RELEASE ?? "",
+    ),
   },
 });

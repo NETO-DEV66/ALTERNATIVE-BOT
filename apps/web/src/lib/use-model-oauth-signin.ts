@@ -179,7 +179,9 @@ export function useModelOAuthSignIn(options: {
       } else {
         // null means the browser blocked the popup — the card keeps showing the
         // URL, and callers can flag that nothing opened.
-        if (!window.open(started.verificationUri, "alternativebot-model-oauth", "noopener,noreferrer")) {
+        if (
+          !window.open(started.verificationUri, "alternativebot-model-oauth", "noopener,noreferrer")
+        ) {
           setPopupBlocked(true);
         }
       }

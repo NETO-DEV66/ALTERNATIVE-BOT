@@ -69,7 +69,11 @@ import {
   withRunWorker,
   withSecretPersistence,
 } from "@alternativebot/adapters";
-import { resolveEncryptionKey, resolveSupervisorToken, uploadSizeFromEnv } from "@alternativebot/core";
+import {
+  resolveEncryptionKey,
+  resolveSupervisorToken,
+  uploadSizeFromEnv,
+} from "@alternativebot/core";
 import {
   createBoardEvents,
   createDb,

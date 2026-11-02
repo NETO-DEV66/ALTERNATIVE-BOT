@@ -531,7 +531,11 @@ describeWithDatabase("API authorization and resource isolation", () => {
   });
 
   it("prevents one user from reading or mutating another user's resources", async () => {
-    const owner = await signup(app, `owner-authz-${stamp}@alternativebot.test`, "Authorization Owner");
+    const owner = await signup(
+      app,
+      `owner-authz-${stamp}@alternativebot.test`,
+      "Authorization Owner",
+    );
     const intruder = await signup(
       app,
       `intruder-authz-${stamp}@alternativebot.test`,
@@ -1081,8 +1085,16 @@ describeWithDatabase("API authorization and resource isolation", () => {
   });
 
   it("keeps approval rules private to each user in a shared Space", async () => {
-    const owner = await signup(app, `approval-owner-${stamp}@alternativebot.test`, "Approval Owner");
-    const member = await signup(app, `approval-member-${stamp}@alternativebot.test`, "Approval Member");
+    const owner = await signup(
+      app,
+      `approval-owner-${stamp}@alternativebot.test`,
+      "Approval Owner",
+    );
+    const member = await signup(
+      app,
+      `approval-member-${stamp}@alternativebot.test`,
+      "Approval Member",
+    );
     const ownerActor = await rpc<Actor>(app, owner, "me");
     const memberActor = await rpc<Actor>(app, member, "me");
 
@@ -1315,7 +1327,11 @@ describeWithDatabase("API authorization and resource isolation", () => {
   });
 
   it("reuses provider credentials and selections in a new Space", async () => {
-    const cookie = await signup(app, `space-provider-copy-${stamp}@alternativebot.test`, "Provider Copy");
+    const cookie = await signup(
+      app,
+      `space-provider-copy-${stamp}@alternativebot.test`,
+      "Provider Copy",
+    );
     const actor = await rpc<Actor>(app, cookie, "me");
     const model = await rpc<ModelCredential>(app, cookie, "models/connect", {
       provider: "copy-provider",
@@ -1395,7 +1411,11 @@ describeWithDatabase("API authorization and resource isolation", () => {
   });
 
   it("shares model credentials and the main model across spaces until one customizes it", async () => {
-    const cookie = await signup(app, `model-defaults-${stamp}@alternativebot.test`, "Model Defaults");
+    const cookie = await signup(
+      app,
+      `model-defaults-${stamp}@alternativebot.test`,
+      "Model Defaults",
+    );
     const actor = await rpc<Actor>(app, cookie, "me");
     const support = await rpc<Space>(app, cookie, "spaces/create", { name: "Support models" });
     const expectSpaceModelDefault = async (spaceId: string, provider: string, modelId: string) => {
@@ -1599,7 +1619,11 @@ describeWithDatabase("API authorization and resource isolation", () => {
       raw(app, cookie, "spaces/remove", { spaceId: "missing-space" }),
     ).resolves.toMatchObject({ status: 404 });
 
-    const intruder = await signup(app, `space-delete-intruder-${stamp}@alternativebot.test`, "Intruder");
+    const intruder = await signup(
+      app,
+      `space-delete-intruder-${stamp}@alternativebot.test`,
+      "Intruder",
+    );
     await expect(raw(app, intruder, "spaces/remove", { spaceId: busy.id })).resolves.toMatchObject({
       status: 404,
     });
@@ -1735,7 +1759,11 @@ describeWithDatabase("API authorization and resource isolation", () => {
   });
 
   it("keeps a bot's sandbox handle when its teardown fails, and finishes on retry", async () => {
-    const cookie = await signup(app, `space-strict-${stamp}@alternativebot.test`, "Strict Teardown");
+    const cookie = await signup(
+      app,
+      `space-strict-${stamp}@alternativebot.test`,
+      "Strict Teardown",
+    );
     const actor = await rpc<Actor>(app, cookie, "me");
     const space = await rpc<Space>(app, cookie, "spaces/create", { name: "Strict" });
     const bot = await rpc<Bot>(app, cookie, "bots/create", botInput("Sandboxed"), space.id);
@@ -2109,7 +2137,11 @@ describeWithDatabase("API authorization and resource isolation", () => {
   });
 
   it("validates custom thinking against the saved connection capability", async () => {
-    const cookie = await signup(app, `custom-thinking-${stamp}@alternativebot.test`, "Custom Thinking");
+    const cookie = await signup(
+      app,
+      `custom-thinking-${stamp}@alternativebot.test`,
+      "Custom Thinking",
+    );
     const bot = await rpc<Bot>(app, cookie, "bots/create", botInput("Thinking Bot"));
     const connection = {
       provider: "openai-compatible",
@@ -2217,7 +2249,11 @@ describeWithDatabase("API authorization and resource isolation", () => {
   });
 
   it("binds a new default to the space preference credential, not a newer unused duplicate", async () => {
-    const cookie = await signup(app, `model-duplicates-${stamp}@alternativebot.test`, "Model Duplicates");
+    const cookie = await signup(
+      app,
+      `model-duplicates-${stamp}@alternativebot.test`,
+      "Model Duplicates",
+    );
     const actor = await rpc<Actor>(app, cookie, "me");
     const olderSecret = await db.secret.create({
       data: {
@@ -2312,7 +2348,11 @@ describeWithDatabase("API authorization and resource isolation", () => {
   });
 
   it("denies server administration to every app account, including a stored former owner", async () => {
-    const formerOwner = await signup(app, `former-owner-${stamp}@alternativebot.test`, "Test Account");
+    const formerOwner = await signup(
+      app,
+      `former-owner-${stamp}@alternativebot.test`,
+      "Test Account",
+    );
     const other = await signup(app, `ordinary-${stamp}@alternativebot.test`, "Other Account");
     const account = await rpc<Actor>(app, formerOwner, "me");
     await handles.prisma.deploymentSettings.update({

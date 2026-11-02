@@ -9,7 +9,12 @@ import {
   snippetAroundMatch,
 } from "@alternativebot/core";
 import type { PrismaClient } from "@alternativebot/db";
-import { contentEncryptionOf, INDEXED_MESSAGE, Prisma, UNINDEXED_MESSAGE } from "@alternativebot/db";
+import {
+  contentEncryptionOf,
+  INDEXED_MESSAGE,
+  Prisma,
+  UNINDEXED_MESSAGE,
+} from "@alternativebot/db";
 
 const SEARCH_LIMIT = 25;
 /** Cap name matches so content hits (messages/files/links/routines) keep most of the budget. */

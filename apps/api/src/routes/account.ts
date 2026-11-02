@@ -1,4 +1,3 @@
-import { ORPCError } from "@orpc/server";
 import {
   effectiveModelRole,
   isAutoReviewCheckerConfigured,
@@ -27,6 +26,7 @@ import {
   selectVoicePreference,
   voicePreferenceTarget,
 } from "@alternativebot/db";
+import { ORPCError } from "@orpc/server";
 import { aiConsentStatus, allowAiConsent } from "../ai-consent.js";
 import type { RouterDeps } from "../router.js";
 import { withSerializableRetry } from "../serializable-retry.js";

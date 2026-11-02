@@ -1,4 +1,3 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import type {
   Bot,
   ComputerReleaseReason,
@@ -16,6 +15,7 @@ import {
   waitForScreenPage,
 } from "@alternativebot/core";
 import { Button, Spinner } from "@alternativebot/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import type { RefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ComputerMaintenanceActions } from "../../components/ComputerMaintenanceActions";
@@ -147,7 +147,9 @@ export function useComputerState({
         screenFrame.focus();
         screenFrame.contentWindow?.postMessage({ alternativebotScreenFocus: true }, "*");
       }
-      const ended = message.alternativebotScreen === "failed" || message.alternativebotScreen === "disconnected";
+      const ended =
+        message.alternativebotScreen === "failed" ||
+        message.alternativebotScreen === "disconnected";
       if (screenUrl?.startsWith("wuying:") && ended) {
         // A Wuying login code works once, so a frame that loaded a spent one, or a session
         // another viewer took over, can only come back with a fresh read of the screen.

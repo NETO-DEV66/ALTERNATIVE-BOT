@@ -357,7 +357,10 @@ async function introspectGraphqlEndpoint(
     const response = await safeFetch(url, {
       method: "POST",
       headers,
-      body: JSON.stringify({ query: INTROSPECTION_QUERY, operationName: "AlternativeBotIntrospection" }),
+      body: JSON.stringify({
+        query: INTROSPECTION_QUERY,
+        operationName: "AlternativeBotIntrospection",
+      }),
       signal: combineSignals(signal, AbortSignal.timeout(15_000)),
     });
     if (!response.ok) throw new Error(`GraphQL introspection returned HTTP ${response.status}`);

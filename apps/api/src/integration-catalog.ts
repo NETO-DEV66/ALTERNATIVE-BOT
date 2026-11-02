@@ -1,4 +1,7 @@
-import type { IntegrationCatalogResult, IntegrationCatalogSurface } from "@alternativebot/contracts";
+import type {
+  IntegrationCatalogResult,
+  IntegrationCatalogSurface,
+} from "@alternativebot/contracts";
 
 const RESPONSE_LIMIT = 1_000_000;
 const SEARCH_LIMIT = 8;

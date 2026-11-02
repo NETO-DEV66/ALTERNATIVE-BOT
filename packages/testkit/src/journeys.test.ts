@@ -152,7 +152,11 @@ describeJourneys("required product journeys", () => {
 
   it("computer updates preserve the workspace and reserve the shared computer until completion", async () => {
     const cookie = await signup(app, `maintenance-${stamp}@alternativebot.test`, "Maintenance");
-    const outsider = await signup(app, `maintenance-other-${stamp}@alternativebot.test`, "Other workspace");
+    const outsider = await signup(
+      app,
+      `maintenance-other-${stamp}@alternativebot.test`,
+      "Other workspace",
+    );
     const bot = await rpc<Bot>(app, cookie, "bots/create", {
       name: "Writer",
       title: "Writer",
@@ -248,7 +252,11 @@ describeJourneys("required product journeys", () => {
   });
 
   it("updating a computer the user has taken over hands control back first", async () => {
-    const cookie = await signup(app, `maintenance-control-${stamp}@alternativebot.test`, "Maintenance");
+    const cookie = await signup(
+      app,
+      `maintenance-control-${stamp}@alternativebot.test`,
+      "Maintenance",
+    );
     const bot = await rpc<Bot>(app, cookie, "bots/create", {
       name: "Shell user",
       title: "Shell user",
@@ -278,7 +286,11 @@ describeJourneys("required product journeys", () => {
   });
 
   it("recovering a computer the user has taken over hands control back first", async () => {
-    const cookie = await signup(app, `maintenance-recover-${stamp}@alternativebot.test`, "Maintenance");
+    const cookie = await signup(
+      app,
+      `maintenance-recover-${stamp}@alternativebot.test`,
+      "Maintenance",
+    );
     const bot = await rpc<Bot>(app, cookie, "bots/create", {
       name: "Shell user",
       title: "Shell user",
@@ -307,7 +319,11 @@ describeJourneys("required product journeys", () => {
   });
 
   it("resetting a computer the user has taken over hands control back first", async () => {
-    const cookie = await signup(app, `maintenance-reset-${stamp}@alternativebot.test`, "Maintenance");
+    const cookie = await signup(
+      app,
+      `maintenance-reset-${stamp}@alternativebot.test`,
+      "Maintenance",
+    );
     const bot = await rpc<Bot>(app, cookie, "bots/create", {
       name: "Shell user",
       title: "Shell user",
@@ -331,7 +347,11 @@ describeJourneys("required product journeys", () => {
   });
 
   it("maintenance leaves a run waiting on control", async () => {
-    const cookie = await signup(app, `maintenance-waiting-${stamp}@alternativebot.test`, "Maintenance");
+    const cookie = await signup(
+      app,
+      `maintenance-waiting-${stamp}@alternativebot.test`,
+      "Maintenance",
+    );
     const bot = await rpc<Bot>(app, cookie, "bots/create", {
       name: "Chief",
       title: "",
@@ -562,7 +582,11 @@ describeJourneys("required product journeys", () => {
   });
 
   it("guards memory edits by revision while preserving legacy clients", async () => {
-    const cookie = await signup(app, `memory-revision-${stamp}@alternativebot.test`, "Memory revisions");
+    const cookie = await signup(
+      app,
+      `memory-revision-${stamp}@alternativebot.test`,
+      "Memory revisions",
+    );
     const bot = await rpc<Bot>(app, cookie, "bots/create", {
       name: "Keeper",
       title: "Memory",
@@ -855,7 +879,11 @@ describeJourneys("required product journeys", () => {
   });
 
   it("4d: skipping takeover resumes without treating login as done", async () => {
-    const cookie = await signup(app, `takeover-skip-j-${stamp}@alternativebot.test`, "Skip Takeover");
+    const cookie = await signup(
+      app,
+      `takeover-skip-j-${stamp}@alternativebot.test`,
+      "Skip Takeover",
+    );
     const bot = await rpc<Bot>(app, cookie, "bots/create", {
       name: "Chief",
       title: "",
@@ -983,7 +1011,11 @@ describeJourneys("required product journeys", () => {
   });
 
   it("4c: a takeover authorizes input only on the controlled bot screen", async () => {
-    const cookie = await signup(app, `takeover-scope-j-${stamp}@alternativebot.test`, "Takeover Scope");
+    const cookie = await signup(
+      app,
+      `takeover-scope-j-${stamp}@alternativebot.test`,
+      "Takeover Scope",
+    );
     const writer = await rpc<Bot>(app, cookie, "bots/create", {
       name: "Writer",
       title: "",
@@ -1323,7 +1355,11 @@ describeJourneys("required product journeys", () => {
   });
 
   it("5b: tool-created schedules wake in the creating group or 1:1 thread", async () => {
-    const cookie = await signup(app, `schedule-dest-j-${stamp}@alternativebot.test`, "Schedule Dest");
+    const cookie = await signup(
+      app,
+      `schedule-dest-j-${stamp}@alternativebot.test`,
+      "Schedule Dest",
+    );
     const me = await rpc<Me>(app, cookie, "me");
     const bot = await rpc<Bot>(app, cookie, "bots/create", {
       name: "Scheduler",
@@ -1820,7 +1856,11 @@ describeJourneys("required product journeys", () => {
   });
 
   it("duplicating a bot uses the new-bot management default", async () => {
-    const cookie = await signup(app, `bot-management-dup-j-${stamp}@alternativebot.test`, "Bot Manager");
+    const cookie = await signup(
+      app,
+      `bot-management-dup-j-${stamp}@alternativebot.test`,
+      "Bot Manager",
+    );
     const source = await rpc<Bot>(app, cookie, "bots/create", {
       name: "Chief",
       title: "",
@@ -1839,7 +1879,11 @@ describeJourneys("required product journeys", () => {
   });
 
   it("untrusted bot_message run cannot rewrite a child's instructions", async () => {
-    const cookie = await signup(app, `bot-management-trust-j-${stamp}@alternativebot.test`, "Bot Manager");
+    const cookie = await signup(
+      app,
+      `bot-management-trust-j-${stamp}@alternativebot.test`,
+      "Bot Manager",
+    );
     const parent = await rpc<Bot>(app, cookie, "bots/create", {
       name: "Chief",
       title: "",
@@ -2771,7 +2815,11 @@ describeJourneys("required product journeys", () => {
   });
 
   it("19b: stopping a run with an open approval card settles its effect", async () => {
-    const cookie = await signup(app, `approval-stop-j-${stamp}@alternativebot.test`, "ApprovalStop");
+    const cookie = await signup(
+      app,
+      `approval-stop-j-${stamp}@alternativebot.test`,
+      "ApprovalStop",
+    );
     const bot = await rpc<Bot>(app, cookie, "bots/create", {
       name: "Chief",
       title: "",
@@ -2852,7 +2900,11 @@ describeJourneys("required product journeys", () => {
   });
 
   it("20b: allowing a tool replaces its block, and the other way around", async () => {
-    const cookie = await signup(app, `always-replaces-j-${stamp}@alternativebot.test`, "Always Replaces");
+    const cookie = await signup(
+      app,
+      `always-replaces-j-${stamp}@alternativebot.test`,
+      "Always Replaces",
+    );
     const bot = await rpc<Bot>(app, cookie, "bots/create", {
       name: "Chief",
       title: "",
@@ -2920,7 +2972,11 @@ describeJourneys("required product journeys", () => {
   });
 
   it("21: in Ask mode, routine destination writes pause on the same approval card", async () => {
-    const cookie = await signup(app, `routine-approval-j-${stamp}@alternativebot.test`, "Routine Approval");
+    const cookie = await signup(
+      app,
+      `routine-approval-j-${stamp}@alternativebot.test`,
+      "Routine Approval",
+    );
     const bot = await rpc<Bot>(app, cookie, "bots/create", {
       name: "Chief",
       title: "",
@@ -2959,7 +3015,11 @@ describeJourneys("required product journeys", () => {
   });
 
   it("22: a routine schedule with any malformed or mixed one-shot cron is rejected", async () => {
-    const cookie = await signup(app, `routine-crons-j-${stamp}@alternativebot.test`, "Routine Crons");
+    const cookie = await signup(
+      app,
+      `routine-crons-j-${stamp}@alternativebot.test`,
+      "Routine Crons",
+    );
     const bot = await rpc<Bot>(app, cookie, "bots/create", {
       name: "Scheduler",
       title: "",
@@ -2990,7 +3050,11 @@ describeJourneys("required product journeys", () => {
   });
 
   it("routine timezone writes reject invalid zones without changing persisted schedules", async () => {
-    const cookie = await signup(app, `routine-zones-j-${stamp}@alternativebot.test`, "Routine Zones");
+    const cookie = await signup(
+      app,
+      `routine-zones-j-${stamp}@alternativebot.test`,
+      "Routine Zones",
+    );
     const bot = await rpc<Bot>(app, cookie, "bots/create", { name: "Scheduler" });
     const input = {
       botId: bot.id,

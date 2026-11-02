@@ -1,4 +1,3 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import type { NavLink } from "@alternativebot/contracts";
 import { ANDROID_APK_URL } from "@alternativebot/contracts";
 import {
@@ -9,6 +8,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@alternativebot/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import {
   BookOpen,
   Download,

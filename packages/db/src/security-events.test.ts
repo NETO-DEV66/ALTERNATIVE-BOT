@@ -1,5 +1,10 @@
 import { SECURITY_EVENT_TYPES } from "@alternativebot/contracts";
-import { createLogger, createTestSink, installLogger, runWithLogContext } from "@alternativebot/logging";
+import {
+  createLogger,
+  createTestSink,
+  installLogger,
+  runWithLogContext,
+} from "@alternativebot/logging";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   createSecurityEventPruner,

@@ -17,7 +17,8 @@ import "../../src/styles.css";
 const params = new URLSearchParams(location.search);
 const theme = params.get("theme") === "light" ? "light" : "dark";
 document.documentElement.dataset.theme = theme;
-const officialMark = new URL("../../../www/public/brand/alternativebot-mark.png", import.meta.url).href;
+const officialMark = new URL("../../../www/public/brand/alternativebot-mark.png", import.meta.url)
+  .href;
 const team = [
   { id: "inbox-01", name: "Inbox", color: "orange" },
   { id: "scout-02", name: "Scout", color: "green" },
@@ -120,9 +121,15 @@ function Study() {
     <main className="mx-auto max-w-[1260px] p-8 text-foreground" data-rerenders={rerenders}>
       <header className="mb-7 flex items-center justify-between gap-5 border-b border-border pb-6">
         <div className="flex items-center gap-4">
-          <img src={officialMark} alt="Official Alternative Bot logo" className="size-14 rounded-xl" />
+          <img
+            src={officialMark}
+            alt="Official Alternative Bot logo"
+            className="size-14 rounded-xl"
+          />
           <div>
-            <p className="mb-1 text-label text-muted-foreground">ALTERNATIVEBOT · LOGO AVATAR STUDY</p>
+            <p className="mb-1 text-label text-muted-foreground">
+              ALTERNATIVEBOT · LOGO AVATAR STUDY
+            </p>
             <h1 className="text-heading2 font-semibold">Different colours. Their own rhythm.</h1>
           </div>
         </div>

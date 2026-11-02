@@ -1,4 +1,8 @@
-import type { ActionApprovalRule, ApprovalRulePreview, SettingsScope } from "@alternativebot/contracts";
+import type {
+  ActionApprovalRule,
+  ApprovalRulePreview,
+  SettingsScope,
+} from "@alternativebot/contracts";
 import { useState } from "react";
 import { Text, TextInput, View } from "react-native";
 import { useI18n } from "../lib/i18n";

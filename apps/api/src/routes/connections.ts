@@ -1,4 +1,3 @@
-import { ORPCError } from "@orpc/server";
 import type { AdapterContext, ConnectorCatalogItem } from "@alternativebot/adapter-kit";
 import { ConnectorAuthUnavailableError } from "@alternativebot/adapter-kit";
 import {
@@ -16,6 +15,7 @@ import {
   runProviderTransaction,
 } from "@alternativebot/db";
 import { getLogger } from "@alternativebot/logging";
+import { ORPCError } from "@orpc/server";
 import { connectionCreatedEvent } from "../security-audit.js";
 import type { RouterContext } from "./context.js";
 

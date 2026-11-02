@@ -1,10 +1,10 @@
-import type { MenuAction } from "@expo/ui/community/menu";
 import type { ModelCatalogEntry, ModelCredential } from "@alternativebot/contracts";
 import {
   canonicalPiProviderId,
   connectionDisplayName,
   MAX_MODEL_CONNECTION_LABEL,
 } from "@alternativebot/contracts";
+import type { MenuAction } from "@expo/ui/community/menu";
 import { Alert, Platform } from "react-native";
 import { useI18n } from "../lib/i18n";
 import { RowMenu } from "./model-role-settings";

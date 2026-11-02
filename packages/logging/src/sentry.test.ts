@@ -48,7 +48,9 @@ describe("sentry sink", () => {
     expect(sentryConfigFromEnv({ SENTRY_DSN: DSN, GIT_SHA: "unknown" }).config?.release).toBe(
       undefined,
     );
-    expect(createSentrySinkFromEnv("alternativebot-api", { SENTRY_DSN: "bad" }).sink).toBeUndefined();
+    expect(
+      createSentrySinkFromEnv("alternativebot-api", { SENTRY_DSN: "bad" }).sink,
+    ).toBeUndefined();
   });
 
   it("passes the root logger service to the SDK scope", () => {
@@ -192,7 +194,11 @@ describe("sentry sink", () => {
   it("names the user only by a keyed hash of the logged account id", async () => {
     const { events, transport } = recordingTransport();
     const secret = "test-pseudonym-secret";
-    const sink = createSentrySink("alternativebot-api", { dsn: DSN, pseudonymSecret: secret }, transport);
+    const sink = createSentrySink(
+      "alternativebot-api",
+      { dsn: DSN, pseudonymSecret: secret },
+      transport,
+    );
     const logger = createLogger({ service: "alternativebot-api", sinks: [sink] });
     await logger.withContext({ "user.id": "user-raw-1", "space.id": "space-1" }, async () => {
       logger.error("rpc failed for ada@example.com", new Error("boom"));

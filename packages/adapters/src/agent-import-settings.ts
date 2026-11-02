@@ -4,7 +4,10 @@ import type {
   AgentImportWarning,
   McpServerConfigInput,
 } from "@alternativebot/contracts";
-import { isValidTimeZone, McpServerConfigInput as McpServerConfigSchema } from "@alternativebot/contracts";
+import {
+  isValidTimeZone,
+  McpServerConfigInput as McpServerConfigSchema,
+} from "@alternativebot/contracts";
 import {
   AGENT_IMPORT_PROVIDER_KEYS,
   mcpServerImportable,

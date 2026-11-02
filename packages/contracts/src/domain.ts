@@ -1811,7 +1811,6 @@ export function signupSurveyAsksTeamSize(use: SignupSurvey["use"]): boolean {
   return use === "work" || use === "both";
 }
 
-
 export const AppBootstrapSchema = z.object({
   me: MeSchema,
   bots: z.array(BotSchema),

@@ -1,4 +1,3 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import type { AccountSecurity, UsageSummary } from "@alternativebot/contracts";
 import {
   accountDisplay,
@@ -28,6 +27,7 @@ import {
   TableHeader,
   TableRow,
 } from "@alternativebot/ui-web/components/ui/table";
+import { Trans, useLingui } from "@lingui/react/macro";
 import type { RefObject } from "react";
 import { useId, useRef, useState, useSyncExternalStore } from "react";
 import { AccountAccess } from "../components/AccountAccess";

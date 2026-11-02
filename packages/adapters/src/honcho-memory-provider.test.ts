@@ -85,7 +85,9 @@ function honchoFetch(
         query: expect.any(String),
         reasoning_level: "low",
         stream: false,
-        ...(peer === "alternativebot-shared" || !peers.has(peer) ? {} : { target: "alternativebot-shared" }),
+        ...(peer === "alternativebot-shared" || !peers.has(peer)
+          ? {}
+          : { target: "alternativebot-shared" }),
       });
       if (chatAnswers) {
         if (!Object.hasOwn(chatAnswers, peer)) throw new Error(`Unexpected chat: ${path}`);
@@ -221,7 +223,9 @@ describe("HonchoMemoryProvider", () => {
     // Bot B sees user 1's shared fact, but never bot A's private fact.
     expect(await memory.recall(recall, otherMember)).toMatchObject({
       ok: true,
-      value: [{ memory: "The Space uses teal", id: "conclusion-2", entity: "alternativebot-shared" }],
+      value: [
+        { memory: "The Space uses teal", id: "conclusion-2", entity: "alternativebot-shared" },
+      ],
     });
     expect(await memory.recall({ ...recall, scope: "isolated" }, otherMember)).toEqual({
       ok: true,
@@ -242,7 +246,9 @@ describe("HonchoMemoryProvider", () => {
       });
       expect(await memory.recall(recall, { ...otherMember, userId })).toMatchObject({
         ok: true,
-        value: [{ memory: "The Space uses teal", id: "conclusion-2", entity: "alternativebot-shared" }],
+        value: [
+          { memory: "The Space uses teal", id: "conclusion-2", entity: "alternativebot-shared" },
+        ],
       });
     }
     expect(
@@ -266,7 +272,9 @@ describe("HonchoMemoryProvider", () => {
   it.each([true, false])(
     "shares facts across Spaces only with an explicit shared workspace (configured: %s)",
     async (configured) => {
-      const workspaces = configured ? ["team-notes"] : ["alternativebot-space-1", "alternativebot-space-2"];
+      const workspaces = configured
+        ? ["team-notes"]
+        : ["alternativebot-space-1", "alternativebot-space-2"];
       const fetch = honchoFetch(undefined, workspaces);
       const settings: Record<string, string> = configured ? { workspaceId: "team-notes" } : {};
       const spaceA = provider(fetch, settings);
@@ -634,7 +642,9 @@ describe("Honcho forget", () => {
         context,
       ),
     ).resolves.toEqual({ ok: true, value: { id: "conclusion-1", expired: true, reason: "x" } });
-    expect(deletes(fetch)).toEqual(["/v3/workspaces/alternativebot-space-1/conclusions/conclusion-1"]);
+    expect(deletes(fetch)).toEqual([
+      "/v3/workspaces/alternativebot-space-1/conclusions/conclusion-1",
+    ]);
     expect(await memory.recall(recall, context)).toMatchObject({
       ok: true,
       value: [{ memory: "Works remotely", id: "conclusion-2" }],
@@ -726,7 +736,9 @@ describe("Honcho forget", () => {
     await expect(
       memory.forget({ id: "conclusion-1", scope: "shared", botId: "bot-1" }, context),
     ).resolves.toMatchObject({ ok: true });
-    expect(deletes(fetch)).toEqual(["/v3/workspaces/alternativebot-space-1/conclusions/conclusion-1"]);
+    expect(deletes(fetch)).toEqual([
+      "/v3/workspaces/alternativebot-space-1/conclusions/conclusion-1",
+    ]);
   });
 
   it.each(["isolated", "shared"] as const)(
@@ -744,7 +756,9 @@ describe("Honcho forget", () => {
         error: "Honcho forget reached its deletion limit. Retry this id.",
       });
       expect(deletes(fetch)).toHaveLength(199);
-      expect(deletes(fetch)).not.toContain(`/v3/workspaces/alternativebot-space-1/conclusions/${id}`);
+      expect(deletes(fetch)).not.toContain(
+        `/v3/workspaces/alternativebot-space-1/conclusions/${id}`,
+      );
       await expect(memory.forget(request, context)).resolves.toMatchObject({ ok: true });
       expect(deletes(fetch)).toHaveLength(total);
       expect(new Set(deletes(fetch)).size).toBe(total);
@@ -805,7 +819,9 @@ describe("Honcho forget", () => {
     await expect(
       memory.forget({ id: "conclusion-1", scope: "isolated", botId: "bot-1" }, context),
     ).resolves.toMatchObject({ ok: true });
-    expect(deletes(fetch)).toEqual(["/v3/workspaces/alternativebot-space-1/conclusions/conclusion-1"]);
+    expect(deletes(fetch)).toEqual([
+      "/v3/workspaces/alternativebot-space-1/conclusions/conclusion-1",
+    ]);
   });
 
   it.each([

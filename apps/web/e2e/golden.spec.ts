@@ -1,6 +1,6 @@
+import { CONNECTION_LABEL_MAX_LENGTH } from "@alternativebot/contracts";
 import type { Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
-import { CONNECTION_LABEL_MAX_LENGTH } from "@alternativebot/contracts";
 import {
   activeBotId,
   captureScreenshot,

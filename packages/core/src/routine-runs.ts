@@ -1,5 +1,8 @@
 import type { RoutineHistory, RoutineRun, RoutineRunCursor } from "@alternativebot/contracts";
-import { ROUTINE_HISTORY_FIRST_PAGE_SIZE, ROUTINE_HISTORY_PAGE_SIZE } from "@alternativebot/contracts";
+import {
+  ROUTINE_HISTORY_FIRST_PAGE_SIZE,
+  ROUTINE_HISTORY_PAGE_SIZE,
+} from "@alternativebot/contracts";
 
 /**
  * Compact human duration, e.g. "850ms", "4.2s", "1m 05s".

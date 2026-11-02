@@ -22,7 +22,8 @@ export async function continueWithSso(
       if (apiBase !== currentApiBase() || generation !== currentSessionGeneration())
         throw new Error(t("Could not continue"));
     };
-    const callbackURL = action === "sign-in" ? "alternativebot://sign-in" : "alternativebot://account";
+    const callbackURL =
+      action === "sign-in" ? "alternativebot://sign-in" : "alternativebot://account";
     const headers = action === "sign-in" ? {} : await authHeaders();
     requireCurrentSession();
     const previous = action === "reauthenticate" ? await sessionUser(apiBase, headers) : undefined;

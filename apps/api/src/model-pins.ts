@@ -1,9 +1,12 @@
-import { ORPCError } from "@orpc/server";
 import type { CodexLiveCatalog, parseModelSecret } from "@alternativebot/adapters";
-import { findConnectedModelCredential, validateConnectedModelChoice } from "@alternativebot/adapters";
+import {
+  findConnectedModelCredential,
+  validateConnectedModelChoice,
+} from "@alternativebot/adapters";
 import type { Actor } from "@alternativebot/contracts";
 import { OPENAI_COMPATIBLE_PROVIDER_ID, usableModelId } from "@alternativebot/contracts";
 import { modelRoleTarget, runAsSystem } from "@alternativebot/db";
+import { ORPCError } from "@orpc/server";
 import type { RouterDeps } from "./router.js";
 
 /**

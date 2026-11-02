@@ -1,4 +1,8 @@
-import type { DurableMemoryScope, SecretStore, SemanticMemoryProvider } from "@alternativebot/adapter-kit";
+import type {
+  DurableMemoryScope,
+  SecretStore,
+  SemanticMemoryProvider,
+} from "@alternativebot/adapter-kit";
 import type { PrismaClient } from "@alternativebot/db";
 import { getLogger } from "@alternativebot/logging";
 import {

@@ -1,4 +1,8 @@
-import { ModelAccountError, ModelOutputError, TransientModelError } from "@alternativebot/adapter-kit";
+import {
+  ModelAccountError,
+  ModelOutputError,
+  TransientModelError,
+} from "@alternativebot/adapter-kit";
 import {
   MODEL_CONTEXT_TOO_SMALL_ERROR,
   MODEL_OUTPUT_LIMIT_ERROR,

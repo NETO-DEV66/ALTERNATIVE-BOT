@@ -386,7 +386,11 @@ describe("Infisical lifecycle and REST", () => {
     let first = true;
     const fetcher: typeof fetch = async (input, init) => {
       const response = await fake.fetcher(input, init);
-      if (init?.method === "GET" && !String(input).includes("alternativebot_start_check") && first) {
+      if (
+        init?.method === "GET" &&
+        !String(input).includes("alternativebot_start_check") &&
+        first
+      ) {
         first = false;
         started();
         await gate;
@@ -523,7 +527,11 @@ describe("Infisical lifecycle and REST", () => {
     let gets = 0;
     const fetcher: typeof fetch = async (input, init) => {
       const response = await fake.fetcher(input, init);
-      if (init?.method === "GET" && !String(input).includes("alternativebot_start_check") && ++gets === 1) {
+      if (
+        init?.method === "GET" &&
+        !String(input).includes("alternativebot_start_check") &&
+        ++gets === 1
+      ) {
         started();
         await gate;
       }

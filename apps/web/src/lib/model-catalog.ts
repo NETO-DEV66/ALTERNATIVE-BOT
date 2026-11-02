@@ -1,7 +1,7 @@
-import { i18n } from "@lingui/core";
 import type { ModelCatalogEntry, ModelCredential, ThinkingLevel } from "@alternativebot/contracts";
 import type { ConnectedModelChoice } from "@alternativebot/core";
 import { connectedModelChoices } from "@alternativebot/core";
+import { i18n } from "@lingui/core";
 
 export { modelOptionKey, parseModelOptionKey } from "@alternativebot/core";
 

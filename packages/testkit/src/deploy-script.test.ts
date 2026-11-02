@@ -296,7 +296,10 @@ describe("production deploy script", () => {
   it("refuses to build with too little free disk", () => {
     const deploy = fixture();
     commit(deploy.upstream, "next");
-    const result = deploy.run({ FREE_KB: String(2 * 1024 * 1024), ALTERNATIVEBOT_DEPLOY_MIN_FREE_GB: "5" });
+    const result = deploy.run({
+      FREE_KB: String(2 * 1024 * 1024),
+      ALTERNATIVEBOT_DEPLOY_MIN_FREE_GB: "5",
+    });
     expect(result.status).toBe(1);
     expect(result.stderr).toContain("Only 2GB free");
     expect(deploy.head()).toBe(deploy.first);

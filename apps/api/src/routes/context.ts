@@ -1,4 +1,3 @@
-import { implement, ORPCError } from "@orpc/server";
 import {
   applyCodexLiveCatalog,
   applyProviderLiveCatalog,
@@ -36,7 +35,13 @@ import {
   modelSupportsRole,
   OPENAI_COMPATIBLE_PROVIDER_ID,
 } from "@alternativebot/contracts";
-import { createGroupRepos, createRepos, recordSecurityEvent, runAsTenant } from "@alternativebot/db";
+import {
+  createGroupRepos,
+  createRepos,
+  recordSecurityEvent,
+  runAsTenant,
+} from "@alternativebot/db";
+import { implement, ORPCError } from "@orpc/server";
 import { createAgentImportServices } from "../agent-import-services.js";
 import { createAgentSkillsService } from "../agent-skills.js";
 import { createBotRemoval } from "../bot-removal.js";

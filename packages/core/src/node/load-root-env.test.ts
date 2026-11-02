@@ -7,7 +7,10 @@ import { loadRootEnv } from "./load-root-env.js";
 let root: string;
 beforeEach(() => {
   root = mkdtempSync(path.join(tmpdir(), "alternativebot-env-test-"));
-  writeFileSync(path.join(root, ".env"), "ALTERNATIVEBOT_TEST_ENV_SENTINEL=fixture\nDATA_DIR=./data\n");
+  writeFileSync(
+    path.join(root, ".env"),
+    "ALTERNATIVEBOT_TEST_ENV_SENTINEL=fixture\nDATA_DIR=./data\n",
+  );
   vi.spyOn(process, "cwd").mockReturnValue(root);
   vi.stubEnv("ALTERNATIVEBOT_TEST_ENV_SENTINEL", undefined);
   vi.stubEnv("DATA_DIR", undefined);

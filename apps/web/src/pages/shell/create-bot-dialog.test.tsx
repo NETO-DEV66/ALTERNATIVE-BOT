@@ -116,9 +116,15 @@ describe("CreateBotDialog", () => {
     await click(button("Color #10B981"));
     await typeName("Scout");
     await click(button("Create"));
-    expect(onCreate.mock.lastCall?.[0]).toMatchObject({ avatarSet: "alternativebot", color: "#10B981" });
+    expect(onCreate.mock.lastCall?.[0]).toMatchObject({
+      avatarSet: "alternativebot",
+      color: "#10B981",
+    });
     await click(button("Create"));
-    expect(onCreate.mock.lastCall?.[0]).toMatchObject({ avatarSet: "alternativebot", color: "#10B981" });
+    expect(onCreate.mock.lastCall?.[0]).toMatchObject({
+      avatarSet: "alternativebot",
+      color: "#10B981",
+    });
   });
 
   it("sends the organic family the preview draws", async () => {
@@ -175,7 +181,9 @@ it("retains the preview identity and colour through rerenders, set toggles and a
   const colour = document.querySelector(".alternativebot-logo-avatar")!.getAttribute("data-color");
   await typeName("First name");
   await render(onCreate);
-  expect(document.querySelector(".alternativebot-logo-avatar")!.getAttribute("data-color")).toBe(colour);
+  expect(document.querySelector(".alternativebot-logo-avatar")!.getAttribute("data-color")).toBe(
+    colour,
+  );
   await click(button("Original"));
   await click(button("Alternative Bot"));
   await click(button("Create"));

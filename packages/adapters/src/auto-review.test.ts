@@ -75,23 +75,27 @@ describe("resolveAutoReviewChecker", () => {
 
 describe("resolveAutoReviewProviderKind", () => {
   it("uses Jev only when a TypeSafe key is present", () => {
-    expect(resolveAutoReviewProviderKind({ ALTERNATIVEBOT_AUTO_REVIEW_PROVIDER: "jev" })).toBe("llm");
+    expect(resolveAutoReviewProviderKind({ ALTERNATIVEBOT_AUTO_REVIEW_PROVIDER: "jev" })).toBe(
+      "llm",
+    );
     expect(
       resolveAutoReviewProviderKind({
         ALTERNATIVEBOT_AUTO_REVIEW_PROVIDER: "jev",
         TYPESAFE_API_KEY: "ts-key",
       }),
     ).toBe("jev");
-    expect(resolveAutoReviewProviderKind({ ALTERNATIVEBOT_AUTO_REVIEW_PROVIDER: "openrouter" })).toBe(
-      "llm",
-    );
+    expect(
+      resolveAutoReviewProviderKind({ ALTERNATIVEBOT_AUTO_REVIEW_PROVIDER: "openrouter" }),
+    ).toBe("llm");
     expect(
       resolveAutoReviewProviderKind({
         ALTERNATIVEBOT_AUTO_REVIEW_PROVIDER: "scripted",
         AGENT_RUNTIME: "scripted",
       }),
     ).toBe("scripted");
-    expect(resolveAutoReviewProviderKind({ ALTERNATIVEBOT_AUTO_REVIEW_PROVIDER: "scripted" })).toBe("llm");
+    expect(resolveAutoReviewProviderKind({ ALTERNATIVEBOT_AUTO_REVIEW_PROVIDER: "scripted" })).toBe(
+      "llm",
+    );
   });
 });
 
@@ -166,7 +170,9 @@ describe("autoReviewMinConfidence", () => {
     expect(autoReviewMinConfidence({})).toBe(0.5);
     expect(autoReviewMinConfidence({ ALTERNATIVEBOT_AUTO_REVIEW_MIN_CONFIDENCE: "0.8" })).toBe(0.8);
     expect(autoReviewMinConfidence({ ALTERNATIVEBOT_AUTO_REVIEW_MIN_CONFIDENCE: "2" })).toBe(0.5);
-    expect(autoReviewMinConfidence({ ALTERNATIVEBOT_AUTO_REVIEW_MIN_CONFIDENCE: "nope" })).toBe(0.5);
+    expect(autoReviewMinConfidence({ ALTERNATIVEBOT_AUTO_REVIEW_MIN_CONFIDENCE: "nope" })).toBe(
+      0.5,
+    );
   });
 });
 

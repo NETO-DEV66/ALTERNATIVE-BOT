@@ -3829,14 +3829,22 @@ describe("stopThreadRuns", () => {
     expect(execute).toHaveBeenCalledWith(
       expect.objectContaining({ providerRef: "computer-team" }),
       expect.objectContaining({
-        argv: expect.arrayContaining(["alternativebot-cancel-run-work", "computer-db-team", "run-a"]),
+        argv: expect.arrayContaining([
+          "alternativebot-cancel-run-work",
+          "computer-db-team",
+          "run-a",
+        ]),
       }),
       expect.objectContaining({ cancelRunWork: true, runId: "run-a", botId: "bot-a" }),
     );
     expect(execute).toHaveBeenCalledWith(
       expect.objectContaining({ providerRef: "computer-team" }),
       expect.objectContaining({
-        argv: expect.arrayContaining(["alternativebot-cancel-run-work", "computer-db-team", "run-b"]),
+        argv: expect.arrayContaining([
+          "alternativebot-cancel-run-work",
+          "computer-db-team",
+          "run-b",
+        ]),
       }),
       expect.objectContaining({ cancelRunWork: true, runId: "run-b", botId: "bot-b" }),
     );

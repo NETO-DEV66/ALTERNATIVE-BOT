@@ -2,7 +2,11 @@ import { execFileSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import type { AutoReviewProvider, AutoReviewRequest, AutoReviewResult } from "@alternativebot/adapter-kit";
+import type {
+  AutoReviewProvider,
+  AutoReviewRequest,
+  AutoReviewResult,
+} from "@alternativebot/adapter-kit";
 import { describe, expect, it } from "vitest";
 import type { ApprovalCase } from "./approval.js";
 import {

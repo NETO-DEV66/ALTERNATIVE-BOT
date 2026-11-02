@@ -6,14 +6,14 @@ import os from "node:os";
 import path from "node:path";
 import { performance } from "node:perf_hooks";
 import { brotliCompressSync, gzipSync } from "node:zlib";
-import { serve } from "@hono/node-server";
-import type { CDPSession, ElectronApplication, Page } from "@playwright/test";
-import { _electron as electron, expect } from "@playwright/test";
 import type { createApp } from "@alternativebot/api/app";
 import { abortableDelay } from "@alternativebot/core";
 import { loadRootEnv } from "@alternativebot/core/node/load-root-env";
 import type { PrismaClient } from "@alternativebot/db";
 import { createThreadMessage } from "@alternativebot/db";
+import { serve } from "@hono/node-server";
+import type { CDPSession, ElectronApplication, Page } from "@playwright/test";
+import { _electron as electron, expect } from "@playwright/test";
 import type { NumericSummary, PerformanceReport } from "../performance-report.js";
 import {
   PERFORMANCE_REPORT_SCHEMA_VERSION,
@@ -216,7 +216,8 @@ function startPreview(env: NodeJS.ProcessEnv) {
 
 async function packagedExecutable() {
   const out = path.join(desktopRoot, "out");
-  const candidates = process.platform === "darwin" ? await findNamed(out, "AlternativeBot.app") : [];
+  const candidates =
+    process.platform === "darwin" ? await findNamed(out, "AlternativeBot.app") : [];
   if (process.platform === "darwin" && candidates[0]) {
     return path.join(candidates[0], "Contents/MacOS/AlternativeBot");
   }
@@ -255,7 +256,9 @@ async function prepareAuthenticatedProfile(benchmark: BenchmarkContext, profile:
     const stamp = Date.now();
     await page.goto(`${webOrigin}/sign-up`);
     await page.getByPlaceholder("Your name").fill("Benchmark User");
-    await page.getByPlaceholder("Your email address").fill(`benchmark-${stamp}@alternativebot.test`);
+    await page
+      .getByPlaceholder("Your email address")
+      .fill(`benchmark-${stamp}@alternativebot.test`);
     await page.getByPlaceholder("Password").fill("password12");
     await page.getByRole("button", { name: "Create account" }).click();
     await page
@@ -512,8 +515,9 @@ async function measureInteractions(app: ElectronApplication, page: Page) {
     const target = document.querySelector<HTMLInputElement>('input[placeholder^="Message "]');
     if (!target) throw new Error("Composer is missing");
     const samples: number[] = [];
-    (window as typeof window & { __alternativebotKeyPaintSamples?: number[] }).__alternativebotKeyPaintSamples =
-      samples;
+    (
+      window as typeof window & { __alternativebotKeyPaintSamples?: number[] }
+    ).__alternativebotKeyPaintSamples = samples;
     target.addEventListener("keydown", () => {
       const started = performance.now();
       requestAnimationFrame(() => samples.push(performance.now() - started));
@@ -522,14 +526,14 @@ async function measureInteractions(app: ElectronApplication, page: Page) {
   await page.keyboard.type("a".repeat(characterCount), { delay: 16 });
   await page.waitForFunction(
     (count) =>
-      ((window as typeof window & { __alternativebotKeyPaintSamples?: number[] }).__alternativebotKeyPaintSamples
-        ?.length ?? 0) >= count,
+      ((window as typeof window & { __alternativebotKeyPaintSamples?: number[] })
+        .__alternativebotKeyPaintSamples?.length ?? 0) >= count,
     characterCount,
   );
   const keyPaintMs = await page.evaluate(
     () =>
-      (window as typeof window & { __alternativebotKeyPaintSamples?: number[] }).__alternativebotKeyPaintSamples ??
-      [],
+      (window as typeof window & { __alternativebotKeyPaintSamples?: number[] })
+        .__alternativebotKeyPaintSamples ?? [],
   );
   const typingAfter = await cdpMetrics(session);
 

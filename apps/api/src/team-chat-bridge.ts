@@ -8,7 +8,11 @@ import type {
 import { runContinueJob } from "@alternativebot/adapter-kit";
 import type { MessageBlock } from "@alternativebot/contracts";
 import { ATTACHMENT_MAX_COUNT, AutomatedSenderPoliciesSchema } from "@alternativebot/contracts";
-import { botMessageMaxHops, messageBlockForArtifact, promptTextForAttachments } from "@alternativebot/core";
+import {
+  botMessageMaxHops,
+  messageBlockForArtifact,
+  promptTextForAttachments,
+} from "@alternativebot/core";
 import type { PrismaClient, ThreadEvents } from "@alternativebot/db";
 import { clearEndedRunState } from "@alternativebot/db";
 import { getLogger } from "@alternativebot/logging";
@@ -687,7 +691,8 @@ export class TeamChatBridge {
     const pending = this.mirroring.get(message.id);
     if (pending) return pending;
     const mirroring = (async () => {
-      if (!conversation.thread) throw new Error("Team chat conversation has no Alternative Bot thread");
+      if (!conversation.thread)
+        throw new Error("Team chat conversation has no Alternative Bot thread");
       // Fetchers cannot survive a restart; reuse any completed per-file uploads.
       const stored = attachments
         ? await this.storeAttachments(

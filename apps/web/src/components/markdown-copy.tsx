@@ -1,7 +1,7 @@
-import { plural } from "@lingui/core/macro";
-import { useLingui } from "@lingui/react/macro";
 import type { MarkdownCopy } from "@alternativebot/chat-ui/web";
 import { MarkdownCopyProvider } from "@alternativebot/chat-ui/web";
+import { plural } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 import { useMemo } from "react";
 

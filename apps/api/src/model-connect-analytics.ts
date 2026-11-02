@@ -1,5 +1,9 @@
 import { listPiCatalog } from "@alternativebot/adapters";
-import type { Actor, AnalyticsErrorKind, AnalyticsModelConnectMethod } from "@alternativebot/contracts";
+import type {
+  Actor,
+  AnalyticsErrorKind,
+  AnalyticsModelConnectMethod,
+} from "@alternativebot/contracts";
 import {
   canonicalPiProviderId,
   MODEL_KEY_REJECTED_ERROR,

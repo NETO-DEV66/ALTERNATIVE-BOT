@@ -63,7 +63,9 @@ afterEach(async () => {
 });
 
 async function fixture(botId: string) {
-  const root = await realpath(await mkdtemp(path.join(tmpdir(), "alternativebot-desktop-containment-")));
+  const root = await realpath(
+    await mkdtemp(path.join(tmpdir(), "alternativebot-desktop-containment-")),
+  );
   roots.push(root);
   const desktop = new DesktopSandboxProvider({ root });
   const computer = await desktop.provision({ botId, homePath: "/unused" }, ctx);

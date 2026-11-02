@@ -1284,7 +1284,9 @@ describe("computer provisioning", () => {
   ])(
     "restores saved files before starting $kind/$providerRef (fresh=$fresh) from $state",
     async ({ state, ...next }) => {
-      const dataDir = await mkdtemp(path.join(tmpdir(), "alternativebot-provision-reconnect-update-"));
+      const dataDir = await mkdtemp(
+        path.join(tmpdir(), "alternativebot-provision-reconnect-update-"),
+      );
       const home = new LocalAgentHomeStore(dataDir);
       const sandbox = new FakeSandboxProvider();
       const ref = {
@@ -1606,7 +1608,9 @@ describe("computer provisioning", () => {
   ])(
     "retains a fresh provider reference when rollback also fails (unsafe stop=$unsafeStop, reconnecting=$reconnecting)",
     async ({ unsafeStop, reconnecting }) => {
-      const dataDir = await mkdtemp(path.join(tmpdir(), "alternativebot-prepare-rollback-failure-"));
+      const dataDir = await mkdtemp(
+        path.join(tmpdir(), "alternativebot-prepare-rollback-failure-"),
+      );
       const prepareError = unsafeStop
         ? new SandboxUnsafeStopError("provider preparation failed", new Error("stop unconfirmed"))
         : new Error("provider preparation failed");

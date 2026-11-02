@@ -5,7 +5,11 @@ import {
   resolveMemberMainModel,
 } from "@alternativebot/adapters";
 import type { Actor, Me } from "@alternativebot/contracts";
-import { attachmentMaxBytes, attachmentMaxCount, canonicalPiProviderId } from "@alternativebot/contracts";
+import {
+  attachmentMaxBytes,
+  attachmentMaxCount,
+  canonicalPiProviderId,
+} from "@alternativebot/contracts";
 import { isAdmin } from "../admins.js";
 import type { RouterDeps } from "../router.js";
 

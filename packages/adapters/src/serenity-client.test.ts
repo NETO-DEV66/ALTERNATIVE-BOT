@@ -422,7 +422,10 @@ describe("serenity verbs", () => {
     });
     expect(result.ok && result.value).toHaveLength(100);
     const call = server.calls.find((entry) => entry.rpc?.method === "tools/call");
-    expect(call?.rpc?.params?.arguments).toEqual({ limit: 100, entity: "alternativebot-bot/bot-1" });
+    expect(call?.rpc?.params?.arguments).toEqual({
+      limit: 100,
+      entity: "alternativebot-bot/bot-1",
+    });
   });
 
   it("rejects facts over the hosted byte limit before connecting", async () => {

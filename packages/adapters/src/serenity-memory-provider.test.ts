@@ -360,7 +360,11 @@ describe("SerenityMemoryProvider", () => {
   });
 
   it("refuses to forget a fact cited from another bot or Space", async () => {
-    for (const entity of ["alternativebot-bot/bot-2", "alternativebot-space/workspace-2", "person/someone"]) {
+    for (const entity of [
+      "alternativebot-bot/bot-2",
+      "alternativebot-space/workspace-2",
+      "person/someone",
+    ]) {
       const result = await provider().forget(
         { id: "fact-9", scope: "shared", botId: "bot-1", entity },
         context,
@@ -369,7 +373,12 @@ describe("SerenityMemoryProvider", () => {
     }
     // An isolated bot cannot reach the shared Space namespace either.
     const isolated = await provider().forget(
-      { id: "fact-9", scope: "isolated", botId: "bot-1", entity: "alternativebot-space/workspace-1" },
+      {
+        id: "fact-9",
+        scope: "isolated",
+        botId: "bot-1",
+        entity: "alternativebot-space/workspace-1",
+      },
       context,
     );
     expect(isolated.ok).toBe(false);

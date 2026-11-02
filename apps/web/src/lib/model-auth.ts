@@ -2,7 +2,11 @@ import { waitForModelOAuthCompletion } from "@alternativebot/core";
 import type { RpcClient } from "./rpc";
 import { rpc } from "./rpc";
 
-export type { ModelCatalogEntry, ModelCredential, ModelOAuthBegin } from "@alternativebot/contracts";
+export type {
+  ModelCatalogEntry,
+  ModelCredential,
+  ModelOAuthBegin,
+} from "@alternativebot/contracts";
 export { cancelModelOAuthAttempt, finishModelOAuthAttempt } from "@alternativebot/core";
 
 /** `client` must be the one that began the sign-in: the login belongs to its space. */

@@ -1,8 +1,8 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import { useLinkPrompt } from "@alternativebot/chat-ui/web";
 import type { MessageBlock } from "@alternativebot/contracts";
 import { appConnectedInput, waitForConnection } from "@alternativebot/core";
 import { Button, Dialog, DialogClose, DialogContent, DialogTitle } from "@alternativebot/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { BuiCard, SuccessPop } from "../../components/ai/primitives";
@@ -167,7 +167,11 @@ export function AppConnectCard({
         displayName: block.name,
       });
       if (started.authorizationUrl) {
-        window.open(started.authorizationUrl, "alternativebot-app-connect", "popup,width=560,height=720");
+        window.open(
+          started.authorizationUrl,
+          "alternativebot-app-connect",
+          "popup,width=560,height=720",
+        );
       }
       const result = await waitForConnection(
         started.connectionId,

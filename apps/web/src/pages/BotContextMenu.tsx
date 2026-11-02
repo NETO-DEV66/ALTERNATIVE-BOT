@@ -1,4 +1,3 @@
-import { useLingui } from "@lingui/react/macro";
 import type { Bot, BotSection } from "@alternativebot/contracts";
 import {
   ContextMenuContent,
@@ -8,6 +7,7 @@ import {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
 } from "@alternativebot/ui-web";
+import { useLingui } from "@lingui/react/macro";
 import {
   Archive,
   Bell,

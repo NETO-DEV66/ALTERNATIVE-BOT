@@ -1,4 +1,9 @@
-import type { Routine, TaughtSkill, ThreadMessage, ThreadSnapshot } from "@alternativebot/contracts";
+import type {
+  Routine,
+  TaughtSkill,
+  ThreadMessage,
+  ThreadSnapshot,
+} from "@alternativebot/contracts";
 import { withLiveStreamingProgress } from "@alternativebot/core";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {

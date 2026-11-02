@@ -245,9 +245,9 @@ describe("screen frame reports", () => {
     expect(screenFrameMessage({ alternativebotScreen: "connected" })).toEqual({
       alternativebotScreen: "connected",
     });
-    expect(screenFrameMessage({ alternativebotScreen: "failed", detail: "  Failed to connect  " })).toEqual(
-      { alternativebotScreen: "failed", detail: "Failed to connect" },
-    );
+    expect(
+      screenFrameMessage({ alternativebotScreen: "failed", detail: "  Failed to connect  " }),
+    ).toEqual({ alternativebotScreen: "failed", detail: "Failed to connect" });
     expect(
       screenFrameMessage({ alternativebotScreen: "failed", detail: "x".repeat(300) })?.detail,
     ).toHaveLength(200);
@@ -270,9 +270,9 @@ describe("screen frame reports", () => {
     expect(screenFrameError({ alternativebotScreen: "loading" }, "fallback")).toBeNull();
     expect(screenFrameError({ alternativebotScreen: "connecting" }, "fallback")).toBeNull();
     expect(screenFrameError({ alternativebotScreen: "connected" }, "fallback")).toBeNull();
-    expect(screenFrameError({ alternativebotScreen: "failed", detail: "Refused" }, "fallback")).toBe(
-      "fallback",
-    );
+    expect(
+      screenFrameError({ alternativebotScreen: "failed", detail: "Refused" }, "fallback"),
+    ).toBe("fallback");
     expect(screenFrameError({ alternativebotScreen: "failed" }, "fallback")).toBe("fallback");
     expect(screenFrameError({ alternativebotScreen: "disconnected" }, "fallback")).toBe(
       "The screen connection closed.",

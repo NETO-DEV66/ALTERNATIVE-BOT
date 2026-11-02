@@ -58,9 +58,9 @@ it.skipIf(!databaseUrl)(
 
       // Asking twice returns the same account rather than creating a second one.
       expect((await post("/api/auth/local-session", {})).status).toBe(200);
-      expect(await handles.prisma.user.count({ where: { email: "local@alternativebot.app" } })).toBe(
-        1,
-      );
+      expect(
+        await handles.prisma.user.count({ where: { email: "local@alternativebot.app" } }),
+      ).toBe(1);
 
       // A single-user server answers the credential surface as if it were never mounted.
       for (const path of [

@@ -1,8 +1,8 @@
-import type { OAuthCredential } from "@earendil-works/pi-ai";
 import type { SecretStore } from "@alternativebot/adapter-kit";
 import type { ThinkingLevel } from "@alternativebot/contracts";
 import { ThinkingLevelSchema } from "@alternativebot/contracts";
 import type { PrismaClient } from "@alternativebot/db";
+import type { OAuthCredential } from "@earendil-works/pi-ai";
 import { LiveCatalogCache, liveModelCatalogEnabled } from "./pi-live-cache.js";
 import type { CatalogSpaceAuth } from "./pi-live-catalog.js";
 import { liveCatalogEntry, overlayLiveCatalog } from "./pi-live-catalog.js";

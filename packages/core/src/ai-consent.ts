@@ -1,4 +1,9 @@
-import type { AiConsentStatus, AiDataUse, AiRecipient, SettingsScope } from "@alternativebot/contracts";
+import type {
+  AiConsentStatus,
+  AiDataUse,
+  AiRecipient,
+  SettingsScope,
+} from "@alternativebot/contracts";
 import { AI_CONSENT_REQUIRED, SettingsScopeSchema } from "@alternativebot/contracts";
 
 /** A foreground check failed before the requested mutation was dispatched. */

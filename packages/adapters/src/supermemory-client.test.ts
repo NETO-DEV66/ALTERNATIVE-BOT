@@ -232,7 +232,11 @@ describe("searchSupermemoryContainers", () => {
     );
 
     await expect(
-      searchSupermemoryContainers("query", ["alternativebot:workspace:ws-1", "alternativebot:bot-1"], config),
+      searchSupermemoryContainers(
+        "query",
+        ["alternativebot:workspace:ws-1", "alternativebot:bot-1"],
+        config,
+      ),
     ).resolves.toEqual({
       ok: true,
       results: [
@@ -295,7 +299,11 @@ describe("saveSupermemoryMemoryToContainers", () => {
     vi.stubGlobal("fetch", fetchMock);
 
     await expect(
-      saveSupermemoryMemoryToContainers("fact", ["alternativebot:workspace:ws-1", "alternativebot:bot-1"], config),
+      saveSupermemoryMemoryToContainers(
+        "fact",
+        ["alternativebot:workspace:ws-1", "alternativebot:bot-1"],
+        config,
+      ),
     ).resolves.toEqual({ ok: true });
     expect(fetchMock).toHaveBeenCalledTimes(2);
     vi.unstubAllGlobals();
@@ -328,7 +336,9 @@ describe("deleteSupermemoryContainer", () => {
     "maps a %i response",
     async (status, expected) => {
       vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response("{}", { status })));
-      await expect(deleteSupermemoryContainer("alternativebot:bot-123", config)).resolves.toEqual(expected);
+      await expect(deleteSupermemoryContainer("alternativebot:bot-123", config)).resolves.toEqual(
+        expected,
+      );
     },
   );
 });

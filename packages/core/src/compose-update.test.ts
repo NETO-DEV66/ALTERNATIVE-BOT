@@ -269,7 +269,11 @@ describe("compose argv construction", () => {
 
   it("defaults -p to the name pinned in the compose file", () => {
     expect(DEFAULT_COMPOSE_PROJECT_NAME).toBe("alternativebot-prod");
-    expect(composePsArgv(target).args.slice(0, 3)).toEqual(["compose", "-p", "alternativebot-prod"]);
+    expect(composePsArgv(target).args.slice(0, 3)).toEqual([
+      "compose",
+      "-p",
+      "alternativebot-prod",
+    ]);
   });
 
   it("refuses a project name that could be parsed as another flag or a second argument", () => {
@@ -512,7 +516,9 @@ describe("managed env assignments", () => {
       "",
     ].join("\n");
     expect(upsertEnvAssignments(contents, { ALTERNATIVEBOT_IMAGE_TAG: "v1.1.0" })).toBe(
-      ["# deployment", "POSTGRES_PASSWORD=secret", "ALTERNATIVEBOT_IMAGE_TAG=v1.1.0", ""].join("\n"),
+      ["# deployment", "POSTGRES_PASSWORD=secret", "ALTERNATIVEBOT_IMAGE_TAG=v1.1.0", ""].join(
+        "\n",
+      ),
     );
   });
 
@@ -580,7 +586,10 @@ describe("managed env assignments", () => {
       " \tALTERNATIVEBOT_IMAGE_TAG \t= v1.2.0 # pinned",
       "\tALTERNATIVEBOT_IMAGE_TAG_PREVIOUS = 'v1.1.0' # rollback",
     ].join("\r\n");
-    const assignments = { ALTERNATIVEBOT_IMAGE_TAG: "v2.0.0", ALTERNATIVEBOT_IMAGE_TAG_PREVIOUS: "v1.2.0" };
+    const assignments = {
+      ALTERNATIVEBOT_IMAGE_TAG: "v2.0.0",
+      ALTERNATIVEBOT_IMAGE_TAG_PREVIOUS: "v1.2.0",
+    };
     const result = upsertEnvAssignments(contents, assignments);
 
     expect(result).toBe(
@@ -625,7 +634,9 @@ describe("managed env assignments", () => {
   it("refuses values that would inject a second assignment or a compose expression", () => {
     // biome-ignore lint/suspicious/noTemplateCurlyInString: the literal is the hostile input under test
     for (const value of ["v1\nEVIL=1", "v1 v2", "$(id)", "v1;rm -rf /", "${OTHER}"]) {
-      expect(() => upsertEnvAssignments("", { ALTERNATIVEBOT_IMAGE_TAG: value })).toThrow(/Refusing/);
+      expect(() => upsertEnvAssignments("", { ALTERNATIVEBOT_IMAGE_TAG: value })).toThrow(
+        /Refusing/,
+      );
     }
   });
 
@@ -637,7 +648,10 @@ describe("managed env assignments", () => {
 describe("sidecar boundary validation", () => {
   it("normalizes a request the API already validated", () => {
     expect(
-      validateUpdateRequest({ repoUrl: "https://github.com/NETO-DEV66/ALTERNATIVE-BOT.git", branch: " main " }),
+      validateUpdateRequest({
+        repoUrl: "https://github.com/NETO-DEV66/ALTERNATIVE-BOT.git",
+        branch: " main ",
+      }),
     ).toEqual({
       request: {
         repoUrl: "https://github.com/NETO-DEV66/ALTERNATIVE-BOT.git",

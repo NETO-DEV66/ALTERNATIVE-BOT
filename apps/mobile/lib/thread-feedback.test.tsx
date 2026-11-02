@@ -1,7 +1,11 @@
 // @vitest-environment jsdom
 
 import * as core from "@alternativebot/core";
-import { AiConsentBlocked, MODEL_REQUIRED_SEND_ERROR, resolveComposerSendPlan } from "@alternativebot/core";
+import {
+  AiConsentBlocked,
+  MODEL_REQUIRED_SEND_ERROR,
+  resolveComposerSendPlan,
+} from "@alternativebot/core";
 import { router } from "expo-router";
 import type { ReactNode } from "react";
 import { act, createElement, useMemo } from "react";

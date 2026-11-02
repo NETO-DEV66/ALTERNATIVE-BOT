@@ -3,7 +3,11 @@ import type { JobPublisher, SecretStore } from "@alternativebot/adapter-kit";
 import { runContinueJob, SecretStoreUnavailableError } from "@alternativebot/adapter-kit";
 import { inboundRoutineModelPin } from "@alternativebot/adapters";
 import type { MessageBlock } from "@alternativebot/contracts";
-import { escapePromptData, inboundRoutineBlock, messageBlockForArtifact } from "@alternativebot/core";
+import {
+  escapePromptData,
+  inboundRoutineBlock,
+  messageBlockForArtifact,
+} from "@alternativebot/core";
 import type { PrismaClient } from "@alternativebot/db";
 import { getLogger } from "@alternativebot/logging";
 

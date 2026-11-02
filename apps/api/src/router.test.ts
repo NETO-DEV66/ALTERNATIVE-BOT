@@ -1,11 +1,11 @@
 import { mkdir, mkdtemp, rm, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import type { InferRouterInitialContext } from "@orpc/server";
-import { createRouterClient } from "@orpc/server";
-import { RPCHandler } from "@orpc/server/fetch";
 import type { ManagedConnectorProvider } from "@alternativebot/adapter-kit";
-import { ConnectorAuthUnavailableError, SecretStoreUnavailableError } from "@alternativebot/adapter-kit";
+import {
+  ConnectorAuthUnavailableError,
+  SecretStoreUnavailableError,
+} from "@alternativebot/adapter-kit";
 import type { McpOAuthSummary } from "@alternativebot/adapters";
 import * as adapters from "@alternativebot/adapters";
 import {
@@ -36,6 +36,9 @@ import { openScreenCapability } from "@alternativebot/core/node/screen-capabilit
 import type { PrismaClient } from "@alternativebot/db";
 import { AnswerTooLongError, runProviderTransaction } from "@alternativebot/db";
 import { createLogger, createTestSink, installLogger } from "@alternativebot/logging";
+import type { InferRouterInitialContext } from "@orpc/server";
+import { createRouterClient } from "@orpc/server";
+import { RPCHandler } from "@orpc/server/fetch";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { mainRole, withModelRoles } from "../../../packages/adapters/src/testing/model-roles.js";
 import type { RouterDeps } from "./router.js";
@@ -1418,7 +1421,10 @@ describe("MCP pre-registered OAuth client", () => {
         }),
       },
       user: {
-        findUnique: vi.fn(async () => ({ email: "owner@alternativebot.test", emailVerified: true })),
+        findUnique: vi.fn(async () => ({
+          email: "owner@alternativebot.test",
+          emailVerified: true,
+        })),
       },
       deploymentSettings: { findUnique: vi.fn().mockResolvedValue({ ownerUserId: "owner-1" }) },
       $executeRaw: vi.fn(async () => 1),
@@ -2081,8 +2087,14 @@ describe("MCP server health", () => {
       mcpServerSpace: { findMany: vi.fn(async () => []) },
       secret: { findFirst: vi.fn(), create: vi.fn(), deleteMany: vi.fn() },
       user: {
-        findUnique: vi.fn(async () => ({ email: "owner@alternativebot.test", emailVerified: true })),
-        findUniqueOrThrow: vi.fn(async () => ({ email: "owner@alternativebot.test", name: "Owner" })),
+        findUnique: vi.fn(async () => ({
+          email: "owner@alternativebot.test",
+          emailVerified: true,
+        })),
+        findUniqueOrThrow: vi.fn(async () => ({
+          email: "owner@alternativebot.test",
+          name: "Owner",
+        })),
       },
       deploymentSettings: { findUnique: vi.fn().mockResolvedValue({ ownerUserId: "owner-1" }) },
       $executeRaw: vi.fn(async () => 1),

@@ -284,7 +284,8 @@ describe("loadEnv", () => {
   it("loads per-client minimum builds and refuses a malformed one", () => {
     expect(loadEnv(base).minimumClientBuilds).toEqual({});
     expect(
-      loadEnv({ ...base, ALTERNATIVEBOT_MIN_CLIENT_BUILD: "web=20261022093015" }).minimumClientBuilds,
+      loadEnv({ ...base, ALTERNATIVEBOT_MIN_CLIENT_BUILD: "web=20261022093015" })
+        .minimumClientBuilds,
     ).toEqual({ web: "20261022093015" });
     expect(() => loadEnv({ ...base, ALTERNATIVEBOT_MIN_CLIENT_BUILD: "latest" })).toThrow(
       /ALTERNATIVEBOT_MIN_CLIENT_BUILD/,

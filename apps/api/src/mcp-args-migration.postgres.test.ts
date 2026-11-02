@@ -2,7 +2,11 @@ import { randomUUID } from "node:crypto";
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { EncryptedSecretStore, FakeSandboxProvider, withSecretPersistence } from "@alternativebot/adapters";
+import {
+  EncryptedSecretStore,
+  FakeSandboxProvider,
+  withSecretPersistence,
+} from "@alternativebot/adapters";
 import type { PrismaClient } from "@alternativebot/db";
 import { createDb, runAsSystem } from "@alternativebot/db";
 import { createLogger, createTestSink, installLogger } from "@alternativebot/logging";

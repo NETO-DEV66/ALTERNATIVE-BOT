@@ -1,6 +1,13 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import type { ComputerStatus } from "@alternativebot/contracts";
-import { Button, Label, Popover, PopoverContent, PopoverTrigger, Textarea } from "@alternativebot/ui-web";
+import {
+  Button,
+  Label,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Textarea,
+} from "@alternativebot/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { useEffect, useRef, useState } from "react";
 import { rpc } from "../../lib/rpc";
 import { errorText } from "../../lib/user-error";

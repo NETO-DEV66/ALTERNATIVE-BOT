@@ -1,5 +1,3 @@
-import { t } from "@lingui/core/macro";
-import { Trans, useLingui } from "@lingui/react/macro";
 import type { RunActivityRow, RunStatus } from "@alternativebot/contracts";
 import { isAgedStuckWork, isRetryableError } from "@alternativebot/core";
 import {
@@ -12,6 +10,8 @@ import {
   NativeSelectOption,
   Spinner,
 } from "@alternativebot/ui-web";
+import { t } from "@lingui/core/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { useQuery } from "@tanstack/react-query";
 import { useId, useMemo, useState } from "react";
 import type { ActivityListFilters } from "../lib/activity-list-filters";

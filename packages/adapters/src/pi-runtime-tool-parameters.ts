@@ -1,7 +1,7 @@
-import { Type } from "@earendil-works/pi-ai";
 import type { ConnectorTool } from "@alternativebot/adapter-kit";
 import { BOT_INSTRUCTIONS_MAX_LENGTH } from "@alternativebot/contracts";
 import { getLogger } from "@alternativebot/logging";
+import { Type } from "@earendil-works/pi-ai";
 import {
   normalizeOpenAiToolParameters,
   openAiToolParametersNeedNormalization,

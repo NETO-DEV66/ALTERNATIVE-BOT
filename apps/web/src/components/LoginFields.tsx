@@ -1,7 +1,7 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import type { LoginFieldInput } from "@alternativebot/contracts";
 import { LOGIN_FIELD_LIMIT } from "@alternativebot/contracts";
 import { Button, Input, Label, Switch } from "@alternativebot/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { X } from "lucide-react";
 import { useId } from "react";
 

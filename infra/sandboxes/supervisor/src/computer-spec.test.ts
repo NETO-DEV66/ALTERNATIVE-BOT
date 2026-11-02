@@ -87,9 +87,9 @@ describe("graphical computer spec", () => {
     expect(resolveComputerImage("ghcr.io/neto-dev66/alternative-bot/computer:edge", "edge")).toBe(
       "ghcr.io/neto-dev66/alternative-bot/computer:edge",
     );
-    expect(resolveComputerImage("registry.example.com:5000/alternativebot/computer", "v1.2.3")).toBe(
-      "registry.example.com:5000/alternativebot/computer:v1.2.3",
-    );
+    expect(
+      resolveComputerImage("registry.example.com:5000/alternativebot/computer", "v1.2.3"),
+    ).toBe("registry.example.com:5000/alternativebot/computer:v1.2.3");
     expect(resolveComputerImage("alternativebot/computer@sha256:abc", "edge")).toBe(
       "alternativebot/computer@sha256:abc",
     );
@@ -120,7 +120,9 @@ describe("graphical computer spec", () => {
     expect(options.Image).not.toMatch(/alpine/);
     expect(options).not.toHaveProperty("Entrypoint");
     expect(JSON.stringify(options)).not.toMatch(/sleep/);
-    expect(options.HostConfig.Binds).toEqual(["/var/alternativebot/homes/abc:/home/alternativebot"]);
+    expect(options.HostConfig.Binds).toEqual([
+      "/var/alternativebot/homes/abc:/home/alternativebot",
+    ]);
     expect(options.Env).toContain(
       "PATH=/home/alternativebot/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     );
@@ -354,7 +356,11 @@ describe("graphical computer spec", () => {
     for (const value of ["/srv/../etc:/mnt/x", "/srv/docs/..:/mnt/x", "/srv/docs:/mnt/a/../x"])
       expect(() => resolveComputerMounts(value)).toThrow(/must not contain \.\./);
 
-    const protectedPaths = ["/opt/alternativebot/data", "/home/op/.docker/run/docker.sock", undefined];
+    const protectedPaths = [
+      "/opt/alternativebot/data",
+      "/home/op/.docker/run/docker.sock",
+      undefined,
+    ];
     for (const source of [
       "/opt/alternativebot/data",
       "/opt/alternativebot/data/homes/bot",
@@ -452,7 +458,9 @@ describe("graphical computer spec", () => {
 
   it("pulls a missing computer image only from a registry the name spells out", () => {
     expect(isRegistryQualifiedImage("ghcr.io/neto-dev66/alternative-bot/computer:edge")).toBe(true);
-    expect(isRegistryQualifiedImage("registry.test/alternativebot/computer@sha256:0123")).toBe(true);
+    expect(isRegistryQualifiedImage("registry.test/alternativebot/computer@sha256:0123")).toBe(
+      true,
+    );
     expect(isRegistryQualifiedImage("localhost:5000/alternativebot/computer")).toBe(true);
     expect(isRegistryQualifiedImage("localhost/alternativebot/computer:local")).toBe(true);
     expect(isRegistryQualifiedImage("docker.io/alternativebot/computer:edge")).toBe(true);
@@ -862,7 +870,10 @@ describe("graphical computer spec", () => {
       mkdirSync(profile, { recursive: true });
       // The kernel records the path passed to exec, so a relative invocation
       // shows up as ./alternativebot-browser rather than an absolute script path.
-      symlinkSync(path.join(root, "alternativebot-browser"), path.join(temp, "alternativebot-browser"));
+      symlinkSync(
+        path.join(root, "alternativebot-browser"),
+        path.join(temp, "alternativebot-browser"),
+      );
 
       try {
         const result = spawnSync(
@@ -1255,7 +1266,10 @@ describe("graphical computer spec", () => {
         '#!/bin/sh\nprintf "%s\\n" "$@" > "$ALTERNATIVEBOT_TEST_ARGS"\n',
       );
       chmodSync(path.join(bin, "chromium"), 0o755);
-      symlinkSync(path.join(root, "alternativebot-browser"), path.join(bin, "alternativebot-browser"));
+      symlinkSync(
+        path.join(root, "alternativebot-browser"),
+        path.join(bin, "alternativebot-browser"),
+      );
       const sleeper = path.join(bin, "sleeper");
       writeFileSync(sleeper, "#!/bin/sh\nsleep 120\n");
       chmodSync(sleeper, 0o755);

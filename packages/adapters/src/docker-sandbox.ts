@@ -135,7 +135,9 @@ export class DockerSandboxProvider implements SandboxProvider {
       ...outgoingCorrelationHeaders(),
       ...(botId ? { "x-alternativebot-bot-id": botId } : {}),
       ...(context.botId ? { "x-alternativebot-screen-id": context.botId } : {}),
-      ...(context.screenLeaseId ? { "x-alternativebot-screen-lease-id": context.screenLeaseId } : {}),
+      ...(context.screenLeaseId
+        ? { "x-alternativebot-screen-lease-id": context.screenLeaseId }
+        : {}),
       ...(context.cancelRunWork ? { "x-alternativebot-cancel-run-work": "1" } : {}),
     };
   }
@@ -694,7 +696,8 @@ function parseProcessLine(line: string): ProcessEvent | undefined {
 }
 
 function dockerCwd(cwd: string | undefined) {
-  if (!cwd || cwd === "." || cwd === "/" || cwd === "/home/alternativebot") return "/home/alternativebot";
+  if (!cwd || cwd === "." || cwd === "/" || cwd === "/home/alternativebot")
+    return "/home/alternativebot";
   const relative = cwd.startsWith("/home/alternativebot/")
     ? cwd.slice("/home/alternativebot/".length)
     : normalizeWorkspacePath(cwd);

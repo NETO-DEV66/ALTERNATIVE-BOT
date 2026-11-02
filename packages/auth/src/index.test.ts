@@ -162,7 +162,9 @@ describe("passwordResetEmail", () => {
       to: "ada@example.test",
       subject: "Reset your Alternative Bot password",
     });
-    expect(message.text).toContain("https://alternativebot.test/reset-password?token=secret&next=1");
+    expect(message.text).toContain(
+      "https://alternativebot.test/reset-password?token=secret&next=1",
+    );
     expect(message.html).toContain("&lt;Ada &amp; &quot;team&quot;&gt;");
     expect(message.html).toContain("token=secret&amp;next=1");
     expect(message.html).not.toContain('<Ada & "team">');
@@ -172,7 +174,10 @@ describe("passwordResetEmail", () => {
 describe("signInCodeEmail", () => {
   it("puts the code in plain text and HTML without links", async () => {
     const message = await signInCodeEmail("ada@example.test", "042517");
-    expect(message).toMatchObject({ to: "ada@example.test", subject: "Your Alternative Bot sign-in code" });
+    expect(message).toMatchObject({
+      to: "ada@example.test",
+      subject: "Your Alternative Bot sign-in code",
+    });
     expect(message.text).toContain("042517");
     expect(message.html).toContain("042517");
     expect(message.text).not.toMatch(/https?:/);

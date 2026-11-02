@@ -1,5 +1,9 @@
 import type { CodexLiveCatalog } from "@alternativebot/adapters";
-import { mcpStdioRefusal, providerCatalogCache, validateBotModelChange } from "@alternativebot/adapters";
+import {
+  mcpStdioRefusal,
+  providerCatalogCache,
+  validateBotModelChange,
+} from "@alternativebot/adapters";
 import type { Actor } from "@alternativebot/contracts";
 import { canonicalPiProviderId, ModelConnectInputSchema } from "@alternativebot/contracts";
 import type { createRepos } from "@alternativebot/db";

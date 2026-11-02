@@ -1,7 +1,11 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import type { Bot, Group } from "@alternativebot/contracts";
-import { GROUP_MEMBER_MAX, GROUP_MEMBER_MIN, GROUP_NAME_MAX_LENGTH } from "@alternativebot/contracts";
+import {
+  GROUP_MEMBER_MAX,
+  GROUP_MEMBER_MIN,
+  GROUP_NAME_MAX_LENGTH,
+} from "@alternativebot/contracts";
 import { BotAvatar, Button, Checkbox, Input } from "@alternativebot/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { X } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { errorText } from "../lib/user-error";

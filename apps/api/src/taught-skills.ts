@@ -1,5 +1,4 @@
 import { randomUUID } from "node:crypto";
-import { ORPCError } from "@orpc/server";
 import type { AgentHomeStore, JobPublisher, SandboxProvider } from "@alternativebot/adapter-kit";
 import {
   createAdapterContext,
@@ -7,7 +6,11 @@ import {
   skillTeachingExpireJob,
   skillTeachingExpireJobKey,
 } from "@alternativebot/adapter-kit";
-import type { ComputerExecutionLease, TaughtSkillRow, TeachComputerInput } from "@alternativebot/adapters";
+import type {
+  ComputerExecutionLease,
+  TaughtSkillRow,
+  TeachComputerInput,
+} from "@alternativebot/adapters";
 import {
   acquireComputerExecutionLease,
   appendRecordingEvent,
@@ -39,8 +42,13 @@ import {
   teachRecordingTtlMs,
 } from "@alternativebot/core";
 import type { createRepos, PrismaClient, ThreadEvents } from "@alternativebot/db";
-import { clearEndedRunState, expireComputerExecutionLeases, IsolationError } from "@alternativebot/db";
+import {
+  clearEndedRunState,
+  expireComputerExecutionLeases,
+  IsolationError,
+} from "@alternativebot/db";
 import { getLogger } from "@alternativebot/logging";
+import { ORPCError } from "@orpc/server";
 
 export interface TaughtSkillsDeps {
   prisma: PrismaClient;

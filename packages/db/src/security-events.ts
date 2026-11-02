@@ -1,5 +1,9 @@
 import { AsyncLocalStorage } from "node:async_hooks";
-import type { SecurityEvent, SecurityEventMetadata, SecurityEventType } from "@alternativebot/contracts";
+import type {
+  SecurityEvent,
+  SecurityEventMetadata,
+  SecurityEventType,
+} from "@alternativebot/contracts";
 import { SECURITY_EVENT_TYPES, SecurityEventTypeSchema } from "@alternativebot/contracts";
 import { getLogContext, getLogger, redactBindings } from "@alternativebot/logging";
 import type { PrismaClient } from "./client.js";

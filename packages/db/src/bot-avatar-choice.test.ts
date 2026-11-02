@@ -50,7 +50,11 @@ describe("chooseBotAvatar", () => {
       });
       expect(chosen.color).toBe(seededLogoAvatarColor(chosen.id));
       expect(
-        chooseBotAvatar([], undefined, { avatarSet: "alternativebot", random: seeded(seed), now: 0 }),
+        chooseBotAvatar([], undefined, {
+          avatarSet: "alternativebot",
+          random: seeded(seed),
+          now: 0,
+        }),
       ).toEqual(chosen);
     }
   });
@@ -79,7 +83,8 @@ describe("chooseBotAvatar", () => {
     "keeps explicit Alternative Bot appearance %s",
     (color) => {
       expect(
-        chooseBotAvatar([], color, { avatarSet: "alternativebot", random: seeded(1), now: 0 }).color,
+        chooseBotAvatar([], color, { avatarSet: "alternativebot", random: seeded(1), now: 0 })
+          .color,
       ).toBe(color);
     },
   );

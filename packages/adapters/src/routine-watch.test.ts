@@ -1012,17 +1012,21 @@ describe("toolResultText", () => {
 
 describe("file watch boundaries", () => {
   it("allows normalized team paths inside the bot folder", () => {
-    expect(resolveWatchPath("team", "bot-1", "/home/alternativebot/bots/bot-1/inbox/../notes")).toBe(
+    expect(
+      resolveWatchPath("team", "bot-1", "/home/alternativebot/bots/bot-1/inbox/../notes"),
+    ).toBe("/home/alternativebot/bots/bot-1/notes");
+    expect(resolveWatchPath("team", "bot-1", "notes")).toBe(
       "/home/alternativebot/bots/bot-1/notes",
     );
-    expect(resolveWatchPath("team", "bot-1", "notes")).toBe("/home/alternativebot/bots/bot-1/notes");
   });
-  it.each(["/etc", "../bot-2", "/home/alternativebot/bots/bot-1/../../shared", "shared/../../other"])(
-    "refuses team escape %s",
-    (path) => {
-      expect(() => resolveWatchPath("team", "bot-1", path)).toThrow("inside the bot's folder");
-    },
-  );
+  it.each([
+    "/etc",
+    "../bot-2",
+    "/home/alternativebot/bots/bot-1/../../shared",
+    "shared/../../other",
+  ])("refuses team escape %s", (path) => {
+    expect(() => resolveWatchPath("team", "bot-1", path)).toThrow("inside the bot's folder");
+  });
   it("keeps dedicated computers unrestricted", () => {
     expect(resolveWatchPath("dedicated", "bot-1", "/etc")).toBe("/etc");
     expect(resolveWatchPath("dedicated", "bot-1", "../tmp")).toBe("/home/tmp");

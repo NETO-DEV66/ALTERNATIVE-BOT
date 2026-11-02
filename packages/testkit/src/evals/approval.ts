@@ -1,4 +1,8 @@
-import type { AutoReviewProvider, AutoReviewRequest, AutoReviewResult } from "@alternativebot/adapter-kit";
+import type {
+  AutoReviewProvider,
+  AutoReviewRequest,
+  AutoReviewResult,
+} from "@alternativebot/adapter-kit";
 import type { EvalPricing, MeasuredCall } from "./measurement.js";
 import { measureCalls } from "./measurement.js";
 

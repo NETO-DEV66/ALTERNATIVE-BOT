@@ -161,7 +161,9 @@ test("Alternative Bot Cloud saves the hosted address and is reselected when save
   // Capture the request instead of reaching the hosted server, so CI stays offline.
   const { cloudUrl } = await setup.evaluate(() =>
     (
-      window as typeof window & { alternativebotSetup: { state: () => Promise<{ cloudUrl: string }> } }
+      window as typeof window & {
+        alternativebotSetup: { state: () => Promise<{ cloudUrl: string }> };
+      }
     ).alternativebotSetup.state(),
   );
   expect(cloudUrl).toMatch(/^https:\/\//);
@@ -671,7 +673,9 @@ test("setup IPC is not reachable from the connected app window", async () => {
   await expect(appWindow.getByText(APP_MARKER)).toBeVisible();
 
   const exposed = await appWindow.evaluate(() =>
-    Object.keys((window as typeof window & { alternativebotSetup?: unknown }).alternativebotSetup ?? {}),
+    Object.keys(
+      (window as typeof window & { alternativebotSetup?: unknown }).alternativebotSetup ?? {},
+    ),
   );
   expect(exposed).toEqual([]);
 });

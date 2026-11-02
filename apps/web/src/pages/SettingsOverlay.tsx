@@ -1,6 +1,6 @@
-import { useLingui } from "@lingui/react/macro";
 import type { SpaceMemoryConfig, UsageSummary } from "@alternativebot/contracts";
 import { Button, Dialog, DialogClose, DialogContent, DialogTitle } from "@alternativebot/ui-web";
+import { useLingui } from "@lingui/react/macro";
 import { ChevronLeft, ChevronRight, XIcon } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ApprovalRulesSettings } from "../components/ApprovalRulesSettings";
@@ -156,13 +156,7 @@ export function SettingsOverlay({
       nav.removeEventListener("scroll", measure);
       observer?.disconnect();
     };
-  }, [
-    section,
-    showComputer,
-    messagingEnabled,
-    showUpdates,
-    i18n.locale,
-  ]);
+  }, [section, showComputer, messagingEnabled, showUpdates, i18n.locale]);
 
   function scrollSections(direction: number) {
     const nav = navRef.current;

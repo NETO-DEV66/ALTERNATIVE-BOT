@@ -1,6 +1,6 @@
-import { Trans } from "@lingui/react/macro";
 import { isOllamaCloudBaseUrl } from "@alternativebot/contracts";
 import { Disclosure } from "@alternativebot/ui-web";
+import { Trans } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 
 export function CompatibleKeyField({

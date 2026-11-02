@@ -73,7 +73,11 @@ it.each(["/app", "/onboarding", "/app?settings=account", "/sign-in?error=SSO_UNA
       ["/app", "/onboarding", "/sign-in"],
     );
     await vi.advanceTimersByTimeAsync(30_000);
-    expect(open).toHaveBeenCalledWith("about:blank", "alternativebot-sso-oauth", expect.any(String));
+    expect(open).toHaveBeenCalledWith(
+      "about:blank",
+      "alternativebot-sso-oauth",
+      expect.any(String),
+    );
     expect(popup.location.href).toBe(result.data.url);
     expect(location.assign).not.toHaveBeenCalled();
     if (callback.includes("?error=")) landing += "&error=SSO_UNAVAILABLE";
@@ -97,7 +101,11 @@ it("ignores spoofed messages, mismatched nonces, foreign URLs and unrelated path
     null,
     {},
     { type: "mcp-oauth-complete", nonce },
-    { type: "sso-complete", nonce: "another-attempt", url: "https://alternativebot.example.test/app" },
+    {
+      type: "sso-complete",
+      nonce: "another-attempt",
+      url: "https://alternativebot.example.test/app",
+    },
     { type: "sso-complete", nonce, url: "https://other.example.test/app" },
     { type: "sso-complete", nonce, url: "https://alternativebot.example.test/unrelated" },
     { type: "sso-complete", nonce, url: "invalid" },
@@ -173,7 +181,11 @@ it("opens synchronously before beginning authorization", async () => {
   const { open, popup } = desktopWindow();
   await expect(
     runSsoFlow(async () => {
-      expect(open).toHaveBeenCalledWith("about:blank", "alternativebot-sso-oauth", expect.any(String));
+      expect(open).toHaveBeenCalledWith(
+        "about:blank",
+        "alternativebot-sso-oauth",
+        expect.any(String),
+      );
       expect(popup.location.href).toBe("about:blank");
       return { data: null, error: { code: "SSO_UNAVAILABLE" } };
     }, ["/app"]),

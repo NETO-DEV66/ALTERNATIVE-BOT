@@ -1,7 +1,6 @@
-import { AlertDialog as AlertDialogPrimitive } from "@base-ui/react/alert-dialog";
 import { Button } from "@alternativebot/ui-web/components/ui/button";
-
 import { cn } from "@alternativebot/ui-web/lib/utils";
+import { AlertDialog as AlertDialogPrimitive } from "@base-ui/react/alert-dialog";
 import type * as React from "react";
 
 function AlertDialog({ ...props }: AlertDialogPrimitive.Root.Props) {

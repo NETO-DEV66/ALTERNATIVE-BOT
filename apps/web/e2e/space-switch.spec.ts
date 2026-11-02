@@ -51,6 +51,8 @@ test("opening a bot in another space switches in place, without a page reload", 
   expect(
     await page.evaluate(() => (window as unknown as { visibleBlanks?: number }).visibleBlanks),
   ).toBe(0);
-  expect(await page.evaluate(() => window.localStorage.getItem("alternativebot:space-id"))).toBe(space.id);
+  expect(await page.evaluate(() => window.localStorage.getItem("alternativebot:space-id"))).toBe(
+    space.id,
+  );
   await captureScreenshot(page, testInfo, "space-switch-in-place");
 });

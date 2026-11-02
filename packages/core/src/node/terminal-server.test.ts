@@ -102,7 +102,9 @@ describe("terminal server", () => {
     const { socket, state } = await startServer({ uid: 501, gid: 20 });
     const { client, waitFor } = connect(socket);
     client.write(encodeTerminalInput("echo who-$(whoami)-$USER\n"));
-    await expect(waitFor(/who-alternativebot-alternativebot/)).resolves.toContain("who-alternativebot-alternativebot");
+    await expect(waitFor(/who-alternativebot-alternativebot/)).resolves.toContain(
+      "who-alternativebot-alternativebot",
+    );
     expect(readdirSync(state)).toHaveLength(2);
     // Stopping the terminal signals every session; each removes its identity files.
     spawnSync("pkill", ["-TERM", "-f", socket]);
