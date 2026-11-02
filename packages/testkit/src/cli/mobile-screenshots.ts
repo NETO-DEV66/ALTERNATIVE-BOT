@@ -214,6 +214,7 @@ function configureEnvironment() {
     DATA_DIR,
     SIGNUPS_ENABLED: "true",
     SIGNUP_ALLOWLIST: "",
+    ALTERNATIVEBOT_LOCAL_SESSION: "false",
     CI: "1",
   });
 }

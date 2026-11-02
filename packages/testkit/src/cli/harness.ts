@@ -104,6 +104,9 @@ async function main() {
     process.env.DATA_DIR = path.join(reportDir, "data");
     process.env.SIGNUPS_ENABLED = "true";
     process.env.SIGNUP_ALLOWLIST = "";
+    // Playwright and the flows sign in through the credential API, so the single-user
+    // session the app defaults to must be off for this server.
+    process.env.ALTERNATIVEBOT_LOCAL_SESSION = "false";
     // Model and speech fixtures listen on loopback, and most test accounts are not the owner.
     process.env.MCP_ALLOW_PRIVATE_ENDPOINT = "true";
     if (!integration) {

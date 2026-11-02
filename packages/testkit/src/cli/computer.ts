@@ -38,6 +38,7 @@ async function main() {
     DATA_DIR: dataDir,
     SIGNUPS_ENABLED: "true",
     SIGNUP_ALLOWLIST: "",
+    ALTERNATIVEBOT_LOCAL_SESSION: "false",
   };
   try {
     execFileSync("pnpm", ["--filter", "@alternativebot/db", "generate"], {

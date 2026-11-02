@@ -16,6 +16,10 @@ describeFast("pnpm test emulator pin", () => {
     expect(process.env.MEDIA_GENERATION_API_KEY).toBeUndefined();
   });
 
+  it("signs in through the credential API instead of the single-user session", () => {
+    expect(process.env.ALTERNATIVEBOT_LOCAL_SESSION).toBe("false");
+  });
+
   it("does not keep a live Composio key in the test process", () => {
     expect(process.env.COMPOSIO_API_KEY).toBeUndefined();
     expect(process.env.INTEGRATIONS_CATALOG_URL).toBeUndefined();

@@ -86,6 +86,7 @@ async function main() {
       WEB_ORIGIN: "http://127.0.0.1:5173",
       SIGNUPS_ENABLED: "true",
       SIGNUP_ALLOWLIST: "",
+      ALTERNATIVEBOT_LOCAL_SESSION: "false",
       DATA_DIR: dataDir,
       LOG_LEVEL: "error",
       COMPOSIO_API_KEY: "",

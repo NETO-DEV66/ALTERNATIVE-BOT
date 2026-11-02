@@ -44,6 +44,9 @@ if (!process.env.VERIFY_PROVIDERS) {
     delete process.env.REALTIME_DATABASE_URL;
   }
 }
+// Suites sign in through the credential API (`/sign-up/email`), which a single-user
+// server closes. A developer .env that leaves the default on would 404 every one of them.
+process.env.ALTERNATIVEBOT_LOCAL_SESSION = "false";
 delete process.env.OTEL_EXPORTER_OTLP_ENDPOINT;
 delete process.env.OTEL_EXPORTER_OTLP_HEADERS;
 delete process.env.OTEL_EXPORTER_OTLP_TRACES_ENDPOINT;

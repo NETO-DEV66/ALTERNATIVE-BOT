@@ -439,6 +439,7 @@ async function main() {
       WEB_ORIGIN: "http://127.0.0.1:5173",
       SIGNUPS_ENABLED: "true",
       SIGNUP_ALLOWLIST: "",
+      ALTERNATIVEBOT_LOCAL_SESSION: "false",
       SANDBOX_PROVIDER: "fake",
       AGENT_RUNTIME: "pi",
       DATA_DIR: dataDir,

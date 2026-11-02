@@ -28,7 +28,6 @@ it.skipIf(!databaseUrl)(
       signupAllowlist: "",
       webOrigin,
       authUrl: webOrigin,
-      localSession: true,
       localAccountEmail: "local@alternativebot.app",
     });
     const post = (path: string, body: object) =>
