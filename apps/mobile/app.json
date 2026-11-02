@@ -3,7 +3,7 @@
     "name": "Alternative Bot",
     "slug": "alternativebot",
     "scheme": "alternativebot",
-    "version": "1.0.12",
+    "version": "1.0.13",
     "orientation": "default",
     "userInterfaceStyle": "automatic",
     "icon": "./assets/icon.png",
@@ -79,7 +79,8 @@
       ],
       "./plugins/with-worklets-headers",
       "./plugins/with-scene-lifecycle",
-      "./plugins/with-lan-cleartext"
+      "./plugins/with-lan-cleartext",
+      "./plugins/with-release-signing"
     ],
     "ios": {
       "bundleIdentifier": "com.alternativebot.app",
@@ -100,7 +101,7 @@
     },
     "android": {
       "package": "com.alternativebot.app",
-      "versionCode": 11,
+      "versionCode": 12,
       "softwareKeyboardLayoutMode": "resize",
       "icon": "./assets/icon.png",
       "adaptiveIcon": {

@@ -27,11 +27,11 @@ the first time.
 
 | | |
 |---|---|
-| Version | 1.0.12 (build 11) |
+| Version | 1.0.13 (build 12) |
 | Size | 123 MB |
 | Android | 7.0 and newer (minSdk 24, targetSdk 36) |
 | Architectures | arm64-v8a, armeabi-v7a, x86, x86_64 |
-| SHA-256 | `b3cdbece1dd27e74107dc1ce87fc474b1d5b7d15e773f6ceda53b8152b5e79ff` |
+| SHA-256 | `PENDING` |
 
 The link always serves the newest APK. Check a download before installing it:
 
@@ -39,9 +39,12 @@ The link always serves the newest APK. Check a download before installing it:
 sha256sum alternativebot.apk
 ```
 
-The APK is signed with a project release key rather than a debug key. This build carries no
+The APK is signed with a project release key rather than a debug key. The
+`release-android-apk` workflow builds it on the runner with the Android SDK and
+Gradle — no EAS and no `EXPO_TOKEN` ([mobile release guide](./docs/mobile-release.md)).
+This build carries no
 Firebase configuration, so push notifications stay off until you add your own
-`google-services.json` and rebuild ([mobile release guide](./docs/mobile-release.md)).
+`google-services.json` and rebuild.
 
 ## Connect the app to your server
 

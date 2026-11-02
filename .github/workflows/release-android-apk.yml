@@ -26,12 +26,22 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Require Expo automation token
+      # The APK must keep the signing identity of the build already installed on phones, or
+      # Android rejects the update with "App not installed". Every secret is required.
+      - name: Require release signing secrets
         env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
-          if [[ -z "$EXPO_TOKEN" ]]; then
-            echo "Add an EXPO_TOKEN repository secret with access to the Expo project linked in apps/mobile/app.json." >&2
+          set -euo pipefail
+          missing=()
+          for name in ANDROID_KEYSTORE_BASE64 ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_ALIAS ANDROID_KEY_PASSWORD; do
+            [[ -n "${!name}" ]] || missing+=("$name")
+          done
+          if (( ${#missing[@]} )); then
+            echo "Add these repository secrets (see docs/mobile-release.md): ${missing[*]}" >&2
             exit 1
           fi
 
@@ -39,50 +49,118 @@ jobs:
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 24
-      - name: Set up Expo
-        uses: expo/expo-github-action@eab7a230208c952974db8c3245cfd78402c7b385 # v9
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
         with:
-          eas-version: latest
-          packager: pnpm
-          token: ${{ secrets.EXPO_TOKEN }}
+          distribution: temurin
+          java-version: 21
+      - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd # v4.0.4
+        with:
+          packages: "platform-tools platforms;android-36 build-tools;36.0.0 ndk;27.1.12297006 cmake;3.22.1"
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
       - name: Verify mobile project
         run: pnpm --filter @alternativebot/mobile check
 
-      # Without Firebase config the APK never registers for push, and an OTA update can't add it.
-      - name: Require Firebase config
-        working-directory: apps/mobile
+      # Keep the keystore outside the checkout and pass only its path to Gradle, so no signing
+      # credential is ever written into the repository tree.
+      - name: Write release keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
         run: |
           set -euo pipefail
-          vars="$(eas env:list production --format short)"
-          if ! grep -q '^GOOGLE_SERVICES_JSON=' <<< "$vars"; then
-            echo "Set the GOOGLE_SERVICES_JSON file variable in the EAS production environment (see docs/mobile-release.md)." >&2
+          keystore="$RUNNER_TEMP/alternativebot-release.keystore"
+          printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$keystore"
+          chmod 600 "$keystore"
+          keytool -list -keystore "$keystore" -storepass:env KEYSTORE_PASSWORD > /dev/null
+
+      - name: Generate Android project
+        working-directory: apps/mobile
+        run: pnpm exec expo prebuild --platform android --no-install
+
+      # `with-release-signing` reads the four ALTERNATIVEBOT_* variables at Gradle configuration
+      # time and signs the release build with the keystore above.
+      - name: Build signed release APK
+        id: build
+        working-directory: apps/mobile
+        env:
+          ALTERNATIVEBOT_KEYSTORE_FILE: ${{ runner.temp }}/alternativebot-release.keystore
+          ALTERNATIVEBOT_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ALTERNATIVEBOT_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ALTERNATIVEBOT_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          (cd android && ./gradlew app:assembleRelease --no-daemon)
+          apk="android/app/build/outputs/apk/release/app-release.apk"
+          test -f "$apk"
+          cp "$apk" "$RUNNER_TEMP/alternativebot.apk"
+          echo "version=$(jq -r '.expo.version' app.json)" >> "$GITHUB_OUTPUT"
+          echo "version_code=$(jq -r '.expo.android.versionCode' app.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Verify signature and version
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          EXPECTED_VERSION: ${{ steps.build.outputs.version }}
+          EXPECTED_VERSION_CODE: ${{ steps.build.outputs.version_code }}
+        run: |
+          set -euo pipefail
+          keystore="$RUNNER_TEMP/alternativebot-release.keystore"
+          apk="$RUNNER_TEMP/alternativebot.apk"
+          build_tools="$ANDROID_HOME/build-tools/36.0.0"
+          # A mismatch here is what makes a phone say "App not installed", so fail before upload.
+          expected="$(
+            keytool -list -v -keystore "$keystore" -storepass:env KEYSTORE_PASSWORD -alias "$KEY_ALIAS" |
+              awk -F': ' '/SHA256:/{print $2; exit}' | tr -d ':' | tr 'A-Z' 'a-z'
+          )"
+          actual="$(
+            "$build_tools/apksigner" verify --print-certs "$apk" |
+              awk -F': ' '/certificate SHA-256 digest:/{print $2; exit}' | tr -d ':' | tr 'A-Z' 'a-z'
+          )"
+          if [[ -z "$expected" || "$actual" != "$expected" ]]; then
+            echo "APK signature $actual does not match the release keystore $expected." >&2
+            exit 1
+          fi
+          "$build_tools/apksigner" verify "$apk"
+          # The APK must carry the version in app.json so the rolling release title is accurate.
+          badging="$("$build_tools/aapt2" dump badging "$apk" | head -1)"
+          version="$(grep -oP "versionName='\K[^']+" <<< "$badging")"
+          version_code="$(grep -oP "versionCode='\K[^']+" <<< "$badging")"
+          if [[ "$version" != "$EXPECTED_VERSION" || "$version_code" != "$EXPECTED_VERSION_CODE" ]]; then
+            echo "APK is $version ($version_code), expected $EXPECTED_VERSION ($EXPECTED_VERSION_CODE)." >&2
             exit 1
           fi
 
-      # EAS signs with the project's managed Android keystore and bakes in the production update
-      # channel, so installed APKs receive the same OTA updates as store builds.
-      - name: Build APK on EAS
-        id: build
-        working-directory: apps/mobile
+      # Phones reject an update signed by a different key with "App not installed", so the new
+      # APK must carry the same certificate as the one already published. Fail before upload,
+      # leaving the previous download working.
+      - name: Verify the keystore matches the published APK
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
         run: |
           set -euo pipefail
-          eas build --platform android --profile android-apk --non-interactive --wait --json > "$RUNNER_TEMP/build.json"
-          url="$(jq -r '.[0].artifacts.applicationArchiveUrl // .[0].artifacts.buildUrl' "$RUNNER_TEMP/build.json")"
-          version="$(jq -r '.[0].appVersion' "$RUNNER_TEMP/build.json")"
-          version_code="$(jq -r '.[0].appBuildVersion' "$RUNNER_TEMP/build.json")"
-          if [[ -z "$url" || "$url" == "null" || "$url" != https://* ]]; then
-            echo "EAS did not return an APK download URL." >&2
+          keystore="$RUNNER_TEMP/alternativebot-release.keystore"
+          published="$RUNNER_TEMP/published.apk"
+          url="https://github.com/$GITHUB_REPOSITORY/releases/download/$RELEASE_TAG/alternativebot.apk"
+          if ! curl --fail --location --silent --show-error --output "$published" "$url"; then
+            echo "No published APK yet; skipping the signature-identity check."
+            exit 0
+          fi
+          cert() {
+            "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --print-certs "$1" |
+              awk -F': ' '/certificate SHA-256 digest:/{print $2; exit}' | tr -d ':' | tr 'A-Z' 'a-z'
+          }
+          expected="$(
+            keytool -list -v -keystore "$keystore" -storepass:env KEYSTORE_PASSWORD -alias "$KEY_ALIAS" |
+              awk -F': ' '/SHA256:/{print $2; exit}' | tr -d ':' | tr 'A-Z' 'a-z'
+          )"
+          if [[ "$(cert "$published")" != "$expected" ]]; then
+            echo "The release keystore does not match the published APK's signing key; phones would reject the update." >&2
             exit 1
           fi
-          curl --fail --location --silent --show-error --output "$RUNNER_TEMP/alternativebot.apk" "$url"
-          if [[ "$(head -c 2 "$RUNNER_TEMP/alternativebot.apk")" != "PK" ]]; then
-            echo "The downloaded artifact is not an APK." >&2
-            exit 1
-          fi
-          echo "version=$version" >> "$GITHUB_OUTPUT"
-          echo "version_code=$version_code" >> "$GITHUB_OUTPUT"
 
       # One rolling release keeps a stable download URL:
       # https://github.com/<owner>/<repo>/releases/download/android/alternativebot.apk
@@ -105,7 +183,7 @@ jobs:
             gh release create "$RELEASE_TAG" "$RUNNER_TEMP/alternativebot.apk" \
               --target "$GITHUB_SHA" \
               --title "$title" \
-              --notes "Install alternativebot.apk on your Android phone. It updates itself over the air." \
+              --notes "Install alternativebot.apk on your Android phone." \
               --latest=false
             exit 0
           fi
