@@ -2,7 +2,11 @@ import { randomBytes } from "node:crypto";
 import { mkdir, mkdtemp, readdir, readFile, rm, stat, utimes, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import type { PortableFile, SandboxProvider, StreamedPortableFile } from "@alternativebot/adapter-kit";
+import type {
+  PortableFile,
+  SandboxProvider,
+  StreamedPortableFile,
+} from "@alternativebot/adapter-kit";
 import { WorkspaceTooLargeError } from "@alternativebot/adapter-kit";
 import type { PrismaClient, SpaceKeyRecord, SpaceKeyStore } from "@alternativebot/db";
 import { ContentDecryptionError, ContentKeyRing, LocalKeyProvider } from "@alternativebot/db";

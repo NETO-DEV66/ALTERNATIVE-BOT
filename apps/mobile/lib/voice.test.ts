@@ -221,7 +221,10 @@ describe("hosted voice playback controls", () => {
     vi.mocked(SecureStore.getItemAsync).mockResolvedValue(null);
     vi.mocked(captureApiRequestContext).mockResolvedValue({
       apiBase: "https://support.example",
-      headers: { authorization: "Bearer support-token", "x-alternativebot-space-id": "space-support" },
+      headers: {
+        authorization: "Bearer support-token",
+        "x-alternativebot-space-id": "space-support",
+      },
     });
     vi.mocked(rpc).mockImplementation(async (proc) => {
       if (proc === "aiConsent/status") return { version: "2026-09-14", recipients: [] } as never;

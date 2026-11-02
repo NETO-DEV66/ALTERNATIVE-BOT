@@ -1,6 +1,6 @@
-import { Input as InputPrimitive } from "@base-ui/react/input";
 import { Button } from "@alternativebot/ui-web/components/ui/button";
 import { cn } from "@alternativebot/ui-web/lib/utils";
+import { Input as InputPrimitive } from "@base-ui/react/input";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import * as React from "react";
 

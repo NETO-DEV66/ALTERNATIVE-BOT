@@ -1,10 +1,17 @@
-import { i18n } from "@lingui/core";
-import { t as translate } from "@lingui/core/macro";
-import { useLingui } from "@lingui/react/macro";
 import { ChatMarkdown } from "@alternativebot/chat-ui/web";
 import { isAttachmentAudioMimeType } from "@alternativebot/contracts";
 import { fileSizeParts } from "@alternativebot/core";
-import { Button, Dialog, DialogClose, DialogContent, DialogTitle, Spinner } from "@alternativebot/ui-web";
+import {
+  Button,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  Spinner,
+} from "@alternativebot/ui-web";
+import { i18n } from "@lingui/core";
+import { t as translate } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { Code2, Download, FileText, Play, X } from "lucide-react";
 import type { RefObject } from "react";
 import { useEffect, useRef, useState } from "react";

@@ -1,4 +1,3 @@
-import { Plural, Trans } from "@lingui/react/macro";
 import { ChatMarkdown } from "@alternativebot/chat-ui/web";
 import type { ThreadMessage } from "@alternativebot/contracts";
 import { formatCompactDuration } from "@alternativebot/core";
@@ -7,6 +6,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@alternativebot/ui-web/components/ui/collapsible";
+import { Plural, Trans } from "@lingui/react/macro";
 import { ChevronRight } from "lucide-react";
 import type { ReactNode } from "react";
 import { Fragment } from "react";

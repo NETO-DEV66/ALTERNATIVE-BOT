@@ -92,7 +92,12 @@ describe("controller argv restrictions", () => {
   it.each([
     ["env", `DISPLAY=${display}`, `ALTERNATIVEBOT_BROWSER_PROFILE=${profile}`],
     ["env", `DISPLAY=${display}`, "ALTERNATIVEBOT_BROWSER_PROFILE=", "alternativebot-browser"],
-    ["env", `DISPLAY=${display}`, `ALTERNATIVEBOT_BROWSER_PROFILE=${profile}a`, "alternativebot-browser"],
+    [
+      "env",
+      `DISPLAY=${display}`,
+      `ALTERNATIVEBOT_BROWSER_PROFILE=${profile}a`,
+      "alternativebot-browser",
+    ],
     [
       "env",
       `DISPLAY=${display}`,
@@ -120,7 +125,12 @@ describe("controller argv restrictions", () => {
     ["env", "DISPLAY=:8", "xdg-open", "https://example.com"],
     ["env", `DISPLAY=${display}`, "alternativebot-focus-or-launch"],
     ["env", `DISPLAY=${display}`, "alternativebot-focus-or-launch", "sh"],
-    ["env", `DISPLAY=${display}`, "alternativebot-focus-or-launch", "alternativebot-focus-or-launch"],
+    [
+      "env",
+      `DISPLAY=${display}`,
+      "alternativebot-focus-or-launch",
+      "alternativebot-focus-or-launch",
+    ],
     ["env", `DISPLAY=${display}`, "alternativebot-focus-or-launch", "/usr/bin/xterm"],
     ["env", `DISPLAY=${display}`, "alternativebot-focus-or-launch", "xterm", "one", "two"],
     [
@@ -132,10 +142,27 @@ describe("controller argv restrictions", () => {
     ],
     ["env", "DISPLAY=:8", "alternativebot-focus-or-launch", "xterm"],
     ["env", `DISPLAY=${display}`, "LD_PRELOAD=/tmp/unsafe", "xdg-open", "https://example.com"],
-    ["env", `DISPLAY=${display}`, "ALTERNATIVEBOT_BROWSER_PROFILE=/tmp/unsafe", "alternativebot-browser"],
-    ["env", `DISPLAY=${display}`, `ALTERNATIVEBOT_BROWSER_PROFILE=${profile}/../other`, "alternativebot-browser"],
+    [
+      "env",
+      `DISPLAY=${display}`,
+      "ALTERNATIVEBOT_BROWSER_PROFILE=/tmp/unsafe",
+      "alternativebot-browser",
+    ],
+    [
+      "env",
+      `DISPLAY=${display}`,
+      `ALTERNATIVEBOT_BROWSER_PROFILE=${profile}/../other`,
+      "alternativebot-browser",
+    ],
     ["env", `DISPLAY=${display}`, `ALTERNATIVEBOT_BROWSER_PROFILE=${profile}`, "sh", "-c", "true"],
-    ["env", `DISPLAY=${display}`, `ALTERNATIVEBOT_BROWSER_PROFILE=${profile}`, "xdotool", "key", "Return"],
+    [
+      "env",
+      `DISPLAY=${display}`,
+      `ALTERNATIVEBOT_BROWSER_PROFILE=${profile}`,
+      "xdotool",
+      "key",
+      "Return",
+    ],
     [
       "env",
       `DISPLAY=${display}`,

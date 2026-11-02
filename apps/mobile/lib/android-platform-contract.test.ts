@@ -28,8 +28,14 @@ describe("Android mobile platform contract", () => {
       mobileRoot,
       "modules/alternativebot-notifications/android/src/main/java/com/alternativebot/notifications",
     );
-    const service = readFileSync(resolve(nativeRoot, "AlternativeBotNotificationService.kt"), "utf8");
-    const module = readFileSync(resolve(nativeRoot, "AlternativeBotNotificationsModule.kt"), "utf8");
+    const service = readFileSync(
+      resolve(nativeRoot, "AlternativeBotNotificationService.kt"),
+      "utf8",
+    );
+    const module = readFileSync(
+      resolve(nativeRoot, "AlternativeBotNotificationsModule.kt"),
+      "utf8",
+    );
     const allowlist = readFileSync(resolve(nativeRoot, "EndpointAllowlist.kt"), "utf8");
     expect(service).toContain("android.requestPromotedOngoing");
     expect(service).toContain("liveStatusIcon(primary, avatarStyle)");
@@ -47,7 +53,9 @@ describe("Android mobile platform contract", () => {
     expect(allowlist).toContain("isAllowedNotificationEndpoint");
     expect(allowlist).toContain('scheme == "https"');
     expect(allowlist).toContain("isLanOrLocalHost");
-    expect(service).toContain('connection.setRequestProperty("x-alternativebot-space-id", spaceId)');
+    expect(service).toContain(
+      'connection.setRequestProperty("x-alternativebot-space-id", spaceId)',
+    );
     expect(service).toContain("storage.spaceId.isBlank()");
     expect(service).toContain("private fun prepareHistorySpace(");
     expect(service).toContain("knownCompleted.clear()");

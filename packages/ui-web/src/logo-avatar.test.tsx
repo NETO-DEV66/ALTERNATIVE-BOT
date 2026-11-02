@@ -49,7 +49,9 @@ describe("logo-derived avatar prototype", () => {
   });
 
   it("leaves an uploaded avatar intact", () => {
-    const html = renderToString(<BotAvatar color="data:image/png;base64,abc" avatarSet="alternativebot" />);
+    const html = renderToString(
+      <BotAvatar color="data:image/png;base64,abc" avatarSet="alternativebot" />,
+    );
     expect(html).toContain('src="data:image/png;base64,abc"');
     expect(html).not.toContain("bot-avatar-body.png");
   });

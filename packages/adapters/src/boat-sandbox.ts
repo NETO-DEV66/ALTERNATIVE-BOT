@@ -2,15 +2,6 @@ import { createHash, randomUUID } from "node:crypto";
 import path from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 import type {
-  Sandbox as BoatMachine,
-  Command200Response,
-  CommandResponse,
-  FileUrlResponse,
-  SandboxStateEnum,
-  SavedSnapshot,
-} from "@boatdev/sdk";
-import { BoatApi, Configuration, FetchError, followCommand } from "@boatdev/sdk";
-import type {
   AdapterContext,
   CommandRequest,
   ComputerActionRequest,
@@ -37,6 +28,15 @@ import {
 } from "@alternativebot/adapter-kit";
 import { boundedSandboxCommandTimeoutMs } from "@alternativebot/core";
 import { getLogger } from "@alternativebot/logging";
+import type {
+  Sandbox as BoatMachine,
+  Command200Response,
+  CommandResponse,
+  FileUrlResponse,
+  SandboxStateEnum,
+  SavedSnapshot,
+} from "@boatdev/sdk";
+import { BoatApi, Configuration, FetchError, followCommand } from "@boatdev/sdk";
 import {
   BoatApiError,
   BoatRequestGate,

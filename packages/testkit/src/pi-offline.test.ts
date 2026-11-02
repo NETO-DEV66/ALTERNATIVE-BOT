@@ -2,7 +2,11 @@ import { randomUUID } from "node:crypto";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import type { AgentRunRequest, AgentRuntimeEvent, ConnectorTool } from "@alternativebot/adapter-kit";
+import type {
+  AgentRunRequest,
+  AgentRuntimeEvent,
+  ConnectorTool,
+} from "@alternativebot/adapter-kit";
 import { PiAgentRuntime } from "@alternativebot/adapters";
 import * as Core from "@alternativebot/core";
 import { afterEach, describe, expect, it, vi } from "vitest";

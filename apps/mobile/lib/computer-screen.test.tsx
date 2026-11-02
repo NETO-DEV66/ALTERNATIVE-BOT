@@ -398,7 +398,10 @@ describe("computer screen", () => {
     const view = await render();
     act(() =>
       screens.onMessage?.({
-        nativeEvent: { data: JSON.stringify({ alternativebotScreen: "connected" }), url: screens.source },
+        nativeEvent: {
+          data: JSON.stringify({ alternativebotScreen: "connected" }),
+          url: screens.source,
+        },
       }),
     );
     token = "second";

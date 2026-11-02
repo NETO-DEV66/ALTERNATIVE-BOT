@@ -100,7 +100,12 @@ for (const platform of ["darwin", "linux"]) {
 }
 
 test("a saved host choice closes when refreshing the profile fails", async ({ page }) => {
-  await signup(page, `host-choice-refresh-${Date.now()}@alternativebot.test`, "password12", "Host Tester");
+  await signup(
+    page,
+    `host-choice-refresh-${Date.now()}@alternativebot.test`,
+    "password12",
+    "Host Tester",
+  );
   await completeOnboarding(page);
   await page.addInitScript(() => {
     Object.defineProperty(window, "alternativebotDesktop", {

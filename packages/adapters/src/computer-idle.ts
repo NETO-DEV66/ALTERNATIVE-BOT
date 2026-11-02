@@ -214,7 +214,14 @@ export const CANCEL_PRIMARY_BROWSER_WORK = [
 ].join("; ");
 
 export function cancelComputerRunWorkArgv(computerId: string, runId: string): string[] {
-  return ["bash", "-c", CANCEL_COMPUTER_RUN_WORK, "alternativebot-cancel-run-work", computerId, runId];
+  return [
+    "bash",
+    "-c",
+    CANCEL_COMPUTER_RUN_WORK,
+    "alternativebot-cancel-run-work",
+    computerId,
+    runId,
+  ];
 }
 
 export async function cancelComputerRunWork(

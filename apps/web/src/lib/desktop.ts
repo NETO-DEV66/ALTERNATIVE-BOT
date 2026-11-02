@@ -1,6 +1,12 @@
-import type { AlternativeBotDesktop, AlternativeBotDesktopOAuthCallback } from "@alternativebot/contracts";
+import type {
+  AlternativeBotDesktop,
+  AlternativeBotDesktopOAuthCallback,
+} from "@alternativebot/contracts";
 
-export type { AlternativeBotDesktop, AlternativeBotDesktopOAuthCallback } from "@alternativebot/contracts";
+export type {
+  AlternativeBotDesktop,
+  AlternativeBotDesktopOAuthCallback,
+} from "@alternativebot/contracts";
 
 declare global {
   interface Window {
@@ -48,7 +54,9 @@ export function onDesktopOAuthCallback(
   });
 }
 
-export function windowChromeKind(desktop?: AlternativeBotDesktop): "spacer" | "darwin" | "controls" {
+export function windowChromeKind(
+  desktop?: AlternativeBotDesktop,
+): "spacer" | "darwin" | "controls" {
   if (!desktop) return "spacer";
   if (desktop.platform === "darwin") return "darwin";
   if (desktop.nativeWindowFrame) return "spacer";

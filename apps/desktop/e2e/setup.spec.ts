@@ -102,7 +102,7 @@ test("first run offers Alternative Bot Cloud first, with local and existing inst
   await expect(setup.locator(".card")).toHaveCount(0);
 
   // Cloud is the default: one click opens the hosted app, with nothing to fill in.
-  await expect(setup.getByRole("radio", { name: /AlternativeBot Cloud/ })).toBeChecked();
+  await expect(setup.getByRole("radio", { name: /Alternative Bot Cloud/ })).toBeChecked();
   await expect(setup.locator("#panel-new")).toBeHidden();
   await expect(setup.locator("#panel-existing")).toBeHidden();
   await expect(setup.getByRole("button", { name: "Check connection" })).toBeHidden();
@@ -155,13 +155,15 @@ test("first run offers Alternative Bot Cloud first, with local and existing inst
 test("Alternative Bot Cloud saves the hosted address and is reselected when saved", async () => {
   app = await launch();
   const setup = await app.firstWindow();
-  await expect(setup.getByRole("radio", { name: /AlternativeBot Cloud/ })).toBeChecked();
+  await expect(setup.getByRole("radio", { name: /Alternative Bot Cloud/ })).toBeChecked();
   await expect(setup.getByRole("button", { name: "Continue" })).toBeEnabled();
 
   // Capture the request instead of reaching the hosted server, so CI stays offline.
   const { cloudUrl } = await setup.evaluate(() =>
     (
-      window as typeof window & { alternativebotSetup: { state: () => Promise<{ cloudUrl: string }> } }
+      window as typeof window & {
+        alternativebotSetup: { state: () => Promise<{ cloudUrl: string }> };
+      }
     ).alternativebotSetup.state(),
   );
   expect(cloudUrl).toMatch(/^https:\/\//);
@@ -193,7 +195,7 @@ test("Alternative Bot Cloud saves the hosted address and is reselected when save
     }));
   }, cloudUrl);
   await setup.reload();
-  await expect(setup.getByRole("radio", { name: /AlternativeBot Cloud/ })).toBeChecked();
+  await expect(setup.getByRole("radio", { name: /Alternative Bot Cloud/ })).toBeChecked();
   await expect(setup.locator("#panel-existing")).toBeHidden();
 });
 
@@ -671,7 +673,9 @@ test("setup IPC is not reachable from the connected app window", async () => {
   await expect(appWindow.getByText(APP_MARKER)).toBeVisible();
 
   const exposed = await appWindow.evaluate(() =>
-    Object.keys((window as typeof window & { alternativebotSetup?: unknown }).alternativebotSetup ?? {}),
+    Object.keys(
+      (window as typeof window & { alternativebotSetup?: unknown }).alternativebotSetup ?? {},
+    ),
   );
   expect(exposed).toEqual([]);
 });

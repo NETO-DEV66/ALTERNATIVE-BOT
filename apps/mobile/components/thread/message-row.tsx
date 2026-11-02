@@ -2,7 +2,11 @@ import { markdownCodeBlocks } from "@alternativebot/chat-ui/native";
 import type { BotAvatarSet, LoginFieldInput, MessageReaction } from "@alternativebot/contracts";
 import { canReactToThreadMessage, MESSAGE_REACTIONS } from "@alternativebot/contracts";
 import type { ChildBotBlock, PeerExchange } from "@alternativebot/core";
-import { canMarkMessageUnread, isPeerReceiptBlocks, liveMessageComposing } from "@alternativebot/core";
+import {
+  canMarkMessageUnread,
+  isPeerReceiptBlocks,
+  liveMessageComposing,
+} from "@alternativebot/core";
 import * as Clipboard from "expo-clipboard";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { GestureResponderEvent, LayoutChangeEvent } from "react-native";

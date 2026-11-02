@@ -1,6 +1,6 @@
-import { t } from "@lingui/core/macro";
 import { isLocalhostOrLoopbackIp } from "@alternativebot/contracts";
 import { WUYING_SCREEN_PATH } from "@alternativebot/contracts/content-security-policy";
+import { t } from "@lingui/core/macro";
 import { errorText } from "./user-error";
 
 export interface ComputerScreenResult {
@@ -130,9 +130,13 @@ const SCREEN_FRAME_STATES: ReadonlySet<string> = new Set<ScreenFrameState>([
 export function screenFrameMessage(data: unknown): ScreenFrameMessage | null {
   if (!data || typeof data !== "object") return null;
   const { alternativebotScreen, detail } = data as Record<string, unknown>;
-  if (typeof alternativebotScreen !== "string" || !SCREEN_FRAME_STATES.has(alternativebotScreen)) return null;
+  if (typeof alternativebotScreen !== "string" || !SCREEN_FRAME_STATES.has(alternativebotScreen))
+    return null;
   const text = typeof detail === "string" ? detail.trim().slice(0, 200) : "";
-  return { alternativebotScreen: alternativebotScreen as ScreenFrameState, ...(text ? { detail: text } : {}) };
+  return {
+    alternativebotScreen: alternativebotScreen as ScreenFrameState,
+    ...(text ? { detail: text } : {}),
+  };
 }
 
 /** Whether a report shows the page got past loading; a page stalled there is still silent. */
@@ -142,8 +146,11 @@ export function screenFrameStarted(message: ScreenFrameMessage): boolean {
 
 /** The error a frame report means for the screen, or null while it is fine. */
 export function screenFrameError(message: ScreenFrameMessage, fallback: string): string | null {
-  if (message.alternativebotScreen !== "failed" && message.alternativebotScreen !== "disconnected") return null;
-  return message.alternativebotScreen === "disconnected" ? t`The screen connection closed.` : fallback;
+  if (message.alternativebotScreen !== "failed" && message.alternativebotScreen !== "disconnected")
+    return null;
+  return message.alternativebotScreen === "disconnected"
+    ? t`The screen connection closed.`
+    : fallback;
 }
 
 /**

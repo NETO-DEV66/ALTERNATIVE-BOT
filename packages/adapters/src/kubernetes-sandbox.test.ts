@@ -2,9 +2,9 @@ import { execFileSync } from "node:child_process";
 import { link, mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import type { Exec, V1Pod } from "@kubernetes/client-node";
 import type { AdapterContext, ComputerRef, ProcessEvent } from "@alternativebot/adapter-kit";
 import { shellQuote } from "@alternativebot/core/node/desktop-runtime";
+import type { Exec, V1Pod } from "@kubernetes/client-node";
 import { describe, expect, it, vi } from "vitest";
 import type { KubernetesSandboxSdk } from "./kubernetes-sandbox.js";
 import { encodeTarEntry, KubernetesSandboxProvider, TarReader } from "./kubernetes-sandbox.js";
@@ -334,7 +334,10 @@ describe("KubernetesSandboxProvider", () => {
     const read = vi
       .fn()
       .mockRejectedValueOnce(Object.assign(new Error("missing"), { code: 404 }))
-      .mockResolvedValue({ ...readyPod, metadata: { labels: { "alternativebot-bot-id": "bot-b" } } });
+      .mockResolvedValue({
+        ...readyPod,
+        metadata: { labels: { "alternativebot-bot-id": "bot-b" } },
+      });
     const create = vi.fn().mockRejectedValue(Object.assign(new Error("conflict"), { code: 409 }));
     const provider = providerFor({ readNamespacedPod: read, createNamespacedPod: create });
     await expect(
@@ -379,7 +382,9 @@ describe("KubernetesSandboxProvider", () => {
         },
         containers: [
           {
-            volumeMounts: [{ name: "home", mountPath: "/home/alternativebot", subPath: "homes/team-ab12" }],
+            volumeMounts: [
+              { name: "home", mountPath: "/home/alternativebot", subPath: "homes/team-ab12" },
+            ],
           },
         ],
       });
@@ -468,7 +473,9 @@ describe("KubernetesSandboxProvider", () => {
           containers: [
             {
               name: "computer",
-              volumeMounts: [{ name: "home", mountPath: "/home/alternativebot", subPath: "homes/bot-a" }],
+              volumeMounts: [
+                { name: "home", mountPath: "/home/alternativebot", subPath: "homes/bot-a" },
+              ],
             },
           ],
         },
@@ -490,7 +497,9 @@ describe("KubernetesSandboxProvider", () => {
           containers: [
             {
               name: "computer",
-              volumeMounts: [{ name: "home", mountPath: "/home/alternativebot", subPath: "homes/bot-a" }],
+              volumeMounts: [
+                { name: "home", mountPath: "/home/alternativebot", subPath: "homes/bot-a" },
+              ],
             },
           ],
         },
@@ -536,9 +545,10 @@ describe("KubernetesSandboxProvider", () => {
 
   it("rejects a pod carrying another bot's label", async () => {
     const provider = providerFor({
-      readNamespacedPod: vi
-        .fn()
-        .mockResolvedValue({ ...readyPod, metadata: { labels: { "alternativebot-bot-id": "bot-b" } } }),
+      readNamespacedPod: vi.fn().mockResolvedValue({
+        ...readyPod,
+        metadata: { labels: { "alternativebot-bot-id": "bot-b" } },
+      }),
     });
     await expect(
       provider.provision(
@@ -1108,7 +1118,10 @@ describe("KubernetesSandboxProvider", () => {
               args[4]?.write(
                 execFileSync("bash", [
                   "-c",
-                  script.replace(`cd ${shellQuote("/home/alternativebot")}`, `cd ${shellQuote(root)}`),
+                  script.replace(
+                    `cd ${shellQuote("/home/alternativebot")}`,
+                    `cd ${shellQuote(root)}`,
+                  ),
                 ]),
               );
             } else if (args[6]) {

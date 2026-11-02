@@ -1,4 +1,3 @@
-import { useLingui } from "@lingui/react/macro";
 import type {
   Bot,
   ComputerStatus,
@@ -8,7 +7,11 @@ import type {
   ThreadMessage,
   ThreadSnapshot,
 } from "@alternativebot/contracts";
-import { attachmentMaxBytes, attachmentMaxCount, attachmentSizeLabel } from "@alternativebot/contracts";
+import {
+  attachmentMaxBytes,
+  attachmentMaxCount,
+  attachmentSizeLabel,
+} from "@alternativebot/contracts";
 import type { ComposerMention } from "@alternativebot/core";
 import {
   attachmentsForThread,
@@ -17,6 +20,7 @@ import {
   newClientId,
   resolveComposerSendPlan,
 } from "@alternativebot/core";
+import { useLingui } from "@lingui/react/macro";
 import type { RefObject } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { requestBrowserNotificationPermission } from "../../lib/browser-notifications";

@@ -113,7 +113,11 @@ describeSearch("workspace search", () => {
   });
 
   it("finds literal message text without widening wildcard queries", async () => {
-    const cookie = await signup(app, `search-literal-${stamp}@alternativebot.test`, "Literal Search");
+    const cookie = await signup(
+      app,
+      `search-literal-${stamp}@alternativebot.test`,
+      "Literal Search",
+    );
     const bot = await rpc<{ id: string }>(app, cookie, "bots/create", {
       name: "Literal Finder",
       title: "Literal Finder",
@@ -152,7 +156,11 @@ describeSearch("workspace search", () => {
     });
     await sendAndWait(app, ownerCookie, ownerBot.id, { text: "owner-only-token-xyz" });
 
-    const intruderCookie = await signup(app, `search-intruder-${stamp}@alternativebot.test`, "Intruder");
+    const intruderCookie = await signup(
+      app,
+      `search-intruder-${stamp}@alternativebot.test`,
+      "Intruder",
+    );
     const hits = await rpc<{ hits: unknown[] }>(app, intruderCookie, "search/query", {
       q: "owner-only-token-xyz",
     });
@@ -160,7 +168,11 @@ describeSearch("workspace search", () => {
   });
 
   it("finds group conversations, messages, and files", async () => {
-    const cookie = await signup(app, `search-group-${stamp}@alternativebot.test`, "Group Search User");
+    const cookie = await signup(
+      app,
+      `search-group-${stamp}@alternativebot.test`,
+      "Group Search User",
+    );
     const botA = await rpc<{ id: string }>(app, cookie, "bots/create", {
       name: "Alpha",
       title: "Alpha",

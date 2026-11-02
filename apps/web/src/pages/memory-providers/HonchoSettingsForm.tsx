@@ -1,5 +1,5 @@
-import { Trans } from "@lingui/react/macro";
 import { Button, Field, FieldError, FieldLabel, Input } from "@alternativebot/ui-web";
+import { Trans } from "@lingui/react/macro";
 import { useId, useState } from "react";
 import type { ConnectionMode } from "./ConnectionModeFields";
 import { ConnectionModeFields } from "./ConnectionModeFields";
@@ -118,7 +118,9 @@ export function HonchoSettingsForm({ busy, onConnect }: MemoryProviderSettingsFo
           {!userPeerValid ? (
             <FieldError id={userPeerErrorId}>
               {userPeerFormatValid ? (
-                <Trans>alternativebot-shared and IDs starting with bot- are reserved for AlternativeBot.</Trans>
+                <Trans>
+                  alternativebot-shared and IDs starting with bot- are reserved for AlternativeBot.
+                </Trans>
               ) : (
                 <Trans>Use up to 512 letters, digits, _ or -.</Trans>
               )}

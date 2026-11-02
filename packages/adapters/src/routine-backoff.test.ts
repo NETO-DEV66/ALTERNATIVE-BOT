@@ -1,4 +1,8 @@
-import { ModelAccountError, ModelOutputError, TransientModelError } from "@alternativebot/adapter-kit";
+import {
+  ModelAccountError,
+  ModelOutputError,
+  TransientModelError,
+} from "@alternativebot/adapter-kit";
 import type { PrismaClient } from "@alternativebot/db";
 import { describe, expect, it, vi } from "vitest";
 import {

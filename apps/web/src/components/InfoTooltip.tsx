@@ -1,5 +1,9 @@
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@alternativebot/ui-web/components/ui/tooltip";
 import { useLingui } from "@lingui/react/macro";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@alternativebot/ui-web/components/ui/tooltip";
 import { CircleHelp } from "lucide-react";
 import { useId, useRef, useState } from "react";
 

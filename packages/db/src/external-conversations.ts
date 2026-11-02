@@ -1,4 +1,8 @@
-import type { Actor, ExternalConversation, ExternalConversationPolicy } from "@alternativebot/contracts";
+import type {
+  Actor,
+  ExternalConversation,
+  ExternalConversationPolicy,
+} from "@alternativebot/contracts";
 import { AutomatedSenderPoliciesSchema } from "@alternativebot/contracts";
 import type { PrismaClient } from "./client.js";
 import { Prisma } from "./client.js";

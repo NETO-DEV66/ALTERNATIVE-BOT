@@ -5,7 +5,10 @@ import type {
   SecretStore,
 } from "@alternativebot/adapter-kit";
 import type { IntegrationProviderConfig, IntegrationProviderId } from "@alternativebot/contracts";
-import { IntegrationProviderConfigSchema, IntegrationProviderIdSchema } from "@alternativebot/contracts";
+import {
+  IntegrationProviderConfigSchema,
+  IntegrationProviderIdSchema,
+} from "@alternativebot/contracts";
 import type { PrismaClient } from "@alternativebot/db";
 import { ComposioConnector } from "./composio-connector.js";
 import { credentialDigest } from "./credential-digest.js";

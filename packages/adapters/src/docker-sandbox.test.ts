@@ -544,7 +544,9 @@ describe("Docker sandbox", () => {
     expect(fetchMock.mock.calls[1]?.[1]?.headers).toMatchObject({
       "x-alternativebot-cancel-run-work": "1",
     });
-    expect(fetchMock.mock.calls[1]?.[1]?.headers).not.toHaveProperty("x-alternativebot-preserve-screen");
+    expect(fetchMock.mock.calls[1]?.[1]?.headers).not.toHaveProperty(
+      "x-alternativebot-preserve-screen",
+    );
 
     const abort = new AbortController();
     abort.abort();
@@ -553,7 +555,9 @@ describe("Docker sandbox", () => {
       keepScreenWarm: true,
       signal: abort.signal,
     });
-    expect(fetchMock.mock.calls[2]?.[1]?.headers).not.toHaveProperty("x-alternativebot-preserve-screen");
+    expect(fetchMock.mock.calls[2]?.[1]?.headers).not.toHaveProperty(
+      "x-alternativebot-preserve-screen",
+    );
   });
 });
 

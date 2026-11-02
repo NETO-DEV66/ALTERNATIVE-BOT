@@ -81,7 +81,12 @@ test("focus choice suggests apps and preserves a completed connection", async ({
 test("choice refresh failures leave options available for retry", { tag: "@nightly" }, async ({
   page,
 }) => {
-  await signup(page, `choice-refresh-${Date.now()}@alternativebot.test`, "password12", "Choice Retry");
+  await signup(
+    page,
+    `choice-refresh-${Date.now()}@alternativebot.test`,
+    "password12",
+    "Choice Retry",
+  );
   await completeOnboarding(page);
   const choice = page.getByRole("button", { name: /Day-to-day work/ });
   await expect(choice).toBeEnabled();

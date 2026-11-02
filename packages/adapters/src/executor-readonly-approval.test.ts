@@ -8,7 +8,10 @@ import { MEMORY_REVISION_CONFLICT_ERROR } from "@alternativebot/adapter-kit";
 import type { ModelRoleSettings } from "@alternativebot/contracts";
 import type { ActionApprovalRule } from "@alternativebot/core";
 import { inboundRoutineBlock } from "@alternativebot/core";
-import { approvalEffectKey, toolEffectIdempotencyKey } from "@alternativebot/core/node/approval-effect-key";
+import {
+  approvalEffectKey,
+  toolEffectIdempotencyKey,
+} from "@alternativebot/core/node/approval-effect-key";
 import type { PrismaClient } from "@alternativebot/db";
 import { createPendingSteeringRun, sendUserMessage } from "@alternativebot/db";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -2828,7 +2831,10 @@ describe("user_computer_shell", () => {
     f.setCalls([call("ls")]);
     await f.run();
     expect(f.results).toEqual([
-      { error: "The user's computer is not connected. Ask them to open the Alternative Bot desktop app." },
+      {
+        error:
+          "The user's computer is not connected. Ask them to open the Alternative Bot desktop app.",
+      },
     ]);
     expect(requests).toEqual([]);
   });

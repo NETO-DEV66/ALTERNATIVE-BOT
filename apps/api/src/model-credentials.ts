@@ -1,4 +1,3 @@
-import { ORPCError } from "@orpc/server";
 import type { CodexLiveCatalog } from "@alternativebot/adapters";
 import {
   buildModelConnectPlaintext,
@@ -13,7 +12,12 @@ import {
   verifyCatalogProviderApiKey,
   verifyOpenAiCompatibleApiKey,
 } from "@alternativebot/adapters";
-import type { Actor, ModelConnectInput, SettingsScope, ThinkingLevel } from "@alternativebot/contracts";
+import type {
+  Actor,
+  ModelConnectInput,
+  SettingsScope,
+  ThinkingLevel,
+} from "@alternativebot/contracts";
 import {
   canonicalPiProviderId,
   OPENAI_COMPATIBLE_PROVIDER_ID,
@@ -31,6 +35,7 @@ import {
   saveModelPreference,
   writeModelRole,
 } from "@alternativebot/db";
+import { ORPCError } from "@orpc/server";
 import { mayUsePrivateEndpoint } from "./mcp-servers.js";
 import { assertNoDanglingModelPins } from "./model-pins.js";
 import type { RouterDeps } from "./router.js";

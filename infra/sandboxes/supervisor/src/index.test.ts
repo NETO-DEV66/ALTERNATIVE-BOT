@@ -333,7 +333,11 @@ describe("sandbox supervisor input containment", () => {
 
   it("accepts the legacy workspace label without weakening container identity", () => {
     expect(
-      hasComputerIdentity({ "alternativebot.botId": "bot", "alternativebot.workspaceId": "space" }, "bot", "space"),
+      hasComputerIdentity(
+        { "alternativebot.botId": "bot", "alternativebot.workspaceId": "space" },
+        "bot",
+        "space",
+      ),
     ).toBe(true);
     expect(
       hasComputerIdentity(
@@ -698,7 +702,9 @@ describe("sandbox supervisor input containment", () => {
     expect(terminalCommand("control", "terminal", "/work")).toContain("0.0.0.0:6080 8>&-");
     expect(interactiveScreenCommand(true, "lease-new")).not.toContain("sockets/view-1-");
     expect(interactiveScreenCommand(false, "lease-old")).toContain("= 'lease-old'");
-    expect(interactiveScreenCommand(false, "lease-old")).toContain("ALTERNATIVEBOT_CONTROL_RELEASED");
+    expect(interactiveScreenCommand(false, "lease-old")).toContain(
+      "ALTERNATIVEBOT_CONTROL_RELEASED",
+    );
   });
 
   it("assigns distinct screen indexes per Team bot and starts extra displays", () => {

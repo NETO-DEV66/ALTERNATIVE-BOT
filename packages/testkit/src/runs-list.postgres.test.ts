@@ -90,7 +90,11 @@ describeRunsList("runs.list activity tracker", () => {
     });
     await seedRun(prisma, ownerBot.id, "running", "owner active run");
 
-    const intruderCookie = await signup(app, `runs-intruder-${stamp}@alternativebot.test`, "Intruder");
+    const intruderCookie = await signup(
+      app,
+      `runs-intruder-${stamp}@alternativebot.test`,
+      "Intruder",
+    );
     const active = await rpc<{ runs: RunActivityRow[] }>(app, intruderCookie, "runs/list", {
       filter: "active",
     });

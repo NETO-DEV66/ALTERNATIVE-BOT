@@ -54,7 +54,9 @@ function pressUpdate() {
 describe("mobile client build", () => {
   it("names the running bundle by when its update was created", () => {
     expect(mobileClientBuild()).toBe("20261022093015");
-    expect(clientBuildHeaders()).toEqual({ "x-alternativebot-client-build": "mobile/20261022093015" });
+    expect(clientBuildHeaders()).toEqual({
+      "x-alternativebot-client-build": "mobile/20261022093015",
+    });
   });
 
   it("names no build where expo-updates is off", () => {

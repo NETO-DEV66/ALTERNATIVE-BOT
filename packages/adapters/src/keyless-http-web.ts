@@ -1,4 +1,3 @@
-import { Readability } from "@mozilla/readability";
 import type {
   AdapterContext,
   WebFetchRequest,
@@ -7,6 +6,7 @@ import type {
   WebSearchHit,
   WebSearchRequest,
 } from "@alternativebot/adapter-kit";
+import { Readability } from "@mozilla/readability";
 import { JSDOM } from "jsdom";
 import { clampMaxChars, clampMaxResults, clampOffset, pageWindow } from "./web-limits.js";
 import type { ResolveHostname } from "./web-ssrf.js";
@@ -65,7 +65,8 @@ export class KeylessHttpWebProvider implements WebProvider {
     this.fetchTimeoutMs = options.fetchTimeoutMs ?? 15_000;
     this.maxBufferBytes = options.maxBufferBytes ?? 5 * 1024 * 1024;
     this.userAgent =
-      options.userAgent ?? "Alternative Bot/0.1 (+https://github.com/NETO-DEV66/ALTERNATIVE-BOT; web tools)";
+      options.userAgent ??
+      "Alternative Bot/0.1 (+https://github.com/NETO-DEV66/ALTERNATIVE-BOT; web tools)";
   }
 
   describe() {

@@ -1,6 +1,6 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import type { AlternativeBotDesktopDevice, UserDeviceSummary } from "@alternativebot/contracts";
 import { Button, Label, Switch } from "@alternativebot/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { Trash2 } from "lucide-react";
 import { useCallback, useEffect, useId, useState } from "react";
 import { desktopBridge } from "../lib/desktop";

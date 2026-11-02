@@ -37,9 +37,13 @@ it.skipIf(!testDatabase)(
         env: { ...env, DATABASE_MIGRATION_URL: at(ownerDatabase) },
       });
       const boot = (password: string) =>
-        run("pnpm", ["--filter", "@alternativebot/api", "exec", "tsx", "src/cli/bootstrap-owner.ts"], {
-          env: { ...env, DATABASE_MIGRATION_URL: undefined, OWNER_PASSWORD: password },
-        });
+        run(
+          "pnpm",
+          ["--filter", "@alternativebot/api", "exec", "tsx", "src/cli/bootstrap-owner.ts"],
+          {
+            env: { ...env, DATABASE_MIGRATION_URL: undefined, OWNER_PASSWORD: password },
+          },
+        );
       await boot(env.OWNER_PASSWORD);
       const owner = await prisma.user.findUniqueOrThrow({ where: { email: env.OWNER_EMAIL } });
       expect(

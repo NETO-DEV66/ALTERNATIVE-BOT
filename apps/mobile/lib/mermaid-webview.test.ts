@@ -92,7 +92,9 @@ describe("diagram boot script", () => {
     const source = "</script><script>alert(1)</script>\u2028\u2029";
     const boot = diagramBootScript(source, config);
     expect(boot).toContain(`var source = ${JSON.stringify(source)};`);
-    expect(diagramDocument(diagramScriptUrl("https://alternativebot.example.test"))).not.toContain(source);
+    expect(diagramDocument(diagramScriptUrl("https://alternativebot.example.test"))).not.toContain(
+      source,
+    );
     const mermaid = {
       initialize: vi.fn(),
       parse: vi.fn(async () => true),

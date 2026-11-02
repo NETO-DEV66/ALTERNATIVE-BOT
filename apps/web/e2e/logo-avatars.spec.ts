@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
-import { expect, test } from "@playwright/test";
 import { BOT_AVATAR_COLORS } from "@alternativebot/core";
+import { expect, test } from "@playwright/test";
 import { captureScreenshot } from "./helpers";
 
 test.use({ viewport: { width: 1260, height: 1000 } });
@@ -15,7 +15,9 @@ test("renders the real logo in every requested pose in both themes", async ({ pa
     for (const label of ["Idle", "Reading", "Writing", "Thinking", "Computer use"]) {
       await expect(cards.getByRole("img", { name: label, exact: true })).toBeVisible();
     }
-    await expect(page.locator('.alternativebot-logo-avatar[data-artwork-fallback="true"]')).toHaveCount(0);
+    await expect(
+      page.locator('.alternativebot-logo-avatar[data-artwork-fallback="true"]'),
+    ).toHaveCount(0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
       false,
     );
@@ -534,7 +536,9 @@ test("paired blinks last 160ms with uneven spacing and reduced motion opens the 
 test("expressive gaze reads at24/32/38px and stays on the logo silhouette", async ({ page }) => {
   await page.goto("/e2e/fixtures/logo-avatars.html?compare=1");
   const proof = await page.evaluate(async () => {
-    const avatars = [...document.querySelectorAll<SVGSVGElement>(".alternativebot-logo-avatar")].filter(
+    const avatars = [
+      ...document.querySelectorAll<SVGSVGElement>(".alternativebot-logo-avatar"),
+    ].filter(
       (avatar) =>
         [24, 32, 38].includes(Number(avatar.getAttribute("width"))) &&
         avatar.dataset.activity !== "idle",

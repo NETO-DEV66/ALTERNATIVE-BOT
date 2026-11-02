@@ -1,4 +1,3 @@
-import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { AccountItem, Bot, BotSection } from "@alternativebot/contracts";
 import {
   AlertDialog,
@@ -21,6 +20,7 @@ import {
   RadioGroup,
   RadioGroupItem,
 } from "@alternativebot/ui-web";
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { Lock } from "lucide-react";
 import { useId, useState } from "react";
 import { errorText } from "../../lib/user-error";

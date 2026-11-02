@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import {
+  ALTERNATIVEBOT_CLOUD_URL,
   DEFAULT_LOCAL_WEB_URL,
   desktopStackImageTag,
   isAlternativeBotHealth,
@@ -10,7 +11,6 @@ import {
   parseSetupInput,
   parseStoredSetup,
   probeFailureMessage,
-  ALTERNATIVEBOT_CLOUD_URL,
   readProbeJson,
   resolveStartupTarget,
   safeExternalUrl,
@@ -25,11 +25,15 @@ describe("server address normalization", () => {
     expect(normalizeServerUrl("127.0.0.1:5173")).toBe("http://127.0.0.1:5173");
     expect(normalizeServerUrl("localhost:5173")).toBe("http://localhost:5173");
     expect(normalizeServerUrl("192.168.1.20:3100")).toBe("http://192.168.1.20:3100");
-    expect(normalizeServerUrl("alternativebot.example.com")).toBe("https://alternativebot.example.com");
+    expect(normalizeServerUrl("alternativebot.example.com")).toBe(
+      "https://alternativebot.example.com",
+    );
   });
 
   it("keeps an explicit secure scheme and port but stores only the origin", () => {
-    expect(normalizeServerUrl("https://alternativebot.example.com")).toBe("https://alternativebot.example.com");
+    expect(normalizeServerUrl("https://alternativebot.example.com")).toBe(
+      "https://alternativebot.example.com",
+    );
     expect(normalizeServerUrl("https://alternativebot.example.com:8443/team")).toBe(
       "https://alternativebot.example.com:8443",
     );
@@ -87,7 +91,9 @@ describe("managed local open URL", () => {
   it("rejects a different loopback origin even when both are local", () => {
     expect(managedLocalOpenUrl("http://127.0.0.1:5199", DEFAULT_LOCAL_WEB_URL)).toBeNull();
     expect(managedLocalOpenUrl("http://localhost:5173", DEFAULT_LOCAL_WEB_URL)).toBeNull();
-    expect(managedLocalOpenUrl("https://alternativebot.example.com", DEFAULT_LOCAL_WEB_URL)).toBeNull();
+    expect(
+      managedLocalOpenUrl("https://alternativebot.example.com", DEFAULT_LOCAL_WEB_URL),
+    ).toBeNull();
   });
 });
 
@@ -160,7 +166,11 @@ describe("server request headers", () => {
   it("saves headers for an existing server and drops an empty set", () => {
     expect(parseStoredSetup(serializeSetup(setup))).toEqual(setup);
     expect(
-      parseSetupInput({ mode: "existing", serverUrl: "https://alternativebot.example.com", headers: {} }),
+      parseSetupInput({
+        mode: "existing",
+        serverUrl: "https://alternativebot.example.com",
+        headers: {},
+      }),
     ).toEqual({ mode: "existing", serverUrl: "https://alternativebot.example.com" });
   });
 
@@ -174,7 +184,9 @@ describe("server request headers", () => {
 
   it("adds them only to the saved server, websockets included", () => {
     expect(serverHeadersFor("https://alternativebot.example.com/rpc/me", setup)).toEqual(access);
-    expect(serverHeadersFor("wss://alternativebot.example.com/novnc/websockify", setup)).toEqual(access);
+    expect(serverHeadersFor("wss://alternativebot.example.com/novnc/websockify", setup)).toEqual(
+      access,
+    );
     expect(serverHeadersFor("https://alternativebot.example.com.evil/rpc", setup)).toEqual({});
     expect(serverHeadersFor("http://alternativebot.example.com/rpc", setup)).toEqual({});
     expect(serverHeadersFor("https://accounts.example.com/", setup)).toEqual({});

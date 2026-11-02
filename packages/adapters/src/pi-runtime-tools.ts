@@ -1,5 +1,3 @@
-import type { Agent, AgentTool, AgentToolResult } from "@earendil-works/pi-agent-core";
-import type { Api, Model, Models } from "@earendil-works/pi-ai";
 import type {
   AdapterContext,
   AgentRunRequest,
@@ -11,6 +9,8 @@ import type {
 } from "@alternativebot/adapter-kit";
 import { DEFAULT_CONTEXT_STRATEGY } from "@alternativebot/adapter-kit";
 import { FLEET_TOOL_NAMES } from "@alternativebot/contracts";
+import type { Agent, AgentTool, AgentToolResult } from "@earendil-works/pi-agent-core";
+import type { Api, Model, Models } from "@earendil-works/pi-ai";
 import { isToolPauseResult } from "./approval-effect.js";
 import {
   connectionIdArgument,

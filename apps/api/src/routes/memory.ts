@@ -1,8 +1,12 @@
-import { ORPCError } from "@orpc/server";
 import { MEMORY_REVISION_CONFLICT_ERROR } from "@alternativebot/adapter-kit";
-import { isScratchpadStatus, listScratchpadItems, mapScratchpadItem } from "@alternativebot/adapters";
+import {
+  isScratchpadStatus,
+  listScratchpadItems,
+  mapScratchpadItem,
+} from "@alternativebot/adapters";
 import { isDeletableMemoryDocument } from "@alternativebot/contracts";
 import { findSpaceMemoryConfig, IsolationError } from "@alternativebot/db";
+import { ORPCError } from "@orpc/server";
 import {
   disconnectMemoryProvider,
   persistMemoryProviderConfig,

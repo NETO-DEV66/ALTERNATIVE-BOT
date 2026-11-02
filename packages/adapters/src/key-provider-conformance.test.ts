@@ -1,9 +1,9 @@
 import { createCipheriv, createDecipheriv, randomBytes } from "node:crypto";
 import { createServer } from "node:http";
 import type { AddressInfo } from "node:net";
-import { KMSClient } from "@aws-sdk/client-kms";
 import type { KeyProvider } from "@alternativebot/adapter-kit";
 import { LocalKeyProvider, withLocalMasterKeys } from "@alternativebot/db";
+import { KMSClient } from "@aws-sdk/client-kms";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { AwsKmsKeyProvider, awsKmsConfigFromEnv } from "./aws-kms-key-provider.js";
 import { contentKeyProviderFromEnv } from "./key-provider-factory.js";
@@ -145,7 +145,11 @@ describe("AWS KMS key provider", () => {
     kms.state.contexts.length = 0;
     await aws().wrap(randomBytes(32), { spaceId: "space-a", version: 3 });
     expect(kms.state.contexts).toEqual([
-      { "alternativebot:purpose": "space-key/v1", "alternativebot:space": "space-a", "alternativebot:version": "3" },
+      {
+        "alternativebot:purpose": "space-key/v1",
+        "alternativebot:space": "space-a",
+        "alternativebot:version": "3",
+      },
     ]);
   });
 

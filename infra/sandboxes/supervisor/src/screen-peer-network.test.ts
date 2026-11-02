@@ -56,7 +56,11 @@ function fixture() {
     inspect: vi.fn().mockResolvedValue({
       Id: "computer",
       Config: {
-        Labels: { "alternativebot.managed": "true", "alternativebot.botId": "bot", "alternativebot.spaceId": "space" },
+        Labels: {
+          "alternativebot.managed": "true",
+          "alternativebot.botId": "bot",
+          "alternativebot.spaceId": "space",
+        },
       },
       HostConfig: { NetworkMode: "bot-network" },
       State: { Running: true },

@@ -1,10 +1,16 @@
-import { useLingui } from "@lingui/react/macro";
-import type { Bot, Connection, ConnectionCatalogItem, Group, Routine } from "@alternativebot/contracts";
+import type {
+  Bot,
+  Connection,
+  ConnectionCatalogItem,
+  Group,
+  Routine,
+} from "@alternativebot/contracts";
 import {
   buildComposerMentionOptions,
   createRoutineMentionBatcher,
   mentionConnectorsFrom,
 } from "@alternativebot/core";
+import { useLingui } from "@lingui/react/macro";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { connectedAppMarks } from "../../lib/connected-apps";

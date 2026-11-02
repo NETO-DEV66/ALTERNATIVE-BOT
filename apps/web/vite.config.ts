@@ -6,7 +6,6 @@ import https from "node:https";
 import net from "node:net";
 import path from "node:path";
 import tls from "node:tls";
-import { lingui } from "@lingui/vite-plugin";
 import type { DesktopStackProbeResponse } from "@alternativebot/contracts";
 import { buildIdAt } from "@alternativebot/contracts/client-build";
 import {
@@ -20,6 +19,7 @@ import {
   safeScreenProxyResponseHeaders,
   stripSensitiveHandshakeHeaders,
 } from "@alternativebot/core/node/screen-proxy-response";
+import { lingui } from "@lingui/vite-plugin";
 import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
@@ -483,10 +483,15 @@ export default defineConfig(({ command, mode }) => {
         process.env.SANDBOX_SUPERVISOR_TOKEN ?? rootEnv.SANDBOX_SUPERVISOR_TOKEN,
       BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET ?? rootEnv.BETTER_AUTH_SECRET,
     });
-  const performanceAssetDelayMs = Number(process.env.ALTERNATIVEBOT_PERFORMANCE_ASSET_DELAY_MS ?? 0);
+  const performanceAssetDelayMs = Number(
+    process.env.ALTERNATIVEBOT_PERFORMANCE_ASSET_DELAY_MS ?? 0,
+  );
   const desktopStackToken =
-    process.env.ALTERNATIVEBOT_DESKTOP_STACK_TOKEN ?? rootEnv.ALTERNATIVEBOT_DESKTOP_STACK_TOKEN ?? "";
-  const imageTag = process.env.ALTERNATIVEBOT_IMAGE_TAG ?? rootEnv.ALTERNATIVEBOT_IMAGE_TAG ?? "edge";
+    process.env.ALTERNATIVEBOT_DESKTOP_STACK_TOKEN ??
+    rootEnv.ALTERNATIVEBOT_DESKTOP_STACK_TOKEN ??
+    "";
+  const imageTag =
+    process.env.ALTERNATIVEBOT_IMAGE_TAG ?? rootEnv.ALTERNATIVEBOT_IMAGE_TAG ?? "edge";
   // Invalid origins throw here, so the server refuses to start rather than serve a wider policy.
   const appPolicy = appContentSecurityPolicy({
     scriptSrc: parseContentSecuritySources(

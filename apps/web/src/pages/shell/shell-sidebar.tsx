@@ -1,4 +1,3 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import type { Bot, NavLink } from "@alternativebot/contracts";
 import { accountDisplay } from "@alternativebot/core";
 import {
@@ -9,6 +8,7 @@ import {
   InputGroupInput,
   Sidebar,
 } from "@alternativebot/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { Search, SlidersHorizontal } from "lucide-react";
 import type { ReactNode } from "react";
 import { useState } from "react";

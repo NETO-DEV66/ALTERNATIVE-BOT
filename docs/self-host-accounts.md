@@ -10,6 +10,11 @@ SIGNUPS_ENABLED=true
 SIGNUP_ALLOWLIST=you@example.com,@company.com
 ```
 
+A self-hosted server belongs to the operator who runs it, so by default the apps sign in as one
+account and every credential route stays closed. Set `ALTERNATIVEBOT_LOCAL_SESSION=false` to collect
+credentials instead; `ALTERNATIVEBOT_LOCAL_ACCOUNT_EMAIL` names the single account, and defaults to
+`local@alternativebot.app`.
+
 `SIGNUPS_ENABLED` and `SIGNUP_ALLOWLIST` come from the operator's environment on every start. An empty allowlist clears any old stored list; signup order never grants privileges.
 
 Server configuration belongs in the operator's environment. App accounts cannot change signup policy,

@@ -1,4 +1,3 @@
-import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { ModelHeaderRow, ThinkingLevel } from "@alternativebot/contracts";
 import {
   CLOUDFLARE_AI_GATEWAY_PROVIDER_ID,
@@ -39,6 +38,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@alternativebot/ui-web";
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { Check, Copy } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -988,11 +988,7 @@ export function OnboardingPage() {
               </p>
             ) : null}
             {error ? <p className="mt-3 text-sm text-destructive">{error}</p> : null}
-            <Button
-              className="mt-6"
-              disabled={!canSaveModel}
-              onClick={() => void saveModel()}
-            >
+            <Button className="mt-6" disabled={!canSaveModel} onClick={() => void saveModel()}>
               <Trans>Continue</Trans>
             </Button>
           </div>

@@ -1,4 +1,3 @@
-import { ORPCError } from "@orpc/server";
 import type { McpOAuthBroker, McpOAuthSummary, McpStdioPolicy } from "@alternativebot/adapters";
 import {
   assertNoMcpEndpointCredential,
@@ -13,6 +12,7 @@ import { mcpOAuthEnvReferences } from "@alternativebot/contracts";
 import type { McpServer as McpServerRow, Prisma } from "@alternativebot/db";
 import { itemSecretIn, spaceAvailability } from "@alternativebot/db";
 import { getLogger } from "@alternativebot/logging";
+import { ORPCError } from "@orpc/server";
 import { isAdmin } from "./admins.js";
 import { assertNameFreeWhereAvailable, userAddedAvailability } from "./availability.js";
 import { dismissMcpServerApprovals } from "./mcp-approval.js";

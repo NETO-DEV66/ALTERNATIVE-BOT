@@ -1,4 +1,3 @@
-import { useLingui } from "@lingui/react/macro";
 import type { SpaceSetting } from "@alternativebot/contracts";
 import { writeSaved } from "@alternativebot/core/query";
 import {
@@ -12,6 +11,7 @@ import {
   AlertDialogTitle,
   Button,
 } from "@alternativebot/ui-web";
+import { useLingui } from "@lingui/react/macro";
 import type { QueryKey } from "@tanstack/react-query";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ReactNode } from "react";

@@ -1,6 +1,6 @@
-import type { MenuAction } from "@expo/ui/community/menu";
 import { attachmentMaxBytes, attachmentMaxCount } from "@alternativebot/contracts";
 import { attachmentsForThread } from "@alternativebot/core";
+import type { MenuAction } from "@expo/ui/community/menu";
 import type { RefObject } from "react";
 import { useEffect, useRef, useState } from "react";
 import type { ThreadComposerHandle } from "../components/thread-composer";

@@ -346,7 +346,11 @@ describeIntegration("agent import", () => {
   });
 
   it("imports model, MCP servers, routines and opted-in API keys through the existing paths", async () => {
-    const cookie = await signup(app, `import-settings-${stamp}@alternativebot.test`, "Settings User");
+    const cookie = await signup(
+      app,
+      `import-settings-${stamp}@alternativebot.test`,
+      "Settings User",
+    );
     const firstBot = await rpc<Bot>(app, cookie, "bots/create", { name: "First" });
     const owner = await db.bot.findUniqueOrThrow({
       where: { id: firstBot.id },
@@ -560,7 +564,11 @@ describeIntegration("agent import", () => {
     expect((await state()).serverIds[servers[0]!.id]).toBe(true);
     await db.routine.update({ where: { id: routineRows[0]!.id }, data: { active: false } });
     // Another user reads nothing of these.
-    const stranger = await signup(app, `import-state-other-${stamp}@alternativebot.test`, "Stranger");
+    const stranger = await signup(
+      app,
+      `import-state-other-${stamp}@alternativebot.test`,
+      "Stranger",
+    );
     expect(
       await rpc(app, stranger, "bots/importSetupState", {
         botId: bot.id,
@@ -621,7 +629,11 @@ describeIntegration("agent import", () => {
   });
 
   it("writes nothing at all when the last write of the import fails", async () => {
-    const cookie = await signup(app, `import-rollback-${stamp}@alternativebot.test`, "Rollback User");
+    const cookie = await signup(
+      app,
+      `import-rollback-${stamp}@alternativebot.test`,
+      "Rollback User",
+    );
     const firstBot = await rpc<Bot>(app, cookie, "bots/create", { name: "First" });
     const owner = await db.bot.findUniqueOrThrow({
       where: { id: firstBot.id },
@@ -723,7 +735,11 @@ describeIntegration("agent import", () => {
   });
 
   it("refuses a key the provider rejects, in words the client chooses, writing nothing", async () => {
-    const cookie = await signup(app, `import-key-rejected-${stamp}@alternativebot.test`, "Rejected User");
+    const cookie = await signup(
+      app,
+      `import-key-rejected-${stamp}@alternativebot.test`,
+      "Rejected User",
+    );
     const files = [
       { path: ".openclaw/workspace/SOUL.md", content: "Calm.\n" },
       { path: ".openclaw/.env", content: "OPENROUTER_API_KEY=placeholder-rejected-key\n" },
@@ -756,7 +772,11 @@ describeIntegration("agent import", () => {
   });
 
   it("never replaces a key connected after the import checked it", async () => {
-    const cookie = await signup(app, `import-key-race-${stamp}@alternativebot.test`, "Key Race User");
+    const cookie = await signup(
+      app,
+      `import-key-race-${stamp}@alternativebot.test`,
+      "Key Race User",
+    );
     const files = [
       { path: ".openclaw/workspace/SOUL.md", content: "Calm.\n" },
       { path: ".openclaw/.env", content: "OPENROUTER_API_KEY=placeholder-imported-key\n" },
@@ -795,7 +815,11 @@ describeIntegration("agent import", () => {
   });
 
   it("keeps a connection made between preview and Create, and still creates the bot", async () => {
-    const cookie = await signup(app, `import-key-between-${stamp}@alternativebot.test`, "Between User");
+    const cookie = await signup(
+      app,
+      `import-key-between-${stamp}@alternativebot.test`,
+      "Between User",
+    );
     const files = [
       { path: ".openclaw/workspace/SOUL.md", content: "Calm.\n" },
       { path: ".openclaw/.env", content: "OPENROUTER_API_KEY=placeholder-imported-key\n" },

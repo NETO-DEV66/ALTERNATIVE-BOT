@@ -93,6 +93,9 @@ services:
       SANDBOX_SUPERVISOR_URL: http://supervisor:7091
       SANDBOX_SUPERVISOR_TOKEN: topology-only-supervisor-token-at-least-32-characters
       SIGNUPS_ENABLED: "true"
+      # The topology smoke signs in through the credential API, so the single-user
+      # session the server defaults to is off here.
+      ALTERNATIVEBOT_LOCAL_SESSION: "false"
       WAKEUP_DRIVER: graphile
       SANDBOX_PROVIDER: docker
       CLOUD_AGENT_PROVIDER: ${CLOUD_AGENT_PROVIDER:-none}

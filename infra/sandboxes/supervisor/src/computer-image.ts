@@ -49,7 +49,10 @@ async function provideComputerImage(docker: Docker, image: string, context: stri
   // Every Alternative Bot build path tags the stock image alternativebot/computer. Any other name may be a custom
   // build, such as a Brave image, which a stock build must not replace. dockerode's tar packer
   // crashes the process on a context file it cannot read.
-  if (!/^alternativebot\/computer(:[\w][\w.-]*)?$/.test(image) || !(await contextReadable(context))) {
+  if (
+    !/^alternativebot\/computer(:[\w][\w.-]*)?$/.test(image) ||
+    !(await contextReadable(context))
+  ) {
     throw new Error(
       `Missing ${image}. Build it with: docker build -t ${image} infra/sandboxes/computer`,
     );

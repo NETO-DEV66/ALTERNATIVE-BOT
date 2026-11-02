@@ -10,7 +10,11 @@ describe("desktop child windows", () => {
 
   it("opens ordinary external links outside Electron", () => {
     expect(
-      shouldOpenInAppPopup(appOrigin, "https://github.com/NETO-DEV66/ALTERNATIVE-BOT/pull/395", "_blank"),
+      shouldOpenInAppPopup(
+        appOrigin,
+        "https://github.com/NETO-DEV66/ALTERNATIVE-BOT/pull/395",
+        "_blank",
+      ),
     ).toBe(false);
   });
 
@@ -43,14 +47,16 @@ it("keeps SSO popups sandboxed in the parent session without a privileged preloa
     sandbox: true,
   });
   expect(oauthPopupSessionPreferences(null)).not.toHaveProperty("partition");
-  expect(shouldOpenInAppPopup(appOrigin, "http://provider.example.com", "alternativebot-sso-oauth")).toBe(
-    false,
-  );
+  expect(
+    shouldOpenInAppPopup(appOrigin, "http://provider.example.com", "alternativebot-sso-oauth"),
+  ).toBe(false);
 });
 
 it("allows only the named SSO blank popup before provider navigation", () => {
   expect(shouldOpenInAppPopup(appOrigin, "about:blank", "alternativebot-sso-oauth")).toBe(true);
   for (const name of ["_blank", "alternativebot-mcp-oauth", ""])
     expect(shouldOpenInAppPopup(appOrigin, "about:blank", name)).toBe(false);
-  expect(shouldOpenInAppPopup(appOrigin, "about:blank#unsafe", "alternativebot-sso-oauth")).toBe(false);
+  expect(shouldOpenInAppPopup(appOrigin, "about:blank#unsafe", "alternativebot-sso-oauth")).toBe(
+    false,
+  );
 });

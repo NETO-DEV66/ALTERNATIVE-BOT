@@ -1,5 +1,10 @@
 import { randomUUID } from "node:crypto";
-import { createDb, createThreadEvents, RunHistoryWriteError, runAsSystem } from "@alternativebot/db";
+import {
+  createDb,
+  createThreadEvents,
+  RunHistoryWriteError,
+  runAsSystem,
+} from "@alternativebot/db";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { ExecutorDeps } from "./executor-deps.js";
 import { claimEffect, recordEffect } from "./run-effects.js";

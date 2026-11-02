@@ -44,7 +44,12 @@ const MANAGED = {
   runtime: "alternativebot_dev",
   database: "alternativebot",
 };
-const SERVICES = ["@alternativebot/api", "@alternativebot/worker", "@alternativebot/web", "@alternativebot/sandbox-supervisor"];
+const SERVICES = [
+  "@alternativebot/api",
+  "@alternativebot/worker",
+  "@alternativebot/web",
+  "@alternativebot/sandbox-supervisor",
+];
 
 const fileEnv = existsSync(path.join(root, ".env"))
   ? dotenv.parse(readFileSync(path.join(root, ".env")))

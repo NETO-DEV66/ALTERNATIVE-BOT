@@ -177,7 +177,9 @@ describe("sandboxProviderOptionsFromEnv", () => {
       kubernetesHomeColocateLabels: { app: "alternativebot-api" },
     });
     expect(() =>
-      sandboxProviderOptionsFromEnv({ KUBERNETES_SANDBOX_HOME_COLOCATE_LABELS: "alternativebot-api" }),
+      sandboxProviderOptionsFromEnv({
+        KUBERNETES_SANDBOX_HOME_COLOCATE_LABELS: "alternativebot-api",
+      }),
     ).toThrow("KUBERNETES_SANDBOX_HOME_COLOCATE_LABELS must be a JSON object of string values");
   });
 

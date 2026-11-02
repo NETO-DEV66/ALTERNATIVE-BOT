@@ -38,17 +38,22 @@ async function main() {
     DATA_DIR: dataDir,
     SIGNUPS_ENABLED: "true",
     SIGNUP_ALLOWLIST: "",
+    ALTERNATIVEBOT_LOCAL_SESSION: "false",
   };
   try {
     execFileSync("pnpm", ["--filter", "@alternativebot/db", "generate"], {
       stdio: "inherit",
       env,
     });
-    execFileSync("pnpm", ["--filter", "@alternativebot/db", "exec", "prisma", "migrate", "deploy"], {
-      stdio: "inherit",
-      env,
-      cwd: path.resolve("packages/db"),
-    });
+    execFileSync(
+      "pnpm",
+      ["--filter", "@alternativebot/db", "exec", "prisma", "migrate", "deploy"],
+      {
+        stdio: "inherit",
+        env,
+        cwd: path.resolve("packages/db"),
+      },
+    );
     await runProcess(
       "pnpm",
       ["exec", "vitest", "run", "packages/testkit/src/computer-use.e2e.test.ts"],

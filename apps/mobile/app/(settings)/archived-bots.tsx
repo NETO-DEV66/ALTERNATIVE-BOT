@@ -97,7 +97,10 @@ export default function ArchivedBots() {
       skipSpaceAuthRecovery: true,
       requestContext: {
         ...context,
-        headers: { ...context.headers, ...(spaceId ? { "x-alternativebot-space-id": spaceId } : {}) },
+        headers: {
+          ...context.headers,
+          ...(spaceId ? { "x-alternativebot-space-id": spaceId } : {}),
+        },
       },
     };
   }

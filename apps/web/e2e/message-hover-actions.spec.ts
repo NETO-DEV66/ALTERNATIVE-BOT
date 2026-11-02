@@ -402,7 +402,12 @@ test.describe("touch message actions", () => {
   test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
 
   test("More exposes actions without simulated hover", async ({ page }, testInfo) => {
-    await signup(page, `touch-actions-${Date.now()}@alternativebot.test`, "password12", "Touch Actions");
+    await signup(
+      page,
+      `touch-actions-${Date.now()}@alternativebot.test`,
+      "password12",
+      "Touch Actions",
+    );
     await completeOnboarding(page);
     expect(
       await page.evaluate(() => matchMedia("(hover: hover) and (pointer: fine)").matches),
@@ -456,7 +461,12 @@ test.describe("touch message actions", () => {
 });
 
 test("a reaction receipt refreshes live work and exposes Stop", async ({ page }, testInfo) => {
-  await signup(page, `reaction-work-${Date.now()}@alternativebot.test`, "password12", "Reaction Work");
+  await signup(
+    page,
+    `reaction-work-${Date.now()}@alternativebot.test`,
+    "password12",
+    "Reaction Work",
+  );
   await completeOnboarding(page);
   await expect(page.getByText("What do you want me on first?", { exact: true })).toBeVisible({
     timeout: 20_000,

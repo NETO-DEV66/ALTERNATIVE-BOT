@@ -1,4 +1,3 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import type {
   BotSecretMetadata,
   LoginFieldInput,
@@ -15,7 +14,12 @@ import {
 } from "@alternativebot/contracts";
 import { fetchFresh, writeSaved } from "@alternativebot/core/query";
 import { Button, Input, NativeSelect, NativeSelectOption } from "@alternativebot/ui-web";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@alternativebot/ui-web/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@alternativebot/ui-web/components/ui/tooltip";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, Copy, Eye, EyeOff, Plus, RotateCcw, X } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";

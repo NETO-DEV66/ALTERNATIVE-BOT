@@ -1,7 +1,11 @@
-import { Trans, useLingui } from "@lingui/react/macro";
-import type { AgentImportSetupItem, AgentImportSetupState, MessageBlock } from "@alternativebot/contracts";
+import type {
+  AgentImportSetupItem,
+  AgentImportSetupState,
+  MessageBlock,
+} from "@alternativebot/contracts";
 import { isRetiredImportSetup } from "@alternativebot/core";
 import { Button } from "@alternativebot/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { Check } from "lucide-react";
 import { useEffect, useState } from "react";
 import { BuiCard, SuccessPop } from "../../components/ai/primitives";

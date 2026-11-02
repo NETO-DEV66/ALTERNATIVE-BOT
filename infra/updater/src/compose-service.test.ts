@@ -89,7 +89,9 @@ describe("the updater compose service", () => {
   });
 
   it("is bind-mounted at the same path it has on the host", () => {
-    const mount = (updater.volumes ?? []).find((volume) => volume.includes("ALTERNATIVEBOT_DEPLOY_DIR"));
+    const mount = (updater.volumes ?? []).find((volume) =>
+      volume.includes("ALTERNATIVEBOT_DEPLOY_DIR"),
+    );
     // biome-ignore lint/suspicious/noTemplateCurlyInString: this is the literal Compose expression
     const deployDir = "${ALTERNATIVEBOT_DEPLOY_DIR:-/srv/alternativebot}";
     const separatorIndex = mount?.indexOf("}:${") ?? -1;
@@ -143,13 +145,17 @@ describe("the updater compose service", () => {
 
   it("injects the actual Compose project name into the updater container", () => {
     // biome-ignore lint/suspicious/noTemplateCurlyInString: this is the literal Compose expression
-    expect(updater.environment?.COMPOSE_PROJECT_NAME).toBe("${COMPOSE_PROJECT_NAME:-alternativebot-prod}");
+    expect(updater.environment?.COMPOSE_PROJECT_NAME).toBe(
+      "${COMPOSE_PROJECT_NAME:-alternativebot-prod}",
+    );
   });
 
   it("does not load the application env_file into the root-equivalent process", () => {
     expect(updater.env_file).toBeUndefined();
     // biome-ignore lint/suspicious/noTemplateCurlyInString: this is the literal Compose expression
-    expect(updater.environment?.ALTERNATIVEBOT_UPDATER_TOKEN).toBe("${ALTERNATIVEBOT_UPDATER_TOKEN:-}");
+    expect(updater.environment?.ALTERNATIVEBOT_UPDATER_TOKEN).toBe(
+      "${ALTERNATIVEBOT_UPDATER_TOKEN:-}",
+    );
   });
 
   it("does not let the api container reach the Docker socket to update itself", () => {

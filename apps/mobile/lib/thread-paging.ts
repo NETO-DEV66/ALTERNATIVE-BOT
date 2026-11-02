@@ -1,4 +1,8 @@
-import { appendNewerThreadPage, forwardProbeAfterPage, threadWindowMessages } from "@alternativebot/core";
+import {
+  appendNewerThreadPage,
+  forwardProbeAfterPage,
+  threadWindowMessages,
+} from "@alternativebot/core";
 import { useState } from "react";
 import type { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 import type { MobileMessage, MobileSnapshot } from "./api";

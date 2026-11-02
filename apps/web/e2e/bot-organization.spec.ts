@@ -62,7 +62,12 @@ test("pinned bots and sidebar sections persist", async ({ page }, testInfo) => {
 });
 
 test("deleting a section keeps its bots and groups", async ({ page }, testInfo) => {
-  await signup(page, `section-delete-${Date.now()}@alternativebot.test`, "password12", "Section Delete");
+  await signup(
+    page,
+    `section-delete-${Date.now()}@alternativebot.test`,
+    "password12",
+    "Section Delete",
+  );
   await completeOnboarding(page);
   const chiefId = activeBotId(page);
   const alpha = await rpc<{ id: string }>(page, "bots/create", {
@@ -217,7 +222,12 @@ test("bots can be reordered by drag or keyboard and keep that order", async ({ p
 
 test("chat composer controls are vertically centered", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `composer-layout-${stamp}@alternativebot.test`, "password12", "Composer Layout");
+  await signup(
+    page,
+    `composer-layout-${stamp}@alternativebot.test`,
+    "password12",
+    "Composer Layout",
+  );
   await completeOnboarding(page);
 
   const bar = page.getByTestId("composer-bar");

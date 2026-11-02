@@ -7,7 +7,11 @@ import {
   usableModelId,
 } from "@alternativebot/contracts";
 import type { PrismaClient } from "@alternativebot/db";
-import { chooseModelCredential, findModelCredential, findModelCredentialById } from "@alternativebot/db";
+import {
+  chooseModelCredential,
+  findModelCredential,
+  findModelCredentialById,
+} from "@alternativebot/db";
 import { resolveDeploymentModel } from "./deployment-model.js";
 import { modelCredentialDto } from "./model-connect.js";
 import type { ModelCredentialAuthKind } from "./pi-catalog-availability.js";

@@ -1,4 +1,5 @@
 import { createServer } from "node:http";
+import type { CommandRequest, ComputerRef, ProcessEvent } from "@alternativebot/adapter-kit";
 import type { CommandResult, EntryInfo } from "@e2b/desktop";
 import {
   AuthenticationError,
@@ -11,7 +12,6 @@ import {
   SandboxNotFoundError,
   TimeoutError,
 } from "@e2b/desktop";
-import type { CommandRequest, ComputerRef, ProcessEvent } from "@alternativebot/adapter-kit";
 import { describe, expect, it, vi } from "vitest";
 import { sandboxIdleMs } from "./computer-idle.js";
 import { shouldSkipPortableWorkspaceFile } from "./computer-workspace.js";
@@ -257,9 +257,12 @@ describe("E2B computer backend", () => {
   });
 
   it("falls back to the stock desktop template when this account has not built it", async () => {
-    const missing = Object.assign(new SandboxError("404: template 'alternativebot-computer' not found"), {
-      statusCode: 404,
-    });
+    const missing = Object.assign(
+      new SandboxError("404: template 'alternativebot-computer' not found"),
+      {
+        statusCode: 404,
+      },
+    );
     const sdk: E2BSandboxSdk = {
       create: vi.fn().mockRejectedValueOnce(missing).mockResolvedValue({ sandboxId: "stock" }),
       connect: vi.fn(),

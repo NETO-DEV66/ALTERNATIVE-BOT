@@ -143,7 +143,12 @@ test("opening a computer the server reports as booting does not start a second b
 });
 
 test("Retry screen clears a failed takeover on a running computer", async ({ page }) => {
-  await signup(page, `boot-takeover-${Date.now()}@alternativebot.test`, "password12", "Boot Takeover");
+  await signup(
+    page,
+    `boot-takeover-${Date.now()}@alternativebot.test`,
+    "password12",
+    "Boot Takeover",
+  );
   await completeOnboarding(page);
   const botId = activeBotId(page);
   await rpc(page, "computer/boot", { botId });

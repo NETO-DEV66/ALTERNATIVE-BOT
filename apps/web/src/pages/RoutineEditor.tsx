@@ -1,5 +1,3 @@
-import { t } from "@lingui/core/macro";
-import { Trans, useLingui } from "@lingui/react/macro";
 import type {
   ModelCatalogEntry,
   ModelCredential,
@@ -7,7 +5,10 @@ import type {
   RoutineWatch,
   RoutineWatchInput,
 } from "@alternativebot/contracts";
-import { ROUTINE_WATCH_DEFAULT_MINUTES, ROUTINE_WATCH_MIN_MINUTES } from "@alternativebot/contracts";
+import {
+  ROUTINE_WATCH_DEFAULT_MINUTES,
+  ROUTINE_WATCH_MIN_MINUTES,
+} from "@alternativebot/contracts";
 import type { CronFreq, CronLabels, CronPreset } from "@alternativebot/core";
 import {
   credentialForModel,
@@ -36,6 +37,8 @@ import {
   Switch,
   Textarea,
 } from "@alternativebot/ui-web";
+import { t } from "@lingui/core/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import {
   ChevronLeft,
   Clock,

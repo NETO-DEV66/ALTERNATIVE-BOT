@@ -1,7 +1,6 @@
 import { spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
-import { FetchError } from "@boatdev/sdk";
 import type { AgentHomeStore, JobPublisher, SandboxProvider } from "@alternativebot/adapter-kit";
 import {
   SandboxDamagedError,
@@ -12,6 +11,7 @@ import {
 } from "@alternativebot/adapter-kit";
 import type { PrismaClient, ThreadEvents } from "@alternativebot/db";
 import { createLogger, createTestSink, installLogger } from "@alternativebot/logging";
+import { FetchError } from "@boatdev/sdk";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { boatError, FakeBoatApi, fakeBoatProvider } from "./boat-sandbox.test-support.js";
 import {
@@ -231,7 +231,13 @@ describe("sandbox idle", () => {
     expect(harness.sandbox.execute).toHaveBeenCalledWith(
       expect.objectContaining({ id: harness.computer.providerRef }),
       expect.objectContaining({
-        argv: ["bash", "-c", BACKGROUND_WORK_PROBE, "alternativebot-background-probe", harness.computer.id],
+        argv: [
+          "bash",
+          "-c",
+          BACKGROUND_WORK_PROBE,
+          "alternativebot-background-probe",
+          harness.computer.id,
+        ],
       }),
       expect.anything(),
     );

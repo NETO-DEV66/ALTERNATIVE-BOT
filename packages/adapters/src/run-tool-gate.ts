@@ -27,7 +27,10 @@ import {
   unattendedTriggerToolRequiresApproval,
 } from "@alternativebot/core";
 import { normalizedHttpUrl, urlSite } from "@alternativebot/core/egress";
-import { approvalEffectKey, toolEffectIdempotencyKey } from "@alternativebot/core/node/approval-effect-key";
+import {
+  approvalEffectKey,
+  toolEffectIdempotencyKey,
+} from "@alternativebot/core/node/approval-effect-key";
 import { runSecretKind } from "@alternativebot/db";
 import { getLogger } from "@alternativebot/logging";
 import type { FleetCardSummary } from "./approval-ask.js";

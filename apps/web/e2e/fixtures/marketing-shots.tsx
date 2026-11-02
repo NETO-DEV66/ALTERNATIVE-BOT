@@ -1,6 +1,6 @@
-import { I18nProvider } from "@lingui/react";
 import type { Bot, Me, ModelCatalogEntry } from "@alternativebot/contracts";
 import { defaultCronPreset } from "@alternativebot/core";
+import { I18nProvider } from "@lingui/react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
@@ -266,7 +266,8 @@ const subscriptionCatalog: ModelCatalogEntry[] = [
     providerName: "xAI",
     id: "grok-4.6",
     label: "grok-4.6",
-    billing: "Sign in with SuperGrok or X Premium, or paste an xAI API key. Alternative Bot does not pay.",
+    billing:
+      "Sign in with SuperGrok or X Premium, or paste an xAI API key. Alternative Bot does not pay.",
     auth: "both",
     oauthLabel: "Sign in with SuperGrok or X Premium",
     authHint: "SuperGrok / key",

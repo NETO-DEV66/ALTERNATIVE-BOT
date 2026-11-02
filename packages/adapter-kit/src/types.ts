@@ -1191,7 +1191,6 @@ export interface AutoReviewResult {
   model: string;
 }
 
-
 /** Optional provider adapter for recovering authoritative cost after an interrupted call. */
 export interface ModelUsageLookup {
   provider: string;

@@ -96,7 +96,9 @@ describe("DaytonaSandboxProvider", () => {
     expect(visited).not.toContain("/home/daytona/alternativebot-home/project/node_modules");
     expect(visited).not.toContain("/home/daytona/alternativebot-home/.cache");
     expect(visited).not.toContain("/home/daytona/alternativebot-home/.yarn/cache");
-    expect(visited).not.toContain("/home/daytona/alternativebot-home/.browser-profiles/chromium/Cache");
+    expect(visited).not.toContain(
+      "/home/daytona/alternativebot-home/.browser-profiles/chromium/Cache",
+    );
   });
 
   it("omits snapshot from create() when unset", async () => {

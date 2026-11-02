@@ -4,7 +4,11 @@ import { existsSync } from "node:fs";
 import { readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { startUserDeviceClient } from "@alternativebot/adapters/user-device-client";
-import type { DesktopReachability, DesktopSetup, AlternativeBotDesktopDevice } from "@alternativebot/contracts";
+import type {
+  AlternativeBotDesktopDevice,
+  DesktopReachability,
+  DesktopSetup,
+} from "@alternativebot/contracts";
 import { parseServerHeaders } from "@alternativebot/contracts";
 import type { Session } from "electron";
 import {
@@ -57,6 +61,7 @@ import { revealSecondInstanceWindow, secondInstanceWindow } from "./second-insta
 import { installServerHeaders } from "./server-request-headers.js";
 import { installSessionPermissions } from "./session-permissions.js";
 import {
+  ALTERNATIVEBOT_CLOUD_URL,
   DEFAULT_LOCAL_WEB_URL,
   desktopStackImageTag,
   isAlternativeBotHealth,
@@ -65,7 +70,6 @@ import {
   normalizeServerUrl,
   parseSetupInput,
   probeFailureMessage,
-  ALTERNATIVEBOT_CLOUD_URL,
   readProbeJson,
   resolveStartupTarget,
   safeExternalUrl,
@@ -663,7 +667,10 @@ async function runMenuUpdateCheck() {
       detail: state.message,
     });
   } else if (state.phase === "idle") {
-    await alert({ message: "Alternative Bot is up to date.", detail: `Version ${state.currentVersion}` });
+    await alert({
+      message: "Alternative Bot is up to date.",
+      detail: `Version ${state.currentVersion}`,
+    });
   }
 }
 
@@ -1362,7 +1369,9 @@ app.whenReady().then(async () => {
       ? origin
       : null;
   };
-  const deviceState = async (origin: string | null): Promise<AlternativeBotDesktopDevice | null> => {
+  const deviceState = async (
+    origin: string | null,
+  ): Promise<AlternativeBotDesktopDevice | null> => {
     const state = origin === null ? null : userDevices?.state(origin);
     return state ? { ...state, name: await deviceName() } : null;
   };

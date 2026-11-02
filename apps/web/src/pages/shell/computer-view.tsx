@@ -1,6 +1,6 @@
+import type { ComputerStatus } from "@alternativebot/contracts";
 import { t } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-import type { ComputerStatus } from "@alternativebot/contracts";
 
 export function DesktopKindEmptyState({ className }: { className?: string }) {
   return (

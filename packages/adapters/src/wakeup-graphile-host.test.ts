@@ -6,7 +6,12 @@ import {
   messagingDeliverJob,
 } from "@alternativebot/adapter-kit";
 import type { PrismaClient } from "@alternativebot/db";
-import { createLogger, createTestSink, installLogger, wrapJobPayload } from "@alternativebot/logging";
+import {
+  createLogger,
+  createTestSink,
+  installLogger,
+  wrapJobPayload,
+} from "@alternativebot/logging";
 import type { Runner } from "graphile-worker";
 import { makeWorkerUtils } from "graphile-worker";
 import type { Pool } from "pg";

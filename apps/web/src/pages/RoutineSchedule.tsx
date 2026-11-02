@@ -1,5 +1,3 @@
-import { t } from "@lingui/core/macro";
-import { Trans, useLingui } from "@lingui/react/macro";
 import type { CronFreq, CronPreset, CronUnit } from "@alternativebot/core";
 import {
   CRON_FREQS,
@@ -11,6 +9,8 @@ import {
   russianIntervalUnit,
 } from "@alternativebot/core";
 import { Input, NativeSelect, NativeSelectOption } from "@alternativebot/ui-web";
+import { t } from "@lingui/core/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { Clock } from "lucide-react";
 import { cronLabels, cronUnitLabel } from "../lib/cron";
 

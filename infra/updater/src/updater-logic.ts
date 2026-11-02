@@ -46,7 +46,9 @@ export interface UpdaterConfig {
 export function resolveUpdaterConfig(env: NodeJS.ProcessEnv): UpdaterConfig {
   const deployDir = env.ALTERNATIVEBOT_DEPLOY_DIR?.trim() ?? "";
   if (deployDir === "" || !path.posix.isAbsolute(deployDir)) {
-    throw new Error("Set ALTERNATIVEBOT_DEPLOY_DIR to the absolute path of the deployment directory.");
+    throw new Error(
+      "Set ALTERNATIVEBOT_DEPLOY_DIR to the absolute path of the deployment directory.",
+    );
   }
   const image = env.ALTERNATIVEBOT_IMAGE?.trim() || OFFICIAL_SERVER_IMAGE;
   if (!isValidImageName(image))
@@ -64,7 +66,9 @@ export function resolveUpdaterConfig(env: NodeJS.ProcessEnv): UpdaterConfig {
   }
   for (const composeFile of composeFiles) {
     if (path.posix.isAbsolute(composeFile) || composeFile.split("/").includes("..")) {
-      throw new Error("ALTERNATIVEBOT_COMPOSE_FILE must list paths inside the deployment directory.");
+      throw new Error(
+        "ALTERNATIVEBOT_COMPOSE_FILE must list paths inside the deployment directory.",
+      );
     }
   }
   // An overlay that adds a service built from the application image has to be recreated with the
@@ -76,7 +80,9 @@ export function resolveUpdaterConfig(env: NodeJS.ProcessEnv): UpdaterConfig {
     .filter((entry) => entry !== "");
   for (const service of extraServices) {
     if (!SERVICE_NAME.test(service)) {
-      throw new Error(`ALTERNATIVEBOT_UPDATE_SERVICES contains an unusable service name: ${service}`);
+      throw new Error(
+        `ALTERNATIVEBOT_UPDATE_SERVICES contains an unusable service name: ${service}`,
+      );
     }
     // The sidecar is the process running the update. Recreating it would kill the request
     // mid-flight, so there would be nothing left to finish the run, report it, or recover from a

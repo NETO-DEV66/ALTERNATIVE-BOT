@@ -58,7 +58,12 @@ describePostgres("artifact upload nonce (PostgreSQL)", () => {
       await db.pool.end();
     };
     await system.user.create({
-      data: { id: userId, name: userId, email: `${userId}@alternativebot.test`, emailVerified: false },
+      data: {
+        id: userId,
+        name: userId,
+        email: `${userId}@alternativebot.test`,
+        emailVerified: false,
+      },
     });
     await system.organization.create({
       data: { id: organizationId, name: "Nonce Org", slug: organizationId, createdAt: new Date() },

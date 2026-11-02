@@ -298,7 +298,9 @@ describe("archived chat read failures", () => {
       "bots/restore",
       { botId: bot.id },
       expect.objectContaining({
-        requestContext: expect.objectContaining({ headers: { "x-alternativebot-space-id": bot.spaceId } }),
+        requestContext: expect.objectContaining({
+          headers: { "x-alternativebot-space-id": bot.spaceId },
+        }),
       }),
     );
     expect(container.textContent).toBe("No archived chats");

@@ -1,5 +1,9 @@
 import type { SpaceBot, SpaceGroup } from "@alternativebot/contracts";
-import { botAvatarActivity, groupBotsForSidebar, logoAvatarNeedsAttention } from "@alternativebot/core";
+import {
+  botAvatarActivity,
+  groupBotsForSidebar,
+  logoAvatarNeedsAttention,
+} from "@alternativebot/core";
 import type { MobileBot, MobileGroup, MobileSpace } from "./api";
 import { adoptDeletedSpaceFallback, rpc, selectedSpaceId, selectSpace } from "./api";
 import { t } from "./i18n";

@@ -1,7 +1,7 @@
-import type { ConnectedAccountStatus } from "@composio/core";
 import type { AdapterContext, ConnectorEvent } from "@alternativebot/adapter-kit";
 import { ConnectorAuthUnavailableError } from "@alternativebot/adapter-kit";
 import { CONNECTOR_AUTH_UNAVAILABLE } from "@alternativebot/contracts";
+import type { ConnectedAccountStatus } from "@composio/core";
 import { describe, expect, it } from "vitest";
 import { ComposioConnector, createConnectorStack } from "./composio-connector.js";
 import { FakeComposioClient } from "./composio-fake.js";

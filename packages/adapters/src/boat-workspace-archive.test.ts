@@ -136,7 +136,9 @@ describe.skipIf(!gnuTools)("Boat workspace archive script", () => {
     await rm(archive);
     expect(archiveScript(home, archive, { limits: { ...within, maxFiles: 1 } }).status).toBe(4);
     expect(archiveScript(home, archive, { limits: { ...within, maxBytes: 19 } }).status).toBe(5);
-    expect(execFileSync("ls", ["-A", dir], { encoding: "utf8" }).trim()).toBe("alternativebot-home");
+    expect(execFileSync("ls", ["-A", dir], { encoding: "utf8" }).trim()).toBe(
+      "alternativebot-home",
+    );
   });
 
   it.skipIf(root)("fails on a file it cannot read instead of leaving it out", async () => {

@@ -1,4 +1,7 @@
-import type { ComputerMode, ComputerStatus as ContractComputerStatus } from "@alternativebot/contracts";
+import type {
+  ComputerMode,
+  ComputerStatus as ContractComputerStatus,
+} from "@alternativebot/contracts";
 import { isLocalhostOrLoopbackIp, isPrivateNetworkHost } from "@alternativebot/contracts";
 import type { ScreenPageState } from "@alternativebot/core";
 import { isRetryableError, SCREEN_PAGE_STATES } from "@alternativebot/core";

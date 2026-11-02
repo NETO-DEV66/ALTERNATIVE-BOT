@@ -1,4 +1,3 @@
-import { ORPCError } from "@orpc/server";
 import type { AdapterContext, SecretStore } from "@alternativebot/adapter-kit";
 import { VoiceAccountError } from "@alternativebot/adapter-kit";
 import {
@@ -40,6 +39,7 @@ import {
   voicePreferenceTarget,
 } from "@alternativebot/db";
 import { getLogger } from "@alternativebot/logging";
+import { ORPCError } from "@orpc/server";
 import type { Context, Hono } from "hono";
 import { readBoundedBody } from "./http-body.js";
 import { withSerializableRetry } from "./serializable-retry.js";

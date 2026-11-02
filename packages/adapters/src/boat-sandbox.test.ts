@@ -1,7 +1,5 @@
 import { createHash } from "node:crypto";
 import type * as TimersPromises from "node:timers/promises";
-import type { FileUrlResponse, SandboxStateEnum } from "@boatdev/sdk";
-import { FetchError, ResponseError } from "@boatdev/sdk";
 import type { ComputerRef, PortableFile, StreamedPortableFile } from "@alternativebot/adapter-kit";
 import {
   SandboxDamagedError,
@@ -12,6 +10,8 @@ import {
 } from "@alternativebot/adapter-kit";
 import { screenDisplayArgv, shellQuote } from "@alternativebot/core/node/desktop-runtime";
 import { createLogger, createTestSink, installLogger } from "@alternativebot/logging";
+import type { FileUrlResponse, SandboxStateEnum } from "@boatdev/sdk";
+import { FetchError, ResponseError } from "@boatdev/sdk";
 import { parse } from "shell-quote";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
@@ -360,7 +360,9 @@ describe("BoatSandboxProvider", () => {
       /^rm -f -- '\/home\/user\/\.alternativebot-command-env\/[0-9a-f-]{36}'$/,
     );
     expect(
-      [...api.files(computer.id).keys()].some((file) => file.includes(".alternativebot-command-env")),
+      [...api.files(computer.id).keys()].some((file) =>
+        file.includes(".alternativebot-command-env"),
+      ),
     ).toBe(false);
   });
 
@@ -1834,7 +1836,10 @@ describe("BoatSandboxProvider", () => {
   it("accepts empty files and files exactly at the download limit", async () => {
     const { api, provider, computer } = await boat();
     const files = api.files(computer.id);
-    files.set("/home/user/alternativebot-home/empty.bin", { content: new Uint8Array(), executable: false });
+    files.set("/home/user/alternativebot-home/empty.bin", {
+      content: new Uint8Array(),
+      executable: false,
+    });
     files.set("/home/user/alternativebot-home/exact.bin", {
       content: Uint8Array.from([0, 255]),
       executable: false,

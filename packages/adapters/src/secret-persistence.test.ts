@@ -1,8 +1,8 @@
-import type { OAuthClientProvider } from "@modelcontextprotocol/sdk/client/auth.js";
 import type { AdapterContext } from "@alternativebot/adapter-kit";
 import { BOT_SECRET_VALUE_MAX_LENGTH, encodeLoginSecret } from "@alternativebot/contracts";
 import type { Prisma, PrismaClient } from "@alternativebot/db";
 import { withTransactionRetry } from "@alternativebot/db";
+import type { OAuthClientProvider } from "@modelcontextprotocol/sdk/client/auth.js";
 import { describe, expect, it, vi } from "vitest";
 import { findRunLogin } from "./bot-secrets.js";
 import { InfisicalSecretStore } from "./infisical-secret-store.js";

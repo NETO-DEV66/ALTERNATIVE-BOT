@@ -1,8 +1,11 @@
-import type { Credential, OAuthCredential } from "@earendil-works/pi-ai";
-import type { ModelCredentialFailedState, ModelCredentialRetireReason } from "@alternativebot/adapter-kit";
+import type {
+  ModelCredentialFailedState,
+  ModelCredentialRetireReason,
+} from "@alternativebot/adapter-kit";
 import { isModelCredentialRejected } from "@alternativebot/adapter-kit";
 import { containsSecret, redactSecrets } from "@alternativebot/core";
 import type { PrismaClient } from "@alternativebot/db";
+import type { Credential, OAuthCredential } from "@earendil-works/pi-ai";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { PiOAuthBegin } from "./pi-oauth.js";
 import {

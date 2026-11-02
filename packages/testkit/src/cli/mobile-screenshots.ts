@@ -4,7 +4,6 @@ import type { Server } from "node:http";
 import { createServer } from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { serve } from "@hono/node-server";
 import {
   ComposioConnector,
   EmailEmulator,
@@ -14,6 +13,7 @@ import {
 } from "@alternativebot/adapters";
 import type { PrismaClient } from "@alternativebot/db";
 import { createThreadMessage } from "@alternativebot/db";
+import { serve } from "@hono/node-server";
 import { sessionCookieHeader } from "../index.js";
 import { runProcess } from "./process.js";
 
@@ -214,6 +214,7 @@ function configureEnvironment() {
     DATA_DIR,
     SIGNUPS_ENABLED: "true",
     SIGNUP_ALLOWLIST: "",
+    ALTERNATIVEBOT_LOCAL_SESSION: "false",
     CI: "1",
   });
 }

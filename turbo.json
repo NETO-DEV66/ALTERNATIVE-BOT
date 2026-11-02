@@ -30,7 +30,11 @@
       "cache": false,
       "env": ["PUBLIC_CRISP_WEBSITE_ID", "PUBLIC_POSTHOG_HOST", "PUBLIC_POSTHOG_KEY"],
       "persistent": true,
-      "passThroughEnv": ["ALTERNATIVEBOT_HOST", "ALTERNATIVEBOT_DEV_HOST", "ALTERNATIVEBOT_ALLOWED_HOSTS"]
+      "passThroughEnv": [
+        "ALTERNATIVEBOT_HOST",
+        "ALTERNATIVEBOT_DEV_HOST",
+        "ALTERNATIVEBOT_ALLOWED_HOSTS"
+      ]
     }
   }
 }

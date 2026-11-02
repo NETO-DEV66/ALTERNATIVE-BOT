@@ -1,4 +1,3 @@
-import { ORPCError } from "@orpc/server";
 import { runContinueJob, runJobKey } from "@alternativebot/adapter-kit";
 import { settleCallRequest } from "@alternativebot/adapters";
 import type { Actor, ProductEvent } from "@alternativebot/contracts";
@@ -21,6 +20,7 @@ import {
   touchGroupUpdatedAt,
 } from "@alternativebot/db";
 import { getLogger } from "@alternativebot/logging";
+import { ORPCError } from "@orpc/server";
 import { createRoutineTestRun, routineTestRunNonce, routineTestTarget } from "../routines.js";
 import { withSerializableRetry } from "../serializable-retry.js";
 import { assertTeachingSendAllowed } from "../taught-skills.js";

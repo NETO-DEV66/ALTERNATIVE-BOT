@@ -142,7 +142,9 @@ test("settings shell is two-pane and deep-links Models Memory Voice Usage", asyn
   await streamReplies.click();
   await expect(streamReplies).toBeChecked();
   await expect
-    .poll(() => page.evaluate(() => window.localStorage.getItem("alternativebot.responseStreaming")))
+    .poll(() =>
+      page.evaluate(() => window.localStorage.getItem("alternativebot.responseStreaming")),
+    )
     .toBe("on");
   const deleteAccount = settings.getByRole("button", { name: "Delete account", exact: true });
   await deleteAccount.scrollIntoViewIfNeeded();
@@ -205,7 +207,9 @@ test("Honcho memory settings empty and filled", async ({ page }, testInfo) => {
   await userPeer.fill("bot-123");
   await expect(userPeer).toHaveAttribute("aria-invalid", "true");
   await expect(
-    memory.getByText("alternativebot-shared and IDs starting with bot- are reserved for AlternativeBot."),
+    memory.getByText(
+      "alternativebot-shared and IDs starting with bot- are reserved for AlternativeBot.",
+    ),
   ).toBeVisible();
   await expect(memory.getByRole("button", { name: "Connect", exact: true })).toBeDisabled();
   await captureScreenshot(page, testInfo, "memory-honcho-user-peer-reserved");

@@ -140,7 +140,12 @@ describePostgres("new bot avatars (PostgreSQL)", () => {
     const repos = createRepos(prisma);
     for (const explicit of [undefined, "#123456"]) {
       const id = `c${newClientId().replaceAll("-", "").slice(0, 24)}`;
-      const input = { ...botInput("Preview"), id, avatarSet: "alternativebot" as const, color: explicit };
+      const input = {
+        ...botInput("Preview"),
+        id,
+        avatarSet: "alternativebot" as const,
+        color: explicit,
+      };
       const [first, retry] = await runAsTenant(owner, () =>
         Promise.all([repos.createBot(actor(), input), repos.createBot(actor(), input)]),
       );

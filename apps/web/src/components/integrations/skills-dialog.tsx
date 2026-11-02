@@ -1,4 +1,3 @@
-import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { CapabilityInstall, PluginMarketplaceEntry } from "@alternativebot/contracts";
 import { PluginPreviewSchema } from "@alternativebot/contracts";
 import { installedPluginParts, matchesPluginQuery } from "@alternativebot/core";
@@ -14,6 +13,7 @@ import {
   Input,
   Spinner,
 } from "@alternativebot/ui-web";
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronLeft, X } from "lucide-react";
 import { useState } from "react";

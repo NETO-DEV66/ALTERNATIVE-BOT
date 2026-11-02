@@ -51,11 +51,17 @@ describe("passkeysSupported", () => {
               },
       },
     });
-    await expect(passkeysSupported("app.alternativebot.com", mac(["app.alternativebot.com"]))).resolves.toBe(true);
-    await expect(passkeysSupported("App.AlternativeBot.com", mac(["app.alternativebot.com"]))).resolves.toBe(true);
+    await expect(
+      passkeysSupported("app.alternativebot.com", mac(["app.alternativebot.com"])),
+    ).resolves.toBe(true);
+    await expect(
+      passkeysSupported("App.AlternativeBot.com", mac(["app.alternativebot.com"])),
+    ).resolves.toBe(true);
     await expect(passkeysSupported("app.alternativebot.com", mac([]))).resolves.toBe(false);
     await expect(passkeysSupported("app.alternativebot.com", mac())).resolves.toBe(false);
-    await expect(passkeysSupported("app.alternativebot.com", mac(new Error("ipc")))).resolves.toBe(false);
+    await expect(passkeysSupported("app.alternativebot.com", mac(new Error("ipc")))).resolves.toBe(
+      false,
+    );
     const selfHosted = { ...mac(["app.alternativebot.com"]), host: "alternativebot.example.com" };
     await expect(passkeysSupported("alternativebot.example.com", selfHosted)).resolves.toBe(false);
     expect(

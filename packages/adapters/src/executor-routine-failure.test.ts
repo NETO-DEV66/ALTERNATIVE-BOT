@@ -1,5 +1,9 @@
 import type { NotificationMessage } from "@alternativebot/adapter-kit";
-import { ModelAccountError, SandboxRateLimitError, TransientModelError } from "@alternativebot/adapter-kit";
+import {
+  ModelAccountError,
+  SandboxRateLimitError,
+  TransientModelError,
+} from "@alternativebot/adapter-kit";
 import type * as DbModule from "@alternativebot/db";
 import { countUnreadInboxChats } from "@alternativebot/db";
 import { createLogger, createTestSink, installLogger } from "@alternativebot/logging";

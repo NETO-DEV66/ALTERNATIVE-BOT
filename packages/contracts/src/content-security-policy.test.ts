@@ -127,7 +127,10 @@ describe("operator-added origins", () => {
     "https://cdn.example.com;script-src",
   ])("rejects %s and names the setting", (source) => {
     expect(() =>
-      parseContentSecuritySources("ALTERNATIVEBOT_CSP_SCRIPT_SRC", `https://ok.example.com ${source}`),
+      parseContentSecuritySources(
+        "ALTERNATIVEBOT_CSP_SCRIPT_SRC",
+        `https://ok.example.com ${source}`,
+      ),
     ).toThrow(/^ALTERNATIVEBOT_CSP_SCRIPT_SRC accepts only https:\/\/ origins.*Invalid: /);
   });
 

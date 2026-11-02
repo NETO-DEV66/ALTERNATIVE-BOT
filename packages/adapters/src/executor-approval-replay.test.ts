@@ -247,7 +247,13 @@ describe("executor approval replay", () => {
     expect(resolved.call.args).toEqual({ text: "approved exactly" });
     expect(resolved.tool.route).toEqual(route);
     expect(
-      approvalReplayResourceError(resolved.tool.name, true, request, route, "__alternativebotCatalogTool"),
+      approvalReplayResourceError(
+        resolved.tool.name,
+        true,
+        request,
+        route,
+        "__alternativebotCatalogTool",
+      ),
     ).toBeUndefined();
     expect(
       approvalReplayResourceError(
@@ -268,7 +274,11 @@ describe("executor approval replay", () => {
       ),
     ).toContain("different connector resource");
     expect(
-      approvedReplayArgs(queue.take(resolved.tool.name), resolved.call.args, "__alternativebotCatalogTool"),
+      approvedReplayArgs(
+        queue.take(resolved.tool.name),
+        resolved.call.args,
+        "__alternativebotCatalogTool",
+      ),
     ).toEqual({ text: "approved exactly" });
     expect(queue.assertDrained).not.toThrow();
   });
@@ -284,9 +294,9 @@ describe("executor approval replay", () => {
       "__alternativebotCatalogTool",
     );
     const queue = createApprovedEffectReplayQueue([{ kind: "mcp__demo__send_message", request }]);
-    expect(approvedCatalogReplay(queue, called, "__alternativebotCatalogTool", true).error).toContain(
-      "must be replayed before",
-    );
+    expect(
+      approvedCatalogReplay(queue, called, "__alternativebotCatalogTool", true).error,
+    ).toContain("must be replayed before");
     expect(queue.nextRequest()).toBe(request);
     expect(
       approvedCatalogReplay(queue, "connectors_execute_tool", "__alternativebotCatalogTool", false),

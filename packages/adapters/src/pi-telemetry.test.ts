@@ -1,6 +1,7 @@
 import { once } from "node:events";
 import { createServer } from "node:http";
 import type { AddressInfo } from "node:net";
+import { runWithLogContext } from "@alternativebot/logging";
 import type { Api, Model } from "@earendil-works/pi-ai";
 import { builtinModels } from "@earendil-works/pi-ai/providers/all";
 import { SpanStatusCode } from "@opentelemetry/api";
@@ -9,7 +10,6 @@ import {
   NodeTracerProvider,
   SimpleSpanProcessor,
 } from "@opentelemetry/sdk-trace-node";
-import { runWithLogContext } from "@alternativebot/logging";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { MISSING_TOOL_FINAL_RESPONSE_ERROR, PiAgentRuntime } from "./pi-runtime.js";
 import {
@@ -102,7 +102,8 @@ describe("Pi OpenTelemetry", () => {
     expect(spans).toHaveLength(6);
     for (const runId of ["first", "second"]) {
       const run = spans.find(
-        (s) => s.name === "alternativebot.agent.run" && s.attributes["alternativebot.run.id"] === runId,
+        (s) =>
+          s.name === "alternativebot.agent.run" && s.attributes["alternativebot.run.id"] === runId,
       )!;
       const children = spans.filter(
         (s) => s.name !== run.name && s.attributes["alternativebot.run.id"] === runId,
@@ -312,7 +313,9 @@ describe("Pi OpenTelemetry", () => {
         failure === "provider" ? "private provider failure" : MISSING_TOOL_FINAL_RESPONSE_ERROR,
       );
       await provider.forceFlush();
-      const run = output.getFinishedSpans().find((span) => span.name === "alternativebot.agent.run")!;
+      const run = output
+        .getFinishedSpans()
+        .find((span) => span.name === "alternativebot.agent.run")!;
       expect(run.status.code).toBe(SpanStatusCode.ERROR);
       expect(run.events).toEqual([]);
       expect(JSON.stringify(run.attributes)).not.toContain("private");

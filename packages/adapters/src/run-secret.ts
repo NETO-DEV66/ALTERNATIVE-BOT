@@ -1,4 +1,8 @@
-import type { AdapterContext, ManagedConnectorProvider, SecretStore } from "@alternativebot/adapter-kit";
+import type {
+  AdapterContext,
+  ManagedConnectorProvider,
+  SecretStore,
+} from "@alternativebot/adapter-kit";
 import {
   BOT_SECRET_VALUE_MAX_LENGTH,
   encodeLoginSecret,

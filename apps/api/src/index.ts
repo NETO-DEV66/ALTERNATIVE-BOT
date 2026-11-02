@@ -4,9 +4,9 @@ import { stopOnShutdownSignals } from "@alternativebot/core/node/shutdown-signal
 
 loadRootEnv();
 
-import { serve } from "@hono/node-server";
 import { SERVICE_NAMES } from "@alternativebot/logging";
 import { createRootLogger } from "@alternativebot/logging/axiom";
+import { serve } from "@hono/node-server";
 import { createApp } from "./app.js";
 import { loadEnv } from "./env.js";
 

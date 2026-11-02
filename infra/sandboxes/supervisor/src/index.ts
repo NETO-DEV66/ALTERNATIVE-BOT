@@ -5,7 +5,6 @@ import http from "node:http";
 import { homedir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { serve } from "@hono/node-server";
 import {
   boundedSandboxCommandTimeoutMs,
   readBoundedJsonResponse,
@@ -16,6 +15,7 @@ import { loadRootEnv } from "@alternativebot/core/node/load-root-env";
 import { getLogger, SERVICE_NAMES } from "@alternativebot/logging";
 import { createRootLogger } from "@alternativebot/logging/axiom";
 import { requestLogging } from "@alternativebot/logging/hono";
+import { serve } from "@hono/node-server";
 import Docker from "dockerode";
 import type { MiddlewareHandler } from "hono";
 import { Hono } from "hono";
@@ -224,10 +224,14 @@ app.post("/computers", async (c) => {
     })
     .parse(await c.req.json());
   try {
-    assertRequestIdentity(c.req.header("x-alternativebot-bot-id"), c.req.header("x-alternativebot-space-id"), {
-      botId: body.botId,
-      spaceId: body.spaceId,
-    });
+    assertRequestIdentity(
+      c.req.header("x-alternativebot-bot-id"),
+      c.req.header("x-alternativebot-space-id"),
+      {
+        botId: body.botId,
+        spaceId: body.spaceId,
+      },
+    );
     return await withBotLifecycleLock(body.botId, async () => {
       await ensureComputerImage();
       await ensureRestrictedEgressEnforced();
@@ -439,7 +443,8 @@ app.post("/computers/:id/exec", async (c) => {
     // Docker would fail the exec inside the stream; answer up front so the caller can boot it.
     if (!managed.info.State.Running) return c.json({ error: "computer is not running" }, 409);
     container = managed.container;
-    const screenId = c.req.header("x-alternativebot-screen-id") || c.req.header("x-alternativebot-bot-id") || id;
+    const screenId =
+      c.req.header("x-alternativebot-screen-id") || c.req.header("x-alternativebot-bot-id") || id;
     const screenIndex = computerScreens.get(id)?.get(screenId)?.index ?? 0;
     layout = screenPorts(screenIndex);
   } catch (error) {
@@ -594,7 +599,9 @@ app.post("/computers/:id/browser", async (c) => {
           "ALTERNATIVEBOT_BROWSER_WATCH_STDIN=1",
           "ALTERNATIVEBOT_BROWSER_ARGS_STDIN=1",
           ...(process.env.ALTERNATIVEBOT_BROWSER_UPLOAD_MAX_BYTES !== undefined
-            ? [`ALTERNATIVEBOT_BROWSER_UPLOAD_MAX_BYTES=${process.env.ALTERNATIVEBOT_BROWSER_UPLOAD_MAX_BYTES}`]
+            ? [
+                `ALTERNATIVEBOT_BROWSER_UPLOAD_MAX_BYTES=${process.env.ALTERNATIVEBOT_BROWSER_UPLOAD_MAX_BYTES}`,
+              ]
             : []),
         ],
         timeoutMs: 25_000,
@@ -992,9 +999,11 @@ app.delete("/computers/:id/screen", async (c) => {
       c.req.header("x-alternativebot-space-id"),
     );
     containerFound = true;
-    const screenId = c.req.header("x-alternativebot-screen-id") || c.req.header("x-alternativebot-bot-id") || id;
+    const screenId =
+      c.req.header("x-alternativebot-screen-id") || c.req.header("x-alternativebot-bot-id") || id;
     const cancelRunWork = c.req.header("x-alternativebot-cancel-run-work") === "1";
-    const keepScreenWarm = c.req.header("x-alternativebot-preserve-screen") === "1" && !cancelRunWork;
+    const keepScreenWarm =
+      c.req.header("x-alternativebot-preserve-screen") === "1" && !cancelRunWork;
     const screenLeaseId = c.req.header("x-alternativebot-screen-lease-id");
     await withComputerScreenLock(id, async () => {
       const info = await container.inspect();
@@ -1076,7 +1085,11 @@ app.post("/computers/:id/stop", async (c) => {
   const id = c.req.param("id");
   const botId = c.req.header("x-alternativebot-bot-id");
   try {
-    const { container } = await managedContainer(id, botId, c.req.header("x-alternativebot-space-id"));
+    const { container } = await managedContainer(
+      id,
+      botId,
+      c.req.header("x-alternativebot-space-id"),
+    );
     await withComputerScreenLock(id, async () => {
       const info = await container.inspect();
       if (info.State.Running) {
@@ -1118,7 +1131,11 @@ app.delete("/computers/:id", async (c) => {
   try {
     if (!botId) throw new Error("missing computer identity");
     return await withBotLifecycleLock(botId, async () => {
-      const { container } = await managedContainer(id, botId, c.req.header("x-alternativebot-space-id"));
+      const { container } = await managedContainer(
+        id,
+        botId,
+        c.req.header("x-alternativebot-space-id"),
+      );
       await withComputerScreenLock(id, async () => {
         await container.remove({ force: true }).catch((error) => {
           // Already gone is deleted; any other failure may leave the computer running.
@@ -1281,7 +1298,8 @@ async function isManagedSpaceContainer(
     const infoLabels = info.Config?.Labels ?? {};
     const managed =
       infoLabels["alternativebot.managed"] === "true" || info.Config?.Image === COMPUTER_IMAGE;
-    const infoSpaceId = infoLabels["alternativebot.spaceId"] ?? infoLabels["alternativebot.workspaceId"];
+    const infoSpaceId =
+      infoLabels["alternativebot.spaceId"] ?? infoLabels["alternativebot.workspaceId"];
     return managed && infoSpaceId === spaceId;
   } catch {
     // Container might have been removed concurrently
@@ -1482,9 +1500,14 @@ async function ensureManagedScreenAttempt(
   };
 }
 
-function isAlternativeBotContainer(info: Docker.ContainerInspectInfo, botId: string, spaceId: string) {
+function isAlternativeBotContainer(
+  info: Docker.ContainerInspectInfo,
+  botId: string,
+  spaceId: string,
+) {
   const labels = info.Config.Labels ?? {};
-  const managed = labels["alternativebot.managed"] === "true" || info.Config.Image === COMPUTER_IMAGE;
+  const managed =
+    labels["alternativebot.managed"] === "true" || info.Config.Image === COMPUTER_IMAGE;
   return managed && hasComputerIdentity(labels, botId, spaceId);
 }
 
@@ -1646,7 +1669,9 @@ async function setInteractiveScreen(
     interactiveScreenCommand(interactive, controlToken, layout),
   ]);
   if (result.code !== 0) throw new Error(result.stderr || "control screen failed to start");
-  return interactive || !controlToken || result.stdout.includes("ALTERNATIVEBOT_CONTROL_RELEASED\n");
+  return (
+    interactive || !controlToken || result.stdout.includes("ALTERNATIVEBOT_CONTROL_RELEASED\n")
+  );
 }
 
 // Each bot's computer gets its own Docker network so containers cannot reach

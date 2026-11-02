@@ -1,5 +1,7 @@
-import { Trans, useLingui } from "@lingui/react/macro";
-import type { MessagingChannelMembership, MessagingInstallationsStatus } from "@alternativebot/contracts";
+import type {
+  MessagingChannelMembership,
+  MessagingInstallationsStatus,
+} from "@alternativebot/contracts";
 import { isRetryableError, messagingConnectOptions } from "@alternativebot/core";
 import { fetchFresh, writeSaved } from "@alternativebot/core/query";
 import {
@@ -11,6 +13,7 @@ import {
   NativeSelect,
   NativeSelectOption,
 } from "@alternativebot/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronDownIcon, PlusIcon } from "lucide-react";
 import type { ReactNode } from "react";

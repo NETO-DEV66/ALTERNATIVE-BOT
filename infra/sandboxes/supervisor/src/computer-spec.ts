@@ -580,7 +580,9 @@ export function containerCreateOptions(input: ComputerCreateInput) {
       "PATH=/home/alternativebot/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
       "NPM_CONFIG_PREFIX=/home/alternativebot/.local",
       "PIP_USER=1",
-      ...(input.controlToken ? [`ALTERNATIVEBOT_COMPUTER_CONTROL_TOKEN=${input.controlToken}`] : []),
+      ...(input.controlToken
+        ? [`ALTERNATIVEBOT_COMPUTER_CONTROL_TOKEN=${input.controlToken}`]
+        : []),
     ],
     Labels: {
       "alternativebot.managed": "true",

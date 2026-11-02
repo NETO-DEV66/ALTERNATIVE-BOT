@@ -43,7 +43,11 @@ describe("Android call foreground service", () => {
       ja: "values-ja",
       es: "values-es",
     } as const satisfies Record<(typeof UI_LOCALES)[number], string>;
-    const keys = ["alternativebot_call_channel", "alternativebot_call_title", "alternativebot_call_text"];
+    const keys = [
+      "alternativebot_call_channel",
+      "alternativebot_call_title",
+      "alternativebot_call_text",
+    ];
     for (const locale of UI_LOCALES) {
       const xml = source(`res/${directories[locale]}/call_strings.xml`);
       for (const key of keys) expect(xml).toContain(`name="${key}"`);
@@ -52,7 +56,9 @@ describe("Android call foreground service", () => {
 
   // call-card-keep-awake.test.tsx covers the call card starting the service instead of keep-awake.
   it("is exposed to the JS bridge", () => {
-    const module = source("java/com/alternativebot/notifications/AlternativeBotNotificationsModule.kt");
+    const module = source(
+      "java/com/alternativebot/notifications/AlternativeBotNotificationsModule.kt",
+    );
     expect(module).toContain('AsyncFunction("startCall")');
     expect(module).toContain('AsyncFunction("stopCall")');
   });

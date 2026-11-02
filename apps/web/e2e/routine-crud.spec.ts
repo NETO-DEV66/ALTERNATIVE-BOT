@@ -1,6 +1,6 @@
+import type { Bot, Routine } from "@alternativebot/contracts";
 import type { Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
-import type { Bot, Routine } from "@alternativebot/contracts";
 import {
   activeBotId,
   captureScreenshot,
@@ -154,7 +154,12 @@ test("a successful routine create is not reported as failed when refresh fails",
   tag: "@nightly",
 }, async ({ page }) => {
   const stamp = Date.now();
-  await signup(page, `routine-refresh-${stamp}@alternativebot.test`, "password12", "Routine Refresh");
+  await signup(
+    page,
+    `routine-refresh-${stamp}@alternativebot.test`,
+    "password12",
+    "Routine Refresh",
+  );
   await completeOnboarding(page);
   const botId = activeBotId(page);
 
@@ -323,7 +328,12 @@ function localSchedule(iso: string, timezone: string) {
 test("change-trigger screenshot walkthrough", { tag: "@nightly" }, async ({ page }, testInfo) => {
   await page.emulateMedia({ colorScheme: "light" });
   const stamp = Date.now();
-  await signup(page, `routine-walkthrough-${stamp}@alternativebot.test`, "password12", "Routine Watch");
+  await signup(
+    page,
+    `routine-walkthrough-${stamp}@alternativebot.test`,
+    "password12",
+    "Routine Watch",
+  );
   await completeOnboarding(page);
   const botId = activeBotId(page);
 

@@ -1,4 +1,3 @@
-import { ORPCError } from "@orpc/server";
 import type { Actor, SpaceNavigation } from "@alternativebot/contracts";
 import type { createGroupRepos, createRepos, PrismaClient } from "@alternativebot/db";
 import {
@@ -20,6 +19,7 @@ import {
   setSpaceSettingOverride,
   spaceSettingOverrides,
 } from "@alternativebot/db";
+import { ORPCError } from "@orpc/server";
 import type { RouterDeps } from "../router.js";
 import { listRoutinesDto } from "../routines.js";
 import { deleteSpaceWithContent } from "../space-deletion.js";

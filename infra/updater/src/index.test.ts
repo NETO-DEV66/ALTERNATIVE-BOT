@@ -30,13 +30,18 @@ afterEach(async () => {
   );
 });
 
-async function deployment(env = "ALTERNATIVEBOT_IMAGE_TAG=v1.0.0\nALTERNATIVEBOT_IMAGE_TAG_PREVIOUS=v0.9.0\n") {
+async function deployment(
+  env = "ALTERNATIVEBOT_IMAGE_TAG=v1.0.0\nALTERNATIVEBOT_IMAGE_TAG_PREVIOUS=v0.9.0\n",
+) {
   const deployDir = await mkdtemp(path.join(os.tmpdir(), "alternativebot-updater-test-"));
   temporaryDirectories.push(deployDir);
   await writeFile(path.join(deployDir, ".env"), env);
   return {
     deployDir,
-    config: resolveUpdaterConfig({ ALTERNATIVEBOT_DEPLOY_DIR: deployDir, ALTERNATIVEBOT_UPDATER_TOKEN: token }),
+    config: resolveUpdaterConfig({
+      ALTERNATIVEBOT_DEPLOY_DIR: deployDir,
+      ALTERNATIVEBOT_UPDATER_TOKEN: token,
+    }),
   };
 }
 
@@ -108,7 +113,10 @@ describe("updater HTTP surface", () => {
     const response = await app.request("/apply", {
       method: "POST",
       headers: authorized,
-      body: JSON.stringify({ repoUrl: "https://github.com/NETO-DEV66/ALTERNATIVE-BOT", branch: "--exec=id" }),
+      body: JSON.stringify({
+        repoUrl: "https://github.com/NETO-DEV66/ALTERNATIVE-BOT",
+        branch: "--exec=id",
+      }),
     });
     expect(response.status).toBe(400);
   });
@@ -118,7 +126,10 @@ describe("updater HTTP surface", () => {
     const response = await createUpdaterApp(fixture.config).request("/apply", {
       method: "POST",
       headers: authorized,
-      body: JSON.stringify({ repoUrl: "https://github.com/someone/alternativebot", branch: "main" }),
+      body: JSON.stringify({
+        repoUrl: "https://github.com/someone/alternativebot",
+        branch: "main",
+      }),
     });
     expect(response.status).toBe(400);
     const payload = (await response.json()) as { error: string };

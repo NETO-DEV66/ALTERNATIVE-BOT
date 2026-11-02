@@ -1,7 +1,7 @@
 import { setTimeout as delay } from "node:timers/promises";
-import { FetchError, ResponseError } from "@boatdev/sdk";
 import { SandboxRateLimitError, SandboxUnresponsiveError } from "@alternativebot/adapter-kit";
 import { redactSecrets } from "@alternativebot/core";
+import { FetchError, ResponseError } from "@boatdev/sdk";
 import { readBodyCapped } from "./web-ssrf.js";
 
 const MAX_BOAT_ERROR_RESPONSE_BYTES = 16 * 1024;

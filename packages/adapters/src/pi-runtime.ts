@@ -1,3 +1,24 @@
+import type {
+  AdapterContext,
+  AgentRunRequest,
+  AgentRuntime,
+  AgentRuntimeEvent,
+  AgentSteeringMessage,
+  AgentUsage,
+  ModelCallObserver,
+} from "@alternativebot/adapter-kit";
+import {
+  ModelAccountError,
+  ModelOutputError,
+  TransientModelError,
+} from "@alternativebot/adapter-kit";
+import {
+  MISSING_TOOL_FINAL_RESPONSE_ERROR,
+  MODEL_IMAGE_INPUT_ERROR,
+  MODEL_OUTPUT_CUT_ERROR,
+  modelFallbackFailure,
+} from "@alternativebot/core";
+import { getLogger } from "@alternativebot/logging";
 import type { AgentToolResult } from "@earendil-works/pi-agent-core";
 import { Agent } from "@earendil-works/pi-agent-core";
 import type {
@@ -9,23 +30,6 @@ import type {
   Model,
 } from "@earendil-works/pi-ai";
 import { validateToolArguments } from "@earendil-works/pi-ai";
-import type {
-  AdapterContext,
-  AgentRunRequest,
-  AgentRuntime,
-  AgentRuntimeEvent,
-  AgentSteeringMessage,
-  AgentUsage,
-  ModelCallObserver,
-} from "@alternativebot/adapter-kit";
-import { ModelAccountError, ModelOutputError, TransientModelError } from "@alternativebot/adapter-kit";
-import {
-  MISSING_TOOL_FINAL_RESPONSE_ERROR,
-  MODEL_IMAGE_INPUT_ERROR,
-  MODEL_OUTPUT_CUT_ERROR,
-  modelFallbackFailure,
-} from "@alternativebot/core";
-import { getLogger } from "@alternativebot/logging";
 import { uncertainEffectResult } from "./approval-effect.js";
 import { automated, withAutomatedLabels } from "./automated-messages.js";
 import { withCloudflareAuth } from "./cloudflare-ai-gateway.js";
@@ -287,7 +291,8 @@ export class PiAgentRuntime implements AgentRuntime {
           restored
             ? (restored.historyMessageIds ??
                 history.flatMap((message) => {
-                  const id = (message as Message & { alternativebotMessageId?: string }).alternativebotMessageId;
+                  const id = (message as Message & { alternativebotMessageId?: string })
+                    .alternativebotMessageId;
                   return id ? [id] : [];
                 }))
             : [
