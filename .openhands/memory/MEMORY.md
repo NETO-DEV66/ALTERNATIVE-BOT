@@ -34,15 +34,13 @@ rebranded to **Alternative Bot**, mobile-only, Android package
 
 ## Current state (2026-11-03)
 
-- `origin/main` = **`4c83a6d`** "build(mobile): release the Android APK with Gradle
-  instead of EAS" — pushed. It replaced the EAS workflow with a local Gradle build,
-  added `apps/mobile/plugins/with-release-signing.js`, bumped to **1.0.13 (versionCode
-  12)**, removed `release-mobile.yml` + the EAS publish job + every `EXPO_TOKEN`
-  reference, and updated docs/tests. **But its first CI run failed.**
-- **APK released.** Release `android` (id 430456219) serves `alternativebot.apk`
-  **1.0.13 (versionCode 12)**, 128,222,826 bytes, sha256 `a50513e3…e3ac399`,
-  published 2026-11-03. `--latest=false`, so the desktop updater's "latest" is
-  untouched. (1.0.12/vc11 was 128,222,814 bytes, sha256 `b3cdbece…b5e79ff`.)
+- `origin/main` = **`a29e33d`**. CI **green**: run `41654765414` on `c90a3a7` passed
+  Checks, both Postgres-journey shards, and all six `Publish server images` builds.
+- **APK released.** Release `android` serves `alternativebot.apk` **1.0.13 (vc 12)**,
+  128,222,826 bytes, `--latest=false`; tag `android` points at `c90a3a7`. The
+  `release-android-apk` workflow builds it with local Gradle (no EAS/`EXPO_TOKEN`),
+  verifies the signature against the secret keystore and against the published APK,
+  then replaces the asset in place.
 
 ### Release signing: phones are debug-signed (critical)
 - The published APK's signing certificate is the **checked-in
@@ -62,8 +60,8 @@ rebranded to **Alternative Bot**, mobile-only, Android package
   repo public key (PyNaCl `SealedBox`).
 - Rebrand + billing removal are **verified complete** (no `rakazo`/`elie222` outside
   `.git`; Stripe/billing gone).
-- 4 test files fail on clean `HEAD` for environmental reasons (no `::1` loopback,
-  npm-in-pnpm, process-reaping timing, real model HTTP) — not regressions.
+- Don't assume a failing test is "environmental". The `parallel-web` failure blamed on
+  the sandbox was a real UA typo, and the Postgres/GHCR failures were real too (fixed).
 
 ### CI failure that blocked the 1.0.13 release (root cause)
 - `./gradlew app:assembleRelease` died with `OutOfMemoryError: Metaspace` in
@@ -102,10 +100,13 @@ rebranded to **Alternative Bot**, mobile-only, Android package
     removal made `env.ts` read `ALTERNATIVEBOT_LOCAL_SESSION` + `ALTERNATIVEBOT_LOCAL_ACCOUNT_EMAIL`,
     but the api allowlist in `docker-compose{,.prod,.images}.yml` never passed them
     (`compose-env.test.ts`, 4 cases). Fix: add both keys to the api block of each file.
-  - After both fixes the only CI red left is `packages/testkit/src/parallel-web.test.ts`
-    (2 cases), the environmental "real model HTTP" failure — it hits
-    `https://search.parallel.ai/mcp` and the sandbox adds an `authorization` header the
-    test asserts is absent. Not a regression.
+  - **The last CI red was three REAL regressions, not environmental** (fixed in
+    `16b2643` + `c90a3a7`, see `2026-11-03.md`): (a) `parallel-web.test.ts` expected
+    `"AlternativeBot/"` but the brand is `"Alternative Bot/"` (rebrand typo, failed
+    since `9a9178c`); (b) single-user mode 404s `/api/auth/sign-up/email`, so the
+    integration/e2e harness needs `ALTERNATIVEBOT_LOCAL_SESSION=false` (set in
+    `packages/testkit/src/cli/harness.ts`); (c) GHCR rejects the uppercase repo path —
+    workflows must lowercase via `IMAGE_NAMESPACE=${GITHUB_REPOSITORY,,}`.
   - `main` went `801d9d0` → `62fa9a0` (typecheck) → `17d839b` (compose). The Gradle APK
     work (`4c83a6d`, `e6d8ebd`) was already committed **and pushed** by the prior session.
   - Release re-verified after the fixes: `release-android-apk` run 41613895866 green;
