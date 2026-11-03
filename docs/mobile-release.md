@@ -75,13 +75,8 @@ later without a new build. Builds without the variable remain supported.
 
 ## Over-the-air updates
 
-Production and preview builds include `expo-updates` and use the corresponding
-EAS Update channel. The runtime version follows the public app version, so bump
-`expo.version` whenever native code, config plugins, permissions, or native
-dependencies change.
-
-A build carries the update channel it was made with; publishing an update is a
-separate, opt-in step. Installed release builds download a compatible update in
-the background on launch and apply it after the next restart. Builds created
-before `expo-updates` was configured cannot receive OTA updates and must be
-replaced with a new build once.
+`apps/mobile` includes `expo-updates`, and the runtime version follows the public
+app version, so bump `expo.version` whenever native code, config plugins,
+permissions, or native dependencies change. The release here builds and signs the
+APK locally, and nothing publishes an over-the-air update, so a JavaScript change
+reaches an installed APK only through a new build.
