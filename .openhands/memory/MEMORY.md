@@ -39,8 +39,27 @@ rebranded to **Alternative Bot**, mobile-only, Android package
   added `apps/mobile/plugins/with-release-signing.js`, bumped to **1.0.13 (versionCode
   12)**, removed `release-mobile.yml` + the EAS publish job + every `EXPO_TOKEN`
   reference, and updated docs/tests. **But its first CI run failed.**
-- **APK released.** Release `android` (id 430456219) serves `alternativebot.apk`.
-  (Earlier 1.0.12/vc11 was 128,222,814 bytes, sha256 `b3cdbece…b5e79ff`.)
+- **APK released.** Release `android` (id 430456219) serves `alternativebot.apk`
+  **1.0.13 (versionCode 12)**, 128,222,826 bytes, sha256 `a50513e3…e3ac399`,
+  published 2026-11-03. `--latest=false`, so the desktop updater's "latest" is
+  untouched. (1.0.12/vc11 was 128,222,814 bytes, sha256 `b3cdbece…b5e79ff`.)
+
+### Release signing: phones are debug-signed (critical)
+- The published APK's signing certificate is the **checked-in
+  `apps/mobile/android/app/debug.keystore`** (`fac61745dc09…`), *not* a private
+  release key. Phones reject an update signed by any other key ("App not
+  installed"), so **the four `ANDROID_*` repo secrets were set to that debug
+  keystore** (alias `androiddebugkey`, store+key pass `android`). Changing the
+  signing key would strand every installed app; to move to a real upload key you
+  must ship a fresh package/identity.
+- The `release-android-apk` workflow builds with the secret keystore, verifies the
+  APK against it, and *also* verifies it against the currently published APK
+  before uploading — so a mismatch fails the run instead of shipping a broken
+  update. The first CI run failed exactly there because the secret keystore did
+  not match the published (debug-signed) APK.
+- Secrets are writable with the user's PAT via
+  `PUT /repos/{repo}/actions/secrets/{name}` after sealing the value with the
+  repo public key (PyNaCl `SealedBox`).
 - Rebrand + billing removal are **verified complete** (no `rakazo`/`elie222` outside
   `.git`; Stripe/billing gone).
 - 4 test files fail on clean `HEAD` for environmental reasons (no `::1` loopback,
