@@ -91,7 +91,24 @@ rebranded to **Alternative Bot**, mobile-only, Android package
   The repo's release keystore is the `ANDROID_KEYSTORE_BASE64` secret; CI decodes it
   to `$RUNNER_TEMP/alternativebot-release.keystore`.
 
-### Secret hygiene rule (learned the hard way)
+  ### CI was red on main (2026-11-03, fixed)
+  - The last `ci` run on `main` failed at `Checks → Typecheck`:
+    `apps/api/src/local-session.postgres.test.ts(31,7): TS2353 'localSession' does not
+    exist in type 'CreateAppOverrides'`. Pre-existing (from sign-in-era `30e8fe1`), not
+    from the mobile work. Fix: drop the redundant `localSession: true` override —
+    `localAccountEmail` alone enables single-user mode. `@alternativebot/api` `tsc` is
+    clean again.
+  - `main` = `801d9d0` before that fix; the Gradle APK work (`4c83a6d`, `e6d8ebd`) was
+    already committed **and pushed** by the prior session.
+
+  ### PII still in pushed history (not a credential)
+  - `.openhands/conversations/` (added `4c83a6d`, removed `e6d8ebd`) leaves ~5,774 objects
+    incl. a 12.7 MB `trajectory.zip` in history. No live secrets remain (scanned for
+    `ghp_/ghu_/sk-or-v1-/AIza`), but the user's Gmail and the old Rakazo dev emails
+    (`elie@rakazo.com`, `security@`, `support@`) are public. Purge needs filter-repo +
+    force-push and the user's go-ahead.
+
+  ### Secret hygiene rule (learned the hard way)
 - The repo is **public**. Before committing a fetched conversation/trajectory (or any
   third-party dump), grep it for secrets — the user pasted a live `ghp_…` PAT into a
   chat and it landed in the archive. Redact to `<REDACTED-SECRET>` in both the text
