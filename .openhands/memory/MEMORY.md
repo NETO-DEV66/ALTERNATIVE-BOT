@@ -32,37 +32,45 @@ rebranded to **Alternative Bot**, mobile-only, Android package
   **429s around page 129** (~12,900 events). Prefer the download zip.
 - The `/canvas/shared/...` web page requires login; the API does not.
 
-## Current state (2026-11-01)
+## Current state (2026-11-03)
 
-- `origin/main` = **`30e8fe1`** "fix(mobile): recover when the server refuses the app"
-  — **pushed**. Includes the 1.0.12 recovery fix and the first end-to-end test for
-  `POST /api/auth/local-session`.
-- **Sign-in removed for the app** (see `2026-11-01.md`): the mobile sign-in screen,
-  auth routing, passkey offer, and deletion prompt are deleted; the server mints the
-  session for its one account through `POST /local-session` and closes every
-  credential route. Multi-user credential auth still exists behind
-  `ALTERNATIVEBOT_LOCAL_SESSION=false`, and the web sign-in pages remain for it.
-- **APK released.** Built locally with Gradle (no EAS/`EXPO_TOKEN`). Release
-  `android` (id 430456219) currently serves `alternativebot.apk` **1.0.12
-  (versionCode 11)**, 128,222,814 bytes, sha256 `b3cdbece…b5e79ff`, which fixes
-  the "session expired" dead end. Rebuild recipe and SDK paths are in
-  `2026-11-01.md`.
-
-## Earlier state (2026-10-31)
-
-- `origin/main` and local `main` are both at **`d464e4a`** — "chore: drop billing
-  leftovers and the 24 MB source zip". **Pushed** successfully.
-- Rebrand + billing removal are **verified complete**: no `rakazo`/`Rakazo` or
-  `elie222` references remain outside `.git`; all billing/payment code, Prisma models,
-  migrations and Stripe compose env are gone. The last dead remnant (the `pay_token`
-  browser action + `card`/`cardField` fill fields, unreachable from the tool schema)
-  was deleted along with `@stripe/link-sdk` and the 24 MB `ALTERNATIVE BOT.zip`.
-- **T5 (APK build + GitHub release) is still open** — repo has **0 releases** and **0
-  Actions secrets** (no `EXPO_TOKEN`); no java/Android SDK in the sandbox. The ready
-  workflow `.github/workflows/release-android-apk.yml` needs an `EXPO_TOKEN` secret and
-  a `GOOGLE_SERVICES_JSON` file var in the EAS *production* environment.
+- `origin/main` = **`4c83a6d`** "build(mobile): release the Android APK with Gradle
+  instead of EAS" — pushed. It replaced the EAS workflow with a local Gradle build,
+  added `apps/mobile/plugins/with-release-signing.js`, bumped to **1.0.13 (versionCode
+  12)**, removed `release-mobile.yml` + the EAS publish job + every `EXPO_TOKEN`
+  reference, and updated docs/tests. **But its first CI run failed.**
+- **APK released.** Release `android` (id 430456219) serves `alternativebot.apk`.
+  (Earlier 1.0.12/vc11 was 128,222,814 bytes, sha256 `b3cdbece…b5e79ff`.)
+- Rebrand + billing removal are **verified complete** (no `rakazo`/`elie222` outside
+  `.git`; Stripe/billing gone).
 - 4 test files fail on clean `HEAD` for environmental reasons (no `::1` loopback,
   npm-in-pnpm, process-reaping timing, real model HTTP) — not regressions.
+
+### CI failure that blocked the 1.0.13 release (root cause)
+- `./gradlew app:assembleRelease` died with `OutOfMemoryError: Metaspace` in
+  `lintVitalAnalyzeRelease`. Cause: **Expo's template `gradle.properties` sets
+  `org.gradle.jvmargs=-Xmx2048m -XX:MaxMetaspaceSize=512m`**; 512 MB metaspace is not
+  enough for the release lint over the whole RN/Expo graph. Fix: `with-release-signing`
+  now also runs `withGradleProperties` and raises it to
+  `-Xmx4096m -XX:MaxMetaspaceSize=2048m`.
+
+### Local Android build recipe (verified)
+- `sudo apt-get install openjdk-21-jdk-headless`; Android SDK at
+  `/home/openhands/android-sdk` (cmdline-tools `13114758`), packages
+  `platform-tools platforms;android-36 build-tools;36.0.0 build-tools;35.0.0
+  ndk;27.1.12297006 cmake;3.22.1`.
+- `corepack enable` fails (EACCES on `/usr/local/bin`); make a shim instead:
+  `printf '#!/bin/sh\nexec corepack pnpm "$@"\n' | sudo tee /usr/local/bin/pnpm`.
+- `pnpm install --frozen-lockfile`, then from `apps/mobile`:
+  `pnpm exec expo prebuild --platform android --no-install`, then
+  `cd android && ./gradlew app:assembleRelease --no-daemon`. Output
+  `app/build/outputs/apk/release/app-release.apk`.
+- **`EAS_BUILD_PROFILE` unset → `app.config.ts` skips the `EXPO_PUBLIC_API_URL`
+  HTTPS check**, so a local build needs no API URL.
+- Without the four `ALTERNATIVEBOT_*` env vars the release is signed with the
+  checked-in `android/app/debug.keystore` (that is what 1.0.11/1.0.12 shipped).
+  The repo's release keystore is the `ANDROID_KEYSTORE_BASE64` secret; CI decodes it
+  to `$RUNNER_TEMP/alternativebot-release.keystore`.
 
 ### Secret hygiene rule (learned the hard way)
 - The repo is **public**. Before committing a fetched conversation/trajectory (or any

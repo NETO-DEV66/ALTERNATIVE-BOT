@@ -1,10 +1,16 @@
-// Signs Android release builds with a real keystore instead of the debug key.
+// Configures the Android release build: signs it with a real keystore instead of the debug key,
+// and gives Gradle enough memory to run the release lint.
 //
 // The keystore is never committed. CI writes it to a file outside the checkout and passes its
 // path and credentials through four environment variables, which Gradle reads at configuration
 // time. Without them — a local `expo run:android` or `assembleRelease` — the release build falls
 // back to the checked-in debug keystore so it still runs.
-const { withAppBuildGradle } = require("expo/config-plugins");
+const { withAppBuildGradle, withGradleProperties } = require("expo/config-plugins");
+
+// Expo's template sets `-XX:MaxMetaspaceSize=512m`, which the JVM exhausts while running
+// `lintVitalAnalyzeRelease` over the whole dependency graph (the build dies with
+// `OutOfMemoryError: Metaspace`). Raise both limits so a release build finishes.
+const GRADLE_JVM_ARGS = "-Xmx4096m -XX:MaxMetaspaceSize=2048m";
 
 const KEYSTORE_FILE_VAR = "ALTERNATIVEBOT_KEYSTORE_FILE";
 const KEYSTORE_PASSWORD_VAR = "ALTERNATIVEBOT_KEYSTORE_PASSWORD";
@@ -72,12 +78,40 @@ function applyReleaseSigning(contents) {
     .replace(RELEASE_SIGNING_ANCHOR, RELEASE_SIGNING_REPLACEMENT);
 }
 
+/**
+ * Raises `org.gradle.jvmargs` so the release lint has enough metaspace. Exported for tests.
+ * @param {string} contents `android/gradle.properties`
+ * @returns {string} the updated gradle.properties
+ */
+function applyGradleJvmArgs(contents) {
+  const line = `org.gradle.jvmargs=${GRADLE_JVM_ARGS}`;
+  const existing = /^org\.gradle\.jvmargs=.*$/m;
+  if (existing.test(contents)) {
+    return contents.replace(existing, line);
+  }
+  const separator = contents.length > 0 && !contents.endsWith("\n") ? "\n" : "";
+  return `${contents}${separator}${line}\n`;
+}
+
 function withReleaseSigning(config) {
-  return withAppBuildGradle(config, (cfg) => {
+  config = withAppBuildGradle(config, (cfg) => {
     cfg.modResults.contents = applyReleaseSigning(cfg.modResults.contents);
+    return cfg;
+  });
+  return withGradleProperties(config, (cfg) => {
+    const jvmArgs = cfg.modResults.find(
+      (item) => item.type === "property" && item.key === "org.gradle.jvmargs",
+    );
+    if (jvmArgs) {
+      jvmArgs.value = GRADLE_JVM_ARGS;
+    } else {
+      cfg.modResults.push({ type: "property", key: "org.gradle.jvmargs", value: GRADLE_JVM_ARGS });
+    }
     return cfg;
   });
 }
 
 module.exports = withReleaseSigning;
 module.exports.applyReleaseSigning = applyReleaseSigning;
+module.exports.applyGradleJvmArgs = applyGradleJvmArgs;
+module.exports.GRADLE_JVM_ARGS = GRADLE_JVM_ARGS;
