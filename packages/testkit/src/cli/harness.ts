@@ -102,6 +102,9 @@ async function main() {
     process.env.WEB_PORT = String(webPort);
     process.env.PLAYWRIGHT_BASE_URL = webOrigin;
     process.env.DATA_DIR = path.join(reportDir, "data");
+    // Integration and e2e suites create many accounts and rely on tenant isolation, so they
+    // run the multi-user sign-in the deployment's single-user default replaces.
+    process.env.ALTERNATIVEBOT_LOCAL_SESSION = "false";
     process.env.SIGNUPS_ENABLED = "true";
     process.env.SIGNUP_ALLOWLIST = "";
     // Model and speech fixtures listen on loopback, and most test accounts are not the owner.

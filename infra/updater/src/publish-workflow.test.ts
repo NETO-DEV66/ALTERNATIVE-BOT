@@ -9,6 +9,7 @@ const publisherDir = path.resolve(workflowsDir, "../actions/publish-image");
 const publisherText = readFileSync(path.join(publisherDir, "action.yml"), "utf8");
 interface WorkflowStep {
   id?: string;
+  name?: string;
   if?: string;
   uses?: string;
   "continue-on-error"?: boolean;
@@ -172,6 +173,29 @@ describe("server image publish workflow", () => {
     // older revision cannot replace a newer one that is already waiting.
     for (const name of ["checks", "test-integration-shard", "publish-server-image"]) {
       expect(ci.jobs[name]?.needs, name).toBeUndefined();
+    }
+  });
+
+  it("lowercases the repository name for GHCR, which rejects uppercase paths", () => {
+    // biome-ignore lint/suspicious/noTemplateCurlyInString: literal workflow expression
+    expect(workflowText).not.toContain("ghcr.io/${{ github.repository }}");
+    // biome-ignore lint/suspicious/noTemplateCurlyInString: literal workflow expression
+    expect(workflowText).toContain("ghcr.io/${{ env.IMAGE_NAMESPACE }}");
+    expect(workflowText).toContain(
+      // biome-ignore lint/suspicious/noTemplateCurlyInString: literal shell parameter expansion
+      'echo "IMAGE_NAMESPACE=${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"',
+    );
+    // Every job that names an image must compute the lowercase namespace first.
+    for (const name of ["validate", "build", "build-depot", "publish"] as const) {
+      const steps = workflow.jobs[name].steps;
+      const lower = steps.findIndex(
+        (step) => step.name === "Lowercase the repository name for GHCR",
+      );
+      const firstImage = steps.findIndex((step) =>
+        JSON.stringify(step.with ?? {}).includes("IMAGE_NAMESPACE"),
+      );
+      expect(lower, name).toBeGreaterThanOrEqual(0);
+      expect(lower, name).toBeLessThan(firstImage);
     }
   });
 
