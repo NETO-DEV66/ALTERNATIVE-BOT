@@ -98,8 +98,18 @@ rebranded to **Alternative Bot**, mobile-only, Android package
     from the mobile work. Fix: drop the redundant `localSession: true` override —
     `localAccountEmail` alone enables single-user mode. `@alternativebot/api` `tsc` is
     clean again.
-  - `main` = `801d9d0` before that fix; the Gradle APK work (`4c83a6d`, `e6d8ebd`) was
-    already committed **and pushed** by the prior session.
+  - Then `Checks → Unit tests` failed too, on a **real compose regression**: the sign-in
+    removal made `env.ts` read `ALTERNATIVEBOT_LOCAL_SESSION` + `ALTERNATIVEBOT_LOCAL_ACCOUNT_EMAIL`,
+    but the api allowlist in `docker-compose{,.prod,.images}.yml` never passed them
+    (`compose-env.test.ts`, 4 cases). Fix: add both keys to the api block of each file.
+  - After both fixes the only CI red left is `packages/testkit/src/parallel-web.test.ts`
+    (2 cases), the environmental "real model HTTP" failure — it hits
+    `https://search.parallel.ai/mcp` and the sandbox adds an `authorization` header the
+    test asserts is absent. Not a regression.
+  - `main` went `801d9d0` → `62fa9a0` (typecheck) → `17d839b` (compose). The Gradle APK
+    work (`4c83a6d`, `e6d8ebd`) was already committed **and pushed** by the prior session.
+  - Release re-verified after the fixes: `release-android-apk` run 41613895866 green;
+    served APK 1.0.13 (vc 12), 128,222,822 bytes, 2026-11-03T10:19:04Z.
 
   ### PII still in pushed history (not a credential)
   - `.openhands/conversations/` (added `4c83a6d`, removed `e6d8ebd`) leaves ~5,774 objects
